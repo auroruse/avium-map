@@ -74,8 +74,8 @@
   {
     "text": "WESTERN PANTHALASSAN OCEAN",
     "type": "ocean",
-    "x": 1335,
-    "y": 5612,
+    "x": 1372,
+    "y": 5656,
     "minZoom": 2.5,
     "maxZoom": 6,
     "span": 3025.918318721555
@@ -220,7 +220,7 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 475
+    "span": 375
   },
   {
     "text": "PONURVIA",
@@ -613,8 +613,8 @@
   {
     "text": "COSTASERÁ",
     "type": "colony",
-    "x": 2464,
-    "y": 3102,
+    "x": 2462,
+    "y": 3106,
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
@@ -679,10 +679,11 @@
   {
     "text": "AZTEKISCHE ISLANDS",
     "type": "colony",
-    "x": null,
-    "y": null,
+    "x": 1100,
+    "y": 4025,
     "minZoom": 3.5,
-    "maxZoom": 5
+    "maxZoom": 5,
+    "span": 195.2279527729638
   },
   {
     "text": "CÔTE DE SAUMON",
@@ -705,10 +706,11 @@
   {
     "text": "DÄMMERUNG ISLANDS",
     "type": "colony",
-    "x": null,
-    "y": null,
+    "x": 597,
+    "y": 2531,
     "minZoom": 3.5,
-    "maxZoom": 5
+    "maxZoom": 5,
+    "span": 536.1499355728083
   },
   {
     "text": "EIVORIE",
@@ -730,50 +732,56 @@
   {
     "text": "GONENITE ISLANDS",
     "type": "colony",
-    "x": null,
-    "y": null,
+    "x": 4421,
+    "y": 758,
     "minZoom": 3.5,
-    "maxZoom": 5
+    "maxZoom": 5,
+    "span": 228.26238747336075
   },
   {
     "text": "HOCHBRUNN-AM-SAHARAMEER",
     "type": "colony",
-    "x": null,
-    "y": null,
+    "x": 3196,
+    "y": 3869,
     "minZoom": 3.5,
-    "maxZoom": 5
+    "maxZoom": 5,
+    "span": 288.0966143165608
   },
   {
     "text": "KIENAM",
     "type": "colony",
-    "x": null,
-    "y": null,
+    "x": 4492,
+    "y": 863,
     "minZoom": 3.5,
-    "maxZoom": 5
+    "maxZoom": 5,
+    "span": 100.02273357081917
   },
   {
     "text": "KULLANMAAN",
     "type": "colony",
-    "x": null,
-    "y": null,
+    "x": 2144,
+    "y": 3926,
     "minZoom": 3.5,
-    "maxZoom": 5
+    "maxZoom": 5,
+    "span": 144.89624953275705
   },
   {
     "text": "NAPOLYON BONPARTERRE ISLANDS",
     "type": "colony",
-    "x": null,
-    "y": null,
+    "x": 4407,
+    "y": 546,
     "minZoom": 3.5,
-    "maxZoom": 5
+    "maxZoom": 5,
+    "span": 422.0399488562894
   },
   {
     "text": "NEW CELYDDON",
     "type": "colony",
-    "x": null,
-    "y": null,
+    "x": 4234,
+    "y": 410,
     "minZoom": 3.5,
-    "maxZoom": 5
+    "maxZoom": 5,
+    "span": 178.41868173195442
   },
   {
     "text": "NITRAVIA",
@@ -838,18 +846,20 @@
   {
     "text": "VERWUSTUNG ISLANDS",
     "type": "colony",
-    "x": null,
-    "y": null,
+    "x": 4605,
+    "y": 4938,
     "minZoom": 3.5,
-    "maxZoom": 5
+    "maxZoom": 5,
+    "span": 205.54143750135387
   },
   {
     "text": "VIKOMTE ISLANDS",
     "type": "colony",
-    "x": null,
-    "y": null,
+    "x": 2772,
+    "y": 5778,
     "minZoom": 3.5,
-    "maxZoom": 5
+    "maxZoom": 5,
+    "span": 206.91439931015006
   },
   {
     "text": "RECOLOTTA",

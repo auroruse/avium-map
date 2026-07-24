@@ -113,7 +113,7 @@ const labelLayer = L.layerGroup().addTo(map)
 // a small nation when zoomed out and vanishes on a continent when zoomed in.
 const MIN_SPAN = 45   // map px, so a one-city nation still earns a name eventually
 const FIT = 0.75      // the name spans this fraction of the area on screen
-const FS_MIN = 8.5
+const FS_MIN = 8.5    // smallest font a derived span is allowed to produce
 
 // Water is the one thing on this map with no border to trace, so its names are
 // set tight and italic and lean on colour to read as water; land names track
@@ -203,9 +203,18 @@ function fallbackSpan(def: LabelDef): number {
 }
 
 // A hand-set span is the same quantity the deriver produces, so a tuned label
-// runs through the identical pipeline and keeps scaling with zoom
+// runs through the identical pipeline and keeps scaling with zoom. It is also
+// taken literally: a size someone chose is a decision, not a suggestion.
+//
+// A derived span instead floors at whatever renders the name at FS_MIN, because
+// deriving from cities says nothing about how long the name is — four cities on
+// one island give an island colony 45px of territory, which sets a 28-character
+// name at two thirds of a pixel.
 function areaSpan(def: LabelDef): number {
-  return def.span ?? anchors().get(norm(def.text))?.span ?? fallbackSpan(def)
+  if (def.span != null) return def.span
+  const derived = anchors().get(norm(def.text))?.span ?? fallbackSpan(def)
+  const legible = (FS_MIN * def.text.length * advanceOf(def)) / (scaleAt(def.minZoom) * FIT)
+  return Math.max(derived, legible)
 }
 
 // Land names are sized once, at the zoom they first appear at, and hold that
@@ -222,12 +231,12 @@ function areaFontSize(def: LabelDef, z: number): number {
   return (areaSpan(def) * scaleAt(sizeZoom(def, z)) * FIT) / (def.text.length * advanceOf(def))
 }
 
-// Too small to read is too small to draw, so the real map culls it. Dev keeps
-// drawing it at whatever size it truly is: the handles are a fixed 7px, so a
-// label shrunk to nothing is still grabbable and still recoverable.
+// The zoom band is the only thing that hides a label. There used to be a size
+// cull here as well, which meant dev and the public map disagreed about what
+// was on screen — a label tuned to look right in the placer was silently
+// dropped for everyone else. Legibility is handled where the size is decided.
 function labelShown(def: LabelDef, z: number): boolean {
-  return map.hasLayer(labelLayer) &&
-    z >= def.minZoom && z <= def.maxZoom && (DEV || areaFontSize(def, z) >= FS_MIN)
+  return map.hasLayer(labelLayer) && z >= def.minZoom && z <= def.maxZoom
 }
 
 function makeLabelMarker(def: LabelDef, pos: [number, number]): L.Marker {
@@ -343,10 +352,7 @@ function updateLabels() {
   for (const [def, marker] of labelMarkers) {
     const el = marker.getElement()
     if (!el) continue
-    const fs = areaFontSize(def, z)
-    el.style.fontSize = fs.toFixed(1) + 'px'
-    // Marks the labels dev is drawing that the real map would cull
-    if (DEV) el.classList.toggle('label-undersize', fs < FS_MIN)
+    el.style.fontSize = areaFontSize(def, z).toFixed(1) + 'px'
     el.classList.toggle('label-on', labelShown(def, z))
   }
 }

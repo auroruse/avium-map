@@ -129,13 +129,6 @@ html, body {
   opacity: 1;
 }
 
-/* Held at the floor so it stays grabbable, but too small to survive the cull
-   outside dev — drag a corner out until the outline clears. */
-.label-undersize span {
-  outline: 1px dashed rgba(255,90,90,0.95) !important;
-  outline-offset: 2px;
-}
-
 .lh-nw { top: -7px; left: -7px; cursor: nwse-resize; }
 .lh-ne { top: -7px; right: -7px; cursor: nesw-resize; }
 .lh-sw { bottom: -7px; left: -7px; cursor: nesw-resize; }
