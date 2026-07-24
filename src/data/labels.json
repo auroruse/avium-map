@@ -60,25 +60,25 @@
     "y": 1578,
     "minZoom": 2.5,
     "maxZoom": 6,
-    "span": 765.0830496795135
+    "span": 1504.5890809276584
   },
   {
     "text": "EASTERN PANTHALASSAN OCEAN",
     "type": "ocean",
-    "x": 4740,
+    "x": 4859,
     "y": 2489,
     "minZoom": 2.5,
     "maxZoom": 6,
-    "span": 1796.3809745967783
+    "span": 2803.7929484792317
   },
   {
     "text": "WESTERN PANTHALASSAN OCEAN",
     "type": "ocean",
-    "x": 1471,
+    "x": 1335,
     "y": 5612,
     "minZoom": 2.5,
     "maxZoom": 6,
-    "span": 1796
+    "span": 3025.918318721555
   },
   {
     "text": "SAHARA SEA",
