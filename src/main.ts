@@ -235,7 +235,16 @@ function screenFixed(def: LabelDef): boolean {
   return (areaSpan(def) * scaleAt(def.minZoom) * FIT) / (def.text.length * advanceOf(def)) >= FS_MIN
 }
 
-const sizeZoom = (def: LabelDef, z: number) => (screenFixed(def) ? def.minZoom : z)
+// Small territories grow at a fraction of the map's rate, not with it. Full
+// rate put an island's name level with a real nation's by the end of the band,
+// which reads as the island having been promoted.
+const GROW = 0.6
+
+function sizeZoom(def: LabelDef, z: number): number {
+  if (WATER.has(def.type)) return z
+  if (screenFixed(def)) return def.minZoom
+  return def.minZoom + GROW * (z - def.minZoom)
+}
 
 // No floor and no ceiling. A speck is the honest rendering of a territory too
 // small to carry its name yet, and zooming in is what resolves it.
