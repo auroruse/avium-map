@@ -13,7 +13,7 @@ const DEV = new URLSearchParams(window.location.search).has('dev')
 const TILE_GRID = 8192
 const CONTENT = 6000
 const U = 256
-const MAX_ZOOM = 8
+const MAX_ZOOM = 6
 
 function px(x: number, y: number): L.LatLngExpression {
   return [(-y * U) / TILE_GRID, (x * U) / TILE_GRID]
