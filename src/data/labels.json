@@ -1,0 +1,613 @@
+[
+  {
+    "text": "ELYSIA",
+    "type": "continent",
+    "x": null,
+    "y": null,
+    "minZoom": 0,
+    "maxZoom": 3
+  },
+  {
+    "text": "EVRIA",
+    "type": "continent",
+    "x": null,
+    "y": null,
+    "minZoom": 0,
+    "maxZoom": 3
+  },
+  {
+    "text": "VALTHERIA",
+    "type": "continent",
+    "x": null,
+    "y": null,
+    "minZoom": 0,
+    "maxZoom": 3
+  },
+  {
+    "text": "PELAGONIA",
+    "type": "continent",
+    "x": null,
+    "y": null,
+    "minZoom": 0,
+    "maxZoom": 3
+  },
+  {
+    "text": "HYPERBOREA",
+    "type": "continent",
+    "x": null,
+    "y": null,
+    "minZoom": 0,
+    "maxZoom": 3
+  },
+  {
+    "text": "TARTARUS",
+    "type": "continent",
+    "x": null,
+    "y": null,
+    "minZoom": 0,
+    "maxZoom": 3
+  },
+  {
+    "text": "HYPERBOREAN OCEAN",
+    "type": "ocean",
+    "x": null,
+    "y": null,
+    "minZoom": 0,
+    "maxZoom": 4
+  },
+  {
+    "text": "EASTERN PANTHALASSAN OCEAN",
+    "type": "ocean",
+    "x": null,
+    "y": null,
+    "minZoom": 0,
+    "maxZoom": 4
+  },
+  {
+    "text": "WESTERN PANTHALASSAN OCEAN",
+    "type": "ocean",
+    "x": null,
+    "y": null,
+    "minZoom": 0,
+    "maxZoom": 4
+  },
+  {
+    "text": "SAHARA SEA",
+    "type": "sea",
+    "x": null,
+    "y": null,
+    "minZoom": 1,
+    "maxZoom": 5
+  },
+  {
+    "text": "SEA OF AURITANIA",
+    "type": "sea",
+    "x": null,
+    "y": null,
+    "minZoom": 1,
+    "maxZoom": 5
+  },
+  {
+    "text": "TETHYS SEA",
+    "type": "sea",
+    "x": null,
+    "y": null,
+    "minZoom": 1,
+    "maxZoom": 5
+  },
+  {
+    "text": "ARCTIC SEA",
+    "type": "sea",
+    "x": null,
+    "y": null,
+    "minZoom": 1,
+    "maxZoom": 5
+  },
+  {
+    "text": "HIMALAYAN SEA",
+    "type": "sea",
+    "x": null,
+    "y": null,
+    "minZoom": 1,
+    "maxZoom": 5
+  },
+  {
+    "text": "STRAYAN SEA",
+    "type": "sea",
+    "x": null,
+    "y": null,
+    "minZoom": 1,
+    "maxZoom": 5
+  },
+  {
+    "text": "BAY OF TONKIN",
+    "type": "sea",
+    "x": null,
+    "y": null,
+    "minZoom": 2,
+    "maxZoom": 5
+  },
+  {
+    "text": "NORTH SEA",
+    "type": "sea",
+    "x": null,
+    "y": null,
+    "minZoom": 2,
+    "maxZoom": 5
+  },
+  {
+    "text": "SARGASSUM STRAITS",
+    "type": "sea",
+    "x": null,
+    "y": null,
+    "minZoom": 2,
+    "maxZoom": 5
+  },
+  {
+    "text": "BOUSPOROS STRAIT",
+    "type": "sea",
+    "x": null,
+    "y": null,
+    "minZoom": 3,
+    "maxZoom": 6
+  },
+  {
+    "text": "NICHIRIN",
+    "type": "nation",
+    "x": null,
+    "y": null,
+    "minZoom": 2,
+    "maxZoom": 5,
+    "tier": 13
+  },
+  {
+    "text": "RUDANIA",
+    "type": "nation",
+    "x": null,
+    "y": null,
+    "minZoom": 2,
+    "maxZoom": 5,
+    "tier": 13
+  },
+  {
+    "text": "ALEMANNIA",
+    "type": "nation",
+    "x": null,
+    "y": null,
+    "minZoom": 2,
+    "maxZoom": 5,
+    "tier": 13
+  },
+  {
+    "text": "ARVERNE",
+    "type": "nation",
+    "x": null,
+    "y": null,
+    "minZoom": 2,
+    "maxZoom": 5,
+    "tier": 13
+  },
+  {
+    "text": "ELVESTER",
+    "type": "nation",
+    "x": null,
+    "y": null,
+    "minZoom": 2,
+    "maxZoom": 5,
+    "tier": 13
+  },
+  {
+    "text": "HOLLOSEND",
+    "type": "nation",
+    "x": null,
+    "y": null,
+    "minZoom": 2,
+    "maxZoom": 5,
+    "tier": 13
+  },
+  {
+    "text": "ELYSIAN STATE OF UNITY",
+    "type": "nation",
+    "x": null,
+    "y": null,
+    "minZoom": 2,
+    "maxZoom": 5,
+    "tier": 13
+  },
+  {
+    "text": "PONURVIA",
+    "type": "nation",
+    "x": null,
+    "y": null,
+    "minZoom": 2,
+    "maxZoom": 5,
+    "tier": 13
+  },
+  {
+    "text": "CALVERIA",
+    "type": "nation",
+    "x": null,
+    "y": null,
+    "minZoom": 2,
+    "maxZoom": 5,
+    "tier": 13
+  },
+  {
+    "text": "ANAHUAC",
+    "type": "nation",
+    "x": null,
+    "y": null,
+    "minZoom": 2,
+    "maxZoom": 5,
+    "tier": 13
+  },
+  {
+    "text": "VICILY",
+    "type": "nation",
+    "x": null,
+    "y": null,
+    "minZoom": 2,
+    "maxZoom": 5,
+    "tier": 13
+  },
+  {
+    "text": "SELMIRA",
+    "type": "nation",
+    "x": null,
+    "y": null,
+    "minZoom": 2,
+    "maxZoom": 5,
+    "tier": 13
+  },
+  {
+    "text": "GUANDONG",
+    "type": "nation",
+    "x": null,
+    "y": null,
+    "minZoom": 2,
+    "maxZoom": 5,
+    "tier": 13
+  },
+  {
+    "text": "FURAN",
+    "type": "nation",
+    "x": null,
+    "y": null,
+    "minZoom": 2,
+    "maxZoom": 5,
+    "tier": 13
+  },
+  {
+    "text": "SEIGNID",
+    "type": "nation",
+    "x": null,
+    "y": null,
+    "minZoom": 2,
+    "maxZoom": 5,
+    "tier": 13
+  },
+  {
+    "text": "CAHAYA",
+    "type": "nation",
+    "x": null,
+    "y": null,
+    "minZoom": 2,
+    "maxZoom": 5,
+    "tier": 13
+  },
+  {
+    "text": "ARUNYA",
+    "type": "nation",
+    "x": null,
+    "y": null,
+    "minZoom": 2,
+    "maxZoom": 5,
+    "tier": 13
+  },
+  {
+    "text": "THE VERDANIE",
+    "type": "nation",
+    "x": null,
+    "y": null,
+    "minZoom": 2,
+    "maxZoom": 5,
+    "tier": 13
+  },
+  {
+    "text": "AXERFREDITENSHIN",
+    "type": "nation",
+    "x": null,
+    "y": null,
+    "minZoom": 2,
+    "maxZoom": 5,
+    "tier": 13
+  },
+  {
+    "text": "VARAHMEHR",
+    "type": "nation",
+    "x": null,
+    "y": null,
+    "minZoom": 2,
+    "maxZoom": 5,
+    "tier": 13
+  },
+  {
+    "text": "SKJARNLAND",
+    "type": "nation",
+    "x": null,
+    "y": null,
+    "minZoom": 2,
+    "maxZoom": 5,
+    "tier": 13
+  },
+  {
+    "text": "KARJANIA",
+    "type": "nation",
+    "x": null,
+    "y": null,
+    "minZoom": 2,
+    "maxZoom": 5,
+    "tier": 13
+  },
+  {
+    "text": "REINO SIN REY",
+    "type": "nation",
+    "x": null,
+    "y": null,
+    "minZoom": 2,
+    "maxZoom": 5,
+    "tier": 13
+  },
+  {
+    "text": "LECHIA",
+    "type": "nation",
+    "x": null,
+    "y": null,
+    "minZoom": 2,
+    "maxZoom": 5,
+    "tier": 13
+  },
+  {
+    "text": "GENOSA",
+    "type": "nation",
+    "x": null,
+    "y": null,
+    "minZoom": 3,
+    "maxZoom": 6,
+    "tier": 13
+  },
+  {
+    "text": "SHIVON",
+    "type": "nation",
+    "x": null,
+    "y": null,
+    "minZoom": 3,
+    "maxZoom": 6,
+    "tier": 13
+  },
+  {
+    "text": "SIDANYA",
+    "type": "nation",
+    "x": null,
+    "y": null,
+    "minZoom": 3,
+    "maxZoom": 6,
+    "tier": 13
+  },
+  {
+    "text": "THE THORNE",
+    "type": "nation",
+    "x": null,
+    "y": null,
+    "minZoom": 3,
+    "maxZoom": 6,
+    "tier": 13
+  },
+  {
+    "text": "POLABINY",
+    "type": "nation",
+    "x": null,
+    "y": null,
+    "minZoom": 3,
+    "maxZoom": 6,
+    "tier": 13
+  },
+  {
+    "text": "EAST ASTRIYA",
+    "type": "nation",
+    "x": null,
+    "y": null,
+    "minZoom": 3,
+    "maxZoom": 6,
+    "tier": 13
+  },
+  {
+    "text": "LIVONIA",
+    "type": "nation",
+    "x": null,
+    "y": null,
+    "minZoom": 3,
+    "maxZoom": 6,
+    "tier": 13
+  },
+  {
+    "text": "MOROZIA",
+    "type": "nation",
+    "x": null,
+    "y": null,
+    "minZoom": 3,
+    "maxZoom": 6,
+    "tier": 13
+  },
+  {
+    "text": "GIATHKA",
+    "type": "nation",
+    "x": null,
+    "y": null,
+    "minZoom": 2,
+    "maxZoom": 5,
+    "tier": 13
+  },
+  {
+    "text": "PEROVSKA",
+    "type": "nation",
+    "x": null,
+    "y": null,
+    "minZoom": 3,
+    "maxZoom": 6,
+    "tier": 13
+  },
+  {
+    "text": "DIVIA",
+    "type": "colony",
+    "x": null,
+    "y": null,
+    "minZoom": 3,
+    "maxZoom": 6,
+    "tier": 13
+  },
+  {
+    "text": "KEMET",
+    "type": "colony",
+    "x": null,
+    "y": null,
+    "minZoom": 3,
+    "maxZoom": 6,
+    "tier": 13
+  },
+  {
+    "text": "NORADIA",
+    "type": "colony",
+    "x": null,
+    "y": null,
+    "minZoom": 3,
+    "maxZoom": 6,
+    "tier": 13
+  },
+  {
+    "text": "KINSHŪ",
+    "type": "colony",
+    "x": null,
+    "y": null,
+    "minZoom": 3,
+    "maxZoom": 6,
+    "tier": 13
+  },
+  {
+    "text": "HŌRAI",
+    "type": "colony",
+    "x": null,
+    "y": null,
+    "minZoom": 3,
+    "maxZoom": 6,
+    "tier": 13
+  },
+  {
+    "text": "BARBARY",
+    "type": "colony",
+    "x": null,
+    "y": null,
+    "minZoom": 3,
+    "maxZoom": 6,
+    "tier": 13
+  },
+  {
+    "text": "WEST BANGALA",
+    "type": "colony",
+    "x": null,
+    "y": null,
+    "minZoom": 3,
+    "maxZoom": 6,
+    "tier": 13
+  },
+  {
+    "text": "NORTH APHIRICA",
+    "type": "colony",
+    "x": null,
+    "y": null,
+    "minZoom": 3,
+    "maxZoom": 6,
+    "tier": 13
+  },
+  {
+    "text": "SOUTH PELAGONIA",
+    "type": "colony",
+    "x": null,
+    "y": null,
+    "minZoom": 3,
+    "maxZoom": 6,
+    "tier": 13
+  },
+  {
+    "text": "TONKIN",
+    "type": "colony",
+    "x": null,
+    "y": null,
+    "minZoom": 3,
+    "maxZoom": 6,
+    "tier": 13
+  },
+  {
+    "text": "KOGELLAND",
+    "type": "colony",
+    "x": null,
+    "y": null,
+    "minZoom": 3,
+    "maxZoom": 6,
+    "tier": 13
+  },
+  {
+    "text": "NEUHOLLMAR",
+    "type": "colony",
+    "x": null,
+    "y": null,
+    "minZoom": 3,
+    "maxZoom": 6,
+    "tier": 13
+  },
+  {
+    "text": "COSTASERÁ",
+    "type": "colony",
+    "x": null,
+    "y": null,
+    "minZoom": 3,
+    "maxZoom": 6,
+    "tier": 13
+  },
+  {
+    "text": "EAST KAUKASOS",
+    "type": "colony",
+    "x": null,
+    "y": null,
+    "minZoom": 3,
+    "maxZoom": 6,
+    "tier": 13
+  },
+  {
+    "text": "THULE",
+    "type": "colony",
+    "x": null,
+    "y": null,
+    "minZoom": 3,
+    "maxZoom": 6,
+    "tier": 13
+  },
+  {
+    "text": "RYŪGU",
+    "type": "colony",
+    "x": null,
+    "y": null,
+    "minZoom": 3,
+    "maxZoom": 6,
+    "tier": 13
+  },
+  {
+    "text": "MIZUHO",
+    "type": "colony",
+    "x": null,
+    "y": null,
+    "minZoom": 3,
+    "maxZoom": 6,
+    "tier": 13
+  }
+]

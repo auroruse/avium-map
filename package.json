@@ -1,0 +1,27 @@
+{
+  "name": "avium-map",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "tile": "node scripts/tile.mjs",
+    "merge": "node scripts/merge-tsv.mjs",
+    "parse-cities": "node scripts/parse-cities.mjs"
+  },
+  "dependencies": {
+    "leaflet": "^1.9.4"
+  },
+  "devDependencies": {
+    "@types/leaflet": "^1.9.12",
+    "sharp": "^0.33.0",
+    "typescript": "^5.6.0",
+    "vite": "^6.0.0"
+  },
+  "allowScripts": {
+    "esbuild@0.25.12": true,
+    "sharp@0.33.5": true
+  }
+}

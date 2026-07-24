@@ -1,0 +1,585 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+  background: #2d4a5e;
+}
+
+.leaflet-image-layer {
+  will-change: transform;
+}
+
+/* Text labels */
+.map-label {
+  white-space: nowrap;
+  text-shadow:
+    -1px -1px 2px rgba(0,0,0,0.8),
+    1px -1px 2px rgba(0,0,0,0.8),
+    -1px 1px 2px rgba(0,0,0,0.8),
+    1px 1px 2px rgba(0,0,0,0.8);
+  pointer-events: none !important;
+  font-family: 'SF Pro Display', 'SF UI Display', -apple-system, system-ui, sans-serif;
+  transition: opacity 0.2s;
+}
+
+/* Anchor labels at their center, not top-left */
+.map-label span {
+  display: inline-block;
+  transform: translate(-50%, -50%);
+}
+
+.label-ocean {
+  color: #7ca8c4;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 10px;
+  text-transform: uppercase;
+  font-style: italic;
+}
+
+.label-sea {
+  color: #6898b4;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  font-style: italic;
+}
+
+/* City tooltips */
+.city-label {
+  animation: city-fade 0.15s ease-out;
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: #fff !important;
+  font-family: 'SF Pro Text', 'SF UI Text', -apple-system, system-ui, sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 400;
+  text-shadow:
+    -1px -1px 2px rgba(0,0,0,0.9),
+    1px -1px 2px rgba(0,0,0,0.9),
+    -1px 1px 2px rgba(0,0,0,0.9),
+    1px 1px 2px rgba(0,0,0,0.9);
+  padding: 0 !important;
+  margin: 0 !important;
+  white-space: nowrap;
+}
+
+.city-fs-5  { font-size: 5px !important; }
+.city-fs-6  { font-size: 6px !important; }
+.city-fs-7  { font-size: 7px !important; }
+.city-fs-8  { font-size: 8px !important; }
+.city-fs-9  { font-size: 9px !important; }
+.city-fs-10 { font-size: 10px !important; }
+.city-fs-11 { font-size: 11px !important; }
+.city-fs-12 { font-size: 12px !important; }
+.city-fs-13 { font-size: 13px !important; }
+
+.city-label::before {
+  display: none;
+}
+
+/* City marker icons (dot SVG + label span in one element) */
+.city-icon {
+  background: none !important;
+  border: none !important;
+  animation: city-fade 0.15s ease-out;
+}
+
+/* Re-added by viewport culling or zoom-out: appear instantly, no fade */
+.city-icon-still {
+  animation: none;
+}
+
+.city-icon svg {
+  display: block;
+}
+
+.city-icon .city-label {
+  position: absolute;
+  transform: translateY(-50%);
+}
+
+@keyframes city-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* City info panel (Apple Maps style) */
+#city-panel {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+  width: 300px;
+  z-index: 1100;
+  background: rgba(24, 27, 29, 0.82);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 14px;
+  box-shadow: 0 10px 36px rgba(0,0,0,0.5);
+  padding: 18px 18px 16px;
+  color: #fff;
+  font-family: -apple-system, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
+  /* Apple sheet curve: rises with momentum, settles softly */
+  animation: cp-in 0.32s cubic-bezier(0.32, 0.72, 0, 1);
+  transform-origin: bottom left;
+}
+
+@keyframes cp-in {
+  from { opacity: 0; transform: translateY(18px) scale(0.96); }
+  to { opacity: 1; transform: none; }
+}
+
+#city-panel.cp-closing {
+  animation: cp-out 0.22s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+}
+
+@keyframes cp-out {
+  from { opacity: 1; transform: none; }
+  to { opacity: 0; transform: translateY(18px) scale(0.96); }
+}
+
+.cp-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  color: #c6cacd;
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cp-close:hover {
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+}
+
+.cp-name {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  padding-right: 34px;
+  line-height: 1.15;
+}
+
+.cp-native {
+  font-size: 15px;
+  color: #9aa0a5;
+  margin-top: 2px;
+}
+
+.cp-stats {
+  margin-top: 14px;
+  padding-top: 13px;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 13px 16px;
+}
+
+.cp-wide {
+  grid-column: 1 / -1;
+}
+
+.cp-label {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #8b9096;
+  margin-bottom: 3px;
+}
+
+.cp-value {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.cp-sub {
+  font-size: 13px;
+  font-weight: 400;
+  color: #9aa0a5;
+}
+
+.cp-rank {
+  font-size: 11px;
+  font-weight: 500;
+  color: #8b9096;
+  margin-left: 4px;
+}
+
+/* Coordinate display (dev) — bottom-right, clear of the city panel */
+.coord-display {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: 1000;
+  background: rgba(24, 27, 29, 0.82);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid rgba(255,255,255,0.09);
+  color: #fff;
+  padding: 5px 12px;
+  font-family: 'SF Mono', 'Consolas', monospace;
+  font-size: 12px;
+  border-radius: 10px;
+}
+
+/* Dev placement panel — Apple frosted glass */
+#place-panel {
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  background: rgba(24, 27, 29, 0.82);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 14px;
+  box-shadow: 0 10px 36px rgba(0,0,0,0.5);
+  padding: 10px 12px 8px;
+  width: 300px;
+  font-family: -apple-system, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
+  color: #fff;
+  max-height: calc(100vh - 20px);
+  overflow-y: auto;
+}
+
+.pp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+
+.pp-title {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.pp-count {
+  font-size: 11px;
+  font-weight: 500;
+  color: #8b9096;
+}
+
+.pp-search-row {
+  margin-bottom: 4px;
+}
+
+#place-search {
+  width: 100%;
+  box-sizing: border-box;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 8px;
+  padding: 6px 10px;
+  color: #fff;
+  font-size: 12px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+#place-search:focus {
+  border-color: rgba(100,180,255,0.4);
+}
+
+#place-search::placeholder {
+  color: #6b7075;
+}
+
+#place-results {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+#place-results li {
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#place-results li:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+#place-results li.placed {
+  opacity: 0.45;
+}
+
+.result-name {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.result-meta {
+  font-size: 10px;
+  color: #8b9096;
+}
+
+#place-status {
+  font-size: 11px;
+  margin-top: 2px;
+  min-height: 14px;
+  font-weight: 500;
+}
+
+.status-active {
+  color: #64a0ff;
+}
+
+.status-done {
+  color: #34c759;
+}
+
+.pp-toolbar {
+  display: flex;
+  gap: 4px;
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  flex-wrap: wrap;
+}
+
+.pp-toolbar button,
+.pp-tool-btn {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 500;
+  font-family: inherit;
+  transition: background 0.15s;
+  display: inline-flex;
+  align-items: center;
+}
+
+.pp-toolbar button:hover,
+.pp-tool-btn:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+#tsv-paste {
+  width: 100%;
+  box-sizing: border-box;
+  height: 100px;
+  margin-top: 8px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 10px;
+  padding: 8px 12px;
+  color: #fff;
+  font-size: 11px;
+  font-family: 'SF Mono', 'Consolas', monospace;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+#tsv-paste:focus {
+  border-color: rgba(100,180,255,0.4);
+}
+
+#unassigned-panel {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  background: rgba(24, 27, 29, 0.82);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 14px;
+  box-shadow: 0 10px 36px rgba(0,0,0,0.5);
+  padding: 8px 12px;
+  width: 300px;
+  font-family: -apple-system, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
+  color: #fff;
+}
+
+.pp-section-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #8b9096;
+  margin-bottom: 4px;
+}
+
+#unassigned-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 144px;
+  overflow-y: auto;
+}
+
+#unassigned-list li {
+  padding: 3px 8px;
+  cursor: pointer;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#unassigned-list li:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+#unassigned-list .result-name {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+#unassigned-list .result-meta {
+  font-size: 10px;
+  color: #8b9096;
+}
+
+/* Layer control — Apple-style frosted card, same height as zoom buttons */
+.leaflet-control-layers {
+  background: rgba(24, 27, 29, 0.82) !important;
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid rgba(255,255,255,0.09) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 36px rgba(0,0,0,0.5) !important;
+  color: #fff !important;
+  font-family: -apple-system, 'SF Pro Text', 'SF Pro Display', system-ui, sans-serif;
+}
+
+.leaflet-control-layers-expanded {
+  padding: 0 !important;
+}
+
+.leaflet-control-layers-overlays label {
+  margin: 0;
+  padding: 0 12px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  color: #fff !important;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.leaflet-control-layers-overlays label + label {
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+/* Row: name left, switch right */
+.leaflet-control-layers-overlays label > span {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* iOS-style switch */
+.leaflet-control-layers-selector {
+  appearance: none;
+  -webkit-appearance: none;
+  flex: none;
+  width: 34px;
+  height: 21px;
+  border-radius: 11px;
+  background: rgba(120,120,128,0.4);
+  position: relative;
+  top: 0 !important;
+  margin: 0;
+  cursor: pointer;
+  transition: background 0.22s;
+}
+
+.leaflet-control-layers-selector::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1.5px 4px rgba(0,0,0,0.35);
+  transition: transform 0.22s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.leaflet-control-layers-selector:checked {
+  background: #34c759;
+}
+
+.leaflet-control-layers-selector:checked::after {
+  transform: translateX(13px);
+}
+
+.leaflet-control-layers-separator {
+  border-top-color: rgba(255,255,255,0.08) !important;
+}
+
+/* Kill attribution watermark */
+.leaflet-control-attribution {
+  display: none !important;
+}
+
+/* Zoom controls — frosted glass to match layer card */
+.leaflet-control-zoom {
+  background: rgba(24, 27, 29, 0.82) !important;
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid rgba(255,255,255,0.09) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 36px rgba(0,0,0,0.5) !important;
+  overflow: hidden;
+}
+
+.leaflet-control-zoom a {
+  background: transparent !important;
+  color: #fff !important;
+  border: none !important;
+  width: 36px !important;
+  height: 36px !important;
+  line-height: 36px !important;
+  font-size: 18px !important;
+  font-weight: 300;
+  font-family: -apple-system, 'SF Pro Display', system-ui, sans-serif;
+}
+
+.leaflet-control-zoom a:hover {
+  background: rgba(255,255,255,0.12) !important;
+}
+
+.leaflet-control-zoom-in {
+  border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+}

@@ -1,0 +1,5 @@
+node_modules/
+dist/
+layers/*.png
+layers/*.PNG
+.DS_Store

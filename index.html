@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avium</title>
+</head>
+<body>
+  <div id="map"></div>
+  <div id="place-panel">
+    <div class="pp-header">
+      <span class="pp-title">City Placer</span>
+      <span id="place-count" class="pp-count"></span>
+    </div>
+    <div class="pp-search-row">
+      <input id="place-search" type="text" placeholder="Search cities..." autocomplete="off">
+    </div>
+    <ul id="place-results"></ul>
+    <div id="place-status"></div>
+    <div class="pp-toolbar">
+      <button id="place-undo" title="Undo last placement">Undo</button>
+      <button id="place-export" title="Export cities JSON">Export</button>
+      <button id="place-export-labels" title="Export labels JSON">Labels</button>
+      <label class="pp-tool-btn" title="Import JSON">Import<input id="place-import" type="file" accept=".json" hidden></label>
+      <button id="tsv-toggle" title="Paste TSV">TSV</button>
+    </div>
+    <textarea id="tsv-paste" placeholder="Paste TSV here (tab-separated, first row = headers)&#10;Cmd+Enter to import" hidden></textarea>
+  </div>
+  <div id="unassigned-panel">
+    <div class="pp-section-label" id="unassigned-header"></div>
+    <ul id="unassigned-list"></ul>
+  </div>
+  <div class="coord-display">Move mouse over map</div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
