@@ -31,11 +31,11 @@ export const talopedia: Record<string, TalopediaEntry> = {
   },
   Pietari: {
     url: 'https://docs.google.com/document/d/18AwkLg4Fk67j4VRFQnVjYUFNoXEQdLjA0vYUnpPZn-c/edit',
-    about: `Pietari (Pietari) [ˈpie̯tɑri] is the capital and most populous city of the United Socialist States of Karjania. It is located on the shore of the Laatokka and Inkeri Lakes in northern Evria, where it's one of the region's largest cities. Its population exceeds 5 million, it's also the economic and cultural center of Karjania. Pietari doesn't belong to any subdivisions, its main administrative body is the Pietari City Council. Pietari has 5 football stadiums, a university, the largest square in Karjania and is the location where the Karjanian Communist Congress is held. It's also one of the historical centres of the traditional Routanmaa region, the most populated region in Karjania.`,
+    about: `Pietari is the capital and most populous city of the United Socialist States of Karjania. It is located on the shore of the Laatokka and Inkeri Lakes in northern Evria, where it's one of the region's largest cities. Its population exceeds 5 million, it's also the economic and cultural center of Karjania. Pietari doesn't belong to any subdivisions, its main administrative body is the Pietari City Council. Pietari has 5 football stadiums, a university, the largest square in Karjania and is the location where the Karjanian Communist Congress is held. It's also one of the historical centres of the traditional Routanmaa region, the most populated region in Karjania.`,
   },
   Shinkeisei: {
     url: 'https://docs.google.com/document/d/1t4Keh33LsXlkO_XV-ZZTi8puPdWctH1gO-PICYg6NqM/edit',
-    about: `Shinkeisei (新恵星, shin-KAY-say) is the capital of Nichirin. Located at the head of Senpan Bay, it is the second most populous city in the world, with an urban population of over 36 million in 1929. The city sits at the confluence of three major rivers (the Sanzu, Kasuhara, and Hinode), whose convergence creates a massive natural harbor that serves as both the headquarters of the Shogunate Navy and the second-largest commercial port in Nichirin after Takarazuka.`,
+    about: `Shinkeisei is the capital of Nichirin. Located at the head of Senpan Bay, it is the second most populous city in the world, with an urban population of over 36 million in 1929. The city sits at the confluence of three major rivers (the Sanzu, Kasuhara, and Hinode), whose convergence creates a massive natural harbor that serves as both the headquarters of the Shogunate Navy and the second-largest commercial port in Nichirin after Takarazuka.`,
   },
   Takarazuka: {
     url: 'https://docs.google.com/document/d/1-bQViyEqRaqKBjwBc8T6AdZ92H-LJLIKmXlo2kOhwqQ/edit',
