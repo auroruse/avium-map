@@ -91,8 +91,15 @@ html, body {
   --track: 0.08em;
 }
 
-/* Dev only: .map-label kills pointer events with !important, so re-enabling
-   them takes the same weight. Ties on specificity, wins on source order. */
+/* A territory name that opens its nation panel. .map-label kills pointer events
+   with !important, so re-enabling them takes the same weight. A faded-out label
+   is visibility: hidden, which keeps it out of hit-testing on its own. */
+.label-link {
+  pointer-events: auto !important;
+  cursor: pointer;
+}
+
+/* Dev only: same trick, for dragging and resizing instead. */
 .dev-label {
   pointer-events: auto !important;
   cursor: grab;

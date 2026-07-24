@@ -255,17 +255,25 @@ function makeLabelMarker(def: LabelDef, pos: [number, number]): L.Marker {
   const handles = DEV
     ? ['nw', 'ne', 'sw', 'se'].map(c => `<i class="lh lh-${c}"></i>`).join('')
     : ''
-  return L.marker(px(pos[0], pos[1]), {
+  // Every nation and colony in nations.tsv has a panel to open. Continents,
+  // oceans and seas have no entry there, so they stay inert rather than
+  // offering a click that does nothing. Dev keeps the label for editing.
+  const nation = DEV ? undefined : nationByName.get(norm(def.text))
+  const m = L.marker(px(pos[0], pos[1]), {
     icon: L.divIcon({
-      className: `map-label label-${def.type}${DEV ? ' dev-label' : ''}`,
+      className: `map-label label-${def.type}` + (DEV ? ' dev-label' : nation ? ' label-link' : ''),
       html: `<span>${def.text}${handles}</span>`,
       iconSize: [0, 0],
       iconAnchor: [0, 0],
     }),
-    interactive: DEV,
+    interactive: DEV || !!nation,
     draggable: DEV,
+    // Under the city markers: a city dot sitting on a name is the smaller
+    // target and the more specific answer, so it wins the click
     zIndexOffset: -1000,
   })
+  if (nation) m.on('click', () => openNationPanel(nation))
+  return m
 }
 
 // Dev editing: drag to move, wheel to resize. Both write straight onto the
