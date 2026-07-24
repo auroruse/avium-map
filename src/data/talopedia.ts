@@ -35,7 +35,7 @@ export const talopedia: Record<string, TalopediaEntry> = {
   },
   Shinkeisei: {
     url: 'https://docs.google.com/document/d/1t4Keh33LsXlkO_XV-ZZTi8puPdWctH1gO-PICYg6NqM/edit',
-    about: `Shinkeisei is the capital of Nichirin. Located at the head of Senpan Bay, it is the second most populous city in the world, with an urban population of over 36 million in 1929. The city sits at the confluence of three major rivers (the Sanzu, Kasuhara, and Hinode), whose convergence creates a massive natural harbor that serves as both the headquarters of the Shogunate Navy and the second-largest commercial port in Nichirin after Takarazuka.`,
+    about: `Shinkeisei is the capital of Nichirin and, with an urban population of over 36 million in 1929, the second most populous city in the world. At the head of Senpan Bay, the Sanzu, Kasuhara, and Hinode meet in a natural harbor that holds the headquarters of the Shogunate Navy and Nichirin's second-largest commercial port after Takarazuka. Its GDP PPP exceeds $2.5 trillion, roughly 19.8% of national output and the world's largest metropolitan economy. The city is a Specially Administered Region governed directly by the Bakufu rather than through the prefectural system, its 94 wards answering to the Shinkeisei Metropolitan Council and a Governor appointed by the Shogun. Among them are Shiomachi, the seat of Shogunal power; Kōgai, a renowned district of upscale shopping and entertainment; and Sōtenroku, a Kaiseido shrine quarter at the foot of Mount Sōten.`,
   },
   Takarazuka: {
     url: 'https://docs.google.com/document/d/1-bQViyEqRaqKBjwBc8T6AdZ92H-LJLIKmXlo2kOhwqQ/edit',
