@@ -844,6 +844,7 @@ function updateCount() {
 }
 
 function updateUnassigned() {
+  if (!DEV) return
   const unplaced = citiesByPriority.filter(c => c.x == null || c.y == null)
   unassignedHeader.textContent = `Unassigned (${unplaced.length})`
   if (!unplaced.length) {
