@@ -4,6 +4,7 @@ import './style.css'
 import citiesData from './data/cities.json'
 import labelsData from './data/labels.json'
 import nationsTsv from './data/nations.tsv?raw'
+import { talopedia, type TalopediaEntry } from './data/talopedia'
 
 // --- Dev mode ---
 
@@ -613,64 +614,66 @@ function fmtRank(n: number): string {
   return ` <span class="cp-rank">#${n}</span>`
 }
 
-// Banner images: drop Name.png/jpg into public/cities/ (diacritics optional).
-// No manifest — candidate URLs are probed on first open and the verdict cached.
-let panelToken = 0
-const bannerCache = new Map<string, string | null>()
-
-function bannerCandidates(name: string): string[] {
-  const stripped = name.normalize('NFD').replace(/[̀-ͯ]/g, '')
-  const names = stripped === name ? [name] : [name, stripped]
-  const urls: string[] = []
-  for (const n of names) {
-    for (const ext of ['png', 'jpg', 'jpeg', 'PNG', 'JPG', 'JPEG']) {
-      urls.push(`cities/${encodeURIComponent(n)}.${ext}`)
-    }
-  }
-  return urls
+// Banner images: drop Name.png/jpg/jpeg into src/assets/cities/. Vite resolves
+// the whole set at build time, so a lookup is a Map hit — the old approach
+// probed up to six candidate URLs per open and missed on nearly every city.
+// Keys are norm()'d, so file and city names need not agree on diacritics.
+const banners = new Map<string, string>()
+for (const [path, url] of Object.entries(
+  import.meta.glob('./assets/cities/*.{png,jpg,jpeg,PNG,JPG,JPEG}', {
+    eager: true,
+    query: '?url',
+    import: 'default',
+  }) as Record<string, string>
+)) {
+  banners.set(norm(path.slice(path.lastIndexOf('/') + 1).replace(/\.[^.]+$/, '')), url)
 }
 
-function loadBanner(name: string, token: number) {
+const talopediaByCity = new Map<string, TalopediaEntry>()
+for (const [name, entry] of Object.entries(talopedia)) talopediaByCity.set(norm(name), entry)
+
+// Blurbs are pasted prose, so they carry apostrophes and ampersands that would
+// otherwise break out of the template string
+function esc(s: string): string {
+  return s.replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[ch]!)
+}
+
+// Both maps are keyed on bare names, but a city may carry a ", XX" suffix
+function byCityName<T>(m: Map<string, T>, name: string): T | undefined {
+  return m.get(norm(name)) ?? m.get(norm(name.replace(/,\s*[A-Z]{2,4}$/, '')))
+}
+
+function loadBanner(name: string) {
   const holder = cityPanel.querySelector('.cp-banner') as HTMLElement
   const img = holder.querySelector('img') as HTMLImageElement
-  const cached = bannerCache.get(name)
-  if (cached === null) return
-  if (cached) {
-    img.src = cached
-    holder.classList.add('cp-banner-show')
-    return
-  }
-  const urls = bannerCandidates(name)
-  let i = 0
-  const tryNext = () => {
-    if (token !== panelToken) return
-    if (i >= urls.length) {
-      bannerCache.set(name, null)
-      return
-    }
-    const url = urls[i++]
-    const probe = new Image()
-    probe.onload = () => {
-      bannerCache.set(name, url)
-      if (token !== panelToken) return
-      img.src = url
-      holder.classList.add('cp-banner-show')
-    }
-    probe.onerror = tryNext
-    probe.src = url
-  }
-  tryNext()
+  const url = byCityName(banners, name)
+  if (!url) return
+  img.src = url
+  holder.classList.add('cp-banner-show')
+}
+
+// The blurb is clamped to a few lines; the toggle only appears when there is
+// actually something hidden, which can only be known once the panel is laid out
+function wireAboutToggle() {
+  const text = cityPanel.querySelector('.cp-about-text') as HTMLElement | null
+  const btn = cityPanel.querySelector('.cp-more') as HTMLButtonElement | null
+  if (!text || !btn || text.scrollHeight <= text.clientHeight + 1) return
+  btn.hidden = false
+  btn.addEventListener('click', () => {
+    const open = text.classList.toggle('cp-about-open')
+    btn.textContent = open ? 'Less' : 'More'
+  })
 }
 
 function openCityPanel(c: City) {
   if (measuring) return
-  const token = ++panelToken
   const wasOpen = !cityPanel.hidden
   const displayName = c.name.replace(/,\s*[A-Z]{2,4}$/, '')
   const popRank = cityRank(c, 'population')
   const gdpRank = cityRank(c, 'gdp')
   const pcRank = cityRank(c, 'gdpPerCapita')
   const nat = nationByName.get(norm(c.nation))
+  const wiki = byCityName(talopediaByCity, c.name)
   cityPanel.innerHTML =
     `<div class="cp-banner"><img alt=""></div>` +
     `<button class="cp-close" aria-label="Close">✕</button>` +
@@ -680,18 +683,28 @@ function openCityPanel(c: City) {
     `<div class="cp-stat"><div class="cp-label">Nation</div><div class="cp-value${nat ? ' cp-link' : ''}">${c.nation}${c.alpha3 ? ` <span class="cp-sub">(${c.alpha3})</span>` : ''}</div></div>` +
     (c.irlParallel ? `<div class="cp-stat"><div class="cp-label">IRL Parallel</div><div class="cp-value">${c.irlParallel}</div></div>` : '') +
     `<div class="cp-stat cp-wide"><div class="cp-label">Population</div><div class="cp-value">${c.population.toLocaleString('en-US')}${fmtRank(popRank)}</div></div>` +
-    `<div class="cp-stat cp-wide"><div class="cp-label">GDP PPP</div><div class="cp-value">${fmtUSD(c.gdp)}${fmtRank(gdpRank)}</div></div>` +
-    `<div class="cp-stat cp-wide"><div class="cp-label">Per Capita</div><div class="cp-value">${fmtUSD(c.gdpPerCapita)}${fmtRank(pcRank)}</div></div>` +
-    `</div>`
+    `<div class="cp-stat"><div class="cp-label">GDP PPP</div><div class="cp-value">${fmtUSD(c.gdp)}${fmtRank(gdpRank)}</div></div>` +
+    `<div class="cp-stat"><div class="cp-label">Per Capita</div><div class="cp-value">${fmtUSD(c.gdpPerCapita)}${fmtRank(pcRank)}</div></div>` +
+    `</div>` +
+    (wiki?.about
+      ? `<div class="cp-label cp-about-head">About</div>` +
+        `<div class="cp-about"><p class="cp-about-text">${esc(wiki.about)}</p>` +
+        `<button class="cp-more" hidden>More</button></div>`
+      : '') +
+    (wiki
+      ? `<a class="cp-source" href="${wiki.url}" target="_blank" rel="noopener noreferrer">More on <span>the Talopedia</span></a>`
+      : '')
   cityPanel.classList.remove('cp-closing')
   cityPanel.hidden = false
   if (wasOpen) replayAnim(cityPanel, 'cp-swap')
   cityPanel.querySelector('.cp-close')!.addEventListener('click', closeCityPanel)
   if (nat) cityPanel.querySelector('.cp-link')!.addEventListener('click', () => openNationPanel(nat))
+  wireAboutToggle()
   hideSheet()
   openCityName = c.name
+  openNationName = null
   syncHash()
-  loadBanner(c.name, token)
+  loadBanner(c.name)
 }
 
 // --- Nation info panel ---
@@ -716,9 +729,9 @@ function nationRank(n: Nation, field: NationStatField): number {
 
 function openNationPanel(n: Nation) {
   if (measuring) return
-  const token = ++panelToken
   const wasOpen = !cityPanel.hidden
-  const urban = mapAggFor(n).pop
+  const agg = mapAggFor(n)
+  const urban = agg.pop
   const rural = Math.max(0, n.population - urban)
   cityPanel.innerHTML =
     `<div class="cp-banner"><img alt=""></div>` +
@@ -740,15 +753,23 @@ function openNationPanel(n: Nation) {
     (n.hdi ? `<div class="cp-stat"><div class="cp-label">HDI</div><div class="cp-value">${n.hdi.toFixed(3)}${fmtRank(nationRank(n, 'hdi'))}</div></div>` : '') +
     (n.lifeExpectancy ? `<div class="cp-stat"><div class="cp-label">Life Expectancy</div><div class="cp-value">${n.lifeExpectancy.toFixed(1)}${fmtRank(nationRank(n, 'lifeExpectancy'))}</div></div>` : '') +
     (n.literacy ? `<div class="cp-stat"><div class="cp-label">Literacy</div><div class="cp-value">${n.literacy.toFixed(1)}%${fmtRank(nationRank(n, 'literacy'))}</div></div>` : '') +
-    `</div>`
+    `</div>` +
+    (agg.count
+      ? `<button class="cp-action">View ${agg.count} ${agg.count === 1 ? 'city' : 'cities'}</button>`
+      : '')
   cityPanel.classList.remove('cp-closing')
   cityPanel.hidden = false
   if (wasOpen) replayAnim(cityPanel, 'cp-swap')
   cityPanel.querySelector('.cp-close')!.addEventListener('click', closeCityPanel)
+  cityPanel.querySelector('.cp-action')?.addEventListener('click', () => {
+    closeCityPanel()
+    openListView('cities', n.name)
+  })
   hideSheet()
   openCityName = null
+  openNationName = n.name
   syncHash()
-  loadBanner(n.name, token)
+  loadBanner(n.name)
 }
 
 function closeCityPanel() {
@@ -759,6 +780,7 @@ function closeCityPanel() {
     cityPanel.classList.remove('cp-closing')
     cityPanel.hidden = true
     openCityName = null
+    openNationName = null
     syncHash()
     showSheet()
   }, { once: true })
@@ -1277,9 +1299,12 @@ function goCity(c: City) {
 }
 
 // Home search
+let searchSel = -1
+
 bsSearch.addEventListener('input', () => {
   const q = norm(bsSearch.value.trim())
   bsResults.innerHTML = ''
+  searchSel = -1
   if (q.length < 2) return
   const matches = idx().filter(e => e.n.includes(q) || e.nat.includes(q)).slice(0, 10)
   for (const { c } of matches) {
@@ -1288,6 +1313,31 @@ bsSearch.addEventListener('input', () => {
       `<span class="bs-cnation">${c.nation} · ${fmtCompact(c.population)}</span>`
     li.addEventListener('click', () => goCity(c))
     bsResults.appendChild(li)
+  }
+})
+
+// Arrow keys walk the results; Enter opens the highlighted one (or the first,
+// so a fast typist can hit Enter without arrowing down first)
+function moveSearchSel(d: number) {
+  const items = bsResults.children
+  if (!items.length) return
+  items[searchSel]?.classList.remove('sel')
+  searchSel = (searchSel + d + items.length) % items.length
+  const el = items[searchSel] as HTMLElement
+  el.classList.add('sel')
+  el.scrollIntoView({ block: 'nearest' })
+}
+
+bsSearch.addEventListener('keydown', e => {
+  if (e.key === 'ArrowDown') {
+    e.preventDefault()
+    moveSearchSel(1)
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault()
+    moveSearchSel(-1)
+  } else if (e.key === 'Enter' && bsResults.children.length) {
+    e.preventDefault()
+    ;(bsResults.children[Math.max(searchSel, 0)] as HTMLElement).click()
   }
 })
 
@@ -1330,7 +1380,7 @@ function renderMoreRows() {
     const c = listRows[i]
     const li = document.createElement('li')
     li.innerHTML =
-      (rm ? `<span class="bs-rank">${rm.get(c)}</span>` : '') +
+      `<span class="bs-rank">${rm ? rm.get(c) : ''}</span>` +
       `<span class="bs-cinfo"><span class="bs-cname">${c.name}</span><span class="bs-cnation">${c.nation}</span></span>` +
       `<span class="bs-cstat">${statText(c)}</span>`
     li.addEventListener('click', () => goCity(c))
@@ -1410,7 +1460,7 @@ function renderNations(q: string) {
     const pctText = pct >= 0.1 ? pct.toFixed(1) + '%' : '<0.1%'
     const li = document.createElement('li')
     li.innerHTML =
-      (rm ? `<span class="bs-rank">${rm.get(n)}</span>` : '') +
+      `<span class="bs-rank">${rm ? rm.get(n) : ''}</span>` +
       `<span class="bs-cinfo"><span class="bs-cname">${n.name}</span><span class="bs-cnation">${agg.count} ${agg.count === 1 ? 'city' : 'cities'} · ${pctText} of world GDP</span></span>` +
       `<span class="bs-cstat">${nationStatText(n)}</span>`
     li.addEventListener('click', () => flyToNation(n))
@@ -1459,10 +1509,10 @@ for (const chip of sortChips) {
   })
 }
 
-function openListView(mode: 'cities' | 'nations') {
+function openListView(mode: 'cities' | 'nations', filter = '') {
   listMode = mode
   bsTitle.textContent = mode === 'nations' ? 'Nations' : 'Cities'
-  bsFilter.value = ''
+  bsFilter.value = filter
   bsFilter.placeholder = 'Search'
   if (mode === 'nations') {
     sortField = 'population'
@@ -1487,11 +1537,14 @@ document.getElementById('bs-back')!.addEventListener('click', closeSheetList)
 // --- Share view (permalink) ---
 
 let openCityName: string | null = null
+let openNationName: string | null = null
 
 function syncHash() {
   let h: string
   if (openCityName) {
     h = 'city=' + encodeURIComponent(openCityName)
+  } else if (openNationName) {
+    h = 'nation=' + encodeURIComponent(openNationName)
   } else {
     const [cx, cy] = toPx(map.getCenter())
     h = `${map.getZoom()}/${cx}/${cy}`
@@ -1620,7 +1673,7 @@ document.getElementById('measure-clear')!.addEventListener('click', () => {
 
 document.getElementById('measure-done')!.addEventListener('click', endMeasure)
 
-// --- Deep links: #city=Name or #zoom/x/y ---
+// --- Deep links: #city=Name, #nation=Name, or #zoom/x/y ---
 
 {
   const h = decodeURIComponent(location.hash.slice(1))
@@ -1630,6 +1683,13 @@ document.getElementById('measure-done')!.addEventListener('click', endMeasure)
     if (c) {
       if (c.x != null && c.y != null) map.setView(px(c.x, c.y), Math.max(map.getZoom(), 4))
       openCityPanel(c)
+    }
+  } else if (h.startsWith('nation=')) {
+    const n = nationByName.get(norm(h.slice(7)))
+    if (n) {
+      const pts = mapAggFor(n).pts
+      if (pts.length) map.fitBounds(L.latLngBounds(pts).pad(0.2), { maxZoom: 5 })
+      openNationPanel(n)
     }
   } else {
     const m = h.match(/^(\d+(?:\.\d+)?)\/(-?\d+)\/(-?\d+)$/)

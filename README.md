@@ -17,7 +17,11 @@ Interactive world map built for [Avium](https://www.nationstates.net/page=dispat
 - Collision-aware label placement with spatial indexing
 - Cities appear progressively as you zoom in (5M+ first, then 1M+, then all)
 - Click any city for an info panel showing population, GDP PPP, per capita, rankings, and IRL parallel
-- Accent-insensitive search
+- City banner images: drop `CityName.png`/`.jpg` into `src/assets/cities/` (diacritics optional) and it appears atop the city card, then run `node scripts/optimize-banners.mjs` to downscale it
+- Talopedia links and overview blurbs per city, listed in `src/data/talopedia.ts`
+- Nation panels with urban/rural population split, aggregate stats, and a jump to that nation's cities
+- Bottom sheet with search, a sortable all-cities browser, a nation index with aggregate stats, shareable view/city/nation permalinks, and a multi-point distance measure tool
+- Accent-insensitive search, with arrow-key navigation through results
 
 ### Developer Mode
 - Append `?dev` to the URL to enter placement mode

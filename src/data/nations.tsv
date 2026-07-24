@@ -1,0 +1,74 @@
+RANK	COMMON NAME	OFFICIAL NAME	POPULATION	GDP PPP ($)	REAL GDP P/C ($)	LIFE EXPECTANCY	LITERACY RATE	HDI	POP. GROWTH %	ALPHA-3 CODE	STATUS	EXPANSION POINTS	CONTINENT
+1	Alemannia	Alemannian Confederation	157,800,000	9,640,000,000,000	61,090	56.6	92.6%	0.796	0.83	ALE	Active	6	Evria
+2	Divia	Bundesprotektorat Divia	80,282,000	622,009,512,000	7,748	36.2	12.3%	0.272	1.20	ALE	Colony	0	Evria
+3	Neuhollmar	Bundesprotektorat Neuhollmar	4,453,000	195,053,525,000	43,803	51.0	92.4%	0.740	1.40	ALE	Colony	0	Pelagonia
+4	Dämmerung Islands	Bundesprotektorat Dammerung-Inseln	1,951,000	127,980,000,000	65,597	54.6	77.3%	0.739	3.36	ALE	Colony	0	Elysia
+5	Kogelland	Bundesprotektorat Kogelland	4,871,000	78,425,879,000	16,101	41.0	39.0%	0.459	2.50	ALE	Colony	0	Pelagonia
+6	Sankt Gerold Island	Bundesprotektorat Sankt Gerold-Insel	597,000	17,044,558,000	28,550	30.0	0.5%	0.087	0.50	ALE	Colony	0	Pelagonia
+7	Hochbrunn-am-Saharameer	Bundesprotektorat Hochbrunn-am-Saharameer	1,146,000	4,200,000,000	3,665	34.0	5.0%	0.180	1.28	ALE	Colony	0	Pelagonia
+8	Kienam	Bundesprotektorat Kienam	863,000	3,714,376,000	4,304	35.1	5.2%	0.190	1.70	ALE	Colony	0	Valtheria
+9	Gonenite Islands	Bundesprotektorat Gonenite-Inseln	891,000	2,759,938,000	3,098	33.6	5.6%	0.182	1.40	ALE	Colony	0	Valtheria
+10	Andam Islands	Bundesprotektorat Andam-Inseln	415,000	1,359,382,000	3,276	32.5	12.5%	0.233	0.40	ALE	Colony	0	Valtheria
+11	Anahuac	Glorious Republic of Anahuac	140,394,000	3,592,100,000,000	25,586	33.1	31.4%	0.376	0.84	ANA	Active	0	Elysia
+12	Arunya	United Provinces of Arunya	411,210,000	9,290,000,000,000	22,592	26.9	10.1%	0.206	1.20	ARU	Admin Control	6	Pelagonia
+13	Arverne	Arvernois Empire	91,963,000	6,012,650,657,000	65,381	57.2	98.7%	0.821	0.40	ARV	Active	1	Evria
+14	Arvernois West Bangala	Territoire du Bangala-Ouest	135,335,000	1,834,644,801,000	13,556	40.4	23.4%	0.379	1.60	ARV	Colony	0	Pelagonia
+15	Arvernois Barbary	Territoire du Barbarie	50,741,000	959,435,006,000	18,908	37.3	11.2%	0.287	1.30	ARV	Colony	0	Evria
+16	Tonkin	Territoire du Tonkin	43,824,000	543,263,378,000	12,396	33.9	17.6%	0.301	1.90	ARV	Colony	0	Valtheria
+17	Côte de Saumon	Territoire du Côte de Saumon	138,079,000	502,335,526,000	3,638	33.5	4.3%	0.169	1.80	ARV	Colony	0	Pelagonia
+18	Arvernois East Kaukasos	Territoire du Kaukasos Oriental	28,048,000	344,117,069,000	12,269	39.2	25.7%	0.381	1.20	ARV	Colony	0	Evria
+19	Arvernois South Pelagonia	Territoire du Pelagonie du Sud	17,062,000	226,395,643,000	13,269	48.1	46.8%	0.531	2.30	ARV	Colony	0	Pelagonia
+20	Napolyon Bonparterre Islands	Région d'Outre-Mer du Îles Napoléon Bonparterre	687,000	13,032,290,000	18,970	35.6	9.1%	0.259	1.40	ARV	Colony	0	Valtheria
+21	East Astriya	Kingdom of East Astriya	18,066,000	1,035,800,000,000	57,334	42.4	31.8%	0.472	1.30	AST	NPC (Hollosend)	0	Evria
+22	Axerfreditenshin	Axerfreditenshin Kehanate	33,028,000	866,700,000,000	26,241	27.4	10.5%	0.216	0.15	AXE	Admin Control	12	Valtheria
+23	Cahaya	Federated People's Republic of Cahaya	501,175,000	10,537,393,577,000	21,025	33.1	33.4%	0.379	1.30	CAH	Pending	4	Valtheria
+24	Calveria	Federal Republic of Calveria	51,323,000	3,383,770,446,000	65,931	57.6	85.3%	0.785	1.26	CAL	Active	9	Elysia
+25	Elvester	Empire of Elvester	78,692,000	4,915,420,000,000	62,464	56.1	94.8%	0.800	0.92	ELV	NPC (Seal)	3	Evria
+26	Noradia	Royal Federation of Noradia	118,868,000	1,026,338,689,000	8,634	25.0	10.5%	0.176	1.00	ELV	Admin Control	9	Pelagonia
+30	Elvesterian Thule	Thule Governorate	564,000	38,407,558,000	68,099	35.8	17.7%	0.349	0.60	ELV	Colony	0	Elysia
+31	New Celyddon	New Celyddon Governorate	990,000	12,727,485,000	12,856	40.9	15.6%	0.333	0.60	ELV	Colony	0	Valtheria
+32	E.S.U.	Elysian State of Unity	122,757,000	9,952,414,917,000	81,074	59.5	95.6%	0.838	1.34	ESU	Active	0	Elysia
+33	Furan	United Sovereign Provinces of Furan	351,569,000	7,056,122,963,000	20,070	37.3	24.7%	0.375	1.01	FUR	Active	6	Valtheria
+34	Nitravia	Republic of Nitravia	5,410,000	267,420,000,000	49,431	49.2	85.3%	0.711	0.24	NIT	NPC (Ymiria)	0	Evria
+35	Genosa	Republic of Genosa	21,910,000	545,786,322,000	24,910	43.2	60.2%	0.564	1.01	GEN	Active	6	Evria
+36	Uj-Pannonia	Uj-Pannonia Terület	39,277,000	81,562,914,000	2,077	27.0	7.0%	0.151	1.00	GEN	Colony	0	Pelagonia
+37	Szarzatony	Szarzatony Terület	2,453,000	67,315,546,000	27,442	37.0	18.4%	0.344	1.70	GEN	Colony	0	Evria
+38	Uj-Hajnal	Uj-Hajnal Terület	1,473,000	38,773,755,000	26,323	35.5	15.9%	0.317	1.80	GEN	Colony	0	Evria
+39	Giathka	Armed Republic of Giathka	96,734,000	610,650,000,000	6,313	29.8	14.5%	0.239	1.94	GIA	Pending	9	Valtheria
+40	Guandong	People's Republic of Guandong	595,377,000	12,232,131,142,000	20,545	34.9	19.7%	0.331	1.02	GUA	NPC (Kirin)	0	Valtheria
+41	Hollosend	Kingdom of Hollosend	234,055,000	11,490,572,000,000	49,093	50.4	83.4%	0.715	1.50	HOL	Active	0	Elysia
+42	Karjania	United Socialist States of Karjánia	18,363,000	833,668,445,000	45,399	43.4	55.9%	0.571	0.89	KAR	Active	3	Evria
+43	Kullanmaan	Kullanmaan Territory	3,596,000	21,120,000,000	5,873	31.8	12.4%	0.240	2.14	KAR	Colony	0	Pelagonia
+44	Frederikka Islands	Frederikka Islands Territory	45,000	969,344,000	21,541	35.7	13.6%	0.299	2.00	KAR	Colony	0	Valtheria
+45	Cuohpnjalla	Cuohpnjalla Territory	4,000	156,562,000	39,141	33.2	5.8%	0.220	1.60	KAR	Colony	0	Evria
+46	Lechia	Kingdom of Lechia	50,158,000	1,938,820,621,000	38,654	42.9	50.7%	0.544	1.05	LEC	NPC (Valdenmere)	0	Evria
+47	Livonia	Livonian Order	3,857,000	247,000,000,000	64,039	53.4	79.8%	0.737	0.92	LIV	NPC (Seal)	0	Evria
+48	Morozia	Proletarian Republic of Morozia	1,026,000	120,450,000,000	117,398	38.4	68.2%	0.591	0.28	MOR	Pending	18	Elysia
+49	Nichirin	Miyamoto Shogunate	371,758,000	13,529,608,221,000	36,394	45.3	57.0%	0.582	1.10	NCH	Active	0	Valtheria
+50	Kinshū	Kinshū-ryō	24,538,000	1,708,306,985,000	69,619	49.4	72.1%	0.686	1.50	NCH	Colony	0	Pelagonia
+51	Hōrai	Hōrai-ryō	125,928,000	1,055,526,743,000	8,382	34.3	12.7%	0.265	1.90	NCH	Colony	0	Pelagonia
+52	Mizuho	Mizuho-ryō	5,250,000	185,000,000,000	35,238	40.8	68.5%	0.579	0.55	NCH	Colony	0	Elysia
+53	Ryūgu	Ryūgu-ryō	11,850,000	105,150,000,000	8,873	24.5	4.2%	0.125	2.50	NCH	Colony	0	Pelagonia
+54	Perovska	People's Republic of Perovska	34,274,000	648,340,000,000	18,916	31.4	18.2%	0.293	1.14	PER	Pending	12	Valtheria
+55	Polabiny	Polabinyan Monarchy	19,971,000	505,000,000,000	25,287	37.5	40.0%	0.448	3.00	POL	Active	12	Evria
+56	Ponurvia	Empire of Ponurvia	75,834,000	6,474,799,200,000	85,381	54.9	80.2%	0.760	1.18	PON	Admin Control	0	Elysia
+57	Aztekische Islands	Militärgouvernement Aztekische-Inseln	37,000	620,445,000	16,769	34.4	7.2%	0.231	1.40	PON	Colony	0	Elysia
+58	Verwustung Islands	Militärgouvernement Verwustung-Inseln	12,000	208,508,000	17,376	31.9	2.9%	0.161	0.00	PON	Colony	0	Pelagonia
+59	Reino	Reino sin Rey	59,300,000	2,000,000,000,000	33,727	47.3	60.6%	0.607	1.05	REI	Pending	6	Evria
+60	Costaserá	República Popular Federativa Costaserá	43,218,000	454,164,522,000	10,509	36.1	15.6%	0.301	1.40	REI	Colony	0	Evria
+61	Anticostia	República Popular Federativa Anticostia	2,486,000	17,405,108,000	7,001	40.0	55.7%	0.479	1.90	REI	Colony	0	Elysia
+62	Rudania	People's Republic of Rudania	111,480,000	6,102,233,977,000	54,738	35.7	29.5%	0.408	0.86	RUD	Active	0	Evria
+63	Selmira	Sublime Selmiran State	83,464,000	4,054,384,113,000	48,576	39.6	25.6%	0.416	0.89	SEL	NPC (Volkstonia)	0	Evria
+64	Seignid	Kingdom of Seignid	261,954,000	4,073,570,611,000	15,551	35.2	20.1%	0.330	1.03	SGD	Active	6	Valtheria
+65	Shivon	First Republic of Shivon	17,802,000	688,956,952,000	38,701	35.9	20.6%	0.357	0.63	SHI	Active	6	Evria
+66	Shivonite Southeast Aphirica	Southeast Aphirican Republic	15,780,000	18,880,000,000	1,196	25.0	0.7%	0.059	0.70	SHI	Colony	0	Pelagonia
+67	Sidanya	United Socialist States of Sidanya	40,178,000	820,000,000,000	20,409	42.5	66.7%	0.570	2.40	SID	Pending	9	Evria
+68	Skjarnland	Kingdom of Skjarnland	23,792,000	1,873,516,385,000	78,746	59.0	95.0%	0.831	0.76	SKJ	Active	9	Evria
+69	Vikomte Islands	Vikomte Islands	5,000	113,091,000	22,618	36.3	22.8%	0.360	0.76	SKJ	Colony	0	Pelagonia
+70	The Thorne	Democratic Republic of the Thorne	28,550,000	655,745,581,000	22,968	41.7	40.2%	0.479	1.17	THO	NPC (Ymiria)	0	Evria
+71	Raza Lunga de Actiune	Raza Lunga de Actiune	111,000	2,638,770,000	23,773	39.6	25.4%	0.399	1.70	THO	Colony	0	Evria
+72	Varahmehr	Federal Republic of Varahmehr	52,599,000	2,780,000,000,000	52,853	32.1	6.4%	0.224	0.95	VAR	Active	9	Evria
+73	The Verdanie	United Provinces of the Verdanie	111,814,000	3,205,000,000,000	28,664	37.2	48.6%	0.479	0.93	VER	Active	6	Pelagonia
+74	Vicily	Kingdom of Vicily	120,152,000	4,913,679,388,000	40,896	48.0	60.3%	0.618	1.22	VIC	Active	6	Evria
+75	Kemet	Territorio Kemet	133,795,000	3,306,970,410,000	24,717	39.4	18.9%	0.361	2.00	VIC	Colony	0	Evria
+76	Vicilian North Aphirica	Territorio Aphirica del Nord	15,509,000	3,589,804,000	231	32.3	3.7%	0.096	1.80	VIC	Colony	0	Pelagonia

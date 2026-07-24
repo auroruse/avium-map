@@ -118,7 +118,7 @@ html, body {
   position: fixed;
   bottom: 16px;
   left: 16px;
-  width: 300px;
+  width: 400px;
   z-index: 1100;
   background: rgba(24, 27, 29, 0.82);
   backdrop-filter: blur(24px) saturate(1.4);
@@ -146,6 +146,25 @@ html, body {
 @keyframes cp-out {
   from { opacity: 1; transform: none; }
   to { opacity: 0; transform: translateY(18px) scale(0.96); }
+}
+
+/* Banner image (public/cities/Name.png|jpg) — full-bleed, rounded top */
+.cp-banner {
+  display: none;
+  margin: -18px -18px 14px;
+  border-radius: 14px 14px 0 0;
+  overflow: hidden;
+}
+
+.cp-banner.cp-banner-show {
+  display: block;
+}
+
+.cp-banner img {
+  display: block;
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
 }
 
 .cp-close {
@@ -185,17 +204,137 @@ html, body {
   margin-top: 2px;
 }
 
+/* Cells auto-size and wrap as whole cells — a value never breaks mid-line */
 .cp-stats {
   margin-top: 14px;
   padding-top: 13px;
   border-top: 1px solid rgba(255,255,255,0.12);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 13px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 13px 28px;
+}
+
+/* Talopedia blurb, laid out like Apple Maps' About card.
+   The heading carries .cp-label for its type; this only spaces it. */
+.cp-about-head {
+  margin-top: 18px;
+}
+
+/* Opaque, not a translucent tint: .cp-more masks the text it truncates by
+   painting over it, which only works against a known solid colour */
+.cp-about {
+  position: relative;
+  margin-top: 8px;
+  padding: 13px 14px;
+  border-radius: 12px;
+  background: #15181a;
+}
+
+.cp-about-text {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(255,255,255,0.86);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  overflow: hidden;
+}
+
+/* Expanded, the blurb scrolls within itself. The panel is anchored to the
+   bottom and grows upward with an absolutely-positioned close button, so
+   letting it grow with the text would push the close button off-screen. */
+.cp-about-text.cp-about-open {
+  -webkit-line-clamp: unset;
+  max-height: 38vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* Clamped: sits over the last line, masking the text it truncates */
+.cp-more {
+  position: absolute;
+  right: 14px;
+  bottom: 13px;
+  padding: 0 0 0 26px;
+  border: none;
+  background: linear-gradient(to right, rgba(21,24,26,0), #15181a 22px);
+  color: #0a84ff;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Expanded: nothing left to mask, so it drops to its own line below the text
+   rather than covering the final one */
+.cp-about-text.cp-about-open ~ .cp-more {
+  position: static;
+  display: block;
+  margin-top: 8px;
+  padding: 0;
+  background: none;
+}
+
+/* "More on Talopedia" — grey lead-in, the source itself as the link */
+.cp-source {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 12.5px;
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+}
+
+.cp-source span {
+  color: #0a84ff;
+  text-decoration: underline;
+}
+
+/* With no blurb above it the link follows the stats directly and needs room */
+.cp-stats + .cp-source {
+  margin-top: 16px;
+}
+
+/* Full-width tinted action below the stats, like Apple Maps' Directions.
+   Used as both a <button> and an <a>, so reset the anchor defaults too. */
+.cp-action {
+  display: block;
+  box-sizing: border-box;
+  margin-top: 16px;
+  width: 100%;
+  padding: 9px 0;
+  border: none;
+  border-radius: 10px;
+  background: #0a84ff;
+  color: #fff;
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: filter 0.15s ease, transform 0.1s ease;
+}
+
+.cp-action:hover {
+  filter: brightness(1.1);
+}
+
+.cp-action:active {
+  transform: scale(0.97);
 }
 
 .cp-wide {
-  grid-column: 1 / -1;
+  flex-basis: 100%;
+}
+
+.cp-pop-row {
+  display: flex;
+  gap: 24px;
+}
+
+.cp-pop-row > .cp-pop-cell {
+  min-width: 0;
 }
 
 .cp-label {
@@ -211,6 +350,7 @@ html, body {
   font-size: 16px;
   font-weight: 600;
   line-height: 1.25;
+  white-space: nowrap;
 }
 
 .cp-sub {
@@ -551,6 +691,453 @@ html, body {
 /* Kill attribution watermark */
 .leaflet-control-attribution {
   display: none !important;
+}
+
+/* Bottom sheet (public mode) — Apple Maps style */
+#bottom-sheet {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+  width: 400px;
+  z-index: 1090;
+  background: rgba(24, 27, 29, 0.82);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 14px;
+  box-shadow: 0 10px 36px rgba(0,0,0,0.5);
+  padding: 12px 14px;
+  color: #fff;
+  font-family: -apple-system, 'SF Pro Display', 'SF Pro Text', 'Inter', system-ui, sans-serif;
+  transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1), opacity 0.3s;
+}
+
+#bottom-sheet.bs-away {
+  transform: translateY(130%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+#bs-search, #bs-filter {
+  width: 100%;
+  box-sizing: border-box;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 10px;
+  padding: 9px 12px;
+  color: #fff;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+#bs-search:focus, #bs-filter:focus {
+  border-color: rgba(100,180,255,0.4);
+}
+
+#bs-search::placeholder, #bs-filter::placeholder {
+  color: #6b7075;
+}
+
+#bs-results {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+#bs-results li {
+  padding: 7px 10px;
+  cursor: pointer;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+#bs-results li:hover,
+#bs-results li.sel {
+  background: rgba(255,255,255,0.08);
+}
+
+.bs-buttons {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 10px 4px;
+}
+
+.bs-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.bs-circle {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: filter 0.15s;
+}
+
+.bs-btn:hover .bs-circle {
+  filter: brightness(1.15);
+}
+
+.bs-blue   { background: #0a84ff; }
+.bs-orange { background: #ff9f0a; }
+.bs-green  { background: #30d158; }
+.bs-purple { background: #bf5af2; }
+
+.bs-btn-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: #c6cacd;
+}
+
+.bs-list-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+#bs-back {
+  width: 28px;
+  height: 28px;
+  flex: none;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  color: #c6cacd;
+  font-size: 18px;
+  line-height: 1;
+  padding-bottom: 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#bs-back:hover {
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+}
+
+#bs-title {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.bs-controls {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.bs-controls #bs-filter {
+  flex: 1;
+  min-width: 0;
+}
+
+.bs-sorts {
+  display: flex;
+  flex: none;
+  background: rgba(255,255,255,0.08);
+  border-radius: 9px;
+  padding: 2px;
+  gap: 2px;
+}
+
+.bs-sorts button {
+  border: none;
+  background: none;
+  color: #c6cacd;
+  font-size: 11px;
+  font-weight: 500;
+  font-family: inherit;
+  padding: 4px 8px;
+  border-radius: 7px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.bs-sorts button.active {
+  background: rgba(255,255,255,0.18);
+  color: #fff;
+}
+
+#bs-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 45vh;
+  overflow-y: auto;
+}
+
+#bs-items li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#bs-items li:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.bs-rank {
+  width: 30px; /* fits a four-digit rank in tabular nums */
+  flex: none;
+  text-align: right;
+  color: #8b9096;
+  font-size: 12px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.bs-cinfo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.bs-cname {
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bs-cnation {
+  font-size: 11px;
+  color: #8b9096;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bs-cstat {
+  flex: none;
+  font-size: 13px;
+  font-weight: 600;
+  color: #c6cacd;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Measure toolbar */
+#measure-bar {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1090;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(24, 27, 29, 0.82);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 12px;
+  box-shadow: 0 10px 36px rgba(0,0,0,0.5);
+  padding: 8px 10px;
+  color: #fff;
+  font-family: -apple-system, 'SF Pro Text', 'Inter', system-ui, sans-serif;
+}
+
+#measure-bar[hidden] {
+  display: none;
+}
+
+#measure-total {
+  font-size: 13px;
+  font-weight: 600;
+  min-width: 86px;
+  text-align: center;
+  padding: 0 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+#measure-bar button {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 500;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+
+#measure-bar button:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+#map.measure-mode {
+  cursor: crosshair;
+}
+
+/* Clicks pass through city markers while measuring (each icon carries its
+   own pointer-events from .leaflet-interactive, so the pane alone isn't enough) */
+#map.measure-mode .leaflet-marker-pane,
+#map.measure-mode .leaflet-marker-pane * {
+  pointer-events: none !important;
+}
+
+/* Clickable nation name in the city panel */
+.cp-link {
+  cursor: pointer;
+}
+
+.cp-link:hover {
+  text-decoration: underline;
+}
+
+/* --- Animations --- */
+
+@keyframes bs-fade-in {
+  from { opacity: 0; }
+}
+
+@keyframes bs-push-in {
+  from { opacity: 0; transform: translateX(28px); }
+}
+
+@keyframes bs-pop-in {
+  from { opacity: 0; transform: translateX(-28px); }
+}
+
+@keyframes bs-pulse-in {
+  from { opacity: 0.55; }
+}
+
+@keyframes bs-bounce-kf {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.14); }
+  100% { transform: scale(1); }
+}
+
+@keyframes bs-label-pop-kf {
+  from { opacity: 0; transform: translateY(3px); }
+}
+
+@keyframes cp-swap-in {
+  from { opacity: 0.5; transform: translateY(6px); }
+}
+
+@keyframes vertex-pop {
+  from { opacity: 0; transform: scale(0.4); }
+}
+
+/* Sheet page transitions (push forward / pop back) */
+#bs-list.bs-push { animation: bs-push-in 0.32s cubic-bezier(0.32, 0.72, 0, 1); }
+#bs-home.bs-pop  { animation: bs-pop-in 0.32s cubic-bezier(0.32, 0.72, 0, 1); }
+
+/* List refresh pulse (sort change, view open) */
+#bs-items.bs-pulse { animation: bs-pulse-in 0.22s ease-out; }
+
+/* Share feedback */
+.bs-circle.bs-bounce { animation: bs-bounce-kf 0.4s cubic-bezier(0.32, 0.72, 0, 1); }
+.bs-label-pop { animation: bs-label-pop-kf 0.25s ease-out; }
+
+/* Panel content swap while already open (city ↔ nation) */
+#city-panel.cp-swap { animation: cp-swap-in 0.22s cubic-bezier(0.32, 0.72, 0, 1); }
+
+/* Search result rows fade in */
+#bs-results li { animation: bs-fade-in 0.15s ease-out; }
+
+/* Banner appears once probed */
+.cp-banner.cp-banner-show { animation: bs-fade-in 0.35s ease-out; }
+
+/* Measure: bar slides up like the panels, vertices pop in */
+#measure-bar { animation: cp-in 0.32s cubic-bezier(0.32, 0.72, 0, 1); }
+#measure-bar.mb-closing { animation: cp-out 0.22s cubic-bezier(0.32, 0.72, 0, 1) forwards; }
+
+.measure-vertex {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: vertex-pop 0.25s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* Press feedback + hover transitions */
+.bs-circle { transition: filter 0.15s, transform 0.18s; }
+.bs-btn:active .bs-circle { transform: scale(0.9); }
+
+.bs-sorts button { transition: background 0.18s, color 0.18s, transform 0.15s; }
+.bs-sorts button:active { transform: scale(0.94); }
+
+#bs-items li, #bs-results li, #place-results li { transition: background 0.15s; }
+
+.pp-toolbar button:active,
+.pp-tool-btn:active,
+#measure-bar button:active {
+  transform: scale(0.94);
+}
+
+.pp-toolbar button, .pp-tool-btn { transition: background 0.15s, transform 0.15s; }
+#measure-bar button { transition: background 0.15s, transform 0.15s; }
+
+.cp-close, #bs-back { transition: background 0.15s, color 0.15s, transform 0.15s; }
+.cp-close:active, #bs-back:active { transform: scale(0.88); }
+
+.leaflet-control-zoom a { transition: background 0.15s; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Mobile: panel and sheet span the full bottom of the screen */
+@media (max-width: 640px) {
+  #city-panel, #bottom-sheet {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    border-radius: 16px 16px 0 0;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+  }
+
+  .cp-banner {
+    border-radius: 16px 16px 0 0;
+  }
+
+  #bs-items {
+    max-height: 38vh;
+  }
+
+  #measure-bar {
+    bottom: calc(16px + env(safe-area-inset-bottom));
+    max-width: calc(100vw - 24px);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }
 
 /* Zoom controls — frosted glass to match layer card */

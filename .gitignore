@@ -3,3 +3,4 @@ dist/
 layers/*.png
 layers/*.PNG
 .DS_Store
+banners-original/

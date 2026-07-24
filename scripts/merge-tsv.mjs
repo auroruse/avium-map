@@ -53,7 +53,7 @@ for (let i = 1; i < lines.length; i++) {
     if (!field || !vals[j]) continue
     city[field] = numFields.has(field)
       ? parseFloat(vals[j].replace(/,/g, '')) || 0
-      : vals[j]
+      : (vals[j] === '-' ? '' : vals[j])
   }
 
   const coords = coordMap.get(city.name)
