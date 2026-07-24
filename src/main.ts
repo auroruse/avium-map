@@ -3,10 +3,14 @@ import 'leaflet/dist/leaflet.css'
 import './style.css'
 import citiesData from './data/cities.json'
 import labelsData from './data/labels.json'
+import nationsTsv from './data/nations.tsv?raw'
 
 // --- Dev mode ---
 
 const DEV = new URLSearchParams(window.location.search).has('dev')
+
+// Strip diacritics so "Chukyo" matches "Chūkyō" etc.
+const norm = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
 
 // --- Constants ---
 
@@ -174,6 +178,50 @@ function tierRank(pop: number): number {
 const citiesByPriority = [...cities].sort(
   (a, b) => tierRank(a.population) - tierRank(b.population) || b.gdp - a.gdp
 )
+
+// --- Nations (from nations.tsv) ---
+
+interface Nation {
+  name: string
+  official: string
+  population: number
+  gdp: number
+  gdpPerCapita: number
+  lifeExpectancy: number
+  literacy: number
+  hdi: number
+  popGrowth: number
+  alpha3: string
+  status: string
+  expansionPoints: number
+  continent: string
+}
+
+const nations: Nation[] = nationsTsv.trim().split('\n').slice(1).map(line => {
+  const v = line.split('\t').map(s => s.trim())
+  const num = (s: string | undefined) => parseFloat((s ?? '').replace(/[,%]/g, '')) || 0
+  const str = (s: string | undefined) => (s === '-' ? '' : s ?? '')
+  return {
+    name: str(v[1]),
+    official: str(v[2]),
+    population: num(v[3]),
+    gdp: num(v[4]),
+    gdpPerCapita: num(v[5]),
+    lifeExpectancy: num(v[6]),
+    literacy: num(v[7]),
+    hdi: num(v[8]),
+    popGrowth: num(v[9]),
+    alpha3: str(v[10]),
+    status: str(v[11]),
+    expansionPoints: num(v[12]),
+    continent: str(v[13]),
+  }
+}).filter(n => n.name)
+
+const nationByName = new Map<string, Nation>()
+for (const n of nations) nationByName.set(norm(n.name), n)
+
+const worldGdpTotal = nations.reduce((s, n) => s + n.gdp, 0)
 
 interface CityTier {
   radius: number
@@ -565,17 +613,71 @@ function fmtRank(n: number): string {
   return ` <span class="cp-rank">#${n}</span>`
 }
 
+// Banner images: drop Name.png/jpg into public/cities/ (diacritics optional).
+// No manifest — candidate URLs are probed on first open and the verdict cached.
+let panelToken = 0
+const bannerCache = new Map<string, string | null>()
+
+function bannerCandidates(name: string): string[] {
+  const stripped = name.normalize('NFD').replace(/[̀-ͯ]/g, '')
+  const names = stripped === name ? [name] : [name, stripped]
+  const urls: string[] = []
+  for (const n of names) {
+    for (const ext of ['png', 'jpg', 'jpeg', 'PNG', 'JPG', 'JPEG']) {
+      urls.push(`cities/${encodeURIComponent(n)}.${ext}`)
+    }
+  }
+  return urls
+}
+
+function loadBanner(name: string, token: number) {
+  const holder = cityPanel.querySelector('.cp-banner') as HTMLElement
+  const img = holder.querySelector('img') as HTMLImageElement
+  const cached = bannerCache.get(name)
+  if (cached === null) return
+  if (cached) {
+    img.src = cached
+    holder.classList.add('cp-banner-show')
+    return
+  }
+  const urls = bannerCandidates(name)
+  let i = 0
+  const tryNext = () => {
+    if (token !== panelToken) return
+    if (i >= urls.length) {
+      bannerCache.set(name, null)
+      return
+    }
+    const url = urls[i++]
+    const probe = new Image()
+    probe.onload = () => {
+      bannerCache.set(name, url)
+      if (token !== panelToken) return
+      img.src = url
+      holder.classList.add('cp-banner-show')
+    }
+    probe.onerror = tryNext
+    probe.src = url
+  }
+  tryNext()
+}
+
 function openCityPanel(c: City) {
+  if (measuring) return
+  const token = ++panelToken
+  const wasOpen = !cityPanel.hidden
   const displayName = c.name.replace(/,\s*[A-Z]{2,4}$/, '')
   const popRank = cityRank(c, 'population')
   const gdpRank = cityRank(c, 'gdp')
   const pcRank = cityRank(c, 'gdpPerCapita')
+  const nat = nationByName.get(norm(c.nation))
   cityPanel.innerHTML =
+    `<div class="cp-banner"><img alt=""></div>` +
     `<button class="cp-close" aria-label="Close">✕</button>` +
     `<div class="cp-name">${displayName}</div>` +
     (c.nativeScript ? `<div class="cp-native">${c.nativeScript}</div>` : '') +
     `<div class="cp-stats">` +
-    `<div class="cp-stat"><div class="cp-label">Nation</div><div class="cp-value">${c.nation}${c.alpha3 ? ` <span class="cp-sub">(${c.alpha3})</span>` : ''}</div></div>` +
+    `<div class="cp-stat"><div class="cp-label">Nation</div><div class="cp-value${nat ? ' cp-link' : ''}">${c.nation}${c.alpha3 ? ` <span class="cp-sub">(${c.alpha3})</span>` : ''}</div></div>` +
     (c.irlParallel ? `<div class="cp-stat"><div class="cp-label">IRL Parallel</div><div class="cp-value">${c.irlParallel}</div></div>` : '') +
     `<div class="cp-stat cp-wide"><div class="cp-label">Population</div><div class="cp-value">${c.population.toLocaleString('en-US')}${fmtRank(popRank)}</div></div>` +
     `<div class="cp-stat cp-wide"><div class="cp-label">GDP PPP</div><div class="cp-value">${fmtUSD(c.gdp)}${fmtRank(gdpRank)}</div></div>` +
@@ -583,21 +685,93 @@ function openCityPanel(c: City) {
     `</div>`
   cityPanel.classList.remove('cp-closing')
   cityPanel.hidden = false
+  if (wasOpen) replayAnim(cityPanel, 'cp-swap')
   cityPanel.querySelector('.cp-close')!.addEventListener('click', closeCityPanel)
+  if (nat) cityPanel.querySelector('.cp-link')!.addEventListener('click', () => openNationPanel(nat))
+  hideSheet()
+  openCityName = c.name
+  syncHash()
+  loadBanner(c.name, token)
+}
+
+// --- Nation info panel ---
+
+type NationStatField = 'population' | 'gdp' | 'gdpPerCapita' | 'hdi' | 'lifeExpectancy' | 'literacy'
+const nationRankCache = new Map<NationStatField, Map<Nation, number>>()
+
+function nationRanks(field: NationStatField): Map<Nation, number> {
+  let m = nationRankCache.get(field)
+  if (!m) {
+    const built = new Map<Nation, number>()
+    ;[...nations].sort((a, b) => b[field] - a[field]).forEach((n, i) => built.set(n, i + 1))
+    nationRankCache.set(field, built)
+    m = built
+  }
+  return m
+}
+
+function nationRank(n: Nation, field: NationStatField): number {
+  return n[field] ? nationRanks(field).get(n) ?? 0 : 0
+}
+
+function openNationPanel(n: Nation) {
+  if (measuring) return
+  const token = ++panelToken
+  const wasOpen = !cityPanel.hidden
+  const urban = mapAggFor(n).pop
+  const rural = Math.max(0, n.population - urban)
+  cityPanel.innerHTML =
+    `<div class="cp-banner"><img alt=""></div>` +
+    `<button class="cp-close" aria-label="Close">✕</button>` +
+    `<div class="cp-name">${n.name}</div>` +
+    (n.official ? `<div class="cp-native">${n.official}${n.alpha3 ? ` <span class="cp-sub">(${n.alpha3})</span>` : ''}</div>` : '') +
+    `<div class="cp-stats">` +
+    (n.continent ? `<div class="cp-stat"><div class="cp-label">Continent</div><div class="cp-value">${n.continent}</div></div>` : '') +
+    (n.status ? `<div class="cp-stat"><div class="cp-label">Status</div><div class="cp-value">${n.status}</div></div>` : '') +
+    `<div class="cp-stat cp-wide cp-pop-row">` +
+    `<div class="cp-pop-cell"><div class="cp-label">Population</div><div class="cp-value">${n.population.toLocaleString('en-US')}${fmtRank(nationRank(n, 'population'))}</div></div>` +
+    (urban > 0
+      ? `<div class="cp-pop-cell"><div class="cp-label">Urban</div><div class="cp-value">${urban.toLocaleString('en-US')}</div></div>` +
+        `<div class="cp-pop-cell"><div class="cp-label">Rural</div><div class="cp-value">${rural.toLocaleString('en-US')}</div></div>`
+      : '') +
+    `</div>` +
+    `<div class="cp-stat cp-wide"><div class="cp-label">GDP PPP</div><div class="cp-value">${fmtUSD(n.gdp)}${fmtRank(nationRank(n, 'gdp'))}</div></div>` +
+    `<div class="cp-stat cp-wide"><div class="cp-label">Per Capita</div><div class="cp-value">${fmtUSD(n.gdpPerCapita)}${fmtRank(nationRank(n, 'gdpPerCapita'))}</div></div>` +
+    (n.hdi ? `<div class="cp-stat"><div class="cp-label">HDI</div><div class="cp-value">${n.hdi.toFixed(3)}${fmtRank(nationRank(n, 'hdi'))}</div></div>` : '') +
+    (n.lifeExpectancy ? `<div class="cp-stat"><div class="cp-label">Life Expectancy</div><div class="cp-value">${n.lifeExpectancy.toFixed(1)}${fmtRank(nationRank(n, 'lifeExpectancy'))}</div></div>` : '') +
+    (n.literacy ? `<div class="cp-stat"><div class="cp-label">Literacy</div><div class="cp-value">${n.literacy.toFixed(1)}%${fmtRank(nationRank(n, 'literacy'))}</div></div>` : '') +
+    `</div>`
+  cityPanel.classList.remove('cp-closing')
+  cityPanel.hidden = false
+  if (wasOpen) replayAnim(cityPanel, 'cp-swap')
+  cityPanel.querySelector('.cp-close')!.addEventListener('click', closeCityPanel)
+  hideSheet()
+  openCityName = null
+  syncHash()
+  loadBanner(n.name, token)
 }
 
 function closeCityPanel() {
   if (cityPanel.hidden || cityPanel.classList.contains('cp-closing')) return
+  cityPanel.classList.remove('cp-swap')
   cityPanel.classList.add('cp-closing')
   cityPanel.addEventListener('animationend', () => {
     cityPanel.classList.remove('cp-closing')
     cityPanel.hidden = true
+    openCityName = null
+    syncHash()
+    showSheet()
   }, { once: true })
 }
 
-map.on('click', closeCityPanel)
+map.on('click', () => {
+  if (!measuring) closeCityPanel()
+})
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeCityPanel()
+  if (e.key !== 'Escape') return
+  if (measuring) endMeasure()
+  else if (!cityPanel.hidden) closeCityPanel()
+  else closeSheetList()
 })
 
 ;(window as any)._map = map
@@ -731,7 +905,7 @@ function importTSV(tsv: string) {
       if (field === 'population' || field === 'gdp' || field === 'gdpPerCapita') {
         (city as any)[field] = parseFloat(vals[j].replace(/,/g, '')) || 0
       } else {
-        (city as any)[field] = vals[j]
+        (city as any)[field] = vals[j] === '-' ? '' : vals[j]
       }
     }
 
@@ -868,9 +1042,6 @@ importInput.addEventListener('change', () => {
   if (importInput.files?.[0]) importJSON(importInput.files[0])
   importInput.value = ''
 })
-
-// Strip diacritics so "Chukyo" matches "Chūkyō" etc.
-const norm = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
 
 searchInput.addEventListener('input', () => {
   const q = norm(searchInput.value.trim())
@@ -1043,3 +1214,430 @@ document.getElementById('place-undo')!.addEventListener('click', () => {
     saveProgress()
   }
 })
+
+// --- Bottom sheet (public mode) ---
+
+const sheet = document.getElementById('bottom-sheet')!
+const bsHome = document.getElementById('bs-home')!
+const bsList = document.getElementById('bs-list')!
+const bsSearch = document.getElementById('bs-search') as HTMLInputElement
+const bsResults = document.getElementById('bs-results')!
+const bsItems = document.getElementById('bs-items')!
+const bsFilter = document.getElementById('bs-filter') as HTMLInputElement
+const bsTitle = document.getElementById('bs-title')!
+
+if (DEV) sheet.style.display = 'none'
+
+// Restart a one-shot CSS animation class regardless of current state
+function replayAnim(el: HTMLElement, cls: string) {
+  el.classList.remove(cls)
+  void el.offsetWidth
+  el.classList.add(cls)
+}
+
+function hideSheet() {
+  if (!DEV) sheet.classList.add('bs-away')
+}
+
+function showSheet() {
+  if (DEV || measuring) return
+  sheet.classList.remove('bs-away')
+}
+
+function closeSheetList() {
+  if (DEV || bsList.hidden) return
+  bsList.hidden = true
+  bsHome.hidden = false
+  replayAnim(bsHome, 'bs-pop')
+}
+
+// Normalized name/nation index, built once (public data never mutates)
+type SearchEntry = { c: City; n: string; nat: string }
+let searchIdx: SearchEntry[] | null = null
+function idx(): SearchEntry[] {
+  if (!searchIdx) searchIdx = cities.map(c => ({ c, n: norm(c.name), nat: norm(c.nation) }))
+  return searchIdx
+}
+
+function fmtCompact(n: number): string {
+  if (n >= 1e12) return (n / 1e12).toFixed(2) + 'T'
+  if (n >= 1e9) return (n / 1e9).toFixed(2) + 'B'
+  if (n >= 1e6) return (n / 1e6).toFixed(2) + 'M'
+  if (n >= 1e3) return (n / 1e3).toFixed(1) + 'k'
+  return String(n)
+}
+
+function goCity(c: City) {
+  bsResults.innerHTML = ''
+  bsSearch.value = ''
+  if (c.x != null && c.y != null) {
+    map.setView(px(c.x, c.y), Math.max(map.getZoom(), 4))
+  }
+  openCityPanel(c)
+}
+
+// Home search
+bsSearch.addEventListener('input', () => {
+  const q = norm(bsSearch.value.trim())
+  bsResults.innerHTML = ''
+  if (q.length < 2) return
+  const matches = idx().filter(e => e.n.includes(q) || e.nat.includes(q)).slice(0, 10)
+  for (const { c } of matches) {
+    const li = document.createElement('li')
+    li.innerHTML = `<span class="bs-cname">${c.name}</span>` +
+      `<span class="bs-cnation">${c.nation} · ${fmtCompact(c.population)}</span>`
+    li.addEventListener('click', () => goCity(c))
+    bsResults.appendChild(li)
+  }
+})
+
+// List views
+type SortField = 'name' | 'population' | 'gdp' | 'gdpPerCapita'
+let listMode: 'cities' | 'nations' = 'cities'
+
+let sortField: SortField = 'name'
+let sortAsc = true
+let listRows: City[] = []
+let renderedCount = 0
+const LIST_CHUNK = 150
+
+// Global rank per stat, computed once per field on demand
+const rankCache = new Map<SortField, Map<City, number>>()
+function statRanks(field: SortField): Map<City, number> {
+  let m = rankCache.get(field)
+  if (!m) {
+    m = new Map()
+    const f = field as 'population'
+    const sorted = [...cities].sort((a, b) => b[f] - a[f])
+    sorted.forEach((c, i) => m!.set(c, i + 1))
+    rankCache.set(field, m)
+  }
+  return m
+}
+
+function statText(c: City): string {
+  if (sortField === 'gdp') return '$' + fmtCompact(c.gdp)
+  if (sortField === 'gdpPerCapita') return '$' + c.gdpPerCapita.toLocaleString('en-US')
+  return fmtCompact(c.population)
+}
+
+function renderMoreRows() {
+  if (listMode === 'nations' || renderedCount >= listRows.length) return
+  const end = Math.min(renderedCount + LIST_CHUNK, listRows.length)
+  const rm = sortField !== 'name' ? statRanks(sortField) : null
+  const frag = document.createDocumentFragment()
+  for (let i = renderedCount; i < end; i++) {
+    const c = listRows[i]
+    const li = document.createElement('li')
+    li.innerHTML =
+      (rm ? `<span class="bs-rank">${rm.get(c)}</span>` : '') +
+      `<span class="bs-cinfo"><span class="bs-cname">${c.name}</span><span class="bs-cnation">${c.nation}</span></span>` +
+      `<span class="bs-cstat">${statText(c)}</span>`
+    li.addEventListener('click', () => goCity(c))
+    frag.appendChild(li)
+  }
+  bsItems.appendChild(frag)
+  renderedCount = end
+}
+
+bsItems.addEventListener('scroll', () => {
+  if (bsItems.scrollTop + bsItems.clientHeight > bsItems.scrollHeight - 300) renderMoreRows()
+})
+
+const sortChips = Array.from(document.querySelectorAll<HTMLButtonElement>('.bs-sorts button'))
+
+function updateSortChips() {
+  for (const chip of sortChips) {
+    const active = chip.dataset.sort === sortField
+    chip.classList.toggle('active', active)
+    const label = chip.dataset.sort === 'name' ? 'Name'
+      : chip.dataset.sort === 'population' ? 'Pop'
+      : chip.dataset.sort === 'gdp' ? 'GDP' : 'P/C'
+    chip.textContent = active ? `${label} ${sortAsc ? '↑' : '↓'}` : label
+  }
+}
+
+// Map presence per nation (city count, urban pop, marker bounds), derived once
+let nationMapAggs: Map<string, { count: number; pop: number; pts: L.LatLngExpression[] }> | null = null
+
+function mapAggFor(n: Nation): { count: number; pop: number; pts: L.LatLngExpression[] } {
+  if (!nationMapAggs) {
+    nationMapAggs = new Map()
+    for (const c of cities) {
+      if (!c.nation) continue
+      const k = norm(c.nation)
+      let a = nationMapAggs.get(k)
+      if (!a) nationMapAggs.set(k, a = { count: 0, pop: 0, pts: [] })
+      a.count++
+      a.pop += c.population
+      if (c.x != null && c.y != null) a.pts.push(px(c.x, c.y))
+    }
+  }
+  return nationMapAggs.get(norm(n.name)) ?? { count: 0, pop: 0, pts: [] }
+}
+
+function flyToNation(n: Nation) {
+  const agg = mapAggFor(n)
+  if (agg.pts.length) {
+    map.flyToBounds(L.latLngBounds(agg.pts).pad(0.2), { maxZoom: 5, duration: 0.8 })
+  }
+  openNationPanel(n)
+}
+
+function nationStatText(n: Nation): string {
+  if (sortField === 'gdp') return '$' + fmtCompact(n.gdp)
+  if (sortField === 'gdpPerCapita') return '$' + n.gdpPerCapita.toLocaleString('en-US')
+  return fmtCompact(n.population)
+}
+
+function renderNations(q: string) {
+  bsItems.innerHTML = ''
+  bsItems.scrollTop = 0
+  let rows = [...nations]
+  if (q) rows = rows.filter(n => norm(n.name).includes(q) || norm(n.official).includes(q))
+  if (sortField === 'name') {
+    rows.sort((a, b) => a.name.localeCompare(b.name))
+  } else {
+    const f = sortField as 'population'
+    rows.sort((a, b) => a[f] - b[f])
+  }
+  if (!sortAsc) rows.reverse()
+  const rm = sortField !== 'name' ? nationRanks(sortField as NationStatField) : null
+  const frag = document.createDocumentFragment()
+  for (const n of rows) {
+    const agg = mapAggFor(n)
+    const pct = worldGdpTotal ? (n.gdp / worldGdpTotal) * 100 : 0
+    const pctText = pct >= 0.1 ? pct.toFixed(1) + '%' : '<0.1%'
+    const li = document.createElement('li')
+    li.innerHTML =
+      (rm ? `<span class="bs-rank">${rm.get(n)}</span>` : '') +
+      `<span class="bs-cinfo"><span class="bs-cname">${n.name}</span><span class="bs-cnation">${agg.count} ${agg.count === 1 ? 'city' : 'cities'} · ${pctText} of world GDP</span></span>` +
+      `<span class="bs-cstat">${nationStatText(n)}</span>`
+    li.addEventListener('click', () => flyToNation(n))
+    frag.appendChild(li)
+  }
+  bsItems.appendChild(frag)
+}
+
+function rebuildList(animate = true) {
+  const q = norm(bsFilter.value.trim())
+  if (listMode === 'nations') {
+    renderNations(q)
+  } else {
+    let rows = idx()
+    if (q) rows = rows.filter(e => e.n.includes(q) || e.nat.includes(q))
+    const sorted = [...rows]
+    if (sortField === 'name') {
+      sorted.sort((a, b) => a.c.name.localeCompare(b.c.name))
+    } else {
+      const f = sortField as 'population'
+      sorted.sort((a, b) => a.c[f] - b.c[f])
+    }
+    if (!sortAsc) sorted.reverse()
+    listRows = sorted.map(e => e.c)
+    bsItems.innerHTML = ''
+    bsItems.scrollTop = 0
+    renderedCount = 0
+    renderMoreRows()
+  }
+  updateSortChips()
+  if (animate) replayAnim(bsItems, 'bs-pulse')
+}
+
+bsFilter.addEventListener('input', () => rebuildList(false))
+
+for (const chip of sortChips) {
+  chip.addEventListener('click', () => {
+    const field = chip.dataset.sort as SortField
+    if (field === sortField) {
+      sortAsc = !sortAsc
+    } else {
+      sortField = field
+      sortAsc = field === 'name'
+    }
+    rebuildList()
+  })
+}
+
+function openListView(mode: 'cities' | 'nations') {
+  listMode = mode
+  bsTitle.textContent = mode === 'nations' ? 'Nations' : 'Cities'
+  bsFilter.value = ''
+  bsFilter.placeholder = 'Search'
+  if (mode === 'nations') {
+    sortField = 'population'
+    sortAsc = false
+  } else {
+    sortField = 'name'
+    sortAsc = true
+  }
+  bsHome.hidden = true
+  bsList.hidden = false
+  replayAnim(bsList, 'bs-push')
+  rebuildList(false)
+}
+
+document.querySelector('.bs-btn[data-view="all"]')!.addEventListener('click', () => openListView('cities'))
+document.querySelector('.bs-btn[data-view="nations"]')!.addEventListener('click', () => openListView('nations'))
+document.querySelector('.bs-btn[data-view="share"]')!.addEventListener('click', () => shareView())
+document.querySelector('.bs-btn[data-view="measure"]')!.addEventListener('click', () => startMeasure())
+
+document.getElementById('bs-back')!.addEventListener('click', closeSheetList)
+
+// --- Share view (permalink) ---
+
+let openCityName: string | null = null
+
+function syncHash() {
+  let h: string
+  if (openCityName) {
+    h = 'city=' + encodeURIComponent(openCityName)
+  } else {
+    const [cx, cy] = toPx(map.getCenter())
+    h = `${map.getZoom()}/${cx}/${cy}`
+  }
+  history.replaceState(null, '', '#' + h)
+}
+
+const shareLabel = document.querySelector('.bs-btn[data-view="share"] .bs-btn-label') as HTMLElement
+const shareCircle = document.querySelector('.bs-btn[data-view="share"] .bs-circle') as HTMLElement
+
+function shareView() {
+  syncHash()
+  navigator.clipboard.writeText(location.href).then(
+    () => {
+      replayAnim(shareCircle, 'bs-bounce')
+      flashShare('Copied!')
+    },
+    () => flashShare('Copy failed')
+  )
+}
+
+function flashShare(text: string) {
+  shareLabel.textContent = text
+  replayAnim(shareLabel, 'bs-label-pop')
+  setTimeout(() => {
+    shareLabel.textContent = 'Share'
+    replayAnim(shareLabel, 'bs-label-pop')
+  }, 1400)
+}
+
+// --- Measure ---
+// Lore scale: the 6000px map diagonal equals Earth's pole-to-pole distance
+// (half the meridional circumference, 20,003.93 km) → ~2.357 km per px
+const PX2KM = 20_003.93 / (6000 * Math.SQRT2)
+
+let measuring = false
+let measurePts: L.LatLng[] = []
+let vertexMarkers: L.CircleMarker[] = []
+let measureLine: L.Polyline | null = null
+const measureLayer = L.layerGroup()
+const measureBar = document.getElementById('measure-bar')!
+const measureTotal = document.getElementById('measure-total')!
+const mapEl = document.getElementById('map')!
+
+function fmtKm(km: number): string {
+  return km >= 100 ? Math.round(km).toLocaleString('en-US') + ' km' : km.toFixed(1) + ' km'
+}
+
+// Vertices are added incrementally (never rebuilt), so each dot's pop-in
+// animation plays exactly once
+function syncMeasureLine() {
+  if (!measureLine) {
+    measureLine = L.polyline([], {
+      color: '#fff', weight: 2, dashArray: '6 6', opacity: 0.9, interactive: false,
+    }).addTo(measureLayer)
+  }
+  measureLine.setLatLngs(measurePts)
+  let km = 0
+  for (let i = 1; i < measurePts.length; i++) {
+    const a = measurePts[i - 1], b = measurePts[i]
+    km += Math.hypot((b.lng - a.lng) * TILE_GRID / U, (b.lat - a.lat) * TILE_GRID / U) * PX2KM
+  }
+  measureTotal.textContent = measurePts.length < 2 ? 'Click the map' : fmtKm(km)
+  replayAnim(measureTotal, 'bs-label-pop')
+}
+
+function addMeasurePoint(ll: L.LatLng) {
+  measurePts.push(ll)
+  vertexMarkers.push(L.circleMarker(ll, {
+    radius: 4, color: '#fff', weight: 2, fillColor: '#0a84ff', fillOpacity: 1,
+    interactive: false, className: 'measure-vertex',
+  }).addTo(measureLayer))
+  syncMeasureLine()
+}
+
+function startMeasure() {
+  measuring = true
+  closeCityPanel()
+  hideSheet()
+  measurePts = []
+  vertexMarkers = []
+  measureLine = null
+  measureLayer.clearLayers()
+  measureLayer.addTo(map)
+  measureBar.classList.remove('mb-closing')
+  measureBar.hidden = false
+  measureTotal.textContent = 'Click the map'
+  mapEl.classList.add('measure-mode')
+}
+
+function endMeasure() {
+  measuring = false
+  measurePts = []
+  vertexMarkers = []
+  measureLine = null
+  measureLayer.clearLayers()
+  map.removeLayer(measureLayer)
+  measureBar.classList.add('mb-closing')
+  measureBar.addEventListener('animationend', () => {
+    measureBar.classList.remove('mb-closing')
+    if (!measuring) measureBar.hidden = true
+  }, { once: true })
+  mapEl.classList.remove('measure-mode')
+  showSheet()
+}
+
+map.on('click', (e: L.LeafletMouseEvent) => {
+  if (!measuring) return
+  addMeasurePoint(e.latlng)
+})
+
+document.getElementById('measure-undo')!.addEventListener('click', () => {
+  if (!measurePts.length) return
+  measurePts.pop()
+  const m = vertexMarkers.pop()
+  if (m) measureLayer.removeLayer(m)
+  syncMeasureLine()
+})
+
+document.getElementById('measure-clear')!.addEventListener('click', () => {
+  measurePts = []
+  for (const m of vertexMarkers) measureLayer.removeLayer(m)
+  vertexMarkers = []
+  syncMeasureLine()
+})
+
+document.getElementById('measure-done')!.addEventListener('click', endMeasure)
+
+// --- Deep links: #city=Name or #zoom/x/y ---
+
+{
+  const h = decodeURIComponent(location.hash.slice(1))
+  if (h.startsWith('city=')) {
+    const name = h.slice(5)
+    const c = cities.find(x => x.name === name) ?? cities.find(x => norm(x.name) === norm(name))
+    if (c) {
+      if (c.x != null && c.y != null) map.setView(px(c.x, c.y), Math.max(map.getZoom(), 4))
+      openCityPanel(c)
+    }
+  } else {
+    const m = h.match(/^(\d+(?:\.\d+)?)\/(-?\d+)\/(-?\d+)$/)
+    if (m) {
+      const z = Math.min(MAX_ZOOM, Math.max(2, parseFloat(m[1])))
+      map.setView(px(parseInt(m[2]), parseInt(m[3])), z)
+    }
+  }
+}
+
+map.on('moveend', syncHash)
