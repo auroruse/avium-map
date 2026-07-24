@@ -27,31 +27,119 @@ html, body {
   pointer-events: none !important;
   font-family: 'SF Pro Display', 'SF UI Display', -apple-system, 'Inter', system-ui, sans-serif;
   transition: opacity 0.2s;
+  /* Tracking is em, never px: the sizing math in main.ts solves a font size
+     from a character advance in em, and an absolute value would drift out of
+     agreement with it at every zoom. Keep --track and TRACK/TRACK_WATER equal. */
+  --track: 0.22em;
+  letter-spacing: var(--track);
+  text-transform: uppercase;
 }
 
-/* Anchor labels at their center, not top-left */
+/* Anchor labels at their center, not top-left. The negative margin cancels
+   the trailing space tracking adds, or the text sits half a gap off-centre. */
 .map-label span {
   display: inline-block;
   transform: translate(-50%, -50%);
+  margin-right: calc(-1 * var(--track));
 }
 
+/* Zoom bands cross-fade instead of popping. visibility keeps a faded-out
+   label from being picked up by hit-testing or find-in-page. */
+.map-label {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.map-label.label-on {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Per-type rules carry colour and weight only. Size is set inline per zoom
+   from the span of the area named, and tracking stays in em so it scales with
+   it — tracking is what makes a name read as covering ground rather than
+   marking a point.
+
+   Colours are opaque on purpose. Any alpha lets the four stacked black
+   shadows above read straight through the strokes, and at label weights that
+   renders as near-black text, not soft colour. */
+.label-continent,
+.label-nation {
+  color: #fff;
+  font-weight: 500;
+}
+
+.label-colony {
+  color: #fff;
+  font-weight: 400;
+  font-style: italic;
+}
+
+/* Water names run tight. They are set in italic at sizes that grow with zoom,
+   and land tracking spreads them into the coastline they are meant to follow. */
 .label-ocean {
   color: #7ca8c4;
-  font-size: 20px;
   font-weight: 600;
-  letter-spacing: 10px;
-  text-transform: uppercase;
   font-style: italic;
+  --track: 0.08em;
 }
 
 .label-sea {
   color: #6898b4;
-  font-size: 15px;
   font-weight: 500;
-  letter-spacing: 5px;
-  text-transform: uppercase;
   font-style: italic;
+  --track: 0.08em;
 }
+
+/* Dev only: .map-label kills pointer events with !important, so re-enabling
+   them takes the same weight. Ties on specificity, wins on source order. */
+.dev-label {
+  pointer-events: auto !important;
+  cursor: grab;
+}
+
+.dev-label:active {
+  cursor: grabbing;
+}
+
+.dev-label span {
+  position: relative;
+}
+
+.dev-label:hover span {
+  outline: 1px dashed rgba(255,255,255,0.55);
+  outline-offset: 2px;
+}
+
+/* Corner resize handles. Hidden until the label is hovered, so 45 of them
+   don't clutter the map; hovering a handle keeps its label hovered too, so
+   they never vanish out from under the cursor on the way to a corner. */
+.lh {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  background: #0a84ff;
+  opacity: 0;
+  transition: opacity 0.12s;
+}
+
+.dev-label:hover .lh {
+  opacity: 1;
+}
+
+/* Held at the floor so it stays grabbable, but too small to survive the cull
+   outside dev — drag a corner out until the outline clears. */
+.label-undersize span {
+  outline: 1px dashed rgba(255,90,90,0.95) !important;
+  outline-offset: 2px;
+}
+
+.lh-nw { top: -7px; left: -7px; cursor: nwse-resize; }
+.lh-ne { top: -7px; right: -7px; cursor: nesw-resize; }
+.lh-sw { bottom: -7px; left: -7px; cursor: nesw-resize; }
+.lh-se { bottom: -7px; right: -7px; cursor: nwse-resize; }
 
 /* City tooltips */
 .city-label {
@@ -426,7 +514,8 @@ html, body {
   margin-bottom: 4px;
 }
 
-#place-search {
+#place-search,
+#place-span {
   width: 100%;
   box-sizing: border-box;
   background: rgba(255,255,255,0.08);
@@ -440,8 +529,31 @@ html, body {
   transition: border-color 0.2s;
 }
 
-#place-search:focus {
+#place-search:focus,
+#place-span:focus {
   border-color: rgba(100,180,255,0.4);
+}
+
+.pp-span-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  font-size: 11px;
+  color: #9aa0a6;
+}
+
+/* The number field shares the search field's chrome, so it takes the row's
+   spare width rather than the full-width rule it inherits */
+#place-span {
+  width: auto;
+  flex: 1;
+  padding: 4px 8px;
+}
+
+#span-readout {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 #place-search::placeholder {

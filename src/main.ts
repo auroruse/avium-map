@@ -100,39 +100,239 @@ interface LabelDef {
   minZoom: number
   maxZoom: number
   tier?: number // nations/colonies: font size in px
+  span?: number // territory width in map px, overriding the derived one
 }
 
 
 const labelDefs = labelsData as LabelDef[]
 const labelMarkers = new Map<LabelDef, L.Marker>()
+const labelLayer = L.layerGroup().addTo(map)
 
-function labelVisible(def: LabelDef, z: number): boolean {
-  if (def.type === 'continent' || def.type === 'nation' || def.type === 'colony') return false
-  return z >= def.minZoom && z <= def.maxZoom
+// Every label is sized to the area it names rather than to a fixed px value,
+// which is the whole trick to reading well at every zoom: a fixed size swamps
+// a small nation when zoomed out and vanishes on a continent when zoomed in.
+const MIN_SPAN = 45   // map px, so a one-city nation still earns a name eventually
+const FIT = 0.75      // the name spans this fraction of the area on screen
+const FS_MIN = 8.5
+
+// Water is the one thing on this map with no border to trace, so its names are
+// set tight and italic and lean on colour to read as water; land names track
+// wide to claim the ground they cover.
+const WATER = new Set(['ocean', 'sea'])
+const TRACK = 0.22       // letter-spacing, em — must match --track in the CSS
+const TRACK_WATER = 0.08 // ditto, .label-ocean / .label-sea
+const GLYPH = 0.68       // char advance before tracking: caps are wider than the 0.62 cities use
+const advanceOf = (def: LabelDef) => GLYPH + (WATER.has(def.type) ? TRACK_WATER : TRACK)
+
+interface Anchor { x: number; y: number; span: number }
+let anchorCache: Map<string, Anchor> | null = null
+
+// Where a nation's name sits and how much room it has, both derived from the
+// cities inside it. Medians, not means: one overseas city should not drag the
+// name into the ocean, and the 10-90 spread keeps an exclave from inflating
+// the name to continent size.
+function anchors(): Map<string, Anchor> {
+  if (anchorCache) return anchorCache
+  const groups = new Map<string, { xs: number[]; ys: number[] }>()
+  const add = (k: string, x: number, y: number) => {
+    let g = groups.get(k)
+    if (!g) groups.set(k, g = { xs: [], ys: [] })
+    g.xs.push(x)
+    g.ys.push(y)
+  }
+  for (const c of cities) {
+    if (c.x == null || c.y == null || !c.nation) continue
+    add(norm(c.nation), c.x, c.y)
+    // A continent has no cities of its own, so it inherits every city of every
+    // nation that names it
+    const cont = nationByName.get(norm(c.nation))?.continent
+    if (cont) add(norm(cont), c.x, c.y)
+  }
+  const at = (a: number[], f: number) => a[Math.min(a.length - 1, Math.floor(a.length * f))]
+  anchorCache = new Map()
+  for (const [k, g] of groups) {
+    g.xs.sort((a, b) => a - b)
+    g.ys.sort((a, b) => a - b)
+    anchorCache.set(k, {
+      x: at(g.xs, 0.5),
+      y: at(g.ys, 0.5),
+      span: Math.max(at(g.xs, 0.9) - at(g.xs, 0.1), at(g.ys, 0.9) - at(g.ys, 0.1), MIN_SPAN),
+    })
+  }
+  return anchorCache
 }
 
-function makeLabelMarker(def: LabelDef): L.Marker {
-  return L.marker(px(def.x!, def.y!), {
+// Screen px per map px at a zoom level
+const scaleAt = (z: number) => (2 ** z * U) / TILE_GRID
+
+// A hand-placed coord always wins; otherwise territories fall back to the
+// centre of their cities, which is why no nation needs placing by hand.
+function labelPos(def: LabelDef): [number, number] | null {
+  if (def.x != null && def.y != null) return [def.x, def.y]
+  const a = anchors().get(norm(def.text))
+  return a ? [a.x, a.y] : null
+}
+
+// Font size that makes the name span FIT of its territory. Returning 0 hides
+// it: too small on screen to read is also too small to name, and that single
+// rule does the work of hand-tuning minZoom per nation — names arrive as their
+// land grows into them.
+// What a label with nothing to measure is worth, taken from what its own kind
+// measures: an empty polar continent has no cities, and MIN_SPAN would render
+// it at under a pixel. Median of the anchored labels of the same type.
+const typeSpans = new Map<string, number>()
+
+function fallbackSpan(def: LabelDef): number {
+  const band = `${def.minZoom}-${def.maxZoom}`
+  let v = typeSpans.get(band)
+  if (v == null) {
+    const med = (ds: LabelDef[]) => {
+      const s = ds
+        .map(d => anchors().get(norm(d.text))?.span)
+        .filter((n): n is number => n != null)
+        .sort((a, b) => a - b)
+      return s.length ? s[s.length >> 1] : null
+    }
+    // Peers are the labels sharing this zoom band, not this type: a band is a
+    // set of names meant to be read at one scale, so a sea inherits from the
+    // continents it appears alongside rather than from the map as a whole.
+    const peer = med(labelDefs.filter(d => d.minZoom === def.minZoom && d.maxZoom === def.maxZoom))
+    typeSpans.set(band, v = peer ?? med(labelDefs) ?? MIN_SPAN)
+  }
+  return v
+}
+
+// A hand-set span is the same quantity the deriver produces, so a tuned label
+// runs through the identical pipeline and keeps scaling with zoom
+function areaSpan(def: LabelDef): number {
+  return def.span ?? anchors().get(norm(def.text))?.span ?? fallbackSpan(def)
+}
+
+// Land names are sized once, at the zoom they first appear at, and hold that
+// screen size: zooming into a nation is asking for the cities under its name,
+// not for bigger letters.
+// Water names do the opposite and stay fixed to the map, growing on screen as
+// you zoom, because a sea has nothing competing for the space and the name is
+// how you read its extent.
+const sizeZoom = (def: LabelDef, z: number) => (WATER.has(def.type) ? z : def.minZoom)
+
+// No floor and no ceiling — every clamp here froze the label the moment a drag
+// pushed past it, which reads as resizing being broken.
+function areaFontSize(def: LabelDef, z: number): number {
+  return (areaSpan(def) * scaleAt(sizeZoom(def, z)) * FIT) / (def.text.length * advanceOf(def))
+}
+
+// Too small to read is too small to draw, so the real map culls it. Dev keeps
+// drawing it at whatever size it truly is: the handles are a fixed 7px, so a
+// label shrunk to nothing is still grabbable and still recoverable.
+function labelShown(def: LabelDef, z: number): boolean {
+  return map.hasLayer(labelLayer) &&
+    z >= def.minZoom && z <= def.maxZoom && (DEV || areaFontSize(def, z) >= FS_MIN)
+}
+
+function makeLabelMarker(def: LabelDef, pos: [number, number]): L.Marker {
+  const handles = DEV
+    ? ['nw', 'ne', 'sw', 'se'].map(c => `<i class="lh lh-${c}"></i>`).join('')
+    : ''
+  return L.marker(px(pos[0], pos[1]), {
     icon: L.divIcon({
-      className: `map-label label-${def.type}`,
-      html: `<span>${def.text}</span>`,
+      className: `map-label label-${def.type}${DEV ? ' dev-label' : ''}`,
+      html: `<span>${def.text}${handles}</span>`,
       iconSize: [0, 0],
       iconAnchor: [0, 0],
     }),
-    interactive: false,
+    interactive: DEV,
+    draggable: DEV,
     zIndexOffset: -1000,
   })
 }
 
-// (Re)create a label's marker after its coords change
-function refreshLabel(def: LabelDef) {
+// Dev editing: drag to move, wheel to resize. Both write straight onto the
+// def, so the export button picks them up with no separate bookkeeping.
+function wireLabelEdit(def: LabelDef, m: L.Marker) {
+  const commit = (msg: string) => {
+    saveLabelProgress()
+    invalidatePlacements()
+    updateCities()
+    statusEl.textContent = msg
+  }
+
+  m.on('dragend', () => {
+    ;[def.x, def.y] = toPx(m.getLatLng())
+    commit(`${def.text} → [${def.x}, ${def.y}]`)
+  })
+
+  const el = m.getElement()
+  if (!el) return
+
+  // Double-click hands the label to the placer's span field, for when a corner
+  // drag is too coarse or the number has to match another label's
+  L.DomEvent.on(el, 'dblclick', (e) => {
+    L.DomEvent.stop(e) // or the map zooms out from under the label
+    setSpanTarget(def)
+    spanInput.focus()
+    spanInput.select()
+  })
+
+  // Corner handles resize. Distance from the label's centre drives it, so
+  // every corner behaves the same and drag-out always means bigger. What gets
+  // set is the span, not a font size, so a tuned label keeps scaling with
+  // zoom exactly as a derived one does.
+  for (const h of el.querySelectorAll<HTMLElement>('.lh')) {
+    // Leaflet starts a marker drag on touchstart too when the browser reports
+    // touch, so a finger reaching for a handle would drag the label instead
+    L.DomEvent.on(h, 'touchstart', L.DomEvent.stop)
+    L.DomEvent.on(h, 'mousedown', (e) => {
+      L.DomEvent.stop(e) // or Leaflet reads it as the start of a marker drag
+      const rect = map.getContainer().getBoundingClientRect()
+      const c = map.latLngToContainerPoint(m.getLatLng())
+      const reach = (ev: MouseEvent) =>
+        Math.hypot(ev.clientX - rect.left - c.x, ev.clientY - rect.top - c.y)
+      // Half the box diagonal, per px of font size
+      const perFs = Math.hypot(def.text.length * advanceOf(def), 1.4) / 2
+      // Handles sit just outside the corner, so the grab starts a little past
+      // it; keeping that offset stops the label jumping on mousedown
+      const slack = reach(e as MouseEvent) - areaFontSize(def, map.getZoom()) * perFs
+
+      // The grabbed corner tracks the cursor. Solving for size from the
+      // pointer each frame, rather than scaling the previous size, is what
+      // makes this recoverable: drag to nothing and dragging back out
+      // restores it, with no floor needed to prevent a dead end.
+      // Only the font size is touched per frame; the placement rebuild that
+      // 1700 cities depend on waits for mouseup.
+      const move = (ev: MouseEvent) => {
+        const fs = Math.max(0, reach(ev) - slack) / perFs
+        def.span = (fs * def.text.length * advanceOf(def)) / (scaleAt(sizeZoom(def, map.getZoom())) * FIT)
+        updateLabels()
+        if (spanTarget === def) syncSpanRow()
+      }
+      const up = () => {
+        document.removeEventListener('mousemove', move)
+        document.removeEventListener('mouseup', up)
+        commit(`${def.text} → span ${Math.round(def.span!)}`)
+      }
+      document.addEventListener('mousemove', move)
+      document.addEventListener('mouseup', up)
+    })
+  }
+}
+
+function mountLabel(def: LabelDef) {
   const existing = labelMarkers.get(def)
   if (existing) {
-    map.removeLayer(existing)
+    labelLayer.removeLayer(existing)
     labelMarkers.delete(def)
   }
-  if (def.x == null || def.y == null) return
-  labelMarkers.set(def, makeLabelMarker(def).addTo(map))
+  const pos = labelPos(def)
+  if (!pos) return
+  const m = makeLabelMarker(def, pos).addTo(labelLayer)
+  labelMarkers.set(def, m)
+  if (DEV) wireLabelEdit(def, m)
+}
+
+// (Re)create a label's marker after its coords change
+function refreshLabel(def: LabelDef) {
+  mountLabel(def)
   updateLabels()
   invalidatePlacements()
   updateCities()
@@ -143,7 +343,11 @@ function updateLabels() {
   for (const [def, marker] of labelMarkers) {
     const el = marker.getElement()
     if (!el) continue
-    el.style.display = labelVisible(def, z) ? '' : 'none'
+    const fs = areaFontSize(def, z)
+    el.style.fontSize = fs.toFixed(1) + 'px'
+    // Marks the labels dev is drawing that the real map would cull
+    if (DEV) el.classList.toggle('label-undersize', fs < FS_MIN)
+    el.classList.toggle('label-on', labelShown(def, z))
   }
 }
 
@@ -164,6 +368,22 @@ interface City {
 
 const cities = citiesData as City[]
 const cityLayer = L.layerGroup().addTo(map)
+
+// Registered here rather than in overlayControl above because cityLayer has to
+// exist first, which puts them under Borders and Rivers in the control
+layerCtrl.addOverlay(labelLayer, 'Territory Names')
+layerCtrl.addOverlay(cityLayer, 'Cities')
+
+map.on('overlayadd overlayremove', (e) => {
+  if ((e as L.LayersControlEvent).layer !== labelLayer) return
+  // Leaflet rebuilds a marker's element when its group is re-added, dropping
+  // the inline font size and, in dev, the corner handles bound to the old one
+  if (DEV) for (const def of labelDefs) mountLabel(def)
+  updateLabels()
+  // Names reserve space in the placement grid, so hiding them hands it back
+  invalidatePlacements()
+  updateCities()
+})
 
 // Bigger tiers always beat smaller ones for space; GDP breaks ties within a tier
 function tierRank(pop: number): number {
@@ -386,6 +606,21 @@ function computePlacement(z: number, pinned: City[]): Placement[] {
     cell.push(j)
   }
   maxDotR += 0.5
+
+  // Area names claim their space before any city competes for it, and never
+  // move. A city label that would cross one is pushed to its other side; a
+  // city with no free side, or whose dot the name covers outright, does not
+  // render at all.
+  for (const def of labelDefs) {
+    if (!labelShown(def, z)) continue
+    const fs = areaFontSize(def, z)
+    const pos = labelPos(def)
+    if (!fs || !pos) continue
+    const s = scaleAt(z)
+    const w = def.text.length * fs * advanceOf(def)
+    const h = fs * 1.4
+    addBox({ x: pos[0] * s - w / 2, y: pos[1] * s - h / 2, w, h })
+  }
 
   const placed: Placement[] = []
 
@@ -849,26 +1084,29 @@ function loadProgress() {
 const LABEL_KEY = 'avium-label-coords'
 
 function saveLabelProgress() {
-  const coords: Record<string, number[]> = {}
+  const saved: Record<string, Partial<LabelDef>> = {}
   for (const d of labelDefs) {
-    if (d.x != null && d.y != null) {
-      coords[`${d.type}:${d.text}`] = d.tier != null ? [d.x, d.y, d.tier] : [d.x, d.y]
-    }
+    // A resized label may never have been dragged, so span alone is enough
+    if (d.x == null && d.span == null) continue
+    saved[`${d.type}:${d.text}`] = { x: d.x, y: d.y, tier: d.tier, span: d.span }
   }
-  localStorage.setItem(LABEL_KEY, JSON.stringify(coords))
+  localStorage.setItem(LABEL_KEY, JSON.stringify(saved))
 }
 
 function loadLabelProgress() {
   const raw = localStorage.getItem(LABEL_KEY)
   if (!raw) return
-  const coords: Record<string, number[]> = JSON.parse(raw)
+  const saved: Record<string, any> = JSON.parse(raw)
   for (const d of labelDefs) {
-    const c = coords[`${d.type}:${d.text}`]
-    if (c) {
-      d.x = c[0]
-      d.y = c[1]
-      if (c[2] != null) d.tier = c[2]
+    const s = saved[`${d.type}:${d.text}`]
+    if (!s) continue
+    const v = Array.isArray(s) ? { x: s[0], y: s[1], tier: s[2] } : s // pre-span sessions
+    if (v.x != null) {
+      d.x = v.x
+      d.y = v.y
     }
+    if (v.tier != null) d.tier = v.tier
+    if (v.span != null) d.span = v.span
   }
 }
 
@@ -1008,7 +1246,12 @@ if (loaded > 0) {
 }
 
 loadLabelProgress()
-for (const def of labelDefs) refreshLabel(def)
+// mountLabel, not refreshLabel: one placement rebuild at the end rather than
+// one per label
+for (const def of labelDefs) mountLabel(def)
+updateLabels()
+invalidatePlacements()
+updateCities()
 
 const panel = document.getElementById('place-panel')!
 const searchInput = document.getElementById('place-search') as HTMLInputElement
@@ -1020,6 +1263,9 @@ const importInput = document.getElementById('place-import') as HTMLInputElement
 const unassignedPanel = document.getElementById('unassigned-panel')!
 const unassignedHeader = document.getElementById('unassigned-header')!
 const unassignedList = document.getElementById('unassigned-list')!
+const spanRow = document.getElementById('span-row')!
+const spanInput = document.getElementById('place-span') as HTMLInputElement
+const spanReadout = document.getElementById('span-readout')!
 
 if (!DEV) {
   panel.style.display = 'none'
@@ -1029,26 +1275,75 @@ if (!DEV) {
 
 let selectedCity: City | null = null
 let selectedLabel: LabelDef | null = null
+
+// The label the span field edits. Tracked apart from selectedLabel, which is
+// armed for a placement click and cleared the moment one lands — the size
+// usually wants a few passes after the position is right.
+let spanTarget: LabelDef | null = null
+
+function syncSpanRow() {
+  const d = spanTarget
+  spanRow.hidden = !d
+  if (!d) return
+  const span = Math.round(areaSpan(d))
+  if (document.activeElement !== spanInput) spanInput.value = String(span)
+  spanReadout.textContent = `${d.text} · ${areaFontSize(d, map.getZoom()).toFixed(1)}px`
+}
+
+function setSpanTarget(d: LabelDef | null) {
+  spanTarget = d
+  syncSpanRow()
+}
+
+spanInput.addEventListener('input', () => {
+  const n = Number(spanInput.value)
+  if (!spanTarget || !isFinite(n) || n <= 0) return
+  spanTarget.span = n
+  // Per keystroke, only the ~70 label markers redraw; the placement rebuild
+  // that 1700 cities depend on waits for blur or Enter
+  updateLabels()
+  syncSpanRow()
+})
+
+spanInput.addEventListener('change', () => {
+  if (!spanTarget?.span) return
+  saveLabelProgress()
+  invalidatePlacements()
+  updateCities()
+  statusEl.textContent = `${spanTarget.text} → span ${Math.round(spanTarget.span)}`
+  statusEl.className = 'status-done'
+})
 let placedMarker: L.CircleMarker | null = null
 
 function updateCount() {
   const placed = cities.filter(c => c.x != null && c.y != null).length
-  const activeDefs = labelDefs.filter(d => d.type !== 'continent' && d.type !== 'nation' && d.type !== 'colony')
-  const lPlaced = activeDefs.filter(d => d.x != null && d.y != null).length
-  countEl.textContent = `${placed}/${cities.length} cities · ${lPlaced}/${activeDefs.length} labels`
+  // A derived anchor counts as placed: that label is already on the map and
+  // draggable, so the placer has nothing left to do for it
+  const lPlaced = labelDefs.filter(d => labelPos(d) != null).length
+  countEl.textContent = `${placed}/${cities.length} cities · ${lPlaced}/${labelDefs.length} labels`
   updateUnassigned()
 }
 
 function updateUnassigned() {
   if (!DEV) return
+  const unplacedLabels = labelDefs.filter(d => labelPos(d) == null)
   const unplaced = citiesByPriority.filter(c => c.x == null || c.y == null)
-  unassignedHeader.textContent = `Unassigned (${unplaced.length})`
-  if (!unplaced.length) {
+  const total = unplacedLabels.length + unplaced.length
+  unassignedHeader.textContent = `Unassigned (${total})`
+  if (!total) {
     unassignedPanel.style.display = 'none'
     return
   }
   unassignedPanel.style.display = ''
   unassignedList.innerHTML = ''
+  // Labels first: there are a handful, and each covers more map than any city
+  for (const d of unplacedLabels) {
+    const li = document.createElement('li')
+    li.innerHTML = `<span class="result-name">${d.text}</span>` +
+      `<span class="result-meta">${d.type.toUpperCase()}</span>`
+    li.addEventListener('click', () => selectLabel(d))
+    unassignedList.appendChild(li)
+  }
   for (const c of unplaced) {
     const li = document.createElement('li')
     li.innerHTML = `<span class="result-name">${c.name}</span>` +
@@ -1085,8 +1380,7 @@ searchInput.addEventListener('input', () => {
   }
 
   const labelMatches = labelDefs
-    .filter(d => d.type !== 'continent' && d.type !== 'nation' && d.type !== 'colony'
-      && d.text.toLowerCase().includes(q))
+    .filter(d => norm(d.text).includes(q))
     .slice(0, 6)
 
   for (const d of labelMatches) {
@@ -1103,6 +1397,7 @@ searchInput.addEventListener('input', () => {
 function selectCity(c: City) {
   selectedCity = c
   selectedLabel = null
+  setSpanTarget(null)
   resultsList.innerHTML = ''
   searchInput.value = c.name
   statusEl.textContent = `Click the map to place ${c.name}`
@@ -1116,6 +1411,7 @@ function selectCity(c: City) {
 function selectLabel(d: LabelDef) {
   selectedLabel = d
   selectedCity = null
+  setSpanTarget(d)
   resultsList.innerHTML = ''
   searchInput.value = d.text
   statusEl.className = 'status-active'

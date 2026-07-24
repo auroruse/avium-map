@@ -12,13 +12,18 @@
   <div id="map"></div>
   <div id="place-panel">
     <div class="pp-header">
-      <span class="pp-title">City Placer</span>
+      <span class="pp-title">Placer</span>
       <span id="place-count" class="pp-count"></span>
     </div>
     <div class="pp-search-row">
-      <input id="place-search" type="text" placeholder="Search cities..." autocomplete="off">
+      <input id="place-search" type="text" placeholder="Search cities or labels..." autocomplete="off">
     </div>
     <ul id="place-results"></ul>
+    <div class="pp-span-row" id="span-row" hidden>
+      <label for="place-span">Span</label>
+      <input id="place-span" type="number" min="1" step="10">
+      <span id="span-readout"></span>
+    </div>
     <div id="place-status"></div>
     <div class="pp-toolbar">
       <button id="place-undo" title="Undo last placement">Undo</button>

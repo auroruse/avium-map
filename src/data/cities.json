@@ -229,7 +229,7 @@
   },
   {
     "name": "Kolkutta",
-    "nation": "Arvernois West Bangala",
+    "nation": "West Bangala",
     "population": 14681000,
     "gdp": 224500000000,
     "gdpPerCapita": 15292,
@@ -997,7 +997,7 @@
   },
   {
     "name": "Canot",
-    "nation": "Arvernois North Aphirica",
+    "nation": "Côte de Saumon",
     "population": 4810000,
     "gdp": 42500000000,
     "gdpPerCapita": 8836,
@@ -1093,7 +1093,7 @@
   },
   {
     "name": "Aubourg",
-    "nation": "Arvernois North Aphirica",
+    "nation": "Côte de Saumon",
     "population": 4392000,
     "gdp": 82400000000,
     "gdpPerCapita": 18761,
@@ -1129,7 +1129,7 @@
   },
   {
     "name": "Cap de Bonne-Espérance",
-    "nation": "Arvernois South Pelagonia",
+    "nation": "South Pelagonia",
     "population": 4210000,
     "gdp": 124500000000,
     "gdpPerCapita": 29572,
@@ -1369,7 +1369,7 @@
   },
   {
     "name": "Algernon",
-    "nation": "Arvernois Barbary",
+    "nation": "Barbary",
     "population": 3246000,
     "gdp": 64800000000,
     "gdpPerCapita": 19963,
@@ -2017,7 +2017,7 @@
   },
   {
     "name": "Bakou",
-    "nation": "Arvernois East Kaukasos",
+    "nation": "East Kaukasos",
     "population": 2382000,
     "gdp": 92500000000,
     "gdpPerCapita": 38833,
@@ -2881,7 +2881,7 @@
   },
   {
     "name": "Tauris",
-    "nation": "Arvernois East Kaukasos",
+    "nation": "East Kaukasos",
     "population": 1713000,
     "gdp": 42800000000,
     "gdpPerCapita": 24985,
@@ -2953,7 +2953,7 @@
   },
   {
     "name": "Niamé-sur-Saharienne",
-    "nation": "Arvernois North Aphirica",
+    "nation": "Côte de Saumon",
     "population": 1633000,
     "gdp": 8850000000,
     "gdpPerCapita": 5419,
@@ -3169,7 +3169,7 @@
   },
   {
     "name": "San Damiano",
-    "nation": "Vicilian North Aphirica",
+    "nation": "Aphirica del Nord",
     "population": 1514000,
     "gdp": 9850000000,
     "gdpPerCapita": 6506,
@@ -3205,7 +3205,7 @@
   },
   {
     "name": "Assansole",
-    "nation": "Arvernois West Bangala",
+    "nation": "West Bangala",
     "population": 1474000,
     "gdp": 18800000000,
     "gdpPerCapita": 12754,
@@ -3685,7 +3685,7 @@
   },
   {
     "name": "Cadounie",
-    "nation": "Arvernois North Aphirica",
+    "nation": "Côte de Saumon",
     "population": 1302000,
     "gdp": 11500000000,
     "gdpPerCapita": 8833,
@@ -3853,7 +3853,7 @@
   },
   {
     "name": "Obangia",
-    "nation": "Vicilian North Aphirica",
+    "nation": "Aphirica del Nord",
     "population": 1224000,
     "gdp": 3200000000,
     "gdpPerCapita": 2614,
@@ -3949,7 +3949,7 @@
   },
   {
     "name": "Montlionne",
-    "nation": "Arvernois Barbary",
+    "nation": "Barbary",
     "population": 1192000,
     "gdp": 18500000000,
     "gdpPerCapita": 15520,
@@ -4045,7 +4045,7 @@
   },
   {
     "name": "Port Gabéra",
-    "nation": "Arvernois South Pelagonia",
+    "nation": "South Pelagonia",
     "population": 1180000,
     "gdp": 22800000000,
     "gdpPerCapita": 19322,
@@ -4057,7 +4057,7 @@
   },
   {
     "name": "Bungaloo",
-    "nation": "Shivonite Southeast Aphirica",
+    "nation": "Southeast Aphirica",
     "population": 1180000,
     "gdp": 6250000000,
     "gdpPerCapita": 5297,
@@ -4369,7 +4369,7 @@
   },
   {
     "name": "Erevan",
-    "nation": "Arvernois East Kaukasos",
+    "nation": "East Kaukasos",
     "population": 1103000,
     "gdp": 24800000000,
     "gdpPerCapita": 22484,
@@ -4405,7 +4405,7 @@
   },
   {
     "name": "Tiflis",
-    "nation": "Arvernois East Kaukasos",
+    "nation": "East Kaukasos",
     "population": 1090000,
     "gdp": 32400000000,
     "gdpPerCapita": 29725,
@@ -4465,7 +4465,7 @@
   },
   {
     "name": "Jousse",
-    "nation": "Arvernois North Aphirica",
+    "nation": "Côte de Saumon",
     "population": 1071000,
     "gdp": 4100000000,
     "gdpPerCapita": 3828,
@@ -4897,7 +4897,7 @@
   },
   {
     "name": "Kasantina",
-    "nation": "Arvernois Barbary",
+    "nation": "Barbary",
     "population": 962000,
     "gdp": 11500000000,
     "gdpPerCapita": 11954,
@@ -4957,7 +4957,7 @@
   },
   {
     "name": "Coulne",
-    "nation": "Arvernois West Bangala",
+    "nation": "West Bangala",
     "population": 942000,
     "gdp": 11400000000,
     "gdpPerCapita": 12102,
@@ -5017,7 +5017,7 @@
   },
   {
     "name": "Médouris",
-    "nation": "Arvernois North Aphirica",
+    "nation": "Côte de Saumon",
     "population": 929000,
     "gdp": 5250000000,
     "gdpPerCapita": 5651,
@@ -5233,7 +5233,7 @@
   },
   {
     "name": "Orumieh",
-    "nation": "Arvernois East Kaukasos",
+    "nation": "East Kaukasos",
     "population": 871000,
     "gdp": 14500000000,
     "gdpPerCapita": 16648,
@@ -5449,7 +5449,7 @@
   },
   {
     "name": "Zarienne",
-    "nation": "Arvernois North Aphirica",
+    "nation": "Côte de Saumon",
     "population": 835000,
     "gdp": 3450000000,
     "gdpPerCapita": 4132,
@@ -5684,8 +5684,8 @@
     "nativeScript": "安易",
     "irlParallel": "Tongling",
     "alpha3": "FUR",
-    "x": null,
-    "y": null
+    "x": 3391,
+    "y": 579
   },
   {
     "name": "Mangapura",
@@ -5713,7 +5713,7 @@
   },
   {
     "name": "Saucoté",
-    "nation": "Arvernois North Aphirica",
+    "nation": "Côte de Saumon",
     "population": 789000,
     "gdp": 3200000000,
     "gdpPerCapita": 4056,
@@ -5845,7 +5845,7 @@
   },
   {
     "name": "Beauchis",
-    "nation": "Arvernois North Aphirica",
+    "nation": "Côte de Saumon",
     "population": 751000,
     "gdp": 3150000000,
     "gdpPerCapita": 4194,
@@ -6433,7 +6433,7 @@
   },
   {
     "name": "Gombeau",
-    "nation": "Arvernois North Aphirica",
+    "nation": "Côte de Saumon",
     "population": 644000,
     "gdp": 2850000000,
     "gdpPerCapita": 4425,
@@ -6673,7 +6673,7 @@
   },
   {
     "name": "Artevil",
-    "nation": "Arvernois East Kaukasos",
+    "nation": "East Kaukasos",
     "population": 622000,
     "gdp": 11400000000,
     "gdpPerCapita": 18328,
@@ -6769,7 +6769,7 @@
   },
   {
     "name": "Hippone",
-    "nation": "Arvernois Barbary",
+    "nation": "Barbary",
     "population": 612000,
     "gdp": 8400000000,
     "gdpPerCapita": 13725,
@@ -7081,7 +7081,7 @@
   },
   {
     "name": "Cassiné",
-    "nation": "Arvernois North Aphirica",
+    "nation": "Côte de Saumon",
     "population": 586000,
     "gdp": 2250000000,
     "gdpPerCapita": 3840,
@@ -7537,7 +7537,7 @@
   },
   {
     "name": "Al-Gilfah",
-    "nation": "Arvernois Barbary",
+    "nation": "Barbary",
     "population": 542000,
     "gdp": 5200000000,
     "gdpPerCapita": 9594,
@@ -7741,7 +7741,7 @@
   },
   {
     "name": "Sitifa",
-    "nation": "Arvernois Barbary",
+    "nation": "Barbary",
     "population": 534000,
     "gdp": 7200000000,
     "gdpPerCapita": 13483,
@@ -8336,8 +8336,8 @@
     "nativeScript": "岩崎",
     "irlParallel": "Newcastle",
     "alpha3": "NCH",
-    "x": null,
-    "y": null
+    "x": 3026,
+    "y": 5533
   },
   {
     "name": "Tia Juana",
@@ -8461,7 +8461,7 @@
   },
   {
     "name": "Argungu",
-    "nation": "Arvernois North Aphirica",
+    "nation": "Côte de Saumon",
     "population": 463000,
     "gdp": 1150000000,
     "gdpPerCapita": 2484,
@@ -8485,7 +8485,7 @@
   },
   {
     "name": "Dunmaris-Est",
-    "nation": "Arvernois South Pelagonia",
+    "nation": "South Pelagonia",
     "population": 462000,
     "gdp": 8400000000,
     "gdpPerCapita": 18182,
@@ -8881,7 +8881,7 @@
   },
   {
     "name": "Batman",
-    "nation": "Arvernois Barbary",
+    "nation": "Barbary",
     "population": 418000,
     "gdp": 4850000000,
     "gdpPerCapita": 11603,
@@ -9224,8 +9224,8 @@
     "nativeScript": "",
     "irlParallel": "Heyuan",
     "alpha3": "SGD",
-    "x": null,
-    "y": null
+    "x": 3813,
+    "y": 537
   },
   {
     "name": "Xarpêt",
@@ -9241,7 +9241,7 @@
   },
   {
     "name": "Ashafa",
-    "nation": "Arvernois North Aphirica",
+    "nation": "Côte de Saumon",
     "population": 409000,
     "gdp": 1450000000,
     "gdpPerCapita": 3545,
@@ -9337,7 +9337,7 @@
   },
   {
     "name": "Sébastopol",
-    "nation": "Arvernois East Kaukasos",
+    "nation": "East Kaukasos",
     "population": 401000,
     "gdp": 11500000000,
     "gdpPerCapita": 28678,
@@ -9349,7 +9349,7 @@
   },
   {
     "name": "Bidéa",
-    "nation": "Arvernois North Aphirica",
+    "nation": "Côte de Saumon",
     "population": 398000,
     "gdp": 1250000000,
     "gdpPerCapita": 3141,
@@ -9877,7 +9877,7 @@
   },
   {
     "name": "Maravento",
-    "nation": "Vicilian North Aphirica",
+    "nation": "Aphirica del Nord",
     "population": 352000,
     "gdp": 2050000000,
     "gdpPerCapita": 5824,
@@ -9889,7 +9889,7 @@
   },
   {
     "name": "Mostagneau",
-    "nation": "Arvernois Barbary",
+    "nation": "Barbary",
     "population": 351000,
     "gdp": 4100000000,
     "gdpPerCapita": 11681,
@@ -10057,7 +10057,7 @@
   },
   {
     "name": "Tourcos",
-    "nation": "Arvernois East Kaukasos",
+    "nation": "East Kaukasos",
     "population": 342000,
     "gdp": 5450000000,
     "gdpPerCapita": 15936,
@@ -10237,7 +10237,7 @@
   },
   {
     "name": "Aqmescit",
-    "nation": "Arvernois East Kaukasos",
+    "nation": "East Kaukasos",
     "population": 339000,
     "gdp": 9200000000,
     "gdpPerCapita": 27139,
@@ -10897,7 +10897,7 @@
   },
   {
     "name": "Garovia",
-    "nation": "Vicilian North Aphirica",
+    "nation": "Aphirica del Nord",
     "population": 312000,
     "gdp": 1250000000,
     "gdpPerCapita": 4006,
@@ -10981,7 +10981,7 @@
   },
   {
     "name": "Bérampour",
-    "nation": "Arvernois West Bangala",
+    "nation": "West Bangala",
     "population": 305000,
     "gdp": 3450000000,
     "gdpPerCapita": 11311,
@@ -11161,7 +11161,7 @@
   },
   {
     "name": "Carapour",
-    "nation": "Arvernois West Bangala",
+    "nation": "West Bangala",
     "population": 293000,
     "gdp": 6250000000,
     "gdpPerCapita": 21331,
@@ -12200,8 +12200,8 @@
     "nativeScript": "Пермское",
     "irlParallel": "Komsomolsk-on-Amur",
     "alpha3": "RUD",
-    "x": null,
-    "y": null
+    "x": 2309,
+    "y": 951
   },
   {
     "name": "Colter",
@@ -12277,7 +12277,7 @@
   },
   {
     "name": "Bougie",
-    "nation": "Arvernois Barbary",
+    "nation": "Barbary",
     "population": 228000,
     "gdp": 2850000000,
     "gdpPerCapita": 12500,
@@ -12332,8 +12332,8 @@
     "nativeScript": "",
     "irlParallel": "Ternopil",
     "alpha3": "SID",
-    "x": null,
-    "y": null
+    "x": 3211,
+    "y": 2419
   },
   {
     "name": "Flevens",
@@ -12769,7 +12769,7 @@
   },
   {
     "name": "Saint-Georges",
-    "nation": "Arvernois South Pelagonia",
+    "nation": "South Pelagonia",
     "population": 212000,
     "gdp": 6850000000,
     "gdpPerCapita": 32311,
@@ -13153,7 +13153,7 @@
   },
   {
     "name": "Kumbaya",
-    "nation": "Shivonite Southeast Aphirica",
+    "nation": "Southeast Aphirica",
     "population": 204000,
     "gdp": 620000000,
     "gdpPerCapita": 3039,
@@ -13465,7 +13465,7 @@
   },
   {
     "name": "Sakez",
-    "nation": "Arvernois East Kaukasos",
+    "nation": "East Kaukasos",
     "population": 192000,
     "gdp": 2850000000,
     "gdpPerCapita": 14844,
@@ -13621,7 +13621,7 @@
   },
   {
     "name": "Batoum",
-    "nation": "Arvernois East Kaukasos",
+    "nation": "East Kaukasos",
     "population": 186000,
     "gdp": 3850000000,
     "gdpPerCapita": 20699,
@@ -13633,7 +13633,7 @@
   },
   {
     "name": "Nantingou",
-    "nation": "Arvernois North Aphirica",
+    "nation": "Côte de Saumon",
     "population": 186000,
     "gdp": 640000000,
     "gdpPerCapita": 3441,
@@ -13765,7 +13765,7 @@
   },
   {
     "name": "Matara",
-    "nation": "Arvernois South Pelagonia",
+    "nation": "South Pelagonia",
     "population": 184000,
     "gdp": 2150000000,
     "gdpPerCapita": 11685,
@@ -13885,7 +13885,7 @@
   },
   {
     "name": "Ndorena",
-    "nation": "Vicilian North Aphirica",
+    "nation": "Aphirica del Nord",
     "population": 184000,
     "gdp": 1050000000,
     "gdpPerCapita": 5707,
@@ -14029,7 +14029,7 @@
   },
   {
     "name": "Dukuzaya",
-    "nation": "Shivonite Southeast Aphirica",
+    "nation": "Southeast Aphirica",
     "population": 178000,
     "gdp": 410000000,
     "gdpPerCapita": 2303,
@@ -14173,7 +14173,7 @@
   },
   {
     "name": "Koyban",
-    "nation": "Arvernois East Kaukasos",
+    "nation": "East Kaukasos",
     "population": 174000,
     "gdp": 3150000000,
     "gdpPerCapita": 18103,
@@ -14689,7 +14689,7 @@
   },
   {
     "name": "Biram",
-    "nation": "Arvernois North Aphirica",
+    "nation": "Côte de Saumon",
     "population": 162000,
     "gdp": 820000000,
     "gdpPerCapita": 5062,
@@ -15253,7 +15253,7 @@
   },
   {
     "name": "Koutaissi",
-    "nation": "Arvernois East Kaukasos",
+    "nation": "East Kaukasos",
     "population": 148000,
     "gdp": 2450000000,
     "gdpPerCapita": 16554,
@@ -15349,7 +15349,7 @@
   },
   {
     "name": "Reykawick",
-    "nation": "Elvesterian Thule",
+    "nation": "Thule",
     "population": 144000,
     "gdp": 7250000000,
     "gdpPerCapita": 50347,
@@ -15457,7 +15457,7 @@
   },
   {
     "name": "Noungu",
-    "nation": "Arvernois North Aphirica",
+    "nation": "Côte de Saumon",
     "population": 142000,
     "gdp": 450000000,
     "gdpPerCapita": 3169,
@@ -16069,7 +16069,7 @@
   },
   {
     "name": "Gumri",
-    "nation": "Arvernois East Kaukasos",
+    "nation": "East Kaukasos",
     "population": 122000,
     "gdp": 1950000000,
     "gdpPerCapita": 15984,
@@ -16081,7 +16081,7 @@
   },
   {
     "name": "Farride",
-    "nation": "Arvernois West Bangala",
+    "nation": "West Bangala",
     "population": 122000,
     "gdp": 1250000000,
     "gdpPerCapita": 10246,
@@ -16141,7 +16141,7 @@
   },
   {
     "name": "Bakassa",
-    "nation": "Vicilian North Aphirica",
+    "nation": "Aphirica del Nord",
     "population": 122000,
     "gdp": 185000000,
     "gdpPerCapita": 1516,
@@ -16352,8 +16352,8 @@
     "nativeScript": "",
     "irlParallel": "Labé",
     "alpha3": "HOL",
-    "x": null,
-    "y": null
+    "x": 2059,
+    "y": 3672
   },
   {
     "name": "Amassajärvi",
@@ -16508,8 +16508,8 @@
     "nativeScript": "",
     "irlParallel": "Bremerhaven",
     "alpha3": "NOR",
-    "x": null,
-    "y": null
+    "x": 2887,
+    "y": 2605
   },
   {
     "name": "Santa María",
@@ -16789,7 +16789,7 @@
   },
   {
     "name": "Lagras",
-    "nation": "Arvernois North Aphirica",
+    "nation": "Côte de Saumon",
     "population": 112000,
     "gdp": 320000000,
     "gdpPerCapita": 2857,
@@ -17113,7 +17113,7 @@
   },
   {
     "name": "Cap-des-Flammes",
-    "nation": "Arvernois South Pelagonia",
+    "nation": "South Pelagonia",
     "population": 104000,
     "gdp": 3850000000,
     "gdpPerCapita": 37019,
@@ -17209,7 +17209,7 @@
   },
   {
     "name": "Al-Sabkha",
-    "nation": "Arvernois Barbary",
+    "nation": "Barbary",
     "population": 102000,
     "gdp": 1850000000,
     "gdpPerCapita": 18137,
@@ -17221,7 +17221,7 @@
   },
   {
     "name": "Mengechar",
-    "nation": "Arvernois East Kaukasos",
+    "nation": "East Kaukasos",
     "population": 102000,
     "gdp": 1620000000,
     "gdpPerCapita": 15882,
@@ -17233,7 +17233,7 @@
   },
   {
     "name": "Vourcestre",
-    "nation": "Arvernois South Pelagonia",
+    "nation": "South Pelagonia",
     "population": 102000,
     "gdp": 2450000000,
     "gdpPerCapita": 24020,
@@ -17665,7 +17665,7 @@
   },
   {
     "name": "Bochier",
-    "nation": "Arvernois Barbary",
+    "nation": "Barbary",
     "population": 92000,
     "gdp": 980000000,
     "gdpPerCapita": 10652,
@@ -17749,7 +17749,7 @@
   },
   {
     "name": "Acra",
-    "nation": "Shivonite Southeast Aphirica",
+    "nation": "Southeast Aphirica",
     "population": 92000,
     "gdp": 245000000,
     "gdpPerCapita": 2663,
@@ -18025,7 +18025,7 @@
   },
   {
     "name": "Lánkon",
-    "nation": "Arvernois East Kaukasos",
+    "nation": "East Kaukasos",
     "population": 82000,
     "gdp": 1250000000,
     "gdpPerCapita": 15244,
@@ -18037,7 +18037,7 @@
   },
   {
     "name": "Uchoyé",
-    "nation": "Arvernois South Pelagonia",
+    "nation": "South Pelagonia",
     "population": 82000,
     "gdp": 3450000000,
     "gdpPerCapita": 42073,
@@ -18229,7 +18229,7 @@
   },
   {
     "name": "Baie-des-Moules",
-    "nation": "Arvernois South Pelagonia",
+    "nation": "South Pelagonia",
     "population": 78000,
     "gdp": 2100000000,
     "gdpPerCapita": 26923,
@@ -18397,7 +18397,7 @@
   },
   {
     "name": "Bareba",
-    "nation": "Arvernois North Aphirica",
+    "nation": "Côte de Saumon",
     "population": 74000,
     "gdp": 280000000,
     "gdpPerCapita": 3784,
@@ -18464,12 +18464,12 @@
     "nativeScript": "",
     "irlParallel": "Rioverde",
     "alpha3": "ANA",
-    "x": null,
-    "y": null
+    "x": 1221,
+    "y": 3789
   },
   {
     "name": "Macandé",
-    "nation": "Arvernois South Pelagonia",
+    "nation": "South Pelagonia",
     "population": 72000,
     "gdp": 1250000000,
     "gdpPerCapita": 17361,
@@ -19501,7 +19501,7 @@
   },
   {
     "name": "Vararakn",
-    "nation": "Arvernois East Kaukasos",
+    "nation": "East Kaukasos",
     "population": 48000,
     "gdp": 420000000,
     "gdpPerCapita": 8750,
@@ -19585,7 +19585,7 @@
   },
   {
     "name": "Zula",
-    "nation": "Shivonite Southeast Aphirica",
+    "nation": "Southeast Aphirica",
     "population": 46000,
     "gdp": 110000000,
     "gdpPerCapita": 2391,
@@ -19652,8 +19652,8 @@
     "nativeScript": "",
     "irlParallel": "Swakopmund",
     "alpha3": "VER",
-    "x": null,
-    "y": null
+    "x": 2491,
+    "y": 4864
   },
   {
     "name": "San Mateo",
@@ -19681,7 +19681,7 @@
   },
   {
     "name": "Farsan",
-    "nation": "Arvernois East Kaukasos",
+    "nation": "East Kaukasos",
     "population": 42000,
     "gdp": 680000000,
     "gdpPerCapita": 16190,
@@ -19700,8 +19700,8 @@
     "nativeScript": "",
     "irlParallel": "Timmins",
     "alpha3": "ESU",
-    "x": null,
-    "y": null
+    "x": 1992,
+    "y": 2910
   },
   {
     "name": "Yangkou",
@@ -19801,7 +19801,7 @@
   },
   {
     "name": "Forte Carmpagna",
-    "nation": "Vicilian North Aphirica",
+    "nation": "Aphirica del Nord",
     "population": 42000,
     "gdp": 65000000,
     "gdpPerCapita": 1548,
@@ -19897,7 +19897,7 @@
   },
   {
     "name": "Renaix-sur-Veldt",
-    "nation": "Arvernois South Pelagonia",
+    "nation": "South Pelagonia",
     "population": 38000,
     "gdp": 540000000,
     "gdpPerCapita": 14211,
@@ -19921,7 +19921,7 @@
   },
   {
     "name": "Alioual",
-    "nation": "Arvernois South Pelagonia",
+    "nation": "South Pelagonia",
     "population": 36000,
     "gdp": 410000000,
     "gdpPerCapita": 11389,
@@ -19945,7 +19945,7 @@
   },
   {
     "name": "Nouveau-Breast",
-    "nation": "Arvernois South Pelagonia",
+    "nation": "South Pelagonia",
     "population": 34000,
     "gdp": 420000000,
     "gdpPerCapita": 12353,
@@ -20281,7 +20281,7 @@
   },
   {
     "name": "Nouvelle-Havre",
-    "nation": "Arvernois Barbary",
+    "nation": "Barbary",
     "population": 24000,
     "gdp": 620000000,
     "gdpPerCapita": 25833,
@@ -20461,7 +20461,7 @@
   },
   {
     "name": "New Holsatia",
-    "nation": "Elvesterian Thule",
+    "nation": "Thule",
     "population": 20000,
     "gdp": 1150000000,
     "gdpPerCapita": 57500,
@@ -20480,12 +20480,12 @@
     "nativeScript": "",
     "irlParallel": "Chios",
     "alpha3": "SEL",
-    "x": null,
-    "y": null
+    "x": 3355,
+    "y": 3280
   },
   {
     "name": "Kingsmouth",
-    "nation": "Elvesterian Thule",
+    "nation": "Thule",
     "population": 18000,
     "gdp": 820000000,
     "gdpPerCapita": 45556,
@@ -20533,7 +20533,7 @@
   },
   {
     "name": "Liguma",
-    "nation": "Vicilian North Aphirica",
+    "nation": "Aphirica del Nord",
     "population": 14000,
     "gdp": 18000000,
     "gdpPerCapita": 1286,
@@ -20581,7 +20581,7 @@
   },
   {
     "name": "Cartishire",
-    "nation": "Elvesterian Thule",
+    "nation": "Thule",
     "population": 12000,
     "gdp": 640000000,
     "gdpPerCapita": 53333,
@@ -20732,8 +20732,8 @@
     "nativeScript": "",
     "irlParallel": "Puerto Baquerizo Moreno",
     "alpha3": "PON",
-    "x": null,
-    "y": null
+    "x": 1113,
+    "y": 4052
   },
   {
     "name": "Långdalshamn",
