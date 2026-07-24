@@ -92,8 +92,8 @@
   {
     "text": "SEA OF AURITANIA",
     "type": "sea",
-    "x": 1881,
-    "y": 4336,
+    "x": 1884,
+    "y": 4327,
     "minZoom": 3.5,
     "maxZoom": 6,
     "span": 728.6887948524741
@@ -400,7 +400,7 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 75
+    "span": 104.98993621186719
   },
   {
     "text": "SHIVON",
@@ -539,7 +539,8 @@
     "y": 5094,
     "minZoom": 3.5,
     "maxZoom": 5,
-    "tier": 13
+    "tier": 13,
+    "span": 83.4898729862814
   },
   {
     "text": "BARBARY",
@@ -663,18 +664,20 @@
   {
     "text": "ANDAM ISLANDS",
     "type": "colony",
-    "x": null,
-    "y": null,
+    "x": 4282,
+    "y": 1847,
     "minZoom": 3.5,
-    "maxZoom": 5
+    "maxZoom": 5,
+    "span": 280.02208903796384
   },
   {
     "text": "ANTICOSTIA",
     "type": "colony",
-    "x": null,
-    "y": null,
+    "x": 2345,
+    "y": 2978,
     "minZoom": 3.5,
-    "maxZoom": 5
+    "maxZoom": 5,
+    "span": 113.65847946765257
   },
   {
     "text": "AZTEKISCHE ISLANDS",
@@ -697,8 +700,8 @@
   {
     "text": "CUOHPNJALLA",
     "type": "colony",
-    "x": 2595,
-    "y": 1884,
+    "x": 2612,
+    "y": 1885,
     "minZoom": 3.5,
     "maxZoom": 5,
     "span": 150
@@ -724,10 +727,11 @@
   {
     "text": "FREDERIKKA ISLANDS",
     "type": "colony",
-    "x": null,
-    "y": null,
+    "x": 4486,
+    "y": 1604,
     "minZoom": 3.5,
-    "maxZoom": 5
+    "maxZoom": 5,
+    "span": 312.14405259941054
   },
   {
     "text": "GONENITE ISLANDS",
@@ -786,10 +790,11 @@
   {
     "text": "NITRAVIA",
     "type": "nation",
-    "x": null,
-    "y": null,
+    "x": 3159,
+    "y": 2537,
     "minZoom": 3.5,
-    "maxZoom": 5
+    "maxZoom": 5,
+    "span": 103.31848583683876
   },
   {
     "text": "RAZA LUNGA DE ACTIUNE",
@@ -812,10 +817,11 @@
   {
     "text": "SANKT GEROLD ISLAND",
     "type": "colony",
-    "x": null,
-    "y": null,
+    "x": 3892,
+    "y": 5289,
     "minZoom": 3.5,
-    "maxZoom": 5
+    "maxZoom": 5,
+    "span": 287.4969625949291
   },
   {
     "text": "SZARZATONY",
@@ -829,8 +835,8 @@
   {
     "text": "UJ-HAJNAL",
     "type": "colony",
-    "x": 3720,
-    "y": 2810,
+    "x": 3721,
+    "y": 2832,
     "minZoom": 3.5,
     "maxZoom": 5,
     "span": 200
@@ -841,7 +847,8 @@
     "x": null,
     "y": null,
     "minZoom": 3.5,
-    "maxZoom": 5
+    "maxZoom": 5,
+    "span": 144.1601366468917
   },
   {
     "text": "VERWUSTUNG ISLANDS",
@@ -873,10 +880,11 @@
   {
     "text": "SOUTHEAST APHIRICA",
     "type": "colony",
-    "x": null,
-    "y": null,
+    "x": 3270,
+    "y": 4127,
     "minZoom": 3.5,
-    "maxZoom": 5
+    "maxZoom": 5,
+    "span": 270.9677932920698
   },
   {
     "text": "NORDSTJÄRNEÖ",

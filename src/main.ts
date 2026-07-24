@@ -220,13 +220,25 @@ function areaSpan(def: LabelDef): number {
 // Land names are sized once, at the zoom they first appear at, and hold that
 // screen size: zooming into a nation is asking for the cities under its name,
 // not for bigger letters.
+//
 // Water names do the opposite and stay fixed to the map, growing on screen as
 // you zoom, because a sea has nothing competing for the space and the name is
 // how you read its extent.
-const sizeZoom = (def: LabelDef, z: number) => (WATER.has(def.type) ? z : def.minZoom)
+//
+// A territory too small to carry a legible name at the zoom it appears is
+// sized the water way for the same reason. Holding it at that size means it
+// only ever loses ground against the land growing beneath it, so it starts
+// unreadable and stays unreadable however far you zoom. Growing with the map
+// makes zooming in the thing that resolves it.
+function screenFixed(def: LabelDef): boolean {
+  if (WATER.has(def.type)) return false
+  return (areaSpan(def) * scaleAt(def.minZoom) * FIT) / (def.text.length * advanceOf(def)) >= FS_MIN
+}
 
-// No floor and no ceiling — every clamp here froze the label the moment a drag
-// pushed past it, which reads as resizing being broken.
+const sizeZoom = (def: LabelDef, z: number) => (screenFixed(def) ? def.minZoom : z)
+
+// No floor and no ceiling. A speck is the honest rendering of a territory too
+// small to carry its name yet, and zooming in is what resolves it.
 function areaFontSize(def: LabelDef, z: number): number {
   return (areaSpan(def) * scaleAt(sizeZoom(def, z)) * FIT) / (def.text.length * advanceOf(def))
 }
