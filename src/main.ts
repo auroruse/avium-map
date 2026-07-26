@@ -1075,6 +1075,7 @@ map.on('zoomend', () => {
   updateCities()
 })
 
+
 // Culling depends on the view, so pans re-diff too. rAF-throttled so inertia
 // glides stream markers in; zoom animation frames skipped (zoomend covers them)
 let moveRaf = 0
@@ -2032,3 +2033,112 @@ document.getElementById('measure-done')!.addEventListener('click', endMeasure)
 }
 
 map.on('moveend', syncHash)
+
+// --- Map rotation ---
+// A placement aid: the map turns under a fixed UI so a diagonal coastline can be
+// worked square to the screen. Nothing is re-projected. The whole map pane turns
+// as one image, so cities, labels and borders all rotate with the terrain and
+// every collision box the placement engine computed stays valid.
+
+let bearing = 0
+
+// The controls live inside the map container, which is about to be oversized and
+// rotated. Moving them out to the body keeps them upright and at the viewport
+// corners. Leaflet only ever appends to this element, so it does not care where
+// the element itself sits in the DOM.
+document.body.appendChild(mapEl.querySelector('.leaflet-control-container')!)
+
+// A rotated rectangle leaves the viewport corners empty, so while turned the
+// container grows to the square that covers the viewport at every angle: its own
+// diagonal. Measured in px rather than a flat 142% because a wide viewport needs
+// more than sqrt(2) of its shorter side, and the extra tiles are only paid for
+// while the tool is in use.
+function applyBearing() {
+  if (bearing) {
+    const w = window.innerWidth
+    const h = window.innerHeight
+    const d = Math.ceil(Math.hypot(w, h))
+    mapEl.style.width = `${d}px`
+    mapEl.style.height = `${d}px`
+    mapEl.style.marginLeft = `${(w - d) / 2}px`
+    mapEl.style.marginTop = `${(h - d) / 2}px`
+  } else {
+    mapEl.style.width = ''
+    mapEl.style.height = ''
+    mapEl.style.marginLeft = ''
+    mapEl.style.marginTop = ''
+  }
+  mapEl.style.transform = bearing ? `rotate(${bearing}deg)` : ''
+  map.invalidateSize({ animate: false })
+}
+
+// getBoundingClientRect on a rotated element reports the axis-aligned box, which
+// is no use for a local coordinate — but rotation about the centre leaves that
+// box centred on the element, so the centre is still exact. Turn the offset from
+// it back through -bearing and the result is the unrotated container point.
+const domToContainer = map.mouseEventToContainerPoint.bind(map)
+map.mouseEventToContainerPoint = (e: MouseEvent) => {
+  if (!bearing) return domToContainer(e)
+  const r = mapEl.getBoundingClientRect()
+  const dx = e.clientX - (r.left + r.width / 2)
+  const dy = e.clientY - (r.top + r.height / 2)
+  const rad = (-bearing * Math.PI) / 180
+  const c = Math.cos(rad)
+  const s = Math.sin(rad)
+  return L.point(dx * c - dy * s + mapEl.offsetWidth / 2, dx * s + dy * c + mapEl.offsetHeight / 2)
+}
+
+// Leaflet pans by adding the raw screen delta to the map pane, but the pane is
+// inside the rotated element, so an untouched delta sends the map off at an
+// angle to the cursor. Turning the delta back through -bearing makes the map
+// follow the hand again.
+const draggable = (map as unknown as { dragging: { _draggable: any } }).dragging._draggable
+const moveDraggable = draggable._updatePosition.bind(draggable)
+draggable._updatePosition = function (this: any) {
+  if (bearing) {
+    const rad = (-bearing * Math.PI) / 180
+    const c = Math.cos(rad)
+    const s = Math.sin(rad)
+    const o = this._newPos.subtract(this._startPos)
+    this._newPos = this._startPos.add(L.point(o.x * c - o.y * s, o.x * s + o.y * c))
+  }
+  moveDraggable()
+}
+
+const STEP = 15
+let bearingReadout: HTMLElement
+
+function setBearing(deg: number) {
+  bearing = ((deg % 360) + 360) % 360
+  applyBearing()
+  if (bearingReadout) bearingReadout.textContent = bearing ? `${bearing}°` : 'N'
+}
+
+const RotateControl = L.Control.extend({
+  options: { position: 'topleft' as L.ControlPosition },
+  onAdd() {
+    const c = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-rotate')
+    const button = (label: string, title: string, fn: () => void) => {
+      const a = L.DomUtil.create('a', '', c)
+      a.href = '#'
+      a.textContent = label
+      a.title = title
+      L.DomEvent.on(a, 'click', (e: Event) => {
+        L.DomEvent.stop(e)
+        fn()
+      })
+      return a
+    }
+    button('↺', `Rotate ${STEP}° counter-clockwise`, () => setBearing(bearing - STEP))
+    button('↻', `Rotate ${STEP}° clockwise`, () => setBearing(bearing + STEP))
+    // Doubles as the readout: it shows the current bearing, and clicking it is
+    // the way back to north without stepping all the way round
+    bearingReadout = button('N', 'Reset to north', () => setBearing(0))
+    bearingReadout.classList.add('rotate-readout')
+    L.DomEvent.disableClickPropagation(c)
+    return c
+  },
+})
+
+new RotateControl().addTo(map)
+window.addEventListener('resize', () => bearing && applyBearing())

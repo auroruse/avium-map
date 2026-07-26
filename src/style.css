@@ -26,7 +26,9 @@ html, body {
     1px 1px 2px rgba(0,0,0,0.8);
   pointer-events: none !important;
   font-family: 'SF Pro Display', 'SF UI Display', -apple-system, 'Inter', system-ui, sans-serif;
-  transition: opacity 0.2s;
+  /* Same curve and duration as .city-icon's city-fade, so a label and a city
+     marker changing at the same zoom read as one event */
+  transition: opacity 0.15s ease-out;
   /* Tracking is em, never px: the sizing math in main.ts solves a font size
      from a character advance in em, and an absolute value would drift out of
      agreement with it at every zoom. Keep --track and TRACK/TRACK_WATER equal. */
@@ -1281,4 +1283,64 @@ html, body {
 
 .leaflet-control-zoom-in {
   border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+}
+
+/* Rotation control — sits under the zoom buttons, same frosted glass */
+.leaflet-control-rotate {
+  background: rgba(24, 27, 29, 0.82) !important;
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid rgba(255,255,255,0.09) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 36px rgba(0,0,0,0.5) !important;
+  overflow: hidden;
+}
+
+.leaflet-control-rotate a {
+  background: transparent !important;
+  color: #fff !important;
+  border: none !important;
+  width: 36px !important;
+  height: 36px !important;
+  line-height: 36px !important;
+  font-size: 16px !important;
+  font-weight: 300;
+  font-family: -apple-system, 'SF Pro Display', 'Inter', system-ui, sans-serif;
+  text-align: center;
+  display: block;
+}
+
+.leaflet-control-rotate a:hover {
+  background: rgba(255,255,255,0.12) !important;
+}
+
+.leaflet-control-rotate a + a {
+  border-top: 1px solid rgba(255,255,255,0.08) !important;
+}
+
+/* The readout is a number, not a glyph, so it wants tabular figures and a
+   smaller size to fit three digits and a degree sign in the same 36px box */
+.leaflet-control-rotate .rotate-readout {
+  font-size: 11px !important;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  color: rgba(255,255,255,0.72) !important;
+}
+
+/* Rotating the container rotates its clipping box with it, so the page behind
+   would show through at the corners mid-turn */
+#map {
+  transform-origin: 50% 50%;
+}
+
+/* A zoom scales the whole map pane, so for the length of the animation a label
+   is being rendered at the size it had before, then snaps when the transform
+   resets. Fading out for the duration and back in at the new size hides that
+   entirely — the same move a city marker makes when it changes tier.
+
+   Leaflet puts this class on the map pane for exactly the span of its own
+   transition, so no JS is involved. Specificity beats .map-label.label-on on
+   its own, so source order doesn't matter here. */
+.leaflet-zoom-anim .map-label.label-on {
+  opacity: 0;
 }
