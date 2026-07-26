@@ -18,7 +18,11 @@ const norm = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCa
 const TILE_GRID = 8192
 const CONTENT = 6000
 const U = 256
-const MAX_ZOOM = 6
+// Two user levels past the tile resolution. Native detail stops at z5, so the
+// top of the range is upscaled and will look soft — the point of it is spacing,
+// not detail: cities the placer drops for want of room at one level have room
+// at the next, so the last few crowded names resolve instead of never rendering.
+const MAX_ZOOM = 7
 
 function px(x: number, y: number): L.LatLngExpression {
   return [(-y * U) / TILE_GRID, (x * U) / TILE_GRID]
@@ -98,7 +102,7 @@ interface LabelDef {
   x: number | null
   y: number | null
   minZoom: number
-  maxZoom: number
+  maxZoom?: number // absent = no ceiling, so raising MAX_ZOOM never strands it
   tier?: number // nations/colonies: font size in px
   span?: number // territory width in map px, overriding the derived one
 }
@@ -183,7 +187,7 @@ function labelPos(def: LabelDef): [number, number] | null {
 const typeSpans = new Map<string, number>()
 
 function fallbackSpan(def: LabelDef): number {
-  const band = `${def.minZoom}-${def.maxZoom}`
+  const band = `${def.minZoom}-${def.maxZoom ?? 'top'}`
   let v = typeSpans.get(band)
   if (v == null) {
     const med = (ds: LabelDef[]) => {
@@ -257,7 +261,7 @@ function areaFontSize(def: LabelDef, z: number): number {
 // was on screen — a label tuned to look right in the placer was silently
 // dropped for everyone else. Legibility is handled where the size is decided.
 function labelShown(def: LabelDef, z: number): boolean {
-  return map.hasLayer(labelLayer) && z >= def.minZoom && z <= def.maxZoom
+  return map.hasLayer(labelLayer) && z >= def.minZoom && z <= (def.maxZoom ?? Infinity)
 }
 
 function makeLabelMarker(def: LabelDef, pos: [number, number]): L.Marker {
