@@ -6,7 +6,7 @@
     "y": 3162,
     "minZoom": 2.5,
     "maxZoom": 3,
-    "span": 713.8862435065331
+    "span": 700
   },
   {
     "text": "EVRIA",
@@ -15,7 +15,7 @@
     "y": 2455,
     "minZoom": 2.5,
     "maxZoom": 3,
-    "span": 602.7255366454306
+    "span": 600
   },
   {
     "text": "VALTHERIA",
@@ -24,7 +24,7 @@
     "y": 1284,
     "minZoom": 2.5,
     "maxZoom": 3,
-    "span": 1295.3901128714526
+    "span": 1300
   },
   {
     "text": "PELAGONIA",
@@ -33,7 +33,7 @@
     "y": 4367,
     "minZoom": 2.5,
     "maxZoom": 3,
-    "span": 1278.4834384147825
+    "span": 1000
   },
   {
     "text": "HYPERBOREA",
@@ -871,8 +871,8 @@
   {
     "text": "RECOLOTTA",
     "type": "nation",
-    "x": 3230,
-    "y": 4871,
+    "x": 3216,
+    "y": 4874,
     "minZoom": 3.5,
     "maxZoom": 5,
     "span": 250

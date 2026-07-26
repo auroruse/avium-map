@@ -32,11 +32,26 @@ const cols = headers.map(h => colMap[h.toLowerCase()] ?? null)
 const nameCol = cols.indexOf('name')
 if (nameCol < 0) { console.error('TSV needs a "Name" column'); process.exit(1) }
 
-// Load existing coords
+// Load existing coords, keyed on name AND nation. Name alone collides: seven
+// cities share a name with one in a different nation, and whichever lacked
+// coordinates was silently handed the other's, landing it on the wrong continent.
+//
+// A rename still has to carry its placements over, so a name that is unique on
+// both sides falls back to matching on name alone — that is what let a hundred
+// colonies lose their "Arvernois " prefix without being unplaced. A name that
+// appears more than once never falls back, which is what stops a repaired
+// duplicate from being broken again by the next merge.
 const existing = JSON.parse(readFileSync(jsonPath, 'utf8'))
+const key = c => `${c.name}\t${c.nation}`
+
 const coordMap = new Map()
+const soloCoord = new Map()
+const oldNameCount = new Map()
 for (const c of existing) {
-  if (c.x != null && c.y != null) coordMap.set(c.name, [c.x, c.y])
+  oldNameCount.set(c.name, (oldNameCount.get(c.name) ?? 0) + 1)
+  if (c.x == null || c.y == null) continue
+  coordMap.set(key(c), [c.x, c.y])
+  soloCoord.set(c.name, [c.x, c.y])
 }
 
 const cities = []
@@ -56,14 +71,29 @@ for (let i = 1; i < lines.length; i++) {
       : (vals[j] === '-' ? '' : vals[j])
   }
 
-  const coords = coordMap.get(city.name)
-  if (coords) { city.x = coords[0]; city.y = coords[1] }
   cities.push(city)
+}
+
+// Second pass: the fallback needs to know whether a name is unique in the new
+// data too, which isn't known until every row has been read
+const newNameCount = new Map()
+for (const c of cities) newNameCount.set(c.name, (newNameCount.get(c.name) ?? 0) + 1)
+
+let renamed = 0
+for (const city of cities) {
+  let coords = coordMap.get(key(city))
+  if (!coords && oldNameCount.get(city.name) === 1 && newNameCount.get(city.name) === 1) {
+    coords = soloCoord.get(city.name)
+    if (coords) renamed++
+  }
+  if (coords) { city.x = coords[0]; city.y = coords[1] }
 }
 
 writeFileSync(jsonPath, JSON.stringify(cities, null, 2) + '\n')
 
 const placed = cities.filter(c => c.x != null).length
-const added = cities.filter(c => !coordMap.has(c.name)).length
-const dropped = existing.filter(c => !cities.find(n => n.name === c.name)).length
-console.log(`${cities.length} cities (${placed} placed, ${added} new, ${dropped} dropped)`)
+const added = cities.filter(c => !coordMap.has(key(c))).length
+const dropped = existing.filter(c => !cities.find(n => key(n) === key(c))).length
+console.log(
+  `${cities.length} cities (${placed} placed, ${added} new, ${dropped} dropped, ${renamed} matched by name after a nation rename)`
+)
