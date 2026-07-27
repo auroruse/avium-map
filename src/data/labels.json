@@ -87,10 +87,10 @@
   },
   {
     "text": "SEA OF AURITANIA",
-    "type": "sea",
+    "type": "ocean",
     "x": 1884,
     "y": 4327,
-    "minZoom": 3.5,
+    "minZoom": 2.5,
     "span": 728.6887948524741
   },
   {
@@ -111,35 +111,35 @@
   },
   {
     "text": "HIMALAYAN SEA",
-    "type": "sea",
+    "type": "ocean",
     "x": 4155,
     "y": 1533,
-    "minZoom": 3.5,
+    "minZoom": 2.5,
     "span": 601.0129630345049
   },
   {
     "text": "STRAYAN SEA",
     "type": "sea",
-    "x": 3176,
+    "x": 3186,
     "y": 5156,
     "minZoom": 3.5,
-    "span": 250
+    "span": 288.5213801127062
   },
   {
     "text": "BAY OF TONKIN",
     "type": "sea",
-    "x": 4228,
-    "y": 733,
+    "x": 4234,
+    "y": 714,
     "minZoom": 3.5,
     "span": 277.83383063494034
   },
   {
     "text": "NORTH SEA",
     "type": "sea",
-    "x": 2692,
-    "y": 2738,
+    "x": 2855,
+    "y": 2575,
     "minZoom": 3.5,
-    "span": 149.902110417078
+    "span": 91.58135136988487
   },
   {
     "text": "NICHIRIN",
@@ -154,8 +154,8 @@
   {
     "text": "RUDANIA",
     "type": "nation",
-    "x": 2630,
-    "y": 1406,
+    "x": 2591,
+    "y": 1414,
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 1,
@@ -174,8 +174,8 @@
   {
     "text": "ARVERNE",
     "type": "nation",
-    "x": 2947,
-    "y": 2828,
+    "x": 2940,
+    "y": 2815,
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
@@ -189,7 +189,7 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 125
+    "span": 139.4127422488326
   },
   {
     "text": "HOLLOSEND",
@@ -494,8 +494,8 @@
   {
     "text": "KEMET",
     "type": "colony",
-    "x": 3482,
-    "y": 3530,
+    "x": 3428,
+    "y": 3410,
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
@@ -623,8 +623,8 @@
   {
     "text": "THULE",
     "type": "colony",
-    "x": 2401,
-    "y": 2613,
+    "x": 2393,
+    "y": 2628,
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
@@ -734,8 +734,8 @@
   {
     "text": "HOCHBRUNN-AM-SAHARAMEER",
     "type": "colony",
-    "x": 3196,
-    "y": 3869,
+    "x": 3199,
+    "y": 3910,
     "minZoom": 3.5,
     "maxZoom": 5,
     "span": 288.0966143165608
@@ -744,10 +744,10 @@
     "text": "KIENAM",
     "type": "colony",
     "x": 4492,
-    "y": 863,
+    "y": 860,
     "minZoom": 3.5,
     "maxZoom": 5,
-    "span": 100.02273357081917
+    "span": 70.72500600978952
   },
   {
     "text": "KULLANMAAN",
@@ -806,11 +806,11 @@
   {
     "text": "SANKT GEROLD ISLAND",
     "type": "colony",
-    "x": 3892,
-    "y": 5289,
+    "x": 3876,
+    "y": 5291,
     "minZoom": 3.5,
     "maxZoom": 5,
-    "span": 287.4969625949291
+    "span": 228.5422842337607
   },
   {
     "text": "SZARZATONY",
@@ -921,9 +921,544 @@
   {
     "text": "BAY OF SERICA",
     "type": "sea",
-    "x": 3142,
-    "y": 498,
+    "x": 3134,
+    "y": 501,
     "minZoom": 3.5,
     "span": 315.30451672950096
+  },
+  {
+    "text": "SARGASSO SEA",
+    "type": "sea",
+    "x": 2673,
+    "y": 2715,
+    "minZoom": 3.5,
+    "span": 136.8899848862611
+  },
+  {
+    "text": "GULF OF EUSCARA",
+    "type": "sea",
+    "x": 2806,
+    "y": 2856,
+    "minZoom": 3.5,
+    "span": 84.45885276133536
+  },
+  {
+    "text": "MARE INTERNUM",
+    "type": "sea",
+    "x": 2913,
+    "y": 3024,
+    "minZoom": 3.5,
+    "span": 85.7327900971431
+  },
+  {
+    "text": "Romassan Sea",
+    "type": "sea",
+    "x": 3056,
+    "y": 3200,
+    "minZoom": 3.5,
+    "span": 126.65197778998015
+  },
+  {
+    "text": "Hellenican Sea",
+    "type": "sea",
+    "x": 3308,
+    "y": 3250,
+    "minZoom": 3.5,
+    "span": 128.26783741535854
+  },
+  {
+    "text": "LEVANTINE SEA",
+    "type": "sea",
+    "x": 3540,
+    "y": 3360,
+    "minZoom": 3.5,
+    "span": 157.71624484782876
+  },
+  {
+    "text": "SEA OF KEMET",
+    "type": "sea",
+    "x": 3439,
+    "y": 3561,
+    "minZoom": 3.5,
+    "span": 184.84152165329309
+  },
+  {
+    "text": "East Aphirican Bay",
+    "type": "sea",
+    "x": 3182,
+    "y": 3849,
+    "minZoom": 3.5
+  },
+  {
+    "text": "KALINAGO SEA",
+    "type": "sea",
+    "x": 1830,
+    "y": 3657,
+    "minZoom": 3.5,
+    "span": 62.0606427415332
+  },
+  {
+    "text": "LUCAYAN SEA",
+    "type": "sea",
+    "x": 1751,
+    "y": 3576,
+    "minZoom": 3.5,
+    "span": 68.62115115894731
+  },
+  {
+    "text": "LAKE TEJO",
+    "type": "sea",
+    "x": 1587,
+    "y": 3581,
+    "minZoom": 3.5,
+    "span": 80.82001422915555
+  },
+  {
+    "text": "LAKE MARAKAYA",
+    "type": "sea",
+    "x": 1523,
+    "y": 3736,
+    "minZoom": 3.5,
+    "span": 38.46124759709038
+  },
+  {
+    "text": "LAKE NAVARELO",
+    "type": "sea",
+    "x": 1615,
+    "y": 3638,
+    "minZoom": 3.5,
+    "span": 85.15609539804672
+  },
+  {
+    "text": "LAKE YUCATAN",
+    "type": "sea",
+    "x": 1362,
+    "y": 3922,
+    "minZoom": 3.5,
+    "span": 72.2755837974945
+  },
+  {
+    "text": "LAKE GALAPAGOS",
+    "type": "sea",
+    "x": 1360,
+    "y": 4203,
+    "minZoom": 3.5,
+    "span": 63.28443972674661
+  },
+  {
+    "text": "NAHUA BAY",
+    "type": "sea",
+    "x": 1216,
+    "y": 4059,
+    "minZoom": 3.5,
+    "span": 103.1284684397216
+  },
+  {
+    "text": "TERRANOVA GULF",
+    "type": "sea",
+    "x": 1744,
+    "y": 3869,
+    "minZoom": 3.5,
+    "span": 189.50244728364825
+  },
+  {
+    "text": "LAKE CAHUITA",
+    "type": "sea",
+    "x": 1536,
+    "y": 4531,
+    "minZoom": 3.5,
+    "span": 68.19551376343328
+  },
+  {
+    "text": "TAMANQUI BAY",
+    "type": "sea",
+    "x": 1423,
+    "y": 4513,
+    "minZoom": 3.5,
+    "span": 39.512161313961876
+  },
+  {
+    "text": "LAKE ARAKANA",
+    "type": "sea",
+    "x": 3625,
+    "y": 5453,
+    "minZoom": 3.5,
+    "span": 135.79996200942358
+  },
+  {
+    "text": "CAPE NATAL",
+    "type": "sea",
+    "x": 2634,
+    "y": 5300,
+    "minZoom": 3.5,
+    "span": 77.07425220180953
+  },
+  {
+    "text": "TEPID SEA",
+    "type": "sea",
+    "x": 3425,
+    "y": 4600,
+    "minZoom": 3.5,
+    "span": 63.327434590574164
+  },
+  {
+    "text": "ARAFURA SEA",
+    "type": "sea",
+    "x": 3912,
+    "y": 5110,
+    "minZoom": 3.5,
+    "span": 233.95520646773286
+  },
+  {
+    "text": "LAKE WELLSPRING",
+    "type": "sea",
+    "x": 3272,
+    "y": 4395,
+    "minZoom": 3.5,
+    "span": 90.36894185301283
+  },
+  {
+    "text": "LAKE ADEN",
+    "type": "sea",
+    "x": 3742,
+    "y": 4507,
+    "minZoom": 3.5,
+    "span": 75.93293559632399
+  },
+  {
+    "text": "LAKE PROFUNDITY",
+    "type": "sea",
+    "x": 3123,
+    "y": 4476,
+    "minZoom": 3.5,
+    "span": 25.98411250880825
+  },
+  {
+    "text": "CELESTINE SEA",
+    "type": "sea",
+    "x": 3213,
+    "y": 4729,
+    "minZoom": 3.5,
+    "span": 28.33370286388438
+  },
+  {
+    "text": "LAKE ALABASTER",
+    "type": "sea",
+    "x": 3060,
+    "y": 4594,
+    "minZoom": 3.5,
+    "span": 30.468668041353748
+  },
+  {
+    "text": "GREAT PELAGONIAN CHANNEL",
+    "type": "sea",
+    "x": 2251,
+    "y": 3943,
+    "minZoom": 3.5,
+    "span": 114.12705345050016
+  },
+  {
+    "text": "NORTHERN ERYTHAEAN BAY",
+    "type": "sea",
+    "x": 4202,
+    "y": 4101,
+    "minZoom": 3.5,
+    "span": 125
+  },
+  {
+    "text": "SOUTHERN ERYTHAEAN BAY",
+    "type": "sea",
+    "x": 4144,
+    "y": 4264,
+    "minZoom": 3.5,
+    "span": 148.35246938649513
+  },
+  {
+    "text": "MIDDLE ERYTHREAN SEA",
+    "type": "sea",
+    "x": 3695,
+    "y": 3934,
+    "minZoom": 3.5,
+    "span": 49.79901423408044
+  },
+  {
+    "text": "UPPER ERYTHREAN SEA",
+    "type": "sea",
+    "x": 3625,
+    "y": 3556,
+    "minZoom": 3.5,
+    "span": 20.365268245767506
+  },
+  {
+    "text": "LAKE LAMENT",
+    "type": "sea",
+    "x": 3634,
+    "y": 3680,
+    "minZoom": 3.5,
+    "span": 13.538317339451845
+  },
+  {
+    "text": "LOWER ERYTHREAN SEA",
+    "type": "sea",
+    "x": 3953,
+    "y": 4105,
+    "minZoom": 3.5,
+    "span": 39.82863054461627
+  },
+  {
+    "text": "LAKE DAKHLI",
+    "type": "sea",
+    "x": 4025,
+    "y": 3602,
+    "minZoom": 3.5,
+    "span": 50
+  },
+  {
+    "text": "LAKE ĀVANAK",
+    "type": "sea",
+    "x": 4119,
+    "y": 3749,
+    "minZoom": 3.5,
+    "span": 50
+  },
+  {
+    "text": "UPPER TYRSENIAN SEA",
+    "type": "sea",
+    "x": 2993,
+    "y": 3065,
+    "minZoom": 3.5,
+    "span": 24.065390815114682
+  },
+  {
+    "text": "LOWER TYRSENIAN SEA",
+    "type": "sea",
+    "x": 3035,
+    "y": 3122,
+    "minZoom": 3.5,
+    "span": 30.46784952716831
+  },
+  {
+    "text": "ILLYRIAN SEA",
+    "type": "sea",
+    "x": 3069,
+    "y": 3059,
+    "minZoom": 3.5,
+    "span": 24.558704444090917
+  },
+  {
+    "text": "SEA OF VENESIA",
+    "type": "sea",
+    "x": 3058,
+    "y": 2971,
+    "minZoom": 3.5,
+    "span": 50
+  },
+  {
+    "text": "LAKE IONIOS",
+    "type": "sea",
+    "x": 3099,
+    "y": 3103,
+    "minZoom": 3.5,
+    "span": 18.659551935911185
+  },
+  {
+    "text": "LAKE LYONARA",
+    "type": "sea",
+    "x": 2979,
+    "y": 2842,
+    "minZoom": 3.5,
+    "span": 21.40850052165615
+  },
+  {
+    "text": "LOWER SUEBIAN SEA",
+    "type": "sea",
+    "x": 2977,
+    "y": 2416,
+    "minZoom": 3.5,
+    "span": 59.228722093822014
+  },
+  {
+    "text": "UPPER SUEBIAN SEA",
+    "type": "sea",
+    "x": 2926,
+    "y": 2309,
+    "minZoom": 3.5,
+    "span": 70.55551858903817
+  },
+  {
+    "text": "LAKE ÖVREBOTHNIA",
+    "type": "sea",
+    "x": 2767,
+    "y": 2202,
+    "minZoom": 3.5,
+    "span": 25.566175902801717
+  },
+  {
+    "text": "LAKE LÄGREBOTHNIA",
+    "type": "sea",
+    "x": 2831,
+    "y": 2284,
+    "minZoom": 3.5,
+    "span": 56.38695871088677
+  },
+  {
+    "text": "LAKE INKERI",
+    "type": "sea",
+    "x": 2913,
+    "y": 2108,
+    "minZoom": 3.5,
+    "span": 37.60070360410226
+  },
+  {
+    "text": "LAKE ÄÄNINEN",
+    "type": "sea",
+    "x": 2921,
+    "y": 2167,
+    "minZoom": 3.5,
+    "span": 38.25321110920647
+  },
+  {
+    "text": "LAKE LAATOKKA",
+    "type": "sea",
+    "x": 2919,
+    "y": 2225,
+    "minZoom": 3.5,
+    "span": 15.597441389001785
+  },
+  {
+    "text": "LAKE VALIVE",
+    "type": "sea",
+    "x": 3021,
+    "y": 2116,
+    "minZoom": 3.5,
+    "span": 25.946088591086834
+  },
+  {
+    "text": "CASPIAN GULF",
+    "type": "sea",
+    "x": 3703,
+    "y": 2149,
+    "minZoom": 3.5,
+    "span": 188.0227653462274
+  },
+  {
+    "text": "LAKE SASANIA",
+    "type": "sea",
+    "x": 3531,
+    "y": 1919,
+    "minZoom": 3.5,
+    "span": 75.79493168052748
+  },
+  {
+    "text": "LAKE BALKAS",
+    "type": "sea",
+    "x": 3502,
+    "y": 1643,
+    "minZoom": 3.5,
+    "span": 38.71469223616252
+  },
+  {
+    "text": "GULF OF MARTABAN",
+    "type": "sea",
+    "x": 4424,
+    "y": 1250,
+    "minZoom": 3.5,
+    "span": 45.99998407264599
+  },
+  {
+    "text": "LAKE VLADIS",
+    "type": "sea",
+    "x": 4525,
+    "y": 1059,
+    "minZoom": 3.5,
+    "span": 92.3234859256796
+  },
+  {
+    "text": "JAVAN SEA",
+    "type": "sea",
+    "x": 4639,
+    "y": 1314,
+    "minZoom": 3.5,
+    "span": 51.431183645715514
+  },
+  {
+    "text": "BAY OF KOSANGSIN",
+    "type": "sea",
+    "x": 4500,
+    "y": 900,
+    "minZoom": 3.5,
+    "span": 155.63583410041988
+  },
+  {
+    "text": "LAKE RYUSEI",
+    "type": "sea",
+    "x": 2565,
+    "y": 703,
+    "minZoom": 3.5,
+    "span": 41.7518183148098
+  },
+  {
+    "text": "LAKE BAISHIN",
+    "type": "sea",
+    "x": 2508,
+    "y": 772,
+    "minZoom": 3.5,
+    "span": 20.548906359871356
+  },
+  {
+    "text": "LAKE SATSUNO",
+    "type": "sea",
+    "x": 2232,
+    "y": 867,
+    "minZoom": 3.5,
+    "span": 26.25379315319419
+  },
+  {
+    "text": "LAKE KAIHOKUDO",
+    "type": "sea",
+    "x": 2237,
+    "y": 942,
+    "minZoom": 3.5,
+    "span": 27.99434601981056
+  },
+  {
+    "text": "GREAT SPATRYAN BIGHT",
+    "type": "sea",
+    "x": 2052,
+    "y": 1105,
+    "minZoom": 3.5,
+    "span": 293.566989875793
+  },
+  {
+    "text": "LAKE RAZYRV",
+    "type": "sea",
+    "x": 2962,
+    "y": 1055,
+    "minZoom": 3.5,
+    "span": 57.94216213579588
+  },
+  {
+    "text": "UNGAVA BAY",
+    "type": "sea",
+    "x": 2333,
+    "y": 2634,
+    "minZoom": 3.5,
+    "span": 70.11691200201514
+  },
+  {
+    "text": "FOXE SEA",
+    "type": "sea",
+    "x": 2184,
+    "y": 2418,
+    "minZoom": 3.5,
+    "span": 117.03349010183585
+  },
+  {
+    "text": "DYCHE BAY",
+    "type": "sea",
+    "x": 2097,
+    "y": 2304,
+    "minZoom": 3.5,
+    "span": 72.62051396390476
   }
 ]
