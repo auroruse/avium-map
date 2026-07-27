@@ -15,10 +15,19 @@
       <span class="pp-title">Placer</span>
       <span id="place-count" class="pp-count"></span>
     </div>
+    <div class="pp-tabs">
+      <button class="pp-tab is-on" data-tab="cities">Cities</button>
+      <button class="pp-tab" data-tab="labels">Labels &amp; Stations</button>
+    </div>
     <div class="pp-search-row">
-      <input id="place-search" type="text" placeholder="Search cities or labels..." autocomplete="off">
+      <input id="place-search" type="text" autocomplete="off">
     </div>
     <ul id="place-results"></ul>
+    <div class="pp-edit-row" id="edit-row" hidden>
+      <input id="place-rename" type="text" placeholder="Name" autocomplete="off">
+      <select id="place-kind"></select>
+      <button id="place-delete" class="pp-danger" title="Delete this label or station">Delete</button>
+    </div>
     <div class="pp-span-row" id="span-row" hidden>
       <label for="place-span">Span</label>
       <input id="place-span" type="number" min="1" step="10">
@@ -26,11 +35,12 @@
     </div>
     <div id="place-status"></div>
     <div class="pp-toolbar">
-      <button id="place-undo" title="Undo last placement">Undo</button>
-      <button id="place-export" title="Export cities JSON">Export</button>
-      <button id="place-export-labels" title="Export labels JSON">Labels</button>
-      <label class="pp-tool-btn" title="Import JSON">Import<input id="place-import" type="file" accept=".json" hidden></label>
-      <button id="tsv-toggle" title="Paste TSV">TSV</button>
+      <button id="place-undo" data-for="cities" title="Undo last placement">Undo</button>
+      <label class="pp-tool-btn" data-for="cities" title="Import JSON">Import<input id="place-import" type="file" accept=".json" hidden></label>
+      <button id="tsv-toggle" data-for="cities" title="Paste TSV">TSV</button>
+      <button id="place-add-label" data-for="labels" title="Add a territory label">+ Label</button>
+      <button id="place-add-station" data-for="labels" title="Add a research station">+ Station</button>
+      <button id="place-save" title="Download cities.json, labels.json and stations.json">Save</button>
     </div>
     <textarea id="tsv-paste" placeholder="Paste TSV here (tab-separated, first row = headers)&#10;Cmd+Enter to import" hidden></textarea>
   </div>

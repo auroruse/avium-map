@@ -265,7 +265,12 @@ html, body {
   height: 28px;
   border: none;
   border-radius: 50%;
-  background: rgba(255,255,255,0.12);
+  /* Opaque, not a translucent white. This button sits over the banner image as
+     often as over the panel, and a 12% tint let whatever it covered read
+     through the glyph. #343638 is what that tint resolved to over the panel's
+     own background, so the weight is unchanged where it already looked right —
+     it just no longer changes with what is behind it. */
+  background: #343638;
   color: #c6cacd;
   font-size: 12px;
   line-height: 1;
@@ -276,7 +281,7 @@ html, body {
 }
 
 .cp-close:hover {
-  background: rgba(255,255,255,0.2);
+  background: #46494a;
   color: #fff;
 }
 
@@ -288,7 +293,12 @@ html, body {
   line-height: 1.15;
 }
 
-.cp-native {
+/* Coordinates read as a subtitle on the name, the same as the native script,
+   and sit under it when both are present. Grouped rather than reusing the
+   native class outright so a change made for scripts doesn't silently apply
+   to a number. */
+.cp-native,
+.cp-coord {
   font-size: 15px;
   color: #9aa0a5;
   margin-top: 2px;
@@ -1343,4 +1353,358 @@ html, body {
    its own, so source order doesn't matter here. */
 .leaflet-zoom-anim .map-label.label-on {
   opacity: 0;
+}
+
+/* Research station markers (Hyperborea and Tartarus) */
+.station-icon {
+  background: none !important;
+  border: none !important;
+  animation: city-fade 0.15s ease-out;
+}
+
+.station-icon svg {
+  display: block;
+}
+
+/* Bold and lighter than a city name: a station is a landmark on an empty
+   continent, not one entry in a dense field, so it reads as a title rather
+   than competing for the tight spacing city labels are tuned for. */
+.station-label {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  /* Same family, size and weight as a city name at the small-marker tier, so a
+     station sits in the same visual register as everything around it. Only the
+     colour separates them. Keep in step with STATION_FS in main.ts. */
+  font-family: 'SF Pro Rounded', 'SF Pro Text', 'SF UI Text', -apple-system, 'Inter', system-ui, sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #c3cbf5;
+  white-space: nowrap;
+  text-shadow:
+    -1px -1px 2px rgba(0,0,0,0.9),
+    1px -1px 2px rgba(0,0,0,0.9),
+    -1px 1px 2px rgba(0,0,0,0.9),
+    1px 1px 2px rgba(0,0,0,0.9);
+}
+
+/* Placer tabs */
+.pp-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 8px;
+  padding: 3px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 9px;
+}
+
+.pp-tab {
+  flex: 1;
+  padding: 5px 8px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #9aa0a6;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.pp-tab:hover {
+  color: #e6e8ea;
+}
+
+/* The selected tab is a raised slab, the way a segmented control reads —
+   colour alone is too weak a signal next to the button row below it. */
+.pp-tab.is-on {
+  background: #3a3f43;
+  color: #fff;
+}
+
+/* Rename + type + delete, shown only while something is selected */
+.pp-edit-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+#place-rename {
+  flex: 1;
+  min-width: 0;
+  padding: 4px 8px;
+}
+
+#place-kind {
+  padding: 4px 6px;
+  font-size: 11px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.07);
+  color: #e6e8ea;
+}
+
+.pp-danger {
+  color: #ff6b6b !important;
+}
+
+.pp-danger:hover {
+  background: rgba(255,80,80,0.16) !important;
+}
+
+/* Unsaved work. The dot is the whole signal — the JSONs on disk are still the
+   previous version until Save is pressed, and nothing else on screen says so. */
+#place-save.pp-dirty {
+  color: #ffd166 !important;
+  font-weight: 600;
+}
+
+/* ============ Placer, Apple-themed ============
+   Wider and shallower on purpose: it floats over the top of the map, so height
+   costs map, width mostly doesn't. The results list is the part that grows, so
+   it runs in two columns instead of one long scroll. */
+#place-panel {
+  width: 480px;
+  padding: 12px 14px 10px;
+  border-radius: 16px;
+  letter-spacing: -0.01em;
+}
+
+.pp-header {
+  align-items: baseline;
+}
+
+.pp-title {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.pp-count {
+  font-size: 11px;
+  color: #8e9297;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Segmented control: an inset track with the active segment raised out of it */
+.pp-tabs {
+  gap: 2px;
+  margin: 9px 0 8px;
+  padding: 2px;
+  background: rgba(0,0,0,0.28);
+  border-radius: 10px;
+}
+
+.pp-tab {
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  transition: background 0.15s, color 0.15s;
+}
+
+.pp-tab.is-on {
+  background: rgba(255,255,255,0.14);
+  color: #fff;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.35);
+}
+
+/* Fields read as recessed wells rather than outlined boxes */
+#place-search,
+#place-rename,
+#place-span,
+#place-kind {
+  background: rgba(0,0,0,0.26);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 9px;
+  color: #fff;
+  font: inherit;
+  font-size: 12.5px;
+  padding: 6px 10px;
+  outline: none;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+#place-search::placeholder,
+#place-rename::placeholder {
+  color: #6f7479;
+}
+
+#place-search:focus,
+#place-rename:focus,
+#place-span:focus,
+#place-kind:focus {
+  border-color: #0a84ff;
+  background: rgba(0,0,0,0.36);
+}
+
+#place-search {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Two columns: the panel has width to spare and height it should not take.
+   Names truncate rather than wrap, so every row is exactly one line tall. */
+#place-results {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px 8px;
+  max-height: 156px;
+  margin-top: 6px;
+}
+
+#place-results:empty {
+  margin-top: 0;
+}
+
+#place-results li {
+  gap: 8px;
+  padding: 3px 8px;
+  border-radius: 7px;
+  font-size: 12px;
+  min-width: 0;
+}
+
+#place-results li .result-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#place-results li .result-meta {
+  flex: none;
+  font-size: 10.5px;
+  color: #8e9297;
+}
+
+.pp-edit-row,
+.pp-span-row {
+  margin-top: 7px;
+}
+
+/* Buttons: one row, no wrapping. Save carries the accent because it is the only
+   one that writes anything to disk; Delete is the only destructive one. */
+.pp-toolbar {
+  gap: 6px;
+  margin-top: 9px;
+  padding-top: 9px;
+  flex-wrap: nowrap;
+}
+
+.pp-toolbar button,
+.pp-tool-btn {
+  flex: 1;
+  padding: 5px 4px;
+  border: none;
+  border-radius: 9px;
+  background: rgba(255,255,255,0.09);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  text-align: center;
+  transition: background 0.15s, color 0.15s;
+}
+
+.pp-toolbar button:hover,
+.pp-tool-btn:hover {
+  background: rgba(255,255,255,0.16);
+}
+
+.pp-toolbar button:active,
+.pp-tool-btn:active {
+  transform: scale(0.97);
+}
+
+#place-save {
+  background: #0a84ff;
+  color: #fff;
+  font-weight: 600;
+}
+
+#place-save:hover {
+  background: #339cff;
+}
+
+#place-save.pp-dirty {
+  background: #ff9f0a;
+  color: #1a1205 !important;
+}
+
+#place-save.pp-dirty:hover {
+  background: #ffb340;
+}
+
+.pp-edit-row .pp-danger {
+  flex: none;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 9px;
+  background: rgba(255,69,58,0.16);
+  font-size: 11.5px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* ============ Layers as a control-bar button ============
+   Collapsed, in the left stack with zoom and rotate. Leaflet ships a background
+   image for the toggle; it's replaced with a mask so the glyph takes currentColor
+   and matches the other two buttons instead of being a fixed dark PNG. */
+.leaflet-control-layers-toggle {
+  width: 36px !important;
+  height: 36px !important;
+  background-image: none !important;
+  position: relative;
+}
+
+.leaflet-control-layers-toggle::before {
+  content: '';
+  position: absolute;
+  inset: 9px;
+  background: #fff;
+  -webkit-mask: var(--layers-glyph) center / 18px 18px no-repeat;
+  mask: var(--layers-glyph) center / 18px 18px no-repeat;
+}
+
+.leaflet-control-layers {
+  /* Stack spacing to match .leaflet-control-zoom's own margin */
+  margin-top: 10px !important;
+  overflow: hidden;
+}
+
+.leaflet-control-layers:hover .leaflet-control-layers-toggle {
+  background: rgba(255,255,255,0.12) !important;
+}
+
+/* Expanded, the panel keeps the same glass and rounding as the buttons above */
+.leaflet-control-layers-expanded {
+  padding: 4px 0 !important;
+  min-width: 176px;
+}
+
+.leaflet-control-layers-expanded .leaflet-control-layers-toggle {
+  display: none !important;
+}
+
+:root {
+  --layers-glyph: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linejoin='round'><path d='M12 3 2.5 8 12 13l9.5-5L12 3Z'/><path d='M2.5 12.5 12 17.5l9.5-5'/></svg>");
+}
+
+/* A display rule in this stylesheet outranks the user agent's [hidden] rule, so
+   any element given `display` here ignores the attribute entirely. That is why
+   the edit row sat on screen permanently with a Delete button that had nothing
+   selected to act on. Scoped to the placer rather than made global, so it can't
+   surprise anything that deliberately styles its own hidden state. */
+#place-panel [hidden] {
+  display: none !important;
+}
+
+/* Delete, armed. Filled red rather than tinted, so the second click is visibly
+   a different act from the first. */
+.pp-edit-row .pp-danger.is-armed {
+  background: #ff453a;
+  color: #fff !important;
 }

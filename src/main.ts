@@ -3,6 +3,7 @@ import 'leaflet/dist/leaflet.css'
 import './style.css'
 import citiesData from './data/cities.json'
 import labelsData from './data/labels.json'
+import stationsData from './data/stations.json'
 import nationsTsv from './data/nations.tsv?raw'
 import { talopedia, type TalopediaEntry } from './data/talopedia'
 
@@ -33,6 +34,65 @@ function toPx(latlng: L.LatLng): [number, number] {
     Math.round((latlng.lng * TILE_GRID) / U),
     Math.round((-latlng.lat * TILE_GRID) / U),
   ]
+}
+
+// --- Geographic coordinates ---
+//
+// Avium's axial tilt puts the graticule on the map's diagonals rather than its
+// edges. The equator runs bottom-left to top-right, the prime meridian top-left
+// to bottom-right, and they cross at the middle of the map, which is 0N 0E. That
+// puts the north pole in the top-left corner and the south pole in the
+// bottom-right, and both ends of the equator — the two remaining corners — on
+// the antimeridian.
+//
+// So the whole square is the world, standing on a corner. Meridians converge on
+// the two polar corners, which means the span of longitude available shrinks
+// toward them: the four edges of the square are all the antimeridian, folded.
+// Reading longitude off the raw diagonal instead would leave half the globe
+// with nowhere to be, and every pixel outside the inscribed diamond would sit at
+// coordinates that do not exist.
+const GEO_ORIGIN = CONTENT / 2
+const GEO_R = Math.hypot(GEO_ORIGIN, GEO_ORIGIN) // half-diagonal: pole and antimeridian distance
+const SQRT1_2 = Math.SQRT1_2
+
+interface Geo {
+  lat: number
+  lon: number
+}
+
+// Map pixels onto the diagonal axes: u runs east along the equator, v runs north
+// along the prime meridian. y grows downward, so north is up-left.
+function axes(x: number, y: number): { u: number; v: number } {
+  const dx = x - GEO_ORIGIN
+  const dy = y - GEO_ORIGIN
+  return { u: (dx - dy) * SQRT1_2, v: -(dx + dy) * SQRT1_2 }
+}
+
+function toGeo(x: number, y: number): Geo {
+  const { u, v } = axes(x, y)
+  const lat = (90 * v) / GEO_R
+  // Half-width of the world at this latitude. It reaches zero at the poles,
+  // where every longitude collapses onto one point and 0 is the honest answer.
+  const halfWidth = GEO_R - Math.abs(v)
+  return { lat, lon: halfWidth < 1e-9 ? 0 : (180 * u) / halfWidth }
+}
+
+function fromGeo(lat: number, lon: number): { x: number; y: number } {
+  const v = (lat / 90) * GEO_R
+  const u = (lon / 180) * (GEO_R - Math.abs(v))
+  return {
+    x: GEO_ORIGIN + (u - v) * SQRT1_2,
+    y: GEO_ORIGIN - (u + v) * SQRT1_2,
+  }
+}
+
+// Single cardinal letters, as any atlas uses. The axes run on the diagonals, so
+// the letters name hemispheres rather than screen directions: N is toward the
+// top-left corner, E toward the top-right.
+function fmtGeo(g: Geo, places = 2): string {
+  const lat = g.lat >= 0 ? 'N' : 'S'
+  const lon = g.lon >= 0 ? 'E' : 'W'
+  return `${Math.abs(g.lat).toFixed(places)}°${lat} ${Math.abs(g.lon).toFixed(places)}°${lon}`
 }
 
 // --- Map ---
@@ -87,12 +147,59 @@ if (DEV) {
 
 // --- Layer control ---
 
+// Listed in the order they stack on the map, from the ground up. Territories and
+// Cities are added later, where their layers are created, and Research Stations
+// after those — so the panel reads Borders, Rivers, Territories, Cities,
+// Research Stations without anything needing to sort it.
 const overlayControl: Record<string, L.Layer> = {
-  'National Borders': bordersLayer,
+  'Borders': bordersLayer,
   'Rivers': riversLayer,
 }
 
-const layerCtrl = L.control.layers({}, overlayControl, { collapsed: false }).addTo(map)
+// Collapsed and moved into the left stack, so layers is a button alongside zoom
+// and rotate rather than a permanent card taking a corner of the map to itself.
+const layerCtrl = L.control
+  .layers({}, overlayControl, { collapsed: true, position: 'topleft' })
+  .addTo(map)
+
+// Leaflet opens a collapsed control on hover, so it springs open whenever the
+// pointer crosses that corner on its way somewhere else. Make it a click toggle.
+//
+// The hover pair comes off by reference. The button's own click handler is an
+// anonymous function inside an object literal, so it can't be removed the same
+// way — a capture-phase listener with stopImmediatePropagation gets in front of
+// it instead, which halts every remaining listener for that event in any phase.
+{
+  const ctrl = layerCtrl as unknown as {
+    _container?: HTMLElement
+    _layersLink?: HTMLElement
+    _expandSafely?: () => void
+    collapse: () => void
+    expand: () => void
+  }
+  const box = ctrl._container
+  const link = ctrl._layersLink
+  if (box && link && ctrl._expandSafely) {
+    L.DomEvent.off(box, { mouseenter: ctrl._expandSafely, mouseleave: ctrl.collapse }, ctrl)
+    const open = () => box.classList.contains('leaflet-control-layers-expanded')
+    link.addEventListener(
+      'click',
+      (e) => {
+        e.preventDefault()
+        e.stopImmediatePropagation()
+        open() ? ctrl.collapse() : ctrl._expandSafely!()
+      },
+      true
+    )
+    // Leaflet already closes it on a map click; this covers the rest of the page
+    document.addEventListener('click', (e) => {
+      if (open() && !box.contains(e.target as Node)) ctrl.collapse()
+    })
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && open()) ctrl.collapse()
+    })
+  }
+}
 
 // --- Labels ---
 
@@ -256,12 +363,66 @@ function areaFontSize(def: LabelDef, z: number): number {
   return (areaSpan(def) * scaleAt(sizeZoom(def, z)) * FIT) / (def.text.length * advanceOf(def))
 }
 
-// The zoom band is the only thing that hides a label. There used to be a size
-// cull here as well, which meant dev and the public map disagreed about what
-// was on screen — a label tuned to look right in the placer was silently
-// dropped for everyone else. Legibility is handled where the size is decided.
+function inBand(def: LabelDef, z: number): boolean {
+  return z >= def.minZoom && z <= (def.maxZoom ?? Infinity)
+}
+
+// The rectangle a name occupies at a zoom, in the same translation-free screen
+// space computePlacement works in.
+function labelBox(def: LabelDef, z: number): Box | null {
+  const pos = labelPos(def)
+  if (!pos) return null
+  const fs = areaFontSize(def, z)
+  if (!fs) return null
+  const s = scaleAt(z)
+  const w = def.text.length * fs * advanceOf(def)
+  const h = fs * 1.4
+  return { x: pos[0] * s - w / 2, y: pos[1] * s - h / 2, w, h }
+}
+
+// A nation name sitting in the same water as a sea name reads as one jumble, and
+// the nation is the more specific claim on that spot, so it takes it. The sea
+// name is not lost — the nation band ends at z5, and the sea comes back on its
+// own the moment it does.
+//
+// Keyed on zoom because both boxes move with it, and cleared alongside the
+// placement cache, since a drag or a span edit changes the geometry.
+const seaSuppressCache = new Map<number, Set<LabelDef>>()
+
+function suppressedSeas(z: number): Set<LabelDef> {
+  const cached = seaSuppressCache.get(z)
+  if (cached) return cached
+
+  const set = new Set<LabelDef>()
+  const claims: Box[] = []
+  for (const d of labelDefs) {
+    if (d.type !== 'nation' && d.type !== 'colony') continue
+    if (!inBand(d, z)) continue
+    const b = labelBox(d, z)
+    if (b) claims.push(b)
+  }
+  if (claims.length) {
+    for (const d of labelDefs) {
+      if (d.type !== 'sea') continue
+      const b = labelBox(d, z)
+      if (b && claims.some(o => boxesOverlap(b, o))) set.add(d)
+    }
+  }
+  seaSuppressCache.set(z, set)
+  return set
+}
+
+// Once a water name is in its band it stays on screen, however small it renders.
+// There is deliberately no size cull: a name too small to read still marks where
+// the water is, and zooming in resolves it — the same reasoning that keeps the
+// tiny land territories on the map rather than hiding them until they are big.
+//
+// The one thing that takes a sea off is a nation name landing on it, and that
+// lifts by itself when the nation band ends.
 function labelShown(def: LabelDef, z: number): boolean {
-  return map.hasLayer(labelLayer) && z >= def.minZoom && z <= (def.maxZoom ?? Infinity)
+  if (!map.hasLayer(labelLayer) || !inBand(def, z)) return false
+  if (def.type === 'sea' && suppressedSeas(z).has(def)) return false
+  return true
 }
 
 function makeLabelMarker(def: LabelDef, pos: [number, number]): L.Marker {
@@ -410,7 +571,7 @@ const cityLayer = L.layerGroup().addTo(map)
 
 // Registered here rather than in overlayControl above because cityLayer has to
 // exist first, which puts them under Borders and Rivers in the control
-layerCtrl.addOverlay(labelLayer, 'Territory Names')
+layerCtrl.addOverlay(labelLayer, 'Territories')
 layerCtrl.addOverlay(cityLayer, 'Cities')
 
 map.on('overlayadd overlayremove', (e) => {
@@ -778,6 +939,9 @@ function placementsAt(z: number): Placement[] {
 
 function invalidatePlacements() {
   placementCache.clear()
+  // Which seas a nation name covers is geometry too, so it goes stale for the
+  // same reasons: a drag, a rename, a span edit, a type change
+  seaSuppressCache.clear()
 }
 
 // Dot and label in one DOM element: no Leaflet tooltip machinery, whose
@@ -953,6 +1117,9 @@ function openCityPanel(c: City) {
     `<button class="cp-close" aria-label="Close">✕</button>` +
     `<div class="cp-name">${displayName}</div>` +
     (c.nativeScript ? `<div class="cp-native">${c.nativeScript}</div>` : '') +
+    (c.x != null && c.y != null
+      ? `<div class="cp-coord">${fmtGeo(toGeo(c.x, c.y))}</div>`
+      : '') +
     `<div class="cp-stats">` +
     `<div class="cp-stat"><div class="cp-label">Nation</div><div class="cp-value${nat ? ' cp-link' : ''}">${c.nation}${c.alpha3 ? ` <span class="cp-sub">(${c.alpha3})</span>` : ''}</div></div>` +
     (c.irlParallel ? `<div class="cp-stat"><div class="cp-label">IRL Parallel</div><div class="cp-value">${c.irlParallel}</div></div>` : '') +
@@ -1099,12 +1266,35 @@ updateCities()
 
 const SAVE_KEY = 'avium-city-coords'
 
+// Placements are keyed on name AND nation. Name alone collides — seven cities
+// share a name with one in a different nation — and the collision corrupts in
+// both directions: on save, whichever comes last in the array overwrites the
+// other's entry, and on load that one coordinate is handed back to both. Place
+// one twin and the other jumps on top of it. Tab matches merge-tsv.mjs, and
+// neither field can contain one.
+const coordKey = (c: { name: string; nation: string }) => `${c.name}\t${c.nation}`
+
+const nameCount = new Map<string, number>()
+for (const c of cities) nameCount.set(c.name, (nameCount.get(c.name) ?? 0) + 1)
+
 function saveProgress() {
+  markDirty()
   const coords: Record<string, [number, number]> = {}
   for (const c of cities) {
-    if (c.x != null && c.y != null) coords[c.name] = [c.x, c.y]
+    if (c.x != null && c.y != null) coords[coordKey(c)] = [c.x, c.y]
   }
   localStorage.setItem(SAVE_KEY, JSON.stringify(coords))
+}
+
+// Saves written before the key carried the nation are keyed on name alone. They
+// are honoured where the name is unique, which is exactly where they mean one
+// city — a legacy entry under a shared name is the corruption this exists to
+// stop, so it is dropped rather than reapplied to both.
+function legacyCoord(
+  coords: Record<string, [number, number]>,
+  c: City
+): [number, number] | undefined {
+  return coords[coordKey(c)] ?? (nameCount.get(c.name) === 1 ? coords[c.name] : undefined)
 }
 
 function loadProgress() {
@@ -1113,8 +1303,9 @@ function loadProgress() {
   const coords: Record<string, [number, number]> = JSON.parse(raw)
   let count = 0
   for (const c of cities) {
-    if (coords[c.name]) {
-      ;[c.x, c.y] = coords[c.name]
+    const xy = legacyCoord(coords, c)
+    if (xy) {
+      ;[c.x, c.y] = xy
       count++
     }
   }
@@ -1124,6 +1315,7 @@ function loadProgress() {
 const LABEL_KEY = 'avium-label-coords'
 
 function saveLabelProgress() {
+  markDirty()
   const saved: Record<string, Partial<LabelDef>> = {}
   for (const d of labelDefs) {
     // A resized label may never have been dragged, so span alone is enough
@@ -1178,15 +1370,18 @@ function importTSV(tsv: string) {
     return
   }
 
-  // Build coord lookup from current state
+  // Build coord lookup from current state, on the same name+nation key
   const coordMap = new Map<string, [number | null, number | null]>()
-  for (const c of cities) coordMap.set(c.name, [c.x, c.y])
+  for (const c of cities) coordMap.set(coordKey(c), [c.x, c.y])
 
   // Also pull from localStorage in case some coords aren't in the current array
   const saved = localStorage.getItem(SAVE_KEY)
   if (saved) {
-    for (const [name, xy] of Object.entries(JSON.parse(saved) as Record<string, [number, number]>)) {
-      if (!coordMap.has(name) || coordMap.get(name)![0] == null) coordMap.set(name, xy)
+    const coords = JSON.parse(saved) as Record<string, [number, number]>
+    for (const c of cities) {
+      const xy = legacyCoord(coords, c)
+      const key = coordKey(c)
+      if (xy && (!coordMap.has(key) || coordMap.get(key)![0] == null)) coordMap.set(key, xy)
     }
   }
 
@@ -1210,7 +1405,7 @@ function importTSV(tsv: string) {
     }
 
     // Preserve coordinates
-    const existing = coordMap.get(city.name)
+    const existing = coordMap.get(coordKey(city))
     if (existing) { city.x = existing[0]; city.y = existing[1] }
     newCities.push(city)
   }
@@ -1316,6 +1511,23 @@ if (!DEV) {
 let selectedCity: City | null = null
 let selectedLabel: LabelDef | null = null
 
+// Declared here, not beside the code that uses them: updateCount() runs during
+// module init and reaches updateUnassigned(), which reads both. Left at the
+// bottom of the file they are still in the temporal dead zone at that moment,
+// which throws and takes every listener registered after it down with it.
+interface Station {
+  name: string
+  continent: string
+  x: number | null
+  y: number | null
+}
+
+const stations = stationsData as Station[]
+let selectedStation: Station | null = null
+
+type PlacerTab = 'cities' | 'labels'
+let tab: PlacerTab = 'cities'
+
 // The label the span field edits. Tracked apart from selectedLabel, which is
 // armed for a placement click and cleared the moment one lands — the size
 // usually wants a few passes after the position is right.
@@ -1366,9 +1578,12 @@ function updateCount() {
 
 function updateUnassigned() {
   if (!DEV) return
-  const unplacedLabels = labelDefs.filter(d => labelPos(d) == null)
-  const unplaced = citiesByPriority.filter(c => c.x == null || c.y == null)
-  const total = unplacedLabels.length + unplaced.length
+  // Scoped to the open tab, so the panel is a worklist for the job in hand
+  // rather than a pile of both
+  const unplacedLabels = tab === 'labels' ? labelDefs.filter(d => labelPos(d) == null) : []
+  const unplacedStations = tab === 'labels' ? stations.filter(p => p.x == null) : []
+  const unplaced = tab === 'cities' ? citiesByPriority.filter(c => c.x == null || c.y == null) : []
+  const total = unplacedLabels.length + unplacedStations.length + unplaced.length
   unassignedHeader.textContent = `Unassigned (${total})`
   if (!total) {
     unassignedPanel.style.display = 'none'
@@ -1382,6 +1597,13 @@ function updateUnassigned() {
     li.innerHTML = `<span class="result-name">${d.text}</span>` +
       `<span class="result-meta">${d.type.toUpperCase()}</span>`
     li.addEventListener('click', () => selectLabel(d))
+    unassignedList.appendChild(li)
+  }
+  for (const p of unplacedStations) {
+    const li = document.createElement('li')
+    li.innerHTML = `<span class="result-name">${p.name}</span>` +
+      `<span class="result-meta">STATION</span>`
+    li.addEventListener('click', () => selectStation(p))
     unassignedList.appendChild(li)
   }
   for (const c of unplaced) {
@@ -1400,14 +1622,19 @@ importInput.addEventListener('change', () => {
   importInput.value = ''
 })
 
-searchInput.addEventListener('input', () => {
+function renderResults() {
   const q = norm(searchInput.value.trim())
   resultsList.innerHTML = ''
-  if (q.length < 2) return
+  // Cities need a query: there are 1747 and nobody browses that. Labels and
+  // stations number about a hundred, so an empty box lists all of them — on that
+  // tab this is a browser, not a search field, and without it the tab looked
+  // broken whenever everything happened to be placed already.
+  const browsing = tab === 'labels' && !q
+  if (!browsing && q.length < 2) return
 
-  const matches = cities
-    .filter(c => norm(c.name).includes(q) || norm(c.nation).includes(q))
-    .slice(0, 10)
+  const matches = tab === 'cities'
+    ? cities.filter(c => norm(c.name).includes(q) || norm(c.nation).includes(q)).slice(0, 10)
+    : []
 
   for (const c of matches) {
     const li = document.createElement('li')
@@ -1419,9 +1646,9 @@ searchInput.addEventListener('input', () => {
     resultsList.appendChild(li)
   }
 
-  const labelMatches = labelDefs
-    .filter(d => norm(d.text).includes(q))
-    .slice(0, 6)
+  const labelMatches = tab === 'labels'
+    ? labelDefs.filter(d => !q || norm(d.text).includes(q)).slice(0, browsing ? 400 : 6)
+    : []
 
   for (const d of labelMatches) {
     const li = document.createElement('li')
@@ -1432,12 +1659,30 @@ searchInput.addEventListener('input', () => {
     li.addEventListener('click', () => selectLabel(d))
     resultsList.appendChild(li)
   }
-})
+
+  const stationMatches = tab === 'labels'
+    ? stations.filter(p => !q || norm(p.name).includes(q)).slice(0, browsing ? 400 : 6)
+    : []
+
+  for (const p of stationMatches) {
+    const li = document.createElement('li')
+    const placed = p.x != null
+    li.innerHTML = `<span class="result-name">${p.name}</span>` +
+      `<span class="result-meta">STATION${placed ? ' ✓' : ''}</span>`
+    if (placed) li.classList.add('placed')
+    li.addEventListener('click', () => selectStation(p))
+    resultsList.appendChild(li)
+  }
+}
+
+searchInput.addEventListener('input', renderResults)
 
 function selectCity(c: City) {
   selectedCity = c
   selectedLabel = null
+  selectedStation = null
   setSpanTarget(null)
+  syncEditRow()
   resultsList.innerHTML = ''
   searchInput.value = c.name
   statusEl.textContent = `Click the map to place ${c.name}`
@@ -1451,7 +1696,9 @@ function selectCity(c: City) {
 function selectLabel(d: LabelDef) {
   selectedLabel = d
   selectedCity = null
+  selectedStation = null
   setSpanTarget(d)
+  syncEditRow()
   resultsList.innerHTML = ''
   searchInput.value = d.text
   statusEl.className = 'status-active'
@@ -1464,6 +1711,20 @@ function selectLabel(d: LabelDef) {
 
 map.on('click', (e: L.LeafletMouseEvent) => {
   const [x, y] = toPx(e.latlng)
+
+  if (selectedStation) {
+    selectedStation.x = x
+    selectedStation.y = y
+    saveStationProgress()
+    updateStations()
+    markDirty()
+    statusEl.textContent = `${selectedStation.name} → [${x}, ${y}]`
+    statusEl.className = 'status-done'
+    // Stays selected: a station is placed and then usually named, and dropping
+    // the selection here would close the rename field the moment it is needed
+    syncEditRow()
+    return
+  }
 
   if (selectedLabel) {
     selectedLabel.x = x
@@ -1519,28 +1780,14 @@ map.on('click', (e: L.LeafletMouseEvent) => {
 if (DEV) {
   map.on('mousemove', (e: L.LeafletMouseEvent) => {
     const [x, y] = toPx(e.latlng)
-    coordEl.textContent = `x: ${x}  y: ${y}`
+    // One decimal: at the widest, a tenth of a degree is about 2px, so a second
+    // place would report precision the pointer does not have
+    coordEl.textContent = `x: ${x}  y: ${y}   ${fmtGeo(toGeo(x, y), 1)}`
   })
 }
 
-// Export
-document.getElementById('place-export')!.addEventListener('click', () => {
-  const blob = new Blob([JSON.stringify(cities, null, 2)], { type: 'application/json' })
-  const a = document.createElement('a')
-  a.href = URL.createObjectURL(blob)
-  a.download = 'cities.json'
-  a.click()
-  URL.revokeObjectURL(a.href)
-})
-
-document.getElementById('place-export-labels')!.addEventListener('click', () => {
-  const blob = new Blob([JSON.stringify(labelDefs, null, 2)], { type: 'application/json' })
-  const a = document.createElement('a')
-  a.href = URL.createObjectURL(blob)
-  a.download = 'labels.json'
-  a.click()
-  URL.revokeObjectURL(a.href)
-})
+// Export is the Save button now — one press writes all three files, so a session
+// can't end with cities.json current and labels.json a version behind.
 
 // TSV paste toggle
 const tsvArea = document.getElementById('tsv-paste') as HTMLTextAreaElement
@@ -2146,3 +2393,437 @@ const RotateControl = L.Control.extend({
 
 new RotateControl().addTo(map)
 window.addEventListener('resize', () => bearing && applyBearing())
+
+// --- Research stations ---
+//
+// Points of interest for Hyperborea and Tartarus, which hold no cities at all —
+// nothing lives at either pole, so a station is the only thing there is to mark.
+// They are their own layer rather than cities with a flag: a station has no
+// population, no GDP and no tier, and every one of those drives how a city is
+// drawn, ranked and culled.
+
+// Stations arrive at the same moment the continent names hand over to the nation
+// names — the zoom where the map stops being an overview and starts naming
+// places. Derived from the nation band rather than written as a number, so
+// retuning that band carries the stations with it.
+const STATION_MIN_ZOOM = Math.min(
+  ...labelDefs.filter(d => d.type === 'nation' || d.type === 'colony').map(d => d.minZoom)
+)
+// The label matches a small city exactly — same family, weight and size — so a
+// station sits in the same register as everything around it.
+//
+// The marker cannot. A small city dot comes out at 4.8px, and at that size the
+// atom's strokes land at a third of a pixel and vanish, which is why the icon
+// looked empty. 11px is the point where the nucleus and both orbits resolve.
+// This is the knob if it wants to be bigger or smaller.
+const STATION_TIER = cityTier(500_000)
+const STATION_SCALE = 0.8
+const STATION_FS = Math.round(STATION_TIER.fontSize * STATION_SCALE)
+const STATION_D = 11
+// Wraps past this. The CSS keeps nowrap and renders the breaks this decides, so
+// the collision box and the drawn text can never disagree about the line count.
+const STATION_MAX_W = 62
+const STATION_CHAR = 0.62 // same advance the city labels measure with
+
+const stationLayer = L.layerGroup().addTo(map)
+layerCtrl.addOverlay(stationLayer, 'Research Stations')
+
+const stationMarkers = new Map<Station, L.Marker>()
+
+// Greedy wrap on the same character advance the collision box is measured with,
+// so the box and the rendered text agree on how many lines there are
+function wrapStation(name: string): string[] {
+  const charW = STATION_FS * STATION_CHAR
+  const lines: string[] = []
+  let line = ''
+  for (const word of name.split(' ')) {
+    const next = line ? `${line} ${word}` : word
+    if (line && next.length * charW > STATION_MAX_W) {
+      lines.push(line)
+      line = word
+    } else {
+      line = next
+    }
+  }
+  if (line) lines.push(line)
+  return lines
+}
+
+// A lab flask on a light blue disc, in the same -3 -3 6 6 viewBox the city
+// markers use so the two share a coordinate system.
+//
+// The flask is one filled path rather than an outline. At 11px a stroked glyph
+// lands near a third of a pixel and disappears — which is exactly what went
+// wrong with the atom — whereas a solid silhouette still reads. Every dimension
+// is chosen for what it becomes at STATION_D; that constant is the knob.
+function stationIcon(station: Station, dir: 'right' | 'left'): L.DivIcon {
+  const r = STATION_D / 2
+  // Kept inside r=2.15 so the base clears the disc's edge — at the full 1.8
+  // half-width the corners were being clipped by the circle.
+  const flask =
+    'M-0.55-1.62 L0.55-1.62 L0.55-1.32 L0.34-1.32 L0.34-0.4 ' +
+    'L1.55 1.3 L1.55 1.56 L-1.55 1.56 L-1.55 1.3 L-0.34-0.4 L-0.34-1.32 L-0.55-1.32 Z'
+  const svg =
+    `<svg width="${STATION_D}" height="${STATION_D}" viewBox="-3 -3 6 6" xmlns="http://www.w3.org/2000/svg">` +
+    `<circle r="2.6" fill="#5860be" stroke="#b9c3f2" stroke-width="0.5"/>` +
+    `<path d="${flask}" fill="#fff"/>` +
+    `</svg>`
+  const gap = r + 3
+  const side = dir === 'right' ? `left:${r + gap}px` : `right:${r + gap}px`
+  const align = dir === 'right' ? 'left' : 'right'
+  return L.divIcon({
+    className: 'station-icon',
+    html: svg + `<span class="station-label" style="${side};text-align:${align}">${wrapStation(station.name).join('<br>')}</span>`,
+    iconSize: [STATION_D, STATION_D],
+    iconAnchor: [r, r],
+  })
+}
+
+// Right unless it collides, then left — the same preference the city labels use,
+// minus the future-cost weighing, since nothing else competes for space out here
+function updateStations() {
+  for (const [, m] of stationMarkers) stationLayer.removeLayer(m)
+  stationMarkers.clear()
+  if (!map.hasLayer(stationLayer) || map.getZoom() < STATION_MIN_ZOOM) return
+
+  const s = scaleAt(map.getZoom())
+  const taken: Box[] = []
+  for (const station of stations) {
+    if (station.x == null || station.y == null) continue
+    const lines = wrapStation(station.name)
+    const w = Math.min(STATION_MAX_W, Math.max(...lines.map(l => l.length * STATION_FS * STATION_CHAR)))
+    const h = lines.length * STATION_FS * 1.25
+    const px0 = station.x * s
+    const py = station.y * s
+    const gap = STATION_D / 2 + 4
+
+    const cands: { dir: 'right' | 'left'; box: Box }[] = [
+      { dir: 'right', box: { x: px0 + gap, y: py - h / 2, w, h } },
+      { dir: 'left', box: { x: px0 - gap - w, y: py - h / 2, w, h } },
+    ]
+    const hit = cands.find(c => !taken.some(t => boxesOverlap(c.box, t))) ?? cands[0]
+    taken.push(hit.box)
+
+    const m = L.marker(px(station.x, station.y), {
+      icon: stationIcon(station, hit.dir),
+      draggable: DEV,
+    }).addTo(stationLayer)
+    if (DEV) {
+      m.on('dragend', () => {
+        const [nx, ny] = toPx(m.getLatLng())
+        station.x = nx
+        station.y = ny
+        saveStationProgress()
+        updateStations()
+        statusEl.textContent = `${station.name} → ${nx}, ${ny}`
+        statusEl.className = 'status-done'
+      })
+    }
+    stationMarkers.set(station, m)
+  }
+}
+
+const STATION_KEY = 'avium-station-coords'
+
+function saveStationProgress() {
+  markDirty()
+  const coords: Record<string, [number, number]> = {}
+  for (const p of stations) if (p.x != null && p.y != null) coords[p.name] = [p.x, p.y]
+  localStorage.setItem(STATION_KEY, JSON.stringify(coords))
+}
+
+function loadStationProgress() {
+  const raw = localStorage.getItem(STATION_KEY)
+  if (!raw) return
+  const coords: Record<string, [number, number]> = JSON.parse(raw)
+  for (const p of stations) if (coords[p.name]) [p.x, p.y] = coords[p.name]
+}
+
+loadStationProgress()
+updateStations()
+map.on('zoomend', updateStations)
+map.on('overlayadd overlayremove', (e) => {
+  if ((e as L.LayersControlEvent).layer === stationLayer) updateStations()
+})
+
+// --- Label and station editing (dev) ---
+//
+// Everything here mutates the in-memory arrays and the localStorage mirror only.
+// The JSON files change when Save is pressed and at no other moment: an edit
+// session is a draft until it is written out, which is why the button carries a
+// dot the moment anything is touched.
+
+let dirty = false
+
+const editRow = document.getElementById('edit-row') as HTMLElement
+const renameInput = document.getElementById('place-rename') as HTMLInputElement
+const kindSelect = document.getElementById('place-kind') as HTMLSelectElement
+const deleteBtn = document.getElementById('place-delete') as HTMLButtonElement
+const saveBtn = document.getElementById('place-save') as HTMLButtonElement
+
+// A label's zoom band belongs to its type, not to the label. Picking "sea" from
+// the dropdown used to change only the styling, leaving the new label on the
+// nation band it was created with — so it looked like a sea and then vanished at
+// z5.5 with the nation names. The band travels with the type now.
+const TYPE_BAND: Record<string, { minZoom: number; maxZoom?: number }> = {
+  continent: { minZoom: 2.5, maxZoom: 3 },
+  ocean: { minZoom: 2.5 },
+  sea: { minZoom: 3.5 },
+  nation: { minZoom: 3.5, maxZoom: 5 },
+  colony: { minZoom: 3.5, maxZoom: 5 },
+}
+
+const LABEL_KINDS = Object.keys(TYPE_BAND)
+
+function setLabelType(def: LabelDef, type: string) {
+  const band = TYPE_BAND[type]
+  if (!band) return
+  def.type = type
+  def.minZoom = band.minZoom
+  // Absent means uncapped — water runs to whatever the top zoom is
+  if (band.maxZoom == null) delete def.maxZoom
+  else def.maxZoom = band.maxZoom
+}
+
+function markDirty() {
+  dirty = true
+  saveBtn.textContent = 'Save •'
+  saveBtn.classList.add('pp-dirty')
+}
+
+// The edit row serves labels and stations both. A station has no type to choose,
+// so the kind selector is hidden for one and populated for the other.
+function syncEditRow() {
+  const target = selectedLabel ?? selectedStation
+  // Never leave the button armed across a change of selection
+  disarmDelete()
+  editRow.hidden = !target
+  if (!target) return
+  const isLabel = selectedLabel != null
+  renameInput.value = isLabel ? selectedLabel!.text : selectedStation!.name
+  kindSelect.hidden = !isLabel
+  if (isLabel) {
+    kindSelect.innerHTML = LABEL_KINDS.map(
+      k => `<option value="${k}"${k === selectedLabel!.type ? ' selected' : ''}>${k}</option>`
+    ).join('')
+  }
+}
+
+function selectStation(p: Station) {
+  selectedStation = p
+  selectedLabel = null
+  selectedCity = null
+  setSpanTarget(null)
+  resultsList.innerHTML = ''
+  searchInput.value = p.name
+  statusEl.className = 'status-active'
+  statusEl.textContent = `Click the map to place ${p.name}`
+  syncEditRow()
+  if (p.x != null && p.y != null) map.setView(px(p.x, p.y), Math.max(map.getZoom(), STATION_MIN_ZOOM))
+}
+
+renameInput.addEventListener('input', () => {
+  const name = renameInput.value
+  if (selectedLabel) {
+    selectedLabel.text = name
+    refreshLabel(selectedLabel)
+    saveLabelProgress()
+  } else if (selectedStation) {
+    selectedStation.name = name
+    saveStationProgress()
+    updateStations()
+  } else {
+    return
+  }
+  markDirty()
+  updateCount()
+})
+
+kindSelect.addEventListener('change', () => {
+  if (!selectedLabel) return
+  setLabelType(selectedLabel, kindSelect.value)
+  refreshLabel(selectedLabel)
+  saveLabelProgress()
+  markDirty()
+})
+
+// Two clicks on the button itself rather than a native confirm(). A browser that
+// has had "prevent additional dialogs" triggered returns false from confirm()
+// forever, with no dialog and no error — the button just stops working, which is
+// indistinguishable from it being unwired. This cannot fail that way, and it
+// keeps the interaction in the panel.
+let armed = false
+let armedTimer = 0
+
+function disarmDelete() {
+  armed = false
+  clearTimeout(armedTimer)
+  deleteBtn.textContent = 'Delete'
+  deleteBtn.classList.remove('is-armed')
+}
+
+deleteBtn.addEventListener('click', () => {
+  const name = selectedLabel?.text ?? selectedStation?.name
+  if (!name) {
+    statusEl.textContent = 'Nothing selected'
+    statusEl.className = ''
+    return
+  }
+
+  if (!armed) {
+    armed = true
+    deleteBtn.textContent = 'Sure?'
+    deleteBtn.classList.add('is-armed')
+    // Disarms itself, so a stray first click can't leave the button primed for
+    // a real delete minutes later
+    armedTimer = window.setTimeout(disarmDelete, 3000)
+    return
+  }
+  disarmDelete()
+  if (selectedLabel) {
+    const m = labelMarkers.get(selectedLabel)
+    if (m) {
+      labelLayer.removeLayer(m)
+      labelMarkers.delete(selectedLabel)
+    }
+    labelDefs.splice(labelDefs.indexOf(selectedLabel), 1)
+    selectedLabel = null
+    saveLabelProgress()
+    invalidatePlacements()
+    updateCities()
+  } else if (selectedStation) {
+    stations.splice(stations.indexOf(selectedStation), 1)
+    selectedStation = null
+    saveStationProgress()
+    updateStations()
+  }
+  setSpanTarget(null)
+  syncEditRow()
+  markDirty()
+  updateCount()
+  searchInput.value = ''
+  statusEl.textContent = `Deleted ${name}`
+  statusEl.className = 'status-done'
+})
+
+document.getElementById('place-add-label')!.addEventListener('click', () => {
+  // Born unplaced, so it lands in the Unassigned panel rather than silently
+  // appearing at some default spot on the map
+  const def: LabelDef = { text: 'New Label', type: 'nation', x: null, y: null, minZoom: 0 }
+  setLabelType(def, 'nation')
+  labelDefs.push(def)
+  markDirty()
+  updateCount()
+  selectLabel(def)
+  renameInput.focus()
+  renameInput.select()
+})
+
+document.getElementById('place-add-station')!.addEventListener('click', () => {
+  const station: Station = { name: 'New Station', continent: '', x: null, y: null }
+  stations.push(station)
+  markDirty()
+  selectStation(station)
+  renameInput.focus()
+  renameInput.select()
+})
+
+function download(name: string, data: unknown) {
+  const blob = new Blob([JSON.stringify(data, null, 2) + '\n'], { type: 'application/json' })
+  const a = document.createElement('a')
+  a.href = URL.createObjectURL(blob)
+  a.download = name
+  a.click()
+  URL.revokeObjectURL(a.href)
+}
+
+// Straight into src/data via the dev server, so a save is done when the button
+// says it is. The download path is the fallback for a built preview, where the
+// middleware does not exist — better a file in Downloads than a silent no-op.
+async function writeData(file: string, data: unknown): Promise<boolean> {
+  try {
+    const res = await fetch('/__save', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ file, data }),
+    })
+    return res.ok
+  } catch {
+    return false
+  }
+}
+
+saveBtn.addEventListener('click', async () => {
+  saveBtn.disabled = true
+  statusEl.textContent = 'Saving…'
+  statusEl.className = 'status-active'
+
+  const files: [string, unknown][] = [
+    ['cities.json', cities],
+    ['labels.json', labelDefs],
+    ['stations.json', stations],
+  ]
+  const written = await Promise.all(files.map(([f, d]) => writeData(f, d)))
+  const failed = files.filter((_, i) => !written[i])
+  for (const [f, d] of failed) download(f, d)
+
+  saveBtn.disabled = false
+  dirty = false
+  saveBtn.textContent = 'Save'
+  saveBtn.classList.remove('pp-dirty')
+  statusEl.className = 'status-done'
+  statusEl.textContent = failed.length
+    ? `Downloaded ${failed.map(f => f[0]).join(', ')} — dev server not writing`
+    : `Saved ${files.length} files to src/data`
+})
+
+// Losing an edit session to a stray refresh is the one thing localStorage cannot
+// protect against, because the JSON on disk is what the next load reads
+window.addEventListener('beforeunload', (e) => {
+  if (!dirty) return
+  e.preventDefault()
+  e.returnValue = ''
+})
+
+// --- Placer tabs ---
+//
+// Cities and territory names are different jobs: one is a long grind through a
+// list of 1747, the other is a handful of names being shaped. Splitting them
+// means the search, the results, the Unassigned list and the toolbar can each
+// answer for one job instead of mixing both. Save spans them, because a session
+// usually touches both and writing one file without the other is how the two
+// drift apart.
+
+
+const tabButtons = [...document.querySelectorAll<HTMLButtonElement>('.pp-tab')]
+
+function setTab(next: PlacerTab, focus = true) {
+  tab = next
+  for (const b of tabButtons) b.classList.toggle('is-on', b.dataset.tab === next)
+  for (const el of document.querySelectorAll<HTMLElement>('.pp-toolbar [data-for]')) {
+    el.hidden = el.dataset.for !== next
+  }
+  searchInput.placeholder = next === 'cities' ? 'Search cities…' : 'Search labels and stations…'
+  // Clearing is the honest move: a selection made on the other tab is no longer
+  // reachable, and leaving it live means the next map click places something the
+  // panel is no longer showing
+  selectedCity = null
+  selectedLabel = null
+  selectedStation = null
+  setSpanTarget(null)
+  syncEditRow()
+  searchInput.value = ''
+  renderResults()
+  statusEl.textContent = ''
+  statusEl.className = ''
+  updateUnassigned()
+  if (focus) searchInput.focus()
+}
+
+for (const b of tabButtons) {
+  b.addEventListener('click', () => setTab(b.dataset.tab as PlacerTab))
+}
+
+// No focus on the initial call: the panel is hidden outside ?dev, and focusing
+// an input inside it would take the caret away from the page for everyone else
+setTab('cities', false)
