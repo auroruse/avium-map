@@ -3,6 +3,9 @@ import 'leaflet/dist/leaflet.css'
 import './style.css'
 import citiesData from './data/cities.json'
 import labelsData from './data/labels.json'
+// Vite fingerprints and emits it; the element lives in index.html so the column
+// has its header before any script runs.
+import bannerUrl from './assets/banner.png'
 import stationsData from './data/stations.json'
 import nationsTsv from './data/nations.tsv?raw'
 import { talopedia, type TalopediaEntry } from './data/talopedia'
@@ -108,7 +111,38 @@ const map = L.map('map', {
   center: px(CONTENT / 2, CONTENT / 2),
   zoom: 2,
   maxBounds: contentBounds.pad(0.1),
+  // The sidebar owns the left edge on a desktop, so every control lives on the
+  // right. Leaflet's own zoom control is replaced rather than moved, because its
+  // position is fixed at construction.
+  zoomControl: false,
 })
+
+L.control.zoom({ position: 'topright' }).addTo(map)
+
+// How much of the map the sidebar hides. Zero on a phone, where the sheet
+// covers the bottom instead and the map is free to use its own centre.
+function sidebarWidth(): number {
+  if (!window.matchMedia('(min-width: 900px)').matches) return 0
+  const css = getComputedStyle(document.documentElement)
+  const rail = parseFloat(css.getPropertyValue('--rail')) || 0
+  // The place column only covers the map while it is open, so it only counts
+  // toward the offset then — otherwise every jump would land 190px off centre.
+  const panelOpen = !(document.getElementById('city-panel') as HTMLElement).hidden
+  const panel = panelOpen ? parseFloat(css.getPropertyValue('--panel')) || 0 : 0
+  return rail + panel
+}
+
+// Centre a point in the visible part of the map. Without this a city opened from
+// a link lands under the sidebar, dead centre of a window it only half occupies.
+function focusOn(x: number, y: number, zoom: number) {
+  const off = sidebarWidth() / 2
+  if (!off) {
+    map.setView(px(x, y), zoom)
+    return
+  }
+  const target = map.project(px(x, y), zoom).subtract([off, 0])
+  map.setView(map.unproject(target, zoom), zoom)
+}
 
 // --- Image layers ---
 
@@ -130,6 +164,15 @@ function tiledLayer(name: string, pane = 'overlayPane'): L.TileLayer {
 }
 
 tiledLayer('base', 'tilePane').addTo(map)
+
+// Where the world stops. The ocean tile and the page behind it are both dark, so
+// without this the map has no visible edge at all when zoomed out.
+L.rectangle(contentBounds, {
+  color: 'rgba(255,255,255,0.5)',
+  weight: 1,
+  fill: false,
+  interactive: false,
+}).addTo(map)
 const bordersLayer = tiledLayer('borders').addTo(map)
 const riversLayer = tiledLayer('rivers').addTo(map)
 
@@ -159,7 +202,7 @@ const overlayControl: Record<string, L.Layer> = {
 // Collapsed and moved into the left stack, so layers is a button alongside zoom
 // and rotate rather than a permanent card taking a corner of the map to itself.
 const layerCtrl = L.control
-  .layers({}, overlayControl, { collapsed: true, position: 'topleft' })
+  .layers({}, overlayControl, { collapsed: true, position: 'topright' })
   .addTo(map)
 
 // Leaflet opens a collapsed control on hover, so it springs open whenever the
@@ -698,7 +741,11 @@ function bigTier(r: number, fontSize: number): CityTier {
 
 // Ciudad Cuerdas's marker (r=3) as a single SVG element; every big city
 // renders this exact graphic, scaled by s = tierRadius / 3
-const BIG_D = 11.09
+// Box, not circle: the ring is 11.09 across and the extra 1.01 is padding, so
+// the drawn edge never sits on the boundary. It used to, and wherever the marker
+// got its own compositing layer the ring was squared off — the same reason the
+// small marker's viewBox is padded to 3.0 for a 2.76 drawing.
+const BIG_D = 12.1
 // The ink is the only thing that marks a capital. Shape and scale are a city's,
 // so a capital still reads at its own tier and nothing else has to change.
 const CITY_INK = '#111'
@@ -706,7 +753,7 @@ const CAPITAL_INK = '#d0342c'
 
 function bigSvgHtml(S: number, ink = CITY_INK): string {
   return (
-    `<svg width="${S}" height="${S}" viewBox="-5.545 -5.545 11.09 11.09" xmlns="http://www.w3.org/2000/svg">` +
+    `<svg width="${S}" height="${S}" viewBox="-6.05 -6.05 12.1 12.1" xmlns="http://www.w3.org/2000/svg">` +
     `<circle r="5.545" fill="#fff"/>` +
     `<circle r="4.095" fill="${ink}"/>` +
     `<circle r="1.905" fill="#fff" fill-opacity="0.95"/>` +
@@ -1009,6 +1056,11 @@ function cityIcon(p: Placement, fade: boolean): L.DivIcon {
   })
 }
 
+// Above this many additions and removals in one pass, the marker pane is
+// detached for the duration and the fade is skipped. Below it the swap costs
+// more than it saves.
+const BATCH_MIN = 60
+
 // Currently rendered markers, keyed by city; zoom changes only touch the diff
 const shownCities = new Map<City, { marker: L.Marker; key: string }>()
 
@@ -1047,23 +1099,51 @@ function updateCities() {
   const want = new Map(placements.map(p => [p.c, p]))
   const isNewSet = all !== lastAll
 
-  for (const [c, e] of shownCities) {
-    if (!want.has(c)) {
-      cityLayer.removeLayer(e.marker)
-      shownCities.delete(c)
-    }
+  const drop: City[] = []
+  for (const [c] of shownCities) if (!want.has(c)) drop.push(c)
+
+  const build: Placement[] = []
+  for (const p of placements) {
+    const existing = shownCities.get(p.c)
+    if (existing?.key === placementKey(p)) continue
+    build.push(p)
   }
 
-  for (const p of placements) {
-    const key = placementKey(p)
-    const existing = shownCities.get(p.c)
-    if (existing?.key === key) continue
-    if (existing) cityLayer.removeLayer(existing.marker)
+  // Leaflet appends each marker icon to the pane as it is added, so a thousand
+  // markers is a thousand separate insertions into a live tree. Detaching the
+  // pane first makes them all off-document and costs one reflow at the end
+  // instead. Only worth the swap for a big batch — crossing z3 to z3.5 rebuilds
+  // every marker on screen, because the global marker scale changes there.
+  const churn = drop.length + build.length
+  const batched = churn > BATCH_MIN
+  const pane = map.getPane('markerPane')!
+  const parent = pane.parentNode
+  const anchor = pane.nextSibling
+  if (batched && parent) parent.removeChild(pane)
 
-    const marker = L.marker(px(p.c.x!, p.c.y!), { icon: cityIcon(p, isNewSet && !prevPlaced.has(p.c)) })
-    marker.on('click', () => openCityPanel(p.c))
-    cityLayer.addLayer(marker)
-    shownCities.set(p.c, { marker, key })
+  try {
+    for (const c of drop) {
+      cityLayer.removeLayer(shownCities.get(c)!.marker)
+      shownCities.delete(c)
+    }
+
+    for (const p of build) {
+      const key = placementKey(p)
+      const existing = shownCities.get(p.c)
+      if (existing) cityLayer.removeLayer(existing.marker)
+
+      // The fade is a nicety for a few markers arriving. A thousand of them at
+      // once is a thousand concurrent animations, which is the cost it was
+      // meant to soften.
+      const fade = !batched && isNewSet && !prevPlaced.has(p.c)
+      const marker = L.marker(px(p.c.x!, p.c.y!), { icon: cityIcon(p, fade) })
+      marker.on('click', () => openCityPanel(p.c))
+      cityLayer.addLayer(marker)
+      shownCities.set(p.c, { marker, key })
+    }
+  } finally {
+    // finally, so a throw mid-batch cannot leave the map with no marker pane
+    if (batched && parent) parent.insertBefore(pane, anchor)
   }
 
   if (isNewSet) {
@@ -1077,7 +1157,11 @@ function updateCities() {
 const cityPanel = document.createElement('div')
 cityPanel.id = 'city-panel'
 cityPanel.hidden = true
-document.body.appendChild(cityPanel)
+// Inside the left stack, not on the body: on a desktop the rail and this panel
+// are flex siblings, so the browser guarantees they sit side by side. Positioning
+// them independently meant two width values had to agree, and when they did not
+// the panel painted over the rail.
+document.getElementById('ui-left')!.appendChild(cityPanel)
 
 function fmtUSD(n: number): string {
   return '$' + n.toLocaleString('en-US')
@@ -1149,6 +1233,115 @@ function wireAboutToggle() {
   })
 }
 
+// One row of a details card: label left, value right on one line. `more` rows
+// are the detail behind the number and are built from this same function, so the
+// reveal inherits the row's padding, type and hairline instead of inventing its
+// own. It is positioned absolutely in CSS, because growing a row on hover would
+// shove every row below it down the panel.
+// A reveal entry is [label, value, icon?]; the icon is optional so the plain card
+// rows can keep passing pairs.
+type Reveal = [string, string, string?]
+
+function detailRow(
+  label: string,
+  value: string,
+  link = false,
+  more: Reveal[] = [],
+  icon = ''
+): string {
+  const reveal = more.length
+    ? `<div class="cp-row-more">` +
+      more.map(([l, v, ic]) => detailRow(l, v, false, [], ic)).join('') +
+      `</div>`
+    : ''
+  return (
+    `<div class="cp-row">` +
+    `<div class="cp-row-label">${icon}${label}</div>` +
+    `<div class="cp-row-value${link ? ' cp-link' : ''}">${value}</div>` +
+    reveal +
+    `</div>`
+  )
+}
+
+// Falsy entries are dropped, so a caller can list every possible row and let the
+// data decide which exist. An empty card renders nothing rather than a heading
+// over a blank box.
+function detailsCard(rows: string[]): string {
+  const body = rows.filter(Boolean).join('')
+  return body ? `<div class="cp-section">Details</div><div class="cp-card">${body}</div>` : ''
+}
+
+// Stroke icons for the strip. They take currentColor, so one rule tints them.
+const STAT_ICON = {
+  population:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+    '<circle cx="9" cy="8" r="3.2"/><path d="M2.8 19.6c0-3.3 2.8-5.2 6.2-5.2s6.2 1.9 6.2 5.2"/>' +
+    '<path d="M16.6 5.4a3.2 3.2 0 0 1 0 5.2"/><path d="M18.4 15c1.9.7 2.8 2.3 2.8 4.6"/></svg>',
+  gdp:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M3.5 20.5h17"/><path d="M6.5 20.5v-6"/><path d="M12 20.5V4.5"/><path d="M17.5 20.5v-9.5"/></svg>',
+  hdi:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M3.5 20.5h17"/><path d="M5 16.2c3.4 0 5.1-3.4 7-6.3 1.6-2.4 3.4-4.4 6.5-4.4"/>' +
+    '<path d="M15.6 5.8h3v3"/></svg>',
+  urban:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M3.5 20.5h17"/><path d="M6 20.5V9l5-3.5V20.5"/><path d="M11 20.5V12h7v8.5"/>' +
+    '<path d="M14 15.5h1.5"/><path d="M8.2 12h.6"/></svg>',
+  rural:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M12 21v-6"/><path d="M12 15c-3.6 0-6-2.2-6-5.3S8.4 3.5 12 3.5s6 3.1 6 6.2S15.6 15 12 15Z"/>' +
+    '<path d="M4 21h16"/></svg>',
+  life:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M12 20.3S3.8 15.4 3.8 9.7A4.4 4.4 0 0 1 12 7.4a4.4 4.4 0 0 1 8.2 2.3c0 5.7-8.2 10.6-8.2 10.6Z"/></svg>',
+  literacy:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M12 6.6C10.3 5.2 7.8 4.6 4 4.6v13c3.8 0 6.3.6 8 2 1.7-1.4 4.2-2 8-2v-13c-3.8 0-6.3.6-8 2Z"/>' +
+    '<path d="M12 6.6v12"/></svg>',
+  perCapita:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+    '<circle cx="12" cy="12" r="8.6"/><path d="M12 6.8v10.4"/>' +
+    '<path d="M14.7 9.4c-.6-.8-1.6-1.2-2.7-1.2-1.5 0-2.7.8-2.7 2s1.2 1.7 2.7 2 2.7.9 2.7 2.1-1.2 2-2.7 2c-1.1 0-2.1-.4-2.7-1.2"/></svg>',
+}
+
+interface Stat {
+  label: string
+  icon: string
+  value: string
+  /** Narrow-screen stand-in. CSS swaps to it below 430px, where the exact figure
+   *  no longer fits the cell. Omit when the value is short enough either way. */
+  short?: string
+  more?: Reveal[]
+}
+
+// The three headline numbers side by side, above everything else. Values are
+// compact: a 400px panel split three ways leaves about 109px per cell, and a
+// figure like $2,320,000,000,000 needs closer to 180px. The exact number and its
+// rank live in the hover, so shortening the face loses nothing.
+function statStrip(stats: Stat[]): string {
+  return (
+    `<div class="cp-strip">` +
+    stats
+      .map(
+        s =>
+          `<div class="cp-cell">` +
+          `<div class="cp-cell-label">${s.label}</div>` +
+          `<div class="cp-cell-value">${s.icon}` +
+          (s.short
+            ? `<span class="v-full">${s.value}</span><span class="v-short">${s.short}</span>`
+            : `<span>${s.value}</span>`) +
+          `</div>` +
+          (s.more?.length
+            ? `<div class="cp-row-more">${s.more.map(([l, v]) => detailRow(l, v)).join('')}</div>`
+            : '') +
+          `</div>`
+      )
+      .join('') +
+    `</div>`
+  )
+}
+
 function openCityPanel(c: City) {
   if (measuring) return
   const wasOpen = !cityPanel.hidden
@@ -1166,24 +1359,48 @@ function openCityPanel(c: City) {
     (c.x != null && c.y != null
       ? `<div class="cp-coord">${fmtGeo(toGeo(c.x, c.y))}</div>`
       : '') +
-    `<div class="cp-stats">` +
-    `<div class="cp-stat"><div class="cp-label">Nation</div><div class="cp-value${nat ? ' cp-link' : ''}">${c.nation}${c.alpha3 ? ` <span class="cp-sub">(${c.alpha3})</span>` : ''}</div></div>` +
-    (c.irlParallel ? `<div class="cp-stat"><div class="cp-label">IRL Parallel</div><div class="cp-value">${c.irlParallel}</div></div>` : '') +
-    `<div class="cp-stat cp-wide"><div class="cp-label">Population</div><div class="cp-value">${c.population.toLocaleString('en-US')}${fmtRank(popRank)}</div></div>` +
-    `<div class="cp-stat"><div class="cp-label">GDP PPP</div><div class="cp-value">${fmtUSD(c.gdp)}${fmtRank(gdpRank)}</div></div>` +
-    `<div class="cp-stat"><div class="cp-label">Per Capita</div><div class="cp-value">${fmtUSD(c.gdpPerCapita)}${fmtRank(pcRank)}</div></div>` +
-    `</div>` +
+    statStrip([
+      {
+        label: 'Population',
+        icon: STAT_ICON.population,
+        value: c.population.toLocaleString('en-US'),
+        short: fmtCompact(c.population),
+        more: [['Population', c.population.toLocaleString('en-US') + fmtRank(popRank), STAT_ICON.population]],
+      },
+      {
+        label: 'GDP PPP',
+        icon: STAT_ICON.gdp,
+        value: '$' + fmtCompact(c.gdp),
+        more: [['GDP PPP', fmtUSD(c.gdp) + fmtRank(gdpRank), STAT_ICON.gdp]],
+      },
+      {
+        label: 'Per Capita',
+        icon: STAT_ICON.perCapita,
+        value: fmtUSD(c.gdpPerCapita),
+        more: [['Per Capita', fmtUSD(c.gdpPerCapita) + fmtRank(pcRank), STAT_ICON.perCapita]],
+      },
+    ]) +
     (wiki?.about
-      ? `<div class="cp-label cp-about-head">About</div>` +
+      ? `<div class="cp-section">About</div>` +
         `<div class="cp-about"><p class="cp-about-text">${esc(wiki.about)}</p>` +
         `<button class="cp-more" hidden>More</button></div>`
       : '') +
     (wiki
       ? `<a class="cp-source" href="${wiki.url}" target="_blank" rel="noopener noreferrer">More on <span>the Talopedia</span></a>`
-      : '')
+      : '') +
+    detailsCard([
+      detailRow('Nation', `${c.nation}${c.alpha3 ? ` <span class="cp-sub">(${c.alpha3})</span>` : ''}`, !!nat),
+      c.irlParallel ? detailRow('IRL Parallel', c.irlParallel) : '',
+    ])
   cityPanel.classList.remove('cp-closing')
   cityPanel.hidden = false
-  if (wasOpen) replayAnim(cityPanel, 'cp-swap')
+  document.body.classList.add('panel-open')
+  closeSheetList()
+  markNavOpen(null)
+  // A swap only reads as a change when the kind changes. City to city is the
+  // same surface showing different content, and re-animating makes an ordinary
+  // click feel like the panel reopened.
+  if (wasOpen && openCityName === null) replayAnim(cityPanel, 'cp-swap')
   cityPanel.querySelector('.cp-close')!.addEventListener('click', closeCityPanel)
   // flyToNation/goCity rather than the bare open*Panel: a link should land you
   // where the thing is, which is what the search results already do
@@ -1222,6 +1439,22 @@ function openNationPanel(n: Nation) {
   const agg = mapAggFor(n)
   const urban = agg.pop
   const rural = Math.max(0, n.population - urban)
+  const hdiParts: Reveal[] = []
+  if (n.hdi) hdiParts.push(['HDI', n.hdi.toFixed(3) + fmtRank(nationRank(n, 'hdi')), STAT_ICON.hdi])
+  if (n.lifeExpectancy) {
+    hdiParts.push([
+      'Life Expectancy',
+      n.lifeExpectancy.toFixed(1) + fmtRank(nationRank(n, 'lifeExpectancy')),
+      STAT_ICON.life,
+    ])
+  }
+  if (n.literacy) {
+    hdiParts.push([
+      'Literacy',
+      n.literacy.toFixed(1) + '%' + fmtRank(nationRank(n, 'literacy')),
+      STAT_ICON.literacy,
+    ])
+  }
   // The capital as an object, not just a name, so the value can open its panel
   const cap = n.capital
     ? cities.find(c => norm(c.name) === norm(n.capital) && norm(c.nation) === norm(n.name))
@@ -1231,35 +1464,62 @@ function openNationPanel(n: Nation) {
     `<button class="cp-close" aria-label="Close">✕</button>` +
     `<div class="cp-name">${n.name}</div>` +
     (n.official ? `<div class="cp-native">${n.official}${n.alpha3 ? ` <span class="cp-sub">(${n.alpha3})</span>` : ''}</div>` : '') +
-    `<div class="cp-stats">` +
-    // Continent, Status and Capital share one row: three short values that would
-    // otherwise each claim a cell and wrap unpredictably as the panel narrows.
-    `<div class="cp-stat cp-wide cp-pop-row">` +
-    (n.continent ? `<div class="cp-pop-cell"><div class="cp-label">Continent</div><div class="cp-value">${n.continent}</div></div>` : '') +
-    (n.status ? `<div class="cp-pop-cell"><div class="cp-label">Status</div><div class="cp-value">${n.status}</div></div>` : '') +
-    (n.capital ? `<div class="cp-pop-cell"><div class="cp-label">Capital</div><div class="cp-value${cap ? ' cp-link' : ''}">${n.capital}</div></div>` : '') +
-    `</div>` +
-    `<div class="cp-stat cp-wide cp-pop-row">` +
-    `<div class="cp-pop-cell"><div class="cp-label">Population</div><div class="cp-value">${n.population.toLocaleString('en-US')}${fmtRank(nationRank(n, 'population'))}</div></div>` +
-    (urban > 0
-      ? `<div class="cp-pop-cell"><div class="cp-label">Urban</div><div class="cp-value">${urban.toLocaleString('en-US')}</div></div>` +
-        `<div class="cp-pop-cell"><div class="cp-label">Rural</div><div class="cp-value">${rural.toLocaleString('en-US')}</div></div>`
-      : '') +
-    `</div>` +
-    `<div class="cp-stat cp-wide cp-pop-row">` +
-    `<div class="cp-pop-cell"><div class="cp-label">GDP PPP</div><div class="cp-value">${fmtUSD(n.gdp)}${fmtRank(nationRank(n, 'gdp'))}</div></div>` +
-    `<div class="cp-pop-cell"><div class="cp-label">Per Capita</div><div class="cp-value">${fmtUSD(n.gdpPerCapita)}${fmtRank(nationRank(n, 'gdpPerCapita'))}</div></div>` +
-    `</div>` +
-    (n.hdi ? `<div class="cp-stat"><div class="cp-label">HDI</div><div class="cp-value">${n.hdi.toFixed(3)}${fmtRank(nationRank(n, 'hdi'))}</div></div>` : '') +
-    (n.lifeExpectancy ? `<div class="cp-stat"><div class="cp-label">Life Expectancy</div><div class="cp-value">${n.lifeExpectancy.toFixed(1)}${fmtRank(nationRank(n, 'lifeExpectancy'))}</div></div>` : '') +
-    (n.literacy ? `<div class="cp-stat"><div class="cp-label">Literacy</div><div class="cp-value">${n.literacy.toFixed(1)}%${fmtRank(nationRank(n, 'literacy'))}</div></div>` : '') +
-    `</div>` +
+    statStrip([
+      {
+        label: 'Population',
+        icon: STAT_ICON.population,
+        value: n.population.toLocaleString('en-US'),
+        short: fmtCompact(n.population),
+        more: [
+          [
+            'Population',
+            n.population.toLocaleString('en-US') + fmtRank(nationRank(n, 'population')),
+            STAT_ICON.population,
+          ],
+          ...(urban > 0
+            ? ([
+                ['Urban', urban.toLocaleString('en-US'), STAT_ICON.urban],
+                ['Rural', rural.toLocaleString('en-US'), STAT_ICON.rural],
+              ] as Reveal[])
+            : []),
+        ],
+      },
+      // Per capita is GDP divided by population, so it belongs behind the GDP it
+      // comes from rather than as a third headline.
+      {
+        label: 'GDP PPP',
+        icon: STAT_ICON.gdp,
+        value: '$' + fmtCompact(n.gdp),
+        more: [
+          ['GDP PPP', fmtUSD(n.gdp) + fmtRank(nationRank(n, 'gdp')), STAT_ICON.gdp],
+          [
+            'Per Capita',
+            fmtUSD(n.gdpPerCapita) + fmtRank(nationRank(n, 'gdpPerCapita')),
+            STAT_ICON.perCapita,
+          ],
+        ],
+      },
+      // Life expectancy and literacy are two of the three components HDI is built
+      // from, so they travel with it as its reveal rather than becoming rows.
+      {
+        label: 'HDI',
+        icon: STAT_ICON.hdi,
+        value: n.hdi ? n.hdi.toFixed(3) : '—',
+        more: hdiParts,
+      },
+    ]) +
+    detailsCard([
+      n.continent ? detailRow('Continent', n.continent) : '',
+      n.capital ? detailRow('Capital', n.capital, !!cap) : '',
+      n.status ? detailRow('Status', n.status) : '',
+    ]) +
     (agg.count
       ? `<button class="cp-action">View ${agg.count} ${agg.count === 1 ? 'city' : 'cities'}</button>`
       : '')
   cityPanel.classList.remove('cp-closing')
   cityPanel.hidden = false
-  if (wasOpen) replayAnim(cityPanel, 'cp-swap')
+  document.body.classList.add('panel-open')
+  if (wasOpen && openNationName === null) replayAnim(cityPanel, 'cp-swap')
   cityPanel.querySelector('.cp-close')!.addEventListener('click', closeCityPanel)
   // The capital is the only link in a nation panel, so this cannot pick up another
   if (cap) cityPanel.querySelector('.cp-link')!.addEventListener('click', () => goCity(cap))
@@ -1281,6 +1541,7 @@ function closeCityPanel() {
   cityPanel.addEventListener('animationend', () => {
     cityPanel.classList.remove('cp-closing')
     cityPanel.hidden = true
+    document.body.classList.remove('panel-open')
     openCityName = null
     openNationName = null
     syncHash()
@@ -1749,9 +2010,7 @@ function selectCity(c: City) {
   statusEl.textContent = `Click the map to place ${c.name}`
   statusEl.className = 'status-active'
 
-  if (c.x != null && c.y != null) {
-    map.setView(px(c.x, c.y), Math.max(map.getZoom(), 4))
-  }
+  if (c.x != null && c.y != null) focusOn(c.x, c.y, Math.max(map.getZoom(), 4))
 }
 
 function selectLabel(d: LabelDef) {
@@ -1765,9 +2024,7 @@ function selectLabel(d: LabelDef) {
   statusEl.className = 'status-active'
   statusEl.textContent = `Click the map to place ${d.text} (${d.type})`
 
-  if (d.x != null && d.y != null) {
-    map.setView(px(d.x, d.y), map.getZoom())
-  }
+  if (d.x != null && d.y != null) focusOn(d.x, d.y, map.getZoom())
 }
 
 map.on('click', (e: L.LeafletMouseEvent) => {
@@ -1901,8 +2158,18 @@ function replayAnim(el: HTMLElement, cls: string) {
   el.classList.add(cls)
 }
 
+const bsBanner = document.getElementById('bs-banner') as HTMLImageElement | null
+if (bsBanner) bsBanner.src = bannerUrl
+
+// The column is permanent on a desktop — the place panel opens beside it rather
+// than over it — so there is nothing to hide. On a phone the sheet still has to
+// get out of the way of the panel that replaces it.
+function onDesktop(): boolean {
+  return window.matchMedia('(min-width: 900px)').matches
+}
+
 function hideSheet() {
-  if (!DEV) sheet.classList.add('bs-away')
+  if (!DEV && !onDesktop()) sheet.classList.add('bs-away')
 }
 
 function showSheet() {
@@ -1914,7 +2181,9 @@ function closeSheetList() {
   if (DEV || bsList.hidden) return
   bsList.hidden = true
   bsHome.hidden = false
-  replayAnim(bsHome, 'bs-pop')
+  markNavOpen(null)
+  showSheet()
+  if (!onDesktop()) replayAnim(bsHome, 'bs-pop')
 }
 
 // Normalized name/nation index, built once (public data never mutates)
@@ -1936,9 +2205,7 @@ function fmtCompact(n: number): string {
 function goCity(c: City) {
   bsResults.innerHTML = ''
   bsSearch.value = ''
-  if (c.x != null && c.y != null) {
-    map.setView(px(c.x, c.y), Math.max(map.getZoom(), 4))
-  }
+  if (c.x != null && c.y != null) focusOn(c.x, c.y, Math.max(map.getZoom(), 4))
   openCityPanel(c)
 }
 
@@ -2045,8 +2312,8 @@ function updateSortChips() {
     const active = chip.dataset.sort === sortField
     chip.classList.toggle('active', active)
     const label = chip.dataset.sort === 'name' ? 'Name'
-      : chip.dataset.sort === 'population' ? 'Pop'
-      : chip.dataset.sort === 'gdp' ? 'GDP' : 'P/C'
+      : chip.dataset.sort === 'population' ? 'Population'
+      : chip.dataset.sort === 'gdp' ? 'GDP' : 'Per Capita'
     chip.textContent = active ? `${label} ${sortAsc ? '↑' : '↓'}` : label
   }
 }
@@ -2073,7 +2340,12 @@ function mapAggFor(n: Nation): { count: number; pop: number; pts: L.LatLngExpres
 function flyToNation(n: Nation) {
   const agg = mapAggFor(n)
   if (agg.pts.length) {
-    map.flyToBounds(L.latLngBounds(agg.pts).pad(0.2), { maxZoom: 5, duration: 0.8 })
+    // Pad by the sidebar so the nation is framed in the visible half
+    map.flyToBounds(L.latLngBounds(agg.pts).pad(0.2), {
+      maxZoom: 5,
+      duration: 0.8,
+      paddingTopLeft: [sidebarWidth(), 0],
+    })
   }
   openNationPanel(n)
 }
@@ -2153,6 +2425,14 @@ for (const chip of sortChips) {
   })
 }
 
+// The rail stays on screen beside an open list, so it has to say which one is
+// open. Cities is the button labelled 'all' in the markup.
+function markNavOpen(view: 'all' | 'nations' | null) {
+  for (const b of document.querySelectorAll<HTMLElement>('.bs-btn')) {
+    b.classList.toggle('is-on', !!view && b.dataset.view === view)
+  }
+}
+
 function openListView(mode: 'cities' | 'nations', filter = '') {
   listMode = mode
   bsTitle.textContent = mode === 'nations' ? 'Nations' : 'Cities'
@@ -2165,9 +2445,13 @@ function openListView(mode: 'cities' | 'nations', filter = '') {
     sortField = 'name'
     sortAsc = true
   }
-  bsHome.hidden = true
+  // The list is its own surface now. On a desktop it opens beside the rail, so
+  // the rail keeps its search and nav; on a phone it takes the footer's place,
+  // so the rail has to get out of the way.
+  bsHome.hidden = !onDesktop()
   bsList.hidden = false
-  replayAnim(bsList, 'bs-push')
+  markNavOpen(mode === 'nations' ? 'nations' : 'all')
+  hideSheet()
   rebuildList(false)
 }
 
@@ -2266,7 +2550,12 @@ function addMeasurePoint(ll: L.LatLng) {
 
 function startMeasure() {
   measuring = true
+  // Clear every surface first. A place panel or a browse list left open would
+  // sit over the map the tool is about to be used on, and the rail would still
+  // highlight a tab for a list that is no longer there.
   closeCityPanel()
+  closeSheetList()
+  markNavOpen(null)
   hideSheet()
   measurePts = []
   vertexMarkers = []
@@ -2325,21 +2614,26 @@ document.getElementById('measure-done')!.addEventListener('click', endMeasure)
     const name = h.slice(5)
     const c = cities.find(x => x.name === name) ?? cities.find(x => norm(x.name) === norm(name))
     if (c) {
-      if (c.x != null && c.y != null) map.setView(px(c.x, c.y), Math.max(map.getZoom(), 4))
+      if (c.x != null && c.y != null) focusOn(c.x, c.y, Math.max(map.getZoom(), 4))
       openCityPanel(c)
     }
   } else if (h.startsWith('nation=')) {
     const n = nationByName.get(norm(h.slice(7)))
     if (n) {
       const pts = mapAggFor(n).pts
-      if (pts.length) map.fitBounds(L.latLngBounds(pts).pad(0.2), { maxZoom: 5 })
+      if (pts.length) {
+        map.fitBounds(L.latLngBounds(pts).pad(0.2), {
+          maxZoom: 5,
+          paddingTopLeft: [sidebarWidth(), 0],
+        })
+      }
       openNationPanel(n)
     }
   } else {
     const m = h.match(/^(\d+(?:\.\d+)?)\/(-?\d+)\/(-?\d+)$/)
     if (m) {
       const z = Math.min(MAX_ZOOM, Math.max(2, parseFloat(m[1])))
-      map.setView(px(parseInt(m[2]), parseInt(m[3])), z)
+      focusOn(parseInt(m[2]), parseInt(m[3]), z)
     }
   }
 }
@@ -2425,7 +2719,7 @@ function setBearing(deg: number) {
 }
 
 const RotateControl = L.Control.extend({
-  options: { position: 'topleft' as L.ControlPosition },
+  options: { position: 'topright' as L.ControlPosition },
   onAdd() {
     const c = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-rotate')
     const button = (label: string, title: string, fn: () => void) => {
@@ -2676,7 +2970,7 @@ function selectStation(p: Station) {
   statusEl.className = 'status-active'
   statusEl.textContent = `Click the map to place ${p.name}`
   syncEditRow()
-  if (p.x != null && p.y != null) map.setView(px(p.x, p.y), Math.max(map.getZoom(), STATION_MIN_ZOOM))
+  if (p.x != null && p.y != null) focusOn(p.x, p.y, Math.max(map.getZoom(), STATION_MIN_ZOOM))
 }
 
 renameInput.addEventListener('input', () => {

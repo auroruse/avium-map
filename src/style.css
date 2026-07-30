@@ -20,10 +20,8 @@ html, body {
 .map-label {
   white-space: nowrap;
   text-shadow:
-    -1px -1px 2px rgba(0,0,0,0.8),
-    1px -1px 2px rgba(0,0,0,0.8),
-    -1px 1px 2px rgba(0,0,0,0.8),
-    1px 1px 2px rgba(0,0,0,0.8);
+    0 0 2px rgba(0,0,0,0.9),
+    0 0 3px rgba(0,0,0,0.7);
   pointer-events: none !important;
   font-family: 'SF Pro Display', 'SF UI Display', -apple-system, 'Inter', system-ui, sans-serif;
   /* Same curve and duration as .city-icon's city-fade, so a label and a city
@@ -154,10 +152,8 @@ html, body {
   font-size: 11px !important;
   font-weight: 400;
   text-shadow:
-    -1px -1px 2px rgba(0,0,0,0.9),
-    1px -1px 2px rgba(0,0,0,0.9),
-    -1px 1px 2px rgba(0,0,0,0.9),
-    1px 1px 2px rgba(0,0,0,0.9);
+    0 0 2px rgba(0,0,0,0.95),
+    0 0 3px rgba(0,0,0,0.8);
   padding: 0 !important;
   margin: 0 !important;
   white-space: nowrap;
@@ -293,10 +289,9 @@ html, body {
   line-height: 1.15;
 }
 
-/* Coordinates read as a subtitle on the name, the same as the native script,
-   and sit under it when both are present. Grouped rather than reusing the
-   native class outright so a change made for scripts doesn't silently apply
-   to a number. */
+/* The line under a name: native script on a city, the official name on a
+   nation, and the coordinates below either. Grouped rather than reusing the
+   native class outright, so a change made for scripts doesn't hit a number. */
 .cp-native,
 .cp-coord {
   font-size: 15px;
@@ -304,22 +299,7 @@ html, body {
   margin-top: 2px;
 }
 
-/* Cells auto-size and wrap as whole cells — a value never breaks mid-line */
-.cp-stats {
-  margin-top: 14px;
-  padding-top: 13px;
-  border-top: 1px solid rgba(255,255,255,0.12);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 13px 28px;
-}
-
-/* Talopedia blurb, laid out like Apple Maps' About card.
-   The heading carries .cp-label for its type; this only spaces it. */
-.cp-about-head {
-  margin-top: 18px;
-}
-
+/* Talopedia blurb, laid out like Apple Maps' About card. */
 /* Opaque, not a translucent tint: .cp-more masks the text it truncates by
    painting over it, which only works against a known solid colour */
 .cp-about {
@@ -390,11 +370,6 @@ html, body {
   text-decoration: underline;
 }
 
-/* With no blurb above it the link follows the stats directly and needs room */
-.cp-stats + .cp-source {
-  margin-top: 16px;
-}
-
 /* Full-width tinted action below the stats, like Apple Maps' Directions.
    Used as both a <button> and an <a>, so reset the anchor defaults too. */
 .cp-action {
@@ -424,19 +399,6 @@ html, body {
   transform: scale(0.97);
 }
 
-.cp-wide {
-  flex-basis: 100%;
-}
-
-.cp-pop-row {
-  display: flex;
-  gap: 24px;
-}
-
-.cp-pop-row > .cp-pop-cell {
-  min-width: 0;
-}
-
 .cp-label {
   font-size: 10.5px;
   font-weight: 600;
@@ -444,13 +406,6 @@ html, body {
   text-transform: uppercase;
   color: #8b9096;
   margin-bottom: 3px;
-}
-
-.cp-value {
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 1.25;
-  white-space: nowrap;
 }
 
 .cp-sub {
@@ -967,20 +922,26 @@ html, body {
   font-weight: 700;
 }
 
+/* Filter above the sorts rather than beside them. Side by side in a narrow rail
+   the field collapsed to a few characters and the sort labels truncated. */
 .bs-controls {
   display: flex;
-  gap: 6px;
-  margin-bottom: 6px;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 7px;
 }
 
 .bs-controls #bs-filter {
-  flex: 1;
-  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
+/* The four sorts span the search field above them, one quarter each, so the row
+   reads as a segmented control rather than as chips floating at one end. */
 .bs-sorts {
   display: flex;
-  flex: none;
+  width: 100%;
+  box-sizing: border-box;
   background: rgba(255,255,255,0.08);
   border-radius: 9px;
   padding: 2px;
@@ -988,13 +949,17 @@ html, body {
 }
 
 .bs-sorts button {
+  flex: 1 1 0;
+  min-width: 0;
   border: none;
   background: none;
   color: #c6cacd;
   font-size: 11px;
   font-weight: 500;
   font-family: inherit;
-  padding: 4px 8px;
+  /* Tight horizontally: the widest label carries a sort arrow when active, and
+     the quarter it gets is only about 82px in the desktop column. */
+  padding: 5px 4px;
   border-radius: 7px;
   cursor: pointer;
   white-space: nowrap;
@@ -1175,7 +1140,6 @@ html, body {
 }
 
 /* Sheet page transitions (push forward / pop back) */
-#bs-list.bs-push { animation: bs-push-in 0.32s cubic-bezier(0.32, 0.72, 0, 1); }
 #bs-home.bs-pop  { animation: bs-pop-in 0.32s cubic-bezier(0.32, 0.72, 0, 1); }
 
 /* List refresh pulse (sort change, view open) */
@@ -1235,7 +1199,7 @@ html, body {
 }
 
 /* Mobile: panel and sheet span the full bottom of the screen */
-@media (max-width: 640px) {
+@media (max-width: 899px) {
   #city-panel, #bottom-sheet {
     left: 0;
     right: 0;
@@ -1375,10 +1339,8 @@ html, body {
   color: #c3cbf5;
   white-space: nowrap;
   text-shadow:
-    -1px -1px 2px rgba(0,0,0,0.9),
-    1px -1px 2px rgba(0,0,0,0.9),
-    -1px 1px 2px rgba(0,0,0,0.9),
-    1px 1px 2px rgba(0,0,0,0.9);
+    0 0 2px rgba(0,0,0,0.95),
+    0 0 3px rgba(0,0,0,0.8);
 }
 
 /* Placer tabs */
@@ -1708,4 +1670,638 @@ html, body {
    whole column. */
 .leaflet-left .leaflet-control {
   margin-left: 16px;
+}
+
+/* ============ Details card ============
+   Apple's grouped-table look: a quiet label over its value, one item per row,
+   hairlines inset to the text. Replaces the two-up stat grid, which packed more
+   in per line but gave the eye no column to follow. */
+.cp-section {
+  margin-top: 18px;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* No overflow: hidden — the hover reveal hangs below its row and would be
+   clipped. Nothing inside paints to the edge, so the radius still reads. */
+.cp-card {
+  margin-top: 9px;
+  border-radius: 13px;
+  background: rgba(255,255,255,0.055);
+}
+
+/* Label left, value right on one line. The stacked form in Apple's own
+   screenshot is what they use for two rows; at eleven it made the nation panel
+   1000px tall. This is the pattern Apple uses for any longer list, and it takes
+   a row from 58px to 42px. */
+.cp-row {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 11px 15px;
+}
+
+/* Inset on the left only, so the rows read as one list rather than a stack of
+   separate blocks. A plain border-top would run the full width and cut the card
+   into slices. */
+.cp-row + .cp-row::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 15px;
+  right: 0;
+  border-top: 1px solid rgba(255,255,255,0.09);
+}
+
+/* Sentence case and no tracking — the shouty uppercase labels were most of what
+   made the old panel feel busy. */
+.cp-row-label {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13.5px;
+  font-weight: 400;
+  color: #9aa0a6;
+}
+
+/* min-width:0 so a long value wraps inside its own column instead of shoving
+   the label off the left edge */
+.cp-row-value {
+  min-width: 0;
+  font-size: 15.5px;
+  font-weight: 500;
+  line-height: 1.3;
+  text-align: right;
+}
+
+/* The reveal is a small card of ordinary rows, so it inherits the row padding,
+   type and inset hairline and matches the card it comes out of. Absolutely
+   positioned: inline it would grow its row on hover and shove everything below
+   it down the panel. */
+.cp-row-more {
+  position: absolute;
+  top: calc(100% - 8px);
+  right: 6px;
+  z-index: 3;
+  /* Sized to its own content, so a line never wraps and the rank always sits
+     beside its value. The cap is viewport-based rather than a fixed px: the
+     panel is 400px on desktop but full-width on a phone, and a popover wider
+     than the screen is worse than one that wraps. */
+  width: max-content;
+  min-width: 214px;
+  max-width: calc(100vw - 40px);
+  border-radius: 11px;
+  background: #2f3438;
+  box-shadow: 0 8px 26px rgba(0,0,0,0.55);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.12s ease-out;
+}
+
+/* Both the things that can own a reveal: a card row, and a strip cell. The strip
+   was missing here — it got the positioning rules but never a trigger, so its
+   reveals were permanently at opacity 0.
+   Direct child, so a row inside a reveal cannot re-trigger its own parent. */
+.cp-row:hover > .cp-row-more,
+.cp-cell:hover > .cp-row-more {
+  opacity: 1;
+}
+
+.cp-card .cp-sub {
+  font-size: 13.5px;
+}
+
+/* The card can make a nation panel taller than the window — eleven rows plus a
+   banner — so the panel scrolls rather than running off the top of the screen. */
+#city-panel {
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.cp-about + .cp-source,
+.cp-source + .cp-section {
+  margin-top: 14px;
+}
+
+/* One divider under the name block, drawn by whichever section heading comes
+   first — About on a city with a blurb, Details otherwise. Keyed on the element
+   before it so the second heading never draws a second line. */
+.cp-strip,
+.cp-name + .cp-section,
+.cp-native + .cp-section,
+.cp-coord + .cp-section {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,0.12);
+}
+
+/* ============ Headline strip ============
+   The three numbers that matter, side by side above everything else. Equal
+   columns rather than content-sized, so the dividers line up whatever the
+   values are. */
+.cp-strip {
+  display: flex;
+}
+
+/* Closed on both sides, so the three headline numbers read as their own band
+   between the name and everything below it. The top border comes from the
+   shared divider rule above. */
+.cp-strip {
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+
+/* Match the gap above the strip, or the first heading below it sits further off
+   its divider than the strip does from its own */
+.cp-strip + .cp-section {
+  margin-top: 14px;
+}
+
+/* Equal thirds, so the dividers land at even fractions. Three cells give 107px
+   each, past the 87px the widest value needs. */
+.cp-cell {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 0 10px;
+}
+
+.cp-cell:first-child { padding-left: 0; }
+.cp-cell:last-child { padding-right: 0; }
+
+/* Short of full height, so it reads as a separator rather than a table border */
+.cp-cell + .cp-cell::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 1px;
+  bottom: 2px;
+  border-left: 1px solid rgba(255,255,255,0.13);
+}
+
+.cp-cell-label {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+  color: #8b9096;
+  margin-bottom: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cp-cell-value {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+/* Sized in em so the glyph tracks the number beside it */
+.cp-cell-value svg {
+  flex: none;
+  width: 0.85em;
+  height: 0.85em;
+  color: #b9bfc4;
+}
+
+/* On a cell the reveal anchors left — right-anchored on the first cell it would
+   hang off the panel edge. The last cell flips back. */
+.cp-cell .cp-row-more {
+  right: auto;
+  left: 0;
+  top: calc(100% + 4px);
+}
+
+/* A middle cell centres its reveal: anchored left it overhangs the right edge of
+   the panel, anchored right it overhangs the left. */
+.cp-cell:not(:first-child):not(:last-child) .cp-row-more {
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+}
+
+.cp-cell:last-child .cp-row-more {
+  left: auto;
+  right: 0;
+  transform: none;
+}
+
+/* Three cells do fit one row on a phone, but not at 16px: a 320px screen leaves
+   about 81px per cell against the 87px the widest value takes. Shrinking the
+   face is enough, and keeps the row intact rather than wrapping it. */
+@media (max-width: 430px) {
+  .cp-cell-value {
+    font-size: 14px;
+  }
+}
+
+/* Reveal-row icons: dimmer and smaller than the strip's, so they read as part of
+   the label rather than competing with the number opposite. */
+.cp-row-label svg {
+  flex: none;
+  width: 13px;
+  height: 13px;
+  color: #7d8288;
+}
+
+/* A 320px phone leaves 280px and the widest reveal line wants 298px. Dropping
+   the value a point and a half is enough, and only bites where it has to. */
+@media (max-width: 360px) {
+  .cp-row-more .cp-row-value {
+    font-size: 14px;
+  }
+}
+
+/* The exact population needs 15.5px at most in a 107px cell, so 15px shows it in
+   full on desktop. A phone cell is 81px and cannot, so the short form takes over
+   there — same markup, one of the two always hidden. */
+.cp-cell-value .v-short {
+  display: none;
+}
+
+@media (max-width: 430px) {
+  .cp-cell-value .v-full {
+    display: none;
+  }
+
+  .cp-cell-value .v-short {
+    display: inline;
+  }
+}
+
+
+/* ============================================================
+   Layout: a full-height column on a desktop, a sheet on a phone
+   ============================================================
+   Both panels already shared one slot — only ever one is open — so the two
+   layouts are defined once here rather than per panel. */
+:root {
+  /* The nav rail: an eighth of the window, so it scales with the screen rather
+     than being a fixed slab. Floored so it cannot collapse at the 900px
+     breakpoint, where an eighth would be 112px and hold nothing. */
+  --rail: clamp(190px, 12.5vw, 320px);
+  /* The place column is not an eighth of anything — it has to fit the stat strip
+     and the details card, which need about 340px of content. */
+  --panel: 380px;
+}
+
+@media (min-width: 900px) {
+  /* Flush to the window on three sides, scrolling inside, the way Apple Maps'
+     place sidebar sits. No radius or border where it meets the edge. */
+  #city-panel,
+  #bottom-sheet {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: var(--rail);
+    max-height: none;
+    padding: 20px 20px 24px;
+    border-radius: 0;
+    border-top: none;
+    border-left: none;
+    border-bottom: none;
+    box-shadow: 6px 0 28px rgba(0,0,0,0.42);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    animation: sidebar-in 0.26s cubic-bezier(0.32, 0.72, 0, 1);
+    transform-origin: left center;
+  }
+
+  #city-panel.cp-closing {
+    animation: sidebar-out 0.2s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+  }
+
+  /* Full-bleed to the top of the column, so the image reads as the header */
+  .cp-banner {
+    margin: -20px -20px 15px;
+    border-radius: 0;
+  }
+
+  /* Everything that floats over the map centres on the map, not the window */
+  #place-panel,
+  #unassigned-panel,
+  #measure-bar {
+    left: calc(50% + var(--rail) / 2);
+    transition: left 0.24s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  /* With the place column open the map is narrower still, so anything centred
+     over it has to shift again or it sits half underneath. */
+  body.panel-open #place-panel,
+  body.panel-open #unassigned-panel,
+  body.panel-open #measure-bar {
+    left: calc(50% + (var(--rail) + var(--panel)) / 2);
+  }
+}
+
+/* Unfolds out of the rail, so it starts to its own right and settles left. The
+   old direction started 16px further left, which drew it across the rail for the
+   length of the animation. */
+@keyframes sidebar-in {
+  from { opacity: 0; transform: translateX(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes sidebar-out {
+  from { opacity: 1; transform: none; }
+  to { opacity: 0; transform: translateX(14px); }
+}
+
+@media (max-width: 899px) {
+  /* Sheet: a grabber at the top, and room to grow without covering the map */
+  #city-panel,
+  #bottom-sheet {
+    max-height: 82vh;
+    border-radius: 18px 18px 0 0;
+  }
+
+
+  /* The banner sits under the grabber rather than bleeding past it */
+}
+
+/* ============ Desktop: two columns, and the column never leaves ============ */
+@media (min-width: 900px) {
+  /* The place panel is a second column beside the first, not a replacement for
+     it. Search and the browse lists stay reachable while a place is open. */
+  #city-panel {
+    left: var(--rail);
+    width: var(--panel);
+    border-left: 1px solid rgba(255,255,255,0.09);
+    box-shadow: 8px 0 30px rgba(0,0,0,0.4);
+  }
+
+  /* hideSheet() is a no-op here, but the class can still be on the element from
+     a narrower width, so it is neutralised rather than relied upon */
+  #bottom-sheet.bs-away {
+    transform: none;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Same width as the search field below it — inside the column padding, not
+     bled past it. height:auto so the 5:1 wordmark shows whole instead of being
+     cropped to a band. */
+  #bs-banner {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0 0 14px;
+  }
+
+  /* The place column butts directly against the rail, so anything in the rail
+     that overflows its width is painted over rather than merely clipped. This
+     bounds every child instead of trusting each one's own sizing. */
+  #bottom-sheet {
+    overflow-x: hidden;
+  }
+
+  #bottom-sheet > *,
+  #bs-home > *,
+  #bs-list > * {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* One action per row, icon then label, left aligned — a nav list rather than
+     a segmented control. No track behind them; the hover fill is the only
+     chrome, which is what makes a row read as tappable rather than as a chip. */
+  .bs-buttons {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1px;
+    padding: 10px 0 0;
+    background: none;
+  }
+
+  .bs-btn {
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 13px;
+    width: 100%;
+    padding: 9px 10px;
+    border-radius: 9px;
+    transition: background 0.15s;
+  }
+
+  .bs-btn:hover {
+    background: rgba(255,255,255,0.09);
+  }
+
+  /* Which list is open. Stronger than hover, and it survives the pointer moving
+     away — the whole point is that it reads while you are looking at the list. */
+  .bs-btn.is-on {
+    background: rgba(255,255,255,0.16);
+  }
+
+  .bs-btn.is-on .bs-btn-label {
+    color: #fff;
+  }
+
+  .bs-btn.is-on .bs-circle {
+    color: #fff;
+  }
+
+  .bs-circle {
+    width: 22px;
+    height: 22px;
+    border-radius: 0;
+    background: none !important;
+  }
+
+  .bs-circle svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .bs-btn:active .bs-circle {
+    transform: none;
+  }
+
+  .bs-btn-label {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: #f2f4f5;
+  }
+
+  /* The browse list has the full column height to work with */
+  #bs-items {
+    max-height: none;
+  }
+}
+
+/* The banner is a desktop header only; the sheet has its grabber instead */
+@media (max-width: 899px) {
+  #bs-banner {
+    display: none;
+  }
+}
+
+/* ============ The left stack ============
+   On a desktop the rail and the place panel are flex siblings inside one fixed
+   container, so the browser lays them out side by side and neither can be
+   painted over by the other. That replaces positioning them independently, where
+   the panel's `left` and the rail's `width` both had to resolve to the same
+   number and any disagreement showed up as the panel clipping the rail.
+
+   On a phone the wrapper is display: contents — it vanishes from layout, and the
+   two keep their own fixed sheet behaviour exactly as before. */
+#ui-left {
+  display: contents;
+}
+
+@media (min-width: 900px) {
+  #ui-left {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 1100;
+    pointer-events: none;
+  }
+
+  #ui-left > * {
+    pointer-events: auto;
+  }
+
+  /* Laid out by the flex parent now, so they give up their own positioning */
+  #bottom-sheet,
+  #city-panel {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    height: 100%;
+    flex: none;
+    box-sizing: border-box;
+  }
+
+  #bottom-sheet {
+    width: var(--rail);
+  }
+
+  #city-panel {
+    width: var(--panel);
+  }
+}
+
+/* ============ Three peer surfaces ============
+   The rail, the browse list and the place panel. The rail is permanent; the
+   other two are columns that slide out of it on a desktop and sheets that rise
+   from the bottom on a phone. The list used to live inside the rail, which at
+   190px left a city row no room for its nation and population. */
+#bs-list {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+  width: 400px;
+  z-index: 1095;
+  box-sizing: border-box;
+  background: rgba(24, 27, 29, 0.82);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 14px;
+  box-shadow: 0 10px 36px rgba(0,0,0,0.5);
+  padding: 12px 14px;
+  color: #fff;
+  font-family: -apple-system, 'SF Pro Display', 'SF Pro Text', 'Inter', system-ui, sans-serif;
+}
+
+@media (min-width: 900px) {
+  #bs-list {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    height: 100%;
+    width: var(--panel);
+    flex: none;
+    padding: 20px 20px 24px;
+    border-radius: 0;
+    border-top: none;
+    border-left: 1px solid rgba(255,255,255,0.09);
+    border-bottom: none;
+    box-shadow: 8px 0 30px rgba(0,0,0,0.4);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  /* The rail paints over its neighbours, so a column emerging from underneath it
+     reads as sliding out of the rail rather than appearing beside it. */
+  #bottom-sheet {
+    z-index: 2;
+  }
+
+  #bs-list,
+  #city-panel {
+    z-index: 1;
+    animation: column-out 0.28s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  #city-panel.cp-closing {
+    animation: column-in 0.2s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+  }
+
+  /* The list has the column to itself, so it fills it */
+  #bs-items {
+    max-height: none;
+  }
+}
+
+@keyframes column-out {
+  from { transform: translateX(-100%); }
+  to { transform: none; }
+}
+
+@keyframes column-in {
+  from { transform: none; }
+  to { transform: translateX(-100%); }
+}
+
+@media (max-width: 899px) {
+  /* Both rise from the bottom edge and take the footer's place */
+  #bs-list,
+  #city-panel {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    max-height: 82vh;
+    overflow-y: auto;
+    border-radius: 18px 18px 0 0;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+    animation: sheet-up 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  #city-panel.cp-closing {
+    animation: sheet-down 0.22s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+  }
+}
+
+@keyframes sheet-up {
+  from { transform: translateY(100%); }
+  to { transform: none; }
+}
+
+@keyframes sheet-down {
+  from { transform: none; }
+  to { transform: translateY(100%); }
 }

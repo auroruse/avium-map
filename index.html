@@ -48,7 +48,9 @@
     <div class="pp-section-label" id="unassigned-header"></div>
     <ul id="unassigned-list"></ul>
   </div>
+  <div id="ui-left">
   <div id="bottom-sheet">
+    <img id="bs-banner" alt="Avium">
     <div id="bs-home">
       <input id="bs-search" type="search" placeholder="Search Avium" autocomplete="off">
       <ul id="bs-results"></ul>
@@ -71,22 +73,23 @@
         </button>
       </div>
     </div>
-    <div id="bs-list" hidden>
-      <div class="bs-list-head">
-        <button id="bs-back" aria-label="Back">‹</button>
-        <span id="bs-title"></span>
-      </div>
-      <div class="bs-controls">
-        <input id="bs-filter" type="search" placeholder="Search" autocomplete="off">
-        <div class="bs-sorts">
-          <button data-sort="name">Name</button>
-          <button data-sort="population">Pop</button>
-          <button data-sort="gdp">GDP</button>
-          <button data-sort="gdpPerCapita">P/C</button>
-        </div>
-      </div>
-      <ul id="bs-items"></ul>
+  </div>
+  <div id="bs-list" hidden>
+    <div class="bs-list-head">
+      <button id="bs-back" aria-label="Back">‹</button>
+      <span id="bs-title"></span>
     </div>
+    <div class="bs-controls">
+      <input id="bs-filter" type="search" placeholder="Search" autocomplete="off">
+      <div class="bs-sorts">
+        <button data-sort="name">Name</button>
+        <button data-sort="population">Population</button>
+        <button data-sort="gdp">GDP</button>
+        <button data-sort="gdpPerCapita">Per Capita</button>
+      </div>
+    </div>
+    <ul id="bs-items"></ul>
+  </div>
   </div>
   <div id="measure-bar" hidden>
     <span id="measure-total">Click the map</span>
