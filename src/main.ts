@@ -829,19 +829,30 @@ interface CityTier {
 // bottom of a ladder.
 const HALO = 1.354 // white disc behind the ink
 const CORE = 0.465 // white centre, the same proportion in every band that draws one
-// The box the drawing sits in, in ink radii. The slack past the halo is what
-// stops the drawn edge landing on the boundary, where a marker that gets its own
-// compositing layer is squared off.
-const MARKER_PAD = 6.05 / 4.095
+// What a marker reserves in the placement grid, in ink radii. Deliberately wider
+// than the halo it draws, so two markers at the limit still have air between them.
+const MARKER_RESERVE = 6.05 / 4.095
+
+// Transparent slack around the halo, in CSS pixels — not in ink radii. The flat
+// edge this prevents is a rasterisation artefact: the anti-aliased rim needs
+// somewhere to land, and that need is a fixed number of pixels wide however
+// large the marker is. Held as a ratio it shrank with the marker, and by the
+// bottom band there was 0.16px of it, under a third of a device pixel at 2x, so
+// the rim was clipped square. It went unnoticed while the small markers ended in
+// a grey stroke, which reads as nothing against grey land; the white halo made
+// the same clipping obvious.
+//
+// Costs nothing elsewhere: the box cancels out of the label offset, and the
+// collision radius is MARKER_RESERVE, computed without reference to it.
+const MARKER_SLACK = 1
 
 // Whether a band draws the core is the only thing that varies, and it is not a
 // style choice: below 1M the whole marker is under 5px across, and a core at any
 // size renders as a grey smudge in the middle of the ink rather than a lit
 // centre. Those bands draw a solid disc.
-function cityMarkerHtml(S: number, ink: string, core?: boolean): string {
-  const p = MARKER_PAD
+function cityMarkerHtml(S: number, pad: number, ink: string, core?: boolean): string {
   return (
-    `<svg width="${S}" height="${S}" viewBox="${-p} ${-p} ${p * 2} ${p * 2}" ` +
+    `<svg width="${S}" height="${S}" viewBox="${-pad} ${-pad} ${pad * 2} ${pad * 2}" ` +
     `xmlns="http://www.w3.org/2000/svg">` +
     `<circle r="${HALO}" fill="#fff"/>` +
     `<circle r="1" fill="${ink}"/>` +
@@ -954,7 +965,7 @@ function boxesOverlap(a: Box, b: Box): boolean {
 }
 
 function visROf(tier: CityTier): number {
-  return tier.radius * MARKER_PAD
+  return tier.radius * MARKER_RESERVE
 }
 
 // Average character advance as a fraction of the font size. A heavier cut of the
@@ -1314,9 +1325,12 @@ function invalidatePlacements() {
 // per-label layout passes were the main zoom cost
 function cityIcon(p: Placement, fade: boolean): L.DivIcon {
   const { c, tier, dir, off } = p
-  const S = tier.radius * MARKER_PAD * 2
+  // Sized off the halo plus a fixed pixel margin, so the box grows with the
+  // drawing rather than in proportion to it
+  const pad = HALO + MARKER_SLACK / tier.radius
+  const S = tier.radius * pad * 2
   const ink = isCapital(c) ? CAPITAL_INK : CITY_INK
-  const svg = cityMarkerHtml(S, ink, tier.core)
+  const svg = cityMarkerHtml(S, pad, ink, tier.core)
   // dir picks the side, off[1] the vertical, signed — a fallback corner puts the
   // name above on the left or below on the right, which the two defaults never do
   const side = dir === 'right' ? 'left' : 'right'
