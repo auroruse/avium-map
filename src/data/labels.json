@@ -1197,10 +1197,10 @@
   {
     "text": "UPPER TYRSENIAN SEA",
     "type": "sea",
-    "x": 2993,
+    "x": 2992,
     "y": 3065,
     "minZoom": 3.5,
-    "span": 24.065390815114682
+    "span": 26.567272437766462
   },
   {
     "text": "LOWER TYRSENIAN SEA",
@@ -1208,28 +1208,28 @@
     "x": 3035,
     "y": 3122,
     "minZoom": 3.5,
-    "span": 30.46784952716831
+    "span": 31.761943051519598
   },
   {
     "text": "ILLYRIAN SEA",
     "type": "sea",
     "x": 3069,
-    "y": 3059,
+    "y": 3060,
     "minZoom": 3.5,
     "span": 24.558704444090917
   },
   {
     "text": "SEA OF VENESIA",
     "type": "sea",
-    "x": 3058,
-    "y": 2971,
+    "x": 3057,
+    "y": 2975,
     "minZoom": 3.5,
     "span": 50
   },
   {
     "text": "LAKE IONIOS",
     "type": "sea",
-    "x": 3099,
+    "x": 3098,
     "y": 3103,
     "minZoom": 3.5,
     "span": 18.659551935911185
@@ -1277,26 +1277,26 @@
   {
     "text": "LAKE INKERI",
     "type": "sea",
-    "x": 2913,
-    "y": 2108,
+    "x": 2918,
+    "y": 2226,
     "minZoom": 3.5,
-    "span": 37.60070360410226
+    "span": 16.213384044187535
   },
   {
     "text": "LAKE ÄÄNINEN",
     "type": "sea",
-    "x": 2921,
-    "y": 2167,
+    "x": 2913,
+    "y": 2109,
     "minZoom": 3.5,
-    "span": 38.25321110920647
+    "span": 35.58292459351662
   },
   {
     "text": "LAKE LAATOKKA",
     "type": "sea",
-    "x": 2919,
-    "y": 2225,
+    "x": 2922,
+    "y": 2164,
     "minZoom": 3.5,
-    "span": 15.597441389001785
+    "span": 39.2067253587193
   },
   {
     "text": "LAKE VALIVE",
@@ -1433,5 +1433,14 @@
     "y": 2304,
     "minZoom": 3.5,
     "span": 72.62051396390476
+  },
+  {
+    "text": "NOZHNORSTAN",
+    "type": "nation",
+    "x": 3605,
+    "y": 1161,
+    "minZoom": 3.5,
+    "maxZoom": 5,
+    "span": 290.96728880948706
   }
 ]
