@@ -722,21 +722,6 @@ const cityLayer = L.layerGroup().addTo(map)
 // the session and the settings gate what goes into them, which is what lets one
 // labelLayer answer to two separate switches.
 
-// Bigger tiers always beat smaller ones for space; GDP breaks ties within a tier
-function tierRank(pop: number): number {
-  if (pop >= 5_000_000) return 0
-  if (pop >= 2_500_000) return 1
-  if (pop >= 1_000_000) return 2
-  if (pop >= 750_000) return 3
-  if (pop >= 500_000) return 4
-  if (pop >= 250_000) return 5
-  return 6
-}
-
-const citiesByPriority = [...cities].sort(
-  (a, b) => tierRank(a.population) - tierRank(b.population) || b.gdp - a.gdp
-)
-
 // --- Nations (from nations.tsv) ---
 
 interface Nation {
@@ -821,52 +806,45 @@ for (const n of nations) nationByName.set(norm(n.name), n)
 
 const worldGdpTotal = nations.reduce((s, n) => s + n.gdp, 0)
 
-interface CityTier {
-  radius: number
-  outerRing: boolean
-  fontSize: number
-}
-
-// Style 1 (small cities): dark hollow circle, thin white outline
-// Style 2 (large cities): white center, thick black ring, white outer ring
-function bigTier(r: number, fontSize: number): CityTier {
-  return { radius: r, outerRing: true, fontSize }
-}
-
-// Ciudad Cuerdas's marker (r=3) as a single SVG element; every big city
-// renders this exact graphic, scaled by s = tierRadius / 3
-// Box, not circle: the ring is 11.09 across and the extra 1.01 is padding, so
-// the drawn edge never sits on the boundary. It used to, and wherever the marker
-// got its own compositing layer the ring was squared off — the same reason the
-// small marker's viewBox is padded to 3.0 for a 2.76 drawing.
-const BIG_D = 12.1
 // The ink is the only thing that marks a capital. Shape and scale are a city's,
 // so a capital still reads at its own tier and nothing else has to change.
 const CITY_INK = '#111'
 const CAPITAL_INK = '#d0342c'
 
-function bigSvgHtml(S: number, ink = CITY_INK): string {
-  return (
-    `<svg width="${S}" height="${S}" viewBox="-6.05 -6.05 12.1 12.1" xmlns="http://www.w3.org/2000/svg">` +
-    `<circle r="5.545" fill="#fff"/>` +
-    `<circle r="4.095" fill="${ink}"/>` +
-    `<circle r="1.905" fill="#fff" fill-opacity="0.95"/>` +
-    `</svg>`
-  )
-}
-function smallTier(r: number, fontSize: number): CityTier {
-  return { radius: r, outerRing: false, fontSize }
+interface CityTier {
+  radius: number // the ink disc, in CSS px — every other measurement is a ratio of it
+  core?: boolean // draws the white centre; below 1M there is no room for one
+  fontSize: number
 }
 
-// Small marker (r=2.3 reference) as one SVG element: hollow circle,
-// scaled by s = tierRadius / 2.3
-// Total radius = r(2.3) + half stroke(0.46) = 2.76; pad to 3.0 so the
-// stroke isn't clipped at sub-pixel sizes
-const SMALL_D = 6.0
-function smallSvgHtml(S: number, ink = CITY_INK): string {
+// One marker, drawn once, scaled per band. The proportions never vary: a white
+// halo, the ink disc, and a white core punched out of it, all fixed multiples of
+// the ink radius, so the viewBox is in units of that radius and a tier's size is
+// the only thing that changes between bands.
+//
+// Per-band variants were tried and cut. Eight drawings meant eight visual
+// languages on one map, and the ones the small bands could carry at 3px across
+// were a plain disc and a faded one, which read as smudges rather than as the
+// bottom of a ladder.
+const HALO = 1.354 // white disc behind the ink
+const CORE = 0.465 // white centre, the same proportion in every band that draws one
+// The box the drawing sits in, in ink radii. The slack past the halo is what
+// stops the drawn edge landing on the boundary, where a marker that gets its own
+// compositing layer is squared off.
+const MARKER_PAD = 6.05 / 4.095
+
+// Whether a band draws the core is the only thing that varies, and it is not a
+// style choice: below 1M the whole marker is under 5px across, and a core at any
+// size renders as a grey smudge in the middle of the ink rather than a lit
+// centre. Those bands draw a solid disc.
+function cityMarkerHtml(S: number, ink: string, core?: boolean): string {
+  const p = MARKER_PAD
   return (
-    `<svg width="${S}" height="${S}" viewBox="-3 -3 6 6" xmlns="http://www.w3.org/2000/svg">` +
-    `<circle r="2.3" fill="${ink}" stroke="#ddd" stroke-width="0.92"/>` +
+    `<svg width="${S}" height="${S}" viewBox="${-p} ${-p} ${p * 2} ${p * 2}" ` +
+    `xmlns="http://www.w3.org/2000/svg">` +
+    `<circle r="${HALO}" fill="#fff"/>` +
+    `<circle r="1" fill="${ink}"/>` +
+    (core ? `<circle r="${CORE}" fill="#fff" fill-opacity="0.95"/>` : '') +
     `</svg>`
   )
 }
@@ -896,16 +874,46 @@ const LIT_K = LIT_KM_AT_1M / 1e6 ** LIT_EXP
 // CRS units, which px() puts at U/TILE_GRID of a map pixel.
 const litRadius = (pop: number) => ((LIT_K * pop ** LIT_EXP) / PX2KM) * (U / TILE_GRID)
 
-// Label sizes: 13px megalopolises, 12px other 1M+, small sizes below
-function cityTier(pop: number): CityTier {
-  if (pop >= 5_000_000)  return bigTier(3,   13)
-  if (pop >= 2_500_000)  return bigTier(2.6, 12)
-  if (pop >= 1_000_000)  return bigTier(2.2, 12)
-  if (pop >= 750_000)    return bigTier(1.9, 10)
-  if (pop >= 500_000)    return smallTier(2.3, 10)
-  if (pop >= 250_000)    return smallTier(1.9, 9)
-  return                        smallTier(1.7, 9)
+// The ladder, read top down. An index into it is a city's rank, so this is also
+// the placement priority order — the two used to be separate functions holding
+// the same seven numbers with nothing keeping them honest.
+//
+// The bands follow the distribution rather than round figures. The old bottom
+// band held 738 cities, 43% of the map, across a 625x population range and drew
+// them all identically; the old top band ran 5M to 41.8M, so Ganjau looked like
+// any other large city. Both ends are split here, and the 750k band is gone: it
+// held 90 cities across 1.33x and sat 0.3px from its neighbours either side.
+//
+// Radii interpolate into the existing range rather than growing out of it. A
+// bigger dot reserves more of the placement grid, and the whole eight-band
+// ladder costs at most 8 placed labels at any zoom, against 28 for a version
+// that simply scaled everything up.
+const CITY_TIERS: (CityTier & { minPop: number })[] = [
+  { minPop: 15_000_000, radius: 4.641, core: true, fontSize: 13 },
+  { minPop:  5_000_000, radius: 4.095, core: true, fontSize: 13 },
+  { minPop:  2_000_000, radius: 3.549, core: true, fontSize: 12 },
+  { minPop:  1_000_000, radius: 3.003, core: true, fontSize: 12 },
+  { minPop:    500_000, radius: 2.3,   fontSize: 10 },
+  { minPop:    250_000, radius: 2.1,   fontSize: 9 },
+  { minPop:    100_000, radius: 1.85,  fontSize: 9 },
+  { minPop:          0, radius: 1.6,   fontSize: 9 },
+]
+
+// Bigger tiers always beat smaller ones for space; GDP breaks ties within a tier.
+// The fallback covers a missing or unparsable population, which would otherwise
+// index the table with -1.
+function tierRank(pop: number): number {
+  for (let i = 0; i < CITY_TIERS.length; i++) if (pop >= CITY_TIERS[i].minPop) return i
+  return CITY_TIERS.length - 1
 }
+
+function cityTier(pop: number): CityTier {
+  return CITY_TIERS[tierRank(pop)]
+}
+
+const citiesByPriority = [...cities].sort(
+  (a, b) => tierRank(a.population) - tierRank(b.population) || b.gdp - a.gdp
+)
 
 // Eligibility ladder. One user zoom-in = one 0.5 internal step from the
 // initial z2 view: z1 = 2.5, z2 = 3, z3 = 3.5.
@@ -924,9 +932,7 @@ function boxesOverlap(a: Box, b: Box): boolean {
 }
 
 function visROf(tier: CityTier): number {
-  return tier.outerRing
-    ? (BIG_D / 2) * (tier.radius / 3)
-    : (SMALL_D / 2) * (tier.radius / 2.3)
+  return tier.radius * MARKER_PAD
 }
 
 // View-independent screen position of a city at a zoom level (translation-free,
@@ -1250,9 +1256,9 @@ function invalidatePlacements() {
 // per-label layout passes were the main zoom cost
 function cityIcon(p: Placement, fade: boolean): L.DivIcon {
   const { c, tier, dir, off } = p
-  const S = tier.outerRing ? BIG_D * (tier.radius / 3) : SMALL_D * (tier.radius / 2.3)
+  const S = tier.radius * MARKER_PAD * 2
   const ink = isCapital(c) ? CAPITAL_INK : CITY_INK
-  const svg = tier.outerRing ? bigSvgHtml(S, ink) : smallSvgHtml(S, ink)
+  const svg = cityMarkerHtml(S, ink, tier.core)
   const gapX = Math.abs(off[0])
   const gapY = Math.abs(off[1])
   const pos = dir === 'right'
