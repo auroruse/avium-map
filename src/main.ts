@@ -614,30 +614,70 @@ interface Nation {
   popGrowth: number
   alpha3: string
   status: string
+  capital: string
   expansionPoints: number
   continent: string
 }
 
-const nations: Nation[] = nationsTsv.trim().split('\n').slice(1).map(line => {
-  const v = line.split('\t').map(s => s.trim())
-  const num = (s: string | undefined) => parseFloat((s ?? '').replace(/[,%]/g, '')) || 0
-  const str = (s: string | undefined) => (s === '-' ? '' : s ?? '')
-  return {
-    name: str(v[1]),
-    official: str(v[2]),
-    population: num(v[3]),
-    gdp: num(v[4]),
-    gdpPerCapita: num(v[5]),
-    lifeExpectancy: num(v[6]),
-    literacy: num(v[7]),
-    hdi: num(v[8]),
-    popGrowth: num(v[9]),
-    alpha3: str(v[10]),
-    status: str(v[11]),
-    expansionPoints: num(v[12]),
-    continent: str(v[13]),
+// Columns are found by header, not by position. They used to be read as v[10],
+// v[11] and so on, which meant inserting CAPITAL in the middle silently shifted
+// alpha3 onto the capital, status onto the code and continent onto the expansion
+// points — every nation panel wrong, with nothing failing loudly.
+const nations: Nation[] = (() => {
+  const lines = nationsTsv.trim().split('\n')
+  const head = lines[0].split('\t').map(s => s.trim())
+  const at = (name: string) => {
+    const i = head.indexOf(name)
+    if (i < 0) throw new Error(`nations.tsv is missing the ${name} column`)
+    return i
   }
-}).filter(n => n.name)
+  const col = {
+    name: at('COMMON NAME'),
+    official: at('OFFICIAL NAME'),
+    population: at('POPULATION'),
+    gdp: at('GDP PPP ($)'),
+    gdpPerCapita: at('REAL GDP P/C ($)'),
+    lifeExpectancy: at('LIFE EXPECTANCY'),
+    literacy: at('LITERACY RATE'),
+    hdi: at('HDI'),
+    popGrowth: at('POP. GROWTH %'),
+    capital: at('CAPITAL'),
+    alpha3: at('ALPHA-3 CODE'),
+    status: at('STATUS'),
+    expansionPoints: at('EXPANSION POINTS'),
+    continent: at('CONTINENT'),
+  }
+  const num = (s: string | undefined) => parseFloat((s ?? '').replace(/[,%]/g, '')) || 0
+  const str = (s: string | undefined) => (s === '-' ? '' : (s ?? '').trim())
+  return lines.slice(1).map(line => {
+    const v = line.split('\t')
+    return {
+      name: str(v[col.name]),
+      official: str(v[col.official]),
+      population: num(v[col.population]),
+      gdp: num(v[col.gdp]),
+      gdpPerCapita: num(v[col.gdpPerCapita]),
+      lifeExpectancy: num(v[col.lifeExpectancy]),
+      literacy: num(v[col.literacy]),
+      hdi: num(v[col.hdi]),
+      popGrowth: num(v[col.popGrowth]),
+      capital: str(v[col.capital]),
+      alpha3: str(v[col.alpha3]),
+      status: str(v[col.status]),
+      expansionPoints: num(v[col.expansionPoints]),
+      continent: str(v[col.continent]),
+    }
+  }).filter(n => n.name)
+})()
+
+// A city is a capital if its own nation names it one. Keyed on both, because a
+// name alone is ambiguous — Hollosend and Reino both have a Lachaven.
+const capitalKeys = new Set<string>()
+for (const n of nations) {
+  if (n.capital) capitalKeys.add(`${norm(n.name)}\t${norm(n.capital)}`)
+}
+
+const isCapital = (c: City) => capitalKeys.has(`${norm(c.nation)}\t${norm(c.name)}`)
 
 const nationByName = new Map<string, Nation>()
 for (const n of nations) nationByName.set(norm(n.name), n)
@@ -659,11 +699,16 @@ function bigTier(r: number, fontSize: number): CityTier {
 // Ciudad Cuerdas's marker (r=3) as a single SVG element; every big city
 // renders this exact graphic, scaled by s = tierRadius / 3
 const BIG_D = 11.09
-function bigSvgHtml(S: number): string {
+// The ink is the only thing that marks a capital. Shape and scale are a city's,
+// so a capital still reads at its own tier and nothing else has to change.
+const CITY_INK = '#111'
+const CAPITAL_INK = '#d0342c'
+
+function bigSvgHtml(S: number, ink = CITY_INK): string {
   return (
     `<svg width="${S}" height="${S}" viewBox="-5.545 -5.545 11.09 11.09" xmlns="http://www.w3.org/2000/svg">` +
     `<circle r="5.545" fill="#fff"/>` +
-    `<circle r="4.095" fill="#111"/>` +
+    `<circle r="4.095" fill="${ink}"/>` +
     `<circle r="1.905" fill="#fff" fill-opacity="0.95"/>` +
     `</svg>`
   )
@@ -677,10 +722,10 @@ function smallTier(r: number, fontSize: number): CityTier {
 // Total radius = r(2.3) + half stroke(0.46) = 2.76; pad to 3.0 so the
 // stroke isn't clipped at sub-pixel sizes
 const SMALL_D = 6.0
-function smallSvgHtml(S: number): string {
+function smallSvgHtml(S: number, ink = CITY_INK): string {
   return (
     `<svg width="${S}" height="${S}" viewBox="-3 -3 6 6" xmlns="http://www.w3.org/2000/svg">` +
-    `<circle r="2.3" fill="#111" stroke="#ddd" stroke-width="0.92"/>` +
+    `<circle r="2.3" fill="${ink}" stroke="#ddd" stroke-width="0.92"/>` +
     `</svg>`
   )
 }
@@ -949,7 +994,8 @@ function invalidatePlacements() {
 function cityIcon(p: Placement, fade: boolean): L.DivIcon {
   const { c, tier, dir, off } = p
   const S = tier.outerRing ? BIG_D * (tier.radius / 3) : SMALL_D * (tier.radius / 2.3)
-  const svg = tier.outerRing ? bigSvgHtml(S) : smallSvgHtml(S)
+  const ink = isCapital(c) ? CAPITAL_INK : CITY_INK
+  const svg = tier.outerRing ? bigSvgHtml(S, ink) : smallSvgHtml(S, ink)
   const gapX = Math.abs(off[0])
   const gapY = Math.abs(off[1])
   const pos = dir === 'right'
@@ -1139,7 +1185,9 @@ function openCityPanel(c: City) {
   cityPanel.hidden = false
   if (wasOpen) replayAnim(cityPanel, 'cp-swap')
   cityPanel.querySelector('.cp-close')!.addEventListener('click', closeCityPanel)
-  if (nat) cityPanel.querySelector('.cp-link')!.addEventListener('click', () => openNationPanel(nat))
+  // flyToNation/goCity rather than the bare open*Panel: a link should land you
+  // where the thing is, which is what the search results already do
+  if (nat) cityPanel.querySelector('.cp-link')!.addEventListener('click', () => flyToNation(nat))
   wireAboutToggle()
   hideSheet()
   openCityName = c.name
@@ -1174,14 +1222,23 @@ function openNationPanel(n: Nation) {
   const agg = mapAggFor(n)
   const urban = agg.pop
   const rural = Math.max(0, n.population - urban)
+  // The capital as an object, not just a name, so the value can open its panel
+  const cap = n.capital
+    ? cities.find(c => norm(c.name) === norm(n.capital) && norm(c.nation) === norm(n.name))
+    : undefined
   cityPanel.innerHTML =
     `<div class="cp-banner"><img alt=""></div>` +
     `<button class="cp-close" aria-label="Close">✕</button>` +
     `<div class="cp-name">${n.name}</div>` +
     (n.official ? `<div class="cp-native">${n.official}${n.alpha3 ? ` <span class="cp-sub">(${n.alpha3})</span>` : ''}</div>` : '') +
     `<div class="cp-stats">` +
-    (n.continent ? `<div class="cp-stat"><div class="cp-label">Continent</div><div class="cp-value">${n.continent}</div></div>` : '') +
-    (n.status ? `<div class="cp-stat"><div class="cp-label">Status</div><div class="cp-value">${n.status}</div></div>` : '') +
+    // Continent, Status and Capital share one row: three short values that would
+    // otherwise each claim a cell and wrap unpredictably as the panel narrows.
+    `<div class="cp-stat cp-wide cp-pop-row">` +
+    (n.continent ? `<div class="cp-pop-cell"><div class="cp-label">Continent</div><div class="cp-value">${n.continent}</div></div>` : '') +
+    (n.status ? `<div class="cp-pop-cell"><div class="cp-label">Status</div><div class="cp-value">${n.status}</div></div>` : '') +
+    (n.capital ? `<div class="cp-pop-cell"><div class="cp-label">Capital</div><div class="cp-value${cap ? ' cp-link' : ''}">${n.capital}</div></div>` : '') +
+    `</div>` +
     `<div class="cp-stat cp-wide cp-pop-row">` +
     `<div class="cp-pop-cell"><div class="cp-label">Population</div><div class="cp-value">${n.population.toLocaleString('en-US')}${fmtRank(nationRank(n, 'population'))}</div></div>` +
     (urban > 0
@@ -1189,8 +1246,10 @@ function openNationPanel(n: Nation) {
         `<div class="cp-pop-cell"><div class="cp-label">Rural</div><div class="cp-value">${rural.toLocaleString('en-US')}</div></div>`
       : '') +
     `</div>` +
-    `<div class="cp-stat cp-wide"><div class="cp-label">GDP PPP</div><div class="cp-value">${fmtUSD(n.gdp)}${fmtRank(nationRank(n, 'gdp'))}</div></div>` +
-    `<div class="cp-stat cp-wide"><div class="cp-label">Per Capita</div><div class="cp-value">${fmtUSD(n.gdpPerCapita)}${fmtRank(nationRank(n, 'gdpPerCapita'))}</div></div>` +
+    `<div class="cp-stat cp-wide cp-pop-row">` +
+    `<div class="cp-pop-cell"><div class="cp-label">GDP PPP</div><div class="cp-value">${fmtUSD(n.gdp)}${fmtRank(nationRank(n, 'gdp'))}</div></div>` +
+    `<div class="cp-pop-cell"><div class="cp-label">Per Capita</div><div class="cp-value">${fmtUSD(n.gdpPerCapita)}${fmtRank(nationRank(n, 'gdpPerCapita'))}</div></div>` +
+    `</div>` +
     (n.hdi ? `<div class="cp-stat"><div class="cp-label">HDI</div><div class="cp-value">${n.hdi.toFixed(3)}${fmtRank(nationRank(n, 'hdi'))}</div></div>` : '') +
     (n.lifeExpectancy ? `<div class="cp-stat"><div class="cp-label">Life Expectancy</div><div class="cp-value">${n.lifeExpectancy.toFixed(1)}${fmtRank(nationRank(n, 'lifeExpectancy'))}</div></div>` : '') +
     (n.literacy ? `<div class="cp-stat"><div class="cp-label">Literacy</div><div class="cp-value">${n.literacy.toFixed(1)}%${fmtRank(nationRank(n, 'literacy'))}</div></div>` : '') +
@@ -1202,6 +1261,8 @@ function openNationPanel(n: Nation) {
   cityPanel.hidden = false
   if (wasOpen) replayAnim(cityPanel, 'cp-swap')
   cityPanel.querySelector('.cp-close')!.addEventListener('click', closeCityPanel)
+  // The capital is the only link in a nation panel, so this cannot pick up another
+  if (cap) cityPanel.querySelector('.cp-link')!.addEventListener('click', () => goCity(cap))
   cityPanel.querySelector('.cp-action')?.addEventListener('click', () => {
     closeCityPanel()
     openListView('cities', n.name)
@@ -2357,12 +2418,10 @@ draggable._updatePosition = function (this: any) {
 }
 
 const STEP = 15
-let bearingReadout: HTMLElement
 
 function setBearing(deg: number) {
   bearing = ((deg % 360) + 360) % 360
   applyBearing()
-  if (bearingReadout) bearingReadout.textContent = bearing ? `${bearing}°` : 'N'
 }
 
 const RotateControl = L.Control.extend({
@@ -2380,12 +2439,10 @@ const RotateControl = L.Control.extend({
       })
       return a
     }
+    // Two buttons only. STEP divides 360 exactly, so stepping either way always
+    // lands back on true north without needing a reset button to get there.
     button('↺', `Rotate ${STEP}° counter-clockwise`, () => setBearing(bearing - STEP))
     button('↻', `Rotate ${STEP}° clockwise`, () => setBearing(bearing + STEP))
-    // Doubles as the readout: it shows the current bearing, and clicking it is
-    // the way back to north without stepping all the way round
-    bearingReadout = button('N', 'Reset to north', () => setBearing(0))
-    bearingReadout.classList.add('rotate-readout')
     L.DomEvent.disableClickPropagation(c)
     return c
   },

@@ -1328,14 +1328,6 @@ html, body {
   border-top: 1px solid rgba(255,255,255,0.08) !important;
 }
 
-/* The readout is a number, not a glyph, so it wants tabular figures and a
-   smaller size to fit three digits and a degree sign in the same 36px box */
-.leaflet-control-rotate .rotate-readout {
-  font-size: 11px !important;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0.02em;
-  color: rgba(255,255,255,0.72) !important;
-}
 
 /* Rotating the container rotates its clipping box with it, so the page behind
    would show through at the corners mid-turn */
@@ -1707,4 +1699,13 @@ html, body {
 .pp-edit-row .pp-danger.is-armed {
   background: #ff453a;
   color: #fff !important;
+}
+
+/* Left-edge alignment. The floating panels sit 16px in; Leaflet's controls
+   default to margin-left: 10px, which left the two stacks 6px out of line all
+   the way down the left edge. Only the horizontal offset changes — margin-top
+   also sets the gap between stacked controls, so touching it would respace the
+   whole column. */
+.leaflet-left .leaflet-control {
+  margin-left: 16px;
 }
