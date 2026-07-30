@@ -28,6 +28,12 @@ const U = 256
 // at the next, so the last few crowded names resolve instead of never rendering.
 const MAX_ZOOM = 7
 
+// Lore scale: the 6000px map diagonal equals Earth's pole-to-pole distance
+// (half the meridional circumference, 20,003.93 km) → ~2.357 km per px. Up here
+// with the other constants rather than down in Measure, because the night lights
+// are sized in real kilometres too and are built well before that section.
+const PX2KM = 20_003.93 / (6000 * Math.SQRT2)
+
 function px(x: number, y: number): L.LatLngExpression {
   return [(-y * U) / TILE_GRID, (x * U) / TILE_GRID]
 }
@@ -190,10 +196,9 @@ if (DEV) {
 
 // --- Layer control ---
 
-// Listed in the order they stack on the map, from the ground up. Territories and
-// Cities are added later, where their layers are created, and Research Stations
-// after those — so the panel reads Borders, Rivers, Territories, Cities,
-// Research Stations without anything needing to sort it.
+// The two raster overlays, in the order they stack on the map. Everything drawn
+// on top of them is a Settings toggle instead, since a layer control can only
+// say on or off and those need more than that.
 const overlayControl: Record<string, L.Layer> = {
   'Borders': bordersLayer,
   'Rivers': riversLayer,
@@ -243,6 +248,103 @@ const layerCtrl = L.control
     })
   }
 }
+
+// --- Settings ---
+//
+// Borders and Rivers are tile layers with nothing to decide beyond on or off, so
+// they stay in Leaflet's own control. Everything below either splits one layer
+// group two ways (territory names and water names share labelLayer) or changes
+// how a layer renders rather than whether it is on the map, which the control
+// cannot express. Both are read during the first render, so this has to be
+// resolved before any of it runs.
+
+interface Settings {
+  territories: boolean
+  water: boolean
+  cities: boolean
+  stations: boolean
+  night: boolean
+}
+
+const SETTINGS_KEY = 'avium-settings'
+
+const settings: Settings = {
+  territories: true,
+  water: true,
+  cities: true,
+  stations: true,
+  night: false,
+}
+
+// What was on before night took the map over. Night turns off every layer but
+// the cities, so this is how switching back restores the map the user had rather
+// than the one the defaults describe. Persisted alongside the settings, because
+// a reload while night is on would otherwise have nothing to restore to.
+interface PreNight {
+  territories: boolean
+  water: boolean
+  stations: boolean
+  borders: boolean
+  rivers: boolean
+}
+
+let preNight: PreNight | null = null
+
+// Key by key and typed, so a stale or hand-edited entry cannot introduce a
+// non-boolean that then reads as truthy forever.
+try {
+  const saved = JSON.parse(localStorage.getItem(SETTINGS_KEY) ?? '{}')
+  for (const k of Object.keys(settings) as (keyof Settings)[]) {
+    if (typeof saved?.[k] === 'boolean') settings[k] = saved[k]
+  }
+  const p = saved?.preNight
+  if (p && typeof p === 'object') {
+    preNight = {
+      territories: !!p.territories,
+      water: !!p.water,
+      stations: !!p.stations,
+      borders: !!p.borders,
+      rivers: !!p.rivers,
+    }
+  }
+} catch {
+  // unreadable entry, defaults stand
+}
+
+function saveSettings() {
+  try {
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify({ ...settings, preNight }))
+  } catch {
+    // private mode or a full quota; the session still works, it just forgets
+  }
+}
+
+// Night is a sheet of near-black between the tiles and the markers rather than a
+// CSS filter on the panes. A filter would be one line, but html2canvas does not
+// implement filters, so every night export would come out in daylight. This is
+// an ordinary SVG rectangle, which it renders like anything else.
+map.createPane('night')
+const nightPane = map.getPane('night')!
+nightPane.style.zIndex = '550' // over overlayPane's borders and rivers, under markerPane
+nightPane.style.pointerEvents = 'none'
+
+// Exactly the world, so night stops where the map does and everything past the
+// edge stays the page colour it is by day.
+//
+// The blue strip this once showed was never the veil's size. tile.mjs pads the
+// edge tiles out to 6144 with #2d4a5e, the same colour as #map's background, so
+// the padding and the page behind it are indistinguishable — until night gave
+// #map a darker background and stranded the padding as a lit band between them.
+// Widening the veil to cover it only moved the seam out to the veil's own edge,
+// which is the dark overflow that replaced the strip. The background override is
+// gone; this stays where the world is.
+const nightVeil = L.rectangle(contentBounds, {
+  stroke: false,
+  fillColor: '#04070f',
+  fillOpacity: 0.82,
+  interactive: false,
+  pane: 'night',
+})
 
 // --- Labels ---
 
@@ -463,7 +565,10 @@ function suppressedSeas(z: number): Set<LabelDef> {
 // The one thing that takes a sea off is a nation name landing on it, and that
 // lifts by itself when the nation band ends.
 function labelShown(def: LabelDef, z: number): boolean {
-  if (!map.hasLayer(labelLayer) || !inBand(def, z)) return false
+  // continent, nation and colony are the land names, so they answer to
+  // Territories; ocean and sea answer to Bodies of Water.
+  if (!settings[WATER.has(def.type) ? 'water' : 'territories']) return false
+  if (!inBand(def, z)) return false
   if (def.type === 'sea' && suppressedSeas(z).has(def)) return false
   return true
 }
@@ -612,21 +717,10 @@ interface City {
 const cities = citiesData as City[]
 const cityLayer = L.layerGroup().addTo(map)
 
-// Registered here rather than in overlayControl above because cityLayer has to
-// exist first, which puts them under Borders and Rivers in the control
-layerCtrl.addOverlay(labelLayer, 'Territories')
-layerCtrl.addOverlay(cityLayer, 'Cities')
-
-map.on('overlayadd overlayremove', (e) => {
-  if ((e as L.LayersControlEvent).layer !== labelLayer) return
-  // Leaflet rebuilds a marker's element when its group is re-added, dropping
-  // the inline font size and, in dev, the corner handles bound to the old one
-  if (DEV) for (const def of labelDefs) mountLabel(def)
-  updateLabels()
-  // Names reserve space in the placement grid, so hiding them hands it back
-  invalidatePlacements()
-  updateCities()
-})
+// Territories, water names, cities and stations are all in the Settings tab
+// instead of the layer control. Their groups now stay on the map for the life of
+// the session and the settings gate what goes into them, which is what lets one
+// labelLayer answer to two separate switches.
 
 // Bigger tiers always beat smaller ones for space; GDP breaks ties within a tier
 function tierRank(pop: number): number {
@@ -776,6 +870,31 @@ function smallSvgHtml(S: number, ink = CITY_INK): string {
     `</svg>`
   )
 }
+
+// A city at night is a light, so the day marker's white ring and pale core both
+// go — those exist to hold a dark dot off light ground, and there is no light
+// ground any more.
+const NIGHT_RGB = '255, 201, 84'
+
+// How wide a metro's lights actually read from orbit. Urban land area grows
+// sublinearly with population — ten times the people cover well under ten times
+// the ground, because a bigger city is a denser one — so the observed radius of
+// the lit blob goes as roughly P^0.4. Steep across the small towns, flattening
+// through the megacities: the step from 50k to 500k more than doubles the light,
+// the step from 5M to 41M does not.
+//
+// Calibrated against real metros: a million people light a blob about 11km in
+// radius, Tokyo's 37M reaches about 45km, a 100k town about 4km. Avium's largest
+// city is 41.8M, which the curve puts at 49km.
+const LIT_EXP = 0.4
+const LIT_KM_AT_1M = 11
+const LIT_K = LIT_KM_AT_1M / 1e6 ** LIT_EXP
+
+// Sized against the ground, not the screen: the map has a real scale, so a
+// city's lights can be laid down at the size they would actually be, and stay
+// that size relative to the terrain at every zoom. L.circle takes its radius in
+// CRS units, which px() puts at U/TILE_GRID of a map pixel.
+const litRadius = (pop: number) => ((LIT_K * pop ** LIT_EXP) / PX2KM) * (U / TILE_GRID)
 
 // Label sizes: 13px megalopolises, 12px other 1M+, small sizes below
 function cityTier(pop: number): CityTier {
@@ -1029,6 +1148,97 @@ function placementsAt(z: number): Placement[] {
   return result
 }
 
+// --- Night lights ---
+//
+// Night draws its cities into a single canvas rather than as 1716 divIcons. The
+// divIcon carries a name span, an anchor, a click binding and its own absolutely
+// positioned element, and Leaflet moves every one of them on every pan; the day
+// map can afford that because a zoom level only ever places a few hundred. Night
+// has no names to place, no collisions to resolve and no size that changes with
+// zoom, so all of that machinery buys nothing. Circles on a canvas cost one
+// element and one redraw, and the layer is built once per session.
+//
+// Constant radius is what lets it be built once: a circleMarker's radius is in
+// screen px, so zooming repositions the dots without resizing them and there is
+// nothing to rebuild. Dropping the population cull with it is the point of the
+// view — the day map hides everything under 5M until user zoom 1, and a world
+// lit by its four largest cities is not a world lit at night.
+map.createPane('night-cities')
+const nightCityPane = map.getPane('night-cities')!
+nightCityPane.style.zIndex = '560' // over the veil at 550, under markerPane's names at 600
+
+let nightLayer: L.LayerGroup | null = null
+
+// A light is one circle whose fill fades to nothing at its own rim, not a solid
+// disc with a halo behind it — a flat fill leaves a visible edge however faint
+// the halo around it is, and stacking more discs to hide that edge only moves it
+// outward. Leaflet's canvas renderer always fills flat, so the fill is the one
+// thing overridden here; the path it has already traced is the circle.
+//
+// GLOW is how far past the light the falloff reaches. The stops put half opacity
+// at 1/GLOW of the radius, so the size the eye reads as the lit area stays the
+// radius the curve asked for and everything past it is skyglow — which really
+// does carry tens of kilometres out from a large metro.
+const GLOW = 2.9
+
+const GLOW_STOPS: [number, number][] = [
+  [0, 1],
+  [0.18, 0.92],
+  [1 / GLOW, 0.5],
+  [0.52, 0.2],
+  [0.72, 0.06],
+  [1, 0],
+]
+
+const GlowCanvas = L.Canvas.extend({
+  _fillStroke(ctx: CanvasRenderingContext2D, layer: { _point: L.Point; _radius: number }) {
+    const { x, y } = layer._point
+    // The same radius _updateCircle traced the arc with, so the gradient ends
+    // exactly where the path does
+    const r = Math.max(Math.round(layer._radius), 1)
+    const grad = ctx.createRadialGradient(x, y, 0, x, y, r)
+    for (const [at, alpha] of GLOW_STOPS) grad.addColorStop(at, `rgba(${NIGHT_RGB}, ${alpha})`)
+    // The alpha is in the stops. Leaflet's own fill leaves globalAlpha set to
+    // the last layer's fillOpacity, and inheriting that would dim these.
+    ctx.globalAlpha = 1
+    ctx.fillStyle = grad
+    ctx.fill()
+  },
+  // @types/leaflet declares L.Canvas with a no-argument constructor, which the
+  // extend() return type inherits; the runtime one takes renderer options.
+}) as unknown as new (options?: L.RendererOptions) => L.Canvas
+
+function nightLights(): L.LayerGroup {
+  if (nightLayer) return nightLayer
+  // Only ever renders these layers, so overriding its fill for all of them is
+  // safe. Redraws happen at the end of a gesture, not per frame, so building a
+  // gradient per light costs one frame per pan rather than one per tick.
+  const renderer = new GlowCanvas({ pane: 'night-cities', padding: 0.4 })
+  const group = L.layerGroup()
+
+  // Night is a picture of the world, not a way through it. Nothing here opens a
+  // panel, which also spares the canvas renderer a hit test over 1716 glows that
+  // overlap each other wherever the map is worth looking at.
+  //
+  // L.circle rather than L.circleMarker: the first measures its radius on the
+  // ground and reprojects it at every zoom, the second is a fixed number of
+  // screen pixels.
+  for (const c of cities) {
+    if (c.x == null || c.y == null) continue
+    group.addLayer(
+      L.circle(px(c.x, c.y), {
+        renderer,
+        radius: litRadius(c.population) * GLOW,
+        stroke: false,
+        interactive: false,
+      })
+    )
+  }
+
+  nightLayer = group
+  return group
+}
+
 function invalidatePlacements() {
   placementCache.clear()
   // Which seas a nation name covers is geometry too, so it goes stale for the
@@ -1076,7 +1286,11 @@ function placementKey(p: Placement): string {
 
 function updateCities() {
   const z = map.getZoom()
-  const all = z < 2.5 ? [] : placementsAt(z)
+  // Empty falls through the same diff as any other change, so both toggles tear
+  // the markers down without a separate path. Night has its own canvas layer, so
+  // this pass has nothing to do there — which is also what makes it cheap.
+  const hidden = !settings.cities || settings.night || z < 2.5
+  const all = hidden ? [] : placementsAt(z)
 
   // Viewport cull: placement is still computed map-wide (so what renders is
   // identical), but only markers near the view get DOM nodes. Pad covers the
@@ -1344,7 +1558,6 @@ function statStrip(stats: Stat[]): string {
 
 function openCityPanel(c: City) {
   if (measuring) return
-  const wasOpen = !cityPanel.hidden
   const displayName = c.name.replace(/,\s*[A-Z]{2,4}$/, '')
   const popRank = cityRank(c, 'population')
   const gdpRank = cityRank(c, 'gdp')
@@ -1397,10 +1610,6 @@ function openCityPanel(c: City) {
   document.body.classList.add('panel-open')
   closeSheetList()
   markNavOpen(null)
-  // A swap only reads as a change when the kind changes. City to city is the
-  // same surface showing different content, and re-animating makes an ordinary
-  // click feel like the panel reopened.
-  if (wasOpen && openCityName === null) replayAnim(cityPanel, 'cp-swap')
   cityPanel.querySelector('.cp-close')!.addEventListener('click', closeCityPanel)
   // flyToNation/goCity rather than the bare open*Panel: a link should land you
   // where the thing is, which is what the search results already do
@@ -1435,7 +1644,6 @@ function nationRank(n: Nation, field: NationStatField): number {
 
 function openNationPanel(n: Nation) {
   if (measuring) return
-  const wasOpen = !cityPanel.hidden
   const agg = mapAggFor(n)
   const urban = agg.pop
   const rural = Math.max(0, n.population - urban)
@@ -1519,7 +1727,8 @@ function openNationPanel(n: Nation) {
   cityPanel.classList.remove('cp-closing')
   cityPanel.hidden = false
   document.body.classList.add('panel-open')
-  if (wasOpen && openNationName === null) replayAnim(cityPanel, 'cp-swap')
+  closeSheetList()
+  markNavOpen(null)
   cityPanel.querySelector('.cp-close')!.addEventListener('click', closeCityPanel)
   // The capital is the only link in a nation panel, so this cannot pick up another
   if (cap) cityPanel.querySelector('.cp-link')!.addEventListener('click', () => goCity(cap))
@@ -1534,19 +1743,37 @@ function openNationPanel(n: Nation) {
   loadBanner(n.name)
 }
 
+// The state reset, without the animation that normally precedes it. Opening a
+// list takes the panel's column on desktop and its place on the screen on
+// mobile, so the panel has to be gone before the list arrives rather than
+// sliding out from under it.
+function dismissPanel() {
+  if (cityPanel.hidden) return
+  cityPanel.removeEventListener('animationend', onCloseEnd)
+  cityPanel.classList.remove('cp-closing')
+  cityPanel.hidden = true
+  document.body.classList.remove('panel-open')
+  openCityName = null
+  openNationName = null
+  syncHash()
+  showSheet()
+}
+
+// The nation banner fades in inside the panel and animationend bubbles, so this
+// has to be sure the event is the panel's own close. cp-closing is the other
+// half: reopening the panel mid-close clears the class and cancels the
+// animation, which leaves this registered with nothing to end it.
+function onCloseEnd(e: AnimationEvent) {
+  if (e.target === cityPanel && cityPanel.classList.contains('cp-closing')) dismissPanel()
+}
+
 function closeCityPanel() {
   if (cityPanel.hidden || cityPanel.classList.contains('cp-closing')) return
-  cityPanel.classList.remove('cp-swap')
   cityPanel.classList.add('cp-closing')
-  cityPanel.addEventListener('animationend', () => {
-    cityPanel.classList.remove('cp-closing')
-    cityPanel.hidden = true
-    document.body.classList.remove('panel-open')
-    openCityName = null
-    openNationName = null
-    syncHash()
-    showSheet()
-  }, { once: true })
+  // Not { once: true } — a bubbled banner fade would spend the registration and
+  // the real close would never land. Removed in dismissPanel; re-adding the same
+  // function is a no-op, so an abandoned one cannot accumulate.
+  cityPanel.addEventListener('animationend', onCloseEnd)
 }
 
 map.on('click', () => {
@@ -2148,6 +2375,7 @@ const bsResults = document.getElementById('bs-results')!
 const bsItems = document.getElementById('bs-items')!
 const bsFilter = document.getElementById('bs-filter') as HTMLInputElement
 const bsTitle = document.getElementById('bs-title')!
+const bsControls = document.querySelector('.bs-controls') as HTMLElement
 
 if (DEV) sheet.style.display = 'none'
 
@@ -2427,15 +2655,20 @@ for (const chip of sortChips) {
 
 // The rail stays on screen beside an open list, so it has to say which one is
 // open. Cities is the button labelled 'all' in the markup.
-function markNavOpen(view: 'all' | 'nations' | null) {
+function markNavOpen(view: 'all' | 'nations' | 'settings' | null) {
   for (const b of document.querySelectorAll<HTMLElement>('.bs-btn')) {
     b.classList.toggle('is-on', !!view && b.dataset.view === view)
   }
 }
 
 function openListView(mode: 'cities' | 'nations', filter = '') {
+  // A list and an info panel are the same slot, so one replaces the other. The
+  // panel goes without its close animation — before hideSheet below, since the
+  // reset ends in a showSheet.
+  dismissPanel()
   listMode = mode
   bsTitle.textContent = mode === 'nations' ? 'Nations' : 'Cities'
+  bsControls.hidden = false
   bsFilter.value = filter
   bsFilter.placeholder = 'Search'
   if (mode === 'nations') {
@@ -2457,12 +2690,124 @@ function openListView(mode: 'cities' | 'nations', filter = '') {
 
 document.querySelector('.bs-btn[data-view="all"]')!.addEventListener('click', () => openListView('cities'))
 document.querySelector('.bs-btn[data-view="nations"]')!.addEventListener('click', () => openListView('nations'))
-document.querySelector('.bs-btn[data-view="share"]')!.addEventListener('click', () => shareView())
+document.querySelector('.bs-btn[data-view="export"]')!.addEventListener('click', () => exportView())
 document.querySelector('.bs-btn[data-view="measure"]')!.addEventListener('click', () => startMeasure())
+document.querySelector('.bs-btn[data-view="settings"]')!.addEventListener('click', () => openSettings())
+
+// --- Settings tab ---
+//
+// The same column the city and nation lists use, with the search and sort row
+// hidden. A settings page is a list of rows in that column, and #bs-items
+// already styles a row, so the alternative was a fourth surface duplicating the
+// slide-out and bottom-sheet behaviour to say the same thing.
+
+const SETTING_ROWS: [keyof Settings, string][] = [
+  ['territories', 'Territories'],
+  ['water', 'Bodies of Water'],
+  ['cities', 'Cities'],
+  ['stations', 'Research Stations'],
+  ['night', 'Night Mode'],
+]
+
+// Night owns the other layers while it is on, so their switches go dead rather
+// than offering a toggle that fights the mode. Cities stays live: it is the one
+// thing night is made of.
+const NIGHT_OWNS = new Set<keyof Settings>(['territories', 'water', 'stations'])
+
+function renderSettingRows() {
+  // A label around both halves, so the whole row toggles rather than the 40px
+  // of switch at the end of it.
+  bsItems.innerHTML = SETTING_ROWS.map(([key, label]) => {
+    const off = settings.night && NIGHT_OWNS.has(key)
+    return (
+      `<li class="set-row${off ? ' is-locked' : ''}"><label class="set-hit"><span>${label}</span>` +
+      `<input type="checkbox" class="set-switch" data-set="${key}"` +
+      `${settings[key] ? ' checked' : ''}${off ? ' disabled' : ''}>` +
+      `</label></li>`
+    )
+  }).join('')
+}
+
+function openSettings() {
+  dismissPanel()
+  bsTitle.textContent = 'Settings'
+  bsControls.hidden = true
+  bsHome.hidden = !onDesktop()
+  bsList.hidden = false
+  markNavOpen('settings')
+  hideSheet()
+  renderSettingRows()
+}
+
+// Night is the whole map at once: the borders, the rivers, every name and the
+// stations all go, because the view is city lights on darkness and anything else
+// is a daylight map showing through it. Borders and Rivers live in Leaflet's
+// control rather than in settings, so their state is read off the map.
+function setNight(on: boolean) {
+  if (on && !settings.night) {
+    preNight = {
+      territories: settings.territories,
+      water: settings.water,
+      stations: settings.stations,
+      borders: map.hasLayer(bordersLayer),
+      rivers: map.hasLayer(riversLayer),
+    }
+    settings.territories = false
+    settings.water = false
+    settings.stations = false
+  } else if (!on && preNight) {
+    settings.territories = preNight.territories
+    settings.water = preNight.water
+    settings.stations = preNight.stations
+    if (preNight.borders) bordersLayer.addTo(map)
+    if (preNight.rivers) riversLayer.addTo(map)
+    preNight = null
+  }
+  settings.night = on
+}
+
+// Delegated, so it survives rebuildList replacing the same innerHTML with city
+// rows. Those are click-driven and never fire change.
+bsItems.addEventListener('change', e => {
+  const box = e.target as HTMLInputElement
+  const key = box.dataset.set as keyof Settings | undefined
+  if (!key || !(key in settings)) return
+  if (key === 'night') setNight(box.checked)
+  else settings[key] = box.checked
+  applySettings()
+  saveSettings()
+  // Night moves three other switches, so the rows have to be redrawn to agree
+  if (key === 'night') renderSettingRows()
+})
+
+// Every toggle lands here. The label switches and Cities change what the update
+// passes emit; Night changes that and the map underneath them. Enforced rather
+// than applied on the transition, so a reload with night already on lands in the
+// same state as the click that turned it on.
+function applySettings() {
+  document.body.classList.toggle('night', settings.night)
+  if (settings.night) {
+    nightVeil.addTo(map)
+    bordersLayer.remove()
+    riversLayer.remove()
+  } else {
+    nightVeil.remove()
+  }
+  if (settings.night && settings.cities) nightLights().addTo(map)
+  else nightLayer?.remove()
+  // Names reserve space in the placement grid, so hiding them hands it back
+  invalidatePlacements()
+  updateLabels()
+  updateCities()
+  updateStations()
+}
 
 document.getElementById('bs-back')!.addEventListener('click', closeSheetList)
 
-// --- Share view (permalink) ---
+// --- Permalink ---
+// The hash still tracks the view and the open panel, so a copied URL reopens
+// where you left it. Nothing in the UI points at it any more; the Export button
+// took that slot.
 
 let openCityName: string | null = null
 let openNationName: string | null = null
@@ -2480,33 +2825,84 @@ function syncHash() {
   history.replaceState(null, '', '#' + h)
 }
 
-const shareLabel = document.querySelector('.bs-btn[data-view="share"] .bs-btn-label') as HTMLElement
-const shareCircle = document.querySelector('.bs-btn[data-view="share"] .bs-circle') as HTMLElement
+// --- Export view (PNG) ---
 
-function shareView() {
-  syncHash()
-  navigator.clipboard.writeText(location.href).then(
-    () => {
-      replayAnim(shareCircle, 'bs-bounce')
-      flashShare('Copied!')
-    },
-    () => flashShare('Copy failed')
-  )
+const exportLabel = document.querySelector('.bs-btn[data-view="export"] .bs-btn-label') as HTMLElement
+const exportCircle = document.querySelector('.bs-btn[data-view="export"] .bs-circle') as HTMLElement
+
+// Named after whatever the view is about, so a folder of these reads as
+// something other than avium-map (7).png
+function exportName(): string {
+  const subject = openCityName ?? openNationName
+  const slug = subject?.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+  return `avium-${slug || 'map'}.png`
 }
 
-function flashShare(text: string) {
-  shareLabel.textContent = text
-  replayAnim(shareLabel, 'bs-label-pop')
-  setTimeout(() => {
-    shareLabel.textContent = 'Share'
-    replayAnim(shareLabel, 'bs-label-pop')
-  }, 1400)
+let exporting = false
+
+async function exportView() {
+  if (exporting) return
+  exporting = true
+  flashExport('Rendering…', 0)
+  try {
+    // Half the size of Leaflet itself, for a button most sessions never press.
+    // Importing it here keeps it out of the initial load — Vite gives it its own
+    // chunk, fetched on the first click and cached after.
+    const { default: html2canvas } = await import('html2canvas')
+    const canvas = await html2canvas(mapEl, {
+      // #map's own background, which is what shows outside the world bounds.
+      // html2canvas fills with white otherwise. Read rather than hardcoded, so
+      // night mode's darker page comes through.
+      backgroundColor: getComputedStyle(mapEl).backgroundColor,
+      // The label text is re-rendered at this scale and comes out crisp. The
+      // tiles are only upscaled, since past z5 there is no more detail to draw
+      // — 2 is where the file size stops buying anything on a 3x display.
+      scale: Math.min(window.devicePixelRatio || 1, 2),
+      logging: false,
+      // Rotated, the container is an oversized square carrying a rotate(). The
+      // clone is a separate document, so dropping the transform there exports
+      // the view upright without the live map flinching. What lands in frame is
+      // that square: everything on screen, plus the corners the rotation filled.
+      onclone: (_doc, el) => {
+        el.style.transform = ''
+      },
+    })
+    const blob = await new Promise<Blob | null>(res => canvas.toBlob(res, 'image/png'))
+    if (!blob) throw new Error('canvas.toBlob returned null')
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = exportName()
+    a.click()
+    // Revoking in the same tick has been known to cancel the download before it
+    // starts. Nothing else holds the blob, so a beat is enough.
+    setTimeout(() => URL.revokeObjectURL(url), 1000)
+    replayAnim(exportCircle, 'bs-bounce')
+    flashExport('Saved')
+  } catch (err) {
+    console.error('export failed', err)
+    flashExport('Export failed')
+  } finally {
+    exporting = false
+  }
+}
+
+// restoreAfter 0 holds the message up, for the render that has not finished yet.
+// Clearing first stops a pending restore from wiping the message after it.
+let flashTimer: ReturnType<typeof setTimeout> | undefined
+
+function flashExport(text: string, restoreAfter = 1400) {
+  clearTimeout(flashTimer)
+  exportLabel.textContent = text
+  replayAnim(exportLabel, 'bs-label-pop')
+  if (!restoreAfter) return
+  flashTimer = setTimeout(() => {
+    exportLabel.textContent = 'Export'
+    replayAnim(exportLabel, 'bs-label-pop')
+  }, restoreAfter)
 }
 
 // --- Measure ---
-// Lore scale: the 6000px map diagonal equals Earth's pole-to-pole distance
-// (half the meridional circumference, 20,003.93 km) → ~2.357 km per px
-const PX2KM = 20_003.93 / (6000 * Math.SQRT2)
 
 let measuring = false
 let measurePts: L.LatLng[] = []
@@ -2777,7 +3173,6 @@ const STATION_MAX_W = 62
 const STATION_CHAR = 0.62 // same advance the city labels measure with
 
 const stationLayer = L.layerGroup().addTo(map)
-layerCtrl.addOverlay(stationLayer, 'Research Stations')
 
 const stationMarkers = new Map<Station, L.Marker>()
 
@@ -2835,7 +3230,7 @@ function stationIcon(station: Station, dir: 'right' | 'left'): L.DivIcon {
 function updateStations() {
   for (const [, m] of stationMarkers) stationLayer.removeLayer(m)
   stationMarkers.clear()
-  if (!map.hasLayer(stationLayer) || map.getZoom() < STATION_MIN_ZOOM) return
+  if (!settings.stations || map.getZoom() < STATION_MIN_ZOOM) return
 
   const s = scaleAt(map.getZoom())
   const taken: Box[] = []
@@ -2893,9 +3288,6 @@ function loadStationProgress() {
 loadStationProgress()
 updateStations()
 map.on('zoomend', updateStations)
-map.on('overlayadd overlayremove', (e) => {
-  if ((e as L.LayersControlEvent).layer === stationLayer) updateStations()
-})
 
 // --- Label and station editing (dev) ---
 //
@@ -3178,3 +3570,9 @@ for (const b of tabButtons) {
 // No focus on the initial call: the panel is hidden outside ?dev, and focusing
 // an input inside it would take the caret away from the page for everyone else
 setTab('cities', false)
+
+// Last line of the module, because it touches the label, city and station
+// layers and all three are built further up. Only matters when night was left
+// on: everything else was already read straight out of `settings` as each layer
+// first rendered.
+applySettings()

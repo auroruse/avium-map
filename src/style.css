@@ -12,6 +12,21 @@ html, body {
   background: #2d4a5e;
 }
 
+/* Night mode. The darkness itself is a Leaflet rectangle over the tiles, not a
+   filter here — html2canvas has no filter support, so a filtered night map would
+   export in daylight.
+
+   #map keeps its daylight background. tile.mjs pads the edge tiles with this
+   exact colour, so the strip of padding past the 6000px world and the page
+   behind it are the same colour, and the veil covers both — which is what makes
+   the world edge seamless. Overriding it here for night put two different darks
+   either side of 6144 and drew a grey band down the edge of the map. */
+
+/* The lights themselves are circles on a canvas in their own pane, drawn by
+   Leaflet — there is nothing here to style. Their bloom is a wider circle under
+   each one rather than a filter, for the same export reason and because a filter
+   on a viewport-sized canvas re-blurs the whole surface on every pan. */
+
 .leaflet-image-layer {
   will-change: transform;
 }
@@ -880,6 +895,7 @@ html, body {
 .bs-blue   { background: #0a84ff; }
 .bs-orange { background: #ff9f0a; }
 .bs-green  { background: #30d158; }
+.bs-grey   { background: #8e8e93; }
 .bs-purple { background: #bf5af2; }
 
 .bs-btn-label {
@@ -922,6 +938,12 @@ html, body {
   font-weight: 700;
 }
 
+/* An author `display` outranks the UA's [hidden] rule, so .bs-controls would
+   stay on screen in the settings view without this. */
+#bs-list [hidden] {
+  display: none !important;
+}
+
 /* Filter above the sorts rather than beside them. Side by side in a narrow rail
    the field collapsed to a few characters and the sort labels truncated. */
 .bs-controls {
@@ -929,6 +951,75 @@ html, body {
   flex-direction: column;
   gap: 7px;
   margin-bottom: 7px;
+}
+
+/* Settings rows: #bs-items li already gives them the hover and radius a city row
+   has, so only the switch is new. The padding moves onto the inner label so the
+   hit target is the whole row rather than the 40px of switch at the end of it. */
+#bs-items .set-row {
+  padding: 0;
+  font-size: 14px;
+}
+
+.set-hit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 8px;
+  cursor: pointer;
+}
+
+.set-switch {
+  appearance: none;
+  -webkit-appearance: none;
+  flex: none;
+  position: relative;
+  width: 40px;
+  height: 24px;
+  margin: 0;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.18);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.set-switch::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.set-switch:checked {
+  background: #30d158;
+}
+
+.set-switch:checked::after {
+  transform: translateX(16px);
+}
+
+.set-switch:focus-visible {
+  outline: 2px solid #6ba8ff;
+  outline-offset: 2px;
+}
+
+/* Night owns these three while it is on. Dimmed rather than removed, so the tab
+   still says what the mode did instead of the rows silently disappearing. */
+#bs-items .set-row.is-locked {
+  opacity: 0.4;
+}
+
+.set-row.is-locked .set-hit,
+.set-switch:disabled {
+  cursor: default;
 }
 
 .bs-controls #bs-filter {
@@ -1131,10 +1222,6 @@ html, body {
   from { opacity: 0; transform: translateY(3px); }
 }
 
-@keyframes cp-swap-in {
-  from { opacity: 0.5; transform: translateY(6px); }
-}
-
 @keyframes vertex-pop {
   from { opacity: 0; transform: scale(0.4); }
 }
@@ -1145,12 +1232,9 @@ html, body {
 /* List refresh pulse (sort change, view open) */
 #bs-items.bs-pulse { animation: bs-pulse-in 0.22s ease-out; }
 
-/* Share feedback */
+/* Export feedback */
 .bs-circle.bs-bounce { animation: bs-bounce-kf 0.4s cubic-bezier(0.32, 0.72, 0, 1); }
 .bs-label-pop { animation: bs-label-pop-kf 0.25s ease-out; }
-
-/* Panel content swap while already open (city ↔ nation) */
-#city-panel.cp-swap { animation: cp-swap-in 0.22s cubic-bezier(0.32, 0.72, 0, 1); }
 
 /* Search result rows fade in */
 #bs-results li { animation: bs-fade-in 0.15s ease-out; }
@@ -1310,6 +1394,13 @@ html, body {
 .leaflet-zoom-anim .map-label.label-on {
   opacity: 0;
 }
+
+/* The night lights deliberately have no rule here. Leaflet CSS-scales a canvas
+   renderer for the length of a zoom instead of redrawing it, which is wrong for
+   anything sized in screen pixels and was what made the bloom breathe while the
+   dot held still. The lights are sized on the ground now, so growing with the
+   map is exactly what they should do — the scale is right for the whole
+   transition and only the sharpness catches up at the end, same as the tiles. */
 
 /* Research station markers (Hyperborea and Tartarus) */
 .station-icon {

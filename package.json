@@ -12,6 +12,7 @@
     "parse-cities": "node scripts/parse-cities.mjs"
   },
   "dependencies": {
+    "html2canvas": "^1.4.1",
     "leaflet": "^1.9.4"
   },
   "devDependencies": {
