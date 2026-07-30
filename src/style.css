@@ -164,7 +164,9 @@ html, body {
   box-shadow: none !important;
   color: #fff !important;
   font-family: 'SF Pro Rounded', 'SF Pro Text', 'SF UI Text', -apple-system, 'Inter', system-ui, sans-serif !important;
-  font-size: 11px !important;
+  /* Fallback only. The real size and weight are set inline per band, and an
+     !important here would beat them. */
+  font-size: 11px;
   font-weight: 400;
   text-shadow:
     0 0 2px rgba(0,0,0,0.95),
@@ -174,15 +176,6 @@ html, body {
   white-space: nowrap;
 }
 
-.city-fs-5  { font-size: 5px !important; }
-.city-fs-6  { font-size: 6px !important; }
-.city-fs-7  { font-size: 7px !important; }
-.city-fs-8  { font-size: 8px !important; }
-.city-fs-9  { font-size: 9px !important; }
-.city-fs-10 { font-size: 10px !important; }
-.city-fs-11 { font-size: 11px !important; }
-.city-fs-12 { font-size: 12px !important; }
-.city-fs-13 { font-size: 13px !important; }
 
 .city-label::before {
   display: none;

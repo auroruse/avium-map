@@ -815,6 +815,7 @@ interface CityTier {
   radius: number // the ink disc, in CSS px — every other measurement is a ratio of it
   core?: boolean // draws the white centre; below 1M there is no room for one
   fontSize: number
+  weight?: number // 400 unless set; the axis that still separates bands at 7px
 }
 
 // One marker, drawn once, scaled per band. The proportions never vary: a white
@@ -889,14 +890,14 @@ const litRadius = (pop: number) => ((LIT_K * pop ** LIT_EXP) / PX2KM) * (U / TIL
 // ladder costs at most 8 placed labels at any zoom, against 28 for a version
 // that simply scaled everything up.
 const CITY_TIERS: (CityTier & { minPop: number })[] = [
-  { minPop: 15_000_000, radius: 4.641, core: true, fontSize: 13 },
-  { minPop:  5_000_000, radius: 4.095, core: true, fontSize: 13 },
-  { minPop:  2_000_000, radius: 3.549, core: true, fontSize: 12 },
-  { minPop:  1_000_000, radius: 3.003, core: true, fontSize: 12 },
+  { minPop: 15_000_000, radius: 4.641, core: true, fontSize: 14.4, weight: 600 },
+  { minPop:  5_000_000, radius: 4.095, core: true, fontSize: 13.2, weight: 600 },
+  { minPop:  2_000_000, radius: 3.549, core: true, fontSize: 12,   weight: 500 },
+  { minPop:  1_000_000, radius: 3.003, core: true, fontSize: 11.2, weight: 500 },
   { minPop:    500_000, radius: 2.3,   fontSize: 10 },
-  { minPop:    250_000, radius: 2.1,   fontSize: 9 },
-  { minPop:    100_000, radius: 1.85,  fontSize: 9 },
-  { minPop:          0, radius: 1.6,   fontSize: 9 },
+  { minPop:    250_000, radius: 2.1,   fontSize: 9.4 },
+  { minPop:    100_000, radius: 1.85,  fontSize: 8.8 },
+  { minPop:          0, radius: 1.6,   fontSize: 8.2 },
 ]
 
 // Bigger tiers always beat smaller ones for space; GDP breaks ties within a tier.
@@ -911,18 +912,39 @@ function cityTier(pop: number): CityTier {
   return CITY_TIERS[tierRank(pop)]
 }
 
+// Down to and including the 1M band. The bands above this get two extra corners
+// to try before they are dropped from the map; the ones below do not.
+const FALLBACK_RANK = 3
+
 const citiesByPriority = [...cities].sort(
   (a, b) => tierRank(a.population) - tierRank(b.population) || b.gdp - a.gdp
 )
 
-// Eligibility ladder. One user zoom-in = one 0.5 internal step from the
-// initial z2 view: z1 = 2.5, z2 = 3, z3 = 3.5.
-// init = none, z1 = 5M+, z2 = 1M+, z3 = everything
+// Eligibility ladder: the floor drops one or two CITY_TIERS bands per zoom until
+// the whole map is on by user zoom 6. One user zoom-in is one 0.5 internal step
+// from the initial z2 view, so this is indexed by (z - 2.5) * 2.
+//
+//   uz1 5M+   uz2 1M+   uz3 500k+   uz4 250k+   uz5 100k+   uz6 everything
+//
+// Eight bands into six steps needs two doublings, and where they go is not
+// arbitrary: the pairs are the two smallest adjacent ones, which is what keeps
+// the largest single step to 458 markers. Doubling anywhere else pushes it to
+// 474 or 771, and the old ladder — everything from 1M down arriving at once —
+// handed the renderer 1325 in one zoom, which is where the jank was.
+//
+// The other thing this buys is that pinning stops inverting rank. A level seeds
+// itself from the level below and processes those cities first, so when the
+// bottom half of the map became eligible in a single step, a 250k city that
+// happened to place was handed space ahead of a 5M city that had not: at user
+// zoom 5, 829 cities outranked by something smaller. Adding bands from the top
+// down keeps the pinned set strictly higher-tier than whatever is arriving, so
+// the two orders agree by construction.
+const ZOOM_BANDS = [1, 3, 4, 5, 6, 7] // index into CITY_TIERS, one per user zoom from 1
+
 function minPop(z: number): number {
-  if (z >= 3.5) return 0
-  if (z >= 3) return 1_000_000
-  if (z >= 2.5) return 5_000_000
-  return Infinity
+  if (z < 2.5) return Infinity
+  const step = Math.min(Math.round((z - 2.5) * 2), ZOOM_BANDS.length - 1)
+  return CITY_TIERS[ZOOM_BANDS[step]].minPop
 }
 
 type Box = { x: number; y: number; w: number; h: number }
@@ -933,6 +955,14 @@ function boxesOverlap(a: Box, b: Box): boolean {
 
 function visROf(tier: CityTier): number {
   return tier.radius * MARKER_PAD
+}
+
+// Average character advance as a fraction of the font size. A heavier cut of the
+// same face is wider, and the placement grid reserves a box from this number, so
+// a bolder label would otherwise be handed less room than it takes and print
+// over its neighbour.
+function advanceFor(weight = 400): number {
+  return weight >= 600 ? 0.645 : weight >= 500 ? 0.632 : 0.62
 }
 
 // View-independent screen position of a city at a zoom level (translation-free,
@@ -962,14 +992,25 @@ function computePlacement(z: number, pinned: City[]): Placement[] {
     ),
   ]
 
-  // Global marker/text scale (tier ratios intact): 0.8× from user zoom 3
-  // (the all-cities zoom), even smaller before then
+  // Global marker/text scale (tier ratios intact): 0.8× from user zoom 3, where
+  // the map is down to 1M+ and has room for full-size markers, even smaller
+  // before then. Deliberately no longer the same step as the all-cities zoom,
+  // which is now uz4.
   const k = z >= 3.5 ? 0.8 : 0.65
 
   const items = order.map(c => {
     const base = cityTier(c.population)
-    const tier = { ...base, radius: base.radius * k, fontSize: Math.round(base.fontSize * k) }
-    return { c, tier, visR: visROf(tier), pt: ptAt(c, z) }
+    // Snapped to half a pixel, not a whole one. Rounding to integers is what
+    // flattened eight bands into three — 13 and 12 both come out of the 0.8
+    // scale at 10 — but leaving it fractional costs crispness, because a stem
+    // that lands between pixels cannot be hinted onto the grid. Half a CSS pixel
+    // is exactly one device pixel at 2x, so these land on it.
+    const tier = {
+      ...base,
+      radius: base.radius * k,
+      fontSize: Math.round(base.fontSize * k * 2) / 2,
+    }
+    return { c, tier, visR: visROf(tier), pt: ptAt(c, z), rank: tierRank(c.population) }
   })
 
   // Spatial indexes: same answers as scanning every box, minus the O(n²).
@@ -1089,7 +1130,7 @@ function computePlacement(z: number, pinned: City[]): Placement[] {
   }
 
   for (let i = 0; i < items.length; i++) {
-    const { c, tier, visR, pt } = items[i]
+    const { c, tier, visR, pt, rank } = items[i]
 
     const dotR = visR + 0.5
     const dotBox: Box = { x: pt.x - dotR, y: pt.y - dotR, w: dotR * 2, h: dotR * 2 }
@@ -1101,21 +1142,38 @@ function computePlacement(z: number, pinned: City[]): Placement[] {
       continue
     }
 
-    const charW = tier.fontSize * 0.62
+    const charW = tier.fontSize * advanceFor(tier.weight)
     const w = c.name.length * charW + 4
     const h = tier.fontSize + 4
     // Gap from marker edge: anchored at Cuerdas (~1.05px), tighter as markers shrink
     const gapX = visR + 0.15 + visR * 0.16
     const gapY = h / 2 + visR * 0.1
 
-    // Apple Maps: top-right preferred, bottom-left when needed
-    const cands: { dir: 'right' | 'left'; off: [number, number]; box: Box }[] = [
+    // Apple Maps: top-right preferred, bottom-left when needed. The other two
+    // corners are a fallback and only for cities from 1M up, tried when neither
+    // default fits. Rank ordering alone was not translating into what actually
+    // reached the map — with two positions a city is dropped the moment both are
+    // taken, however important it is, so at the widest zoom nearly half the 5M
+    // band had no name while the smallest band, whose labels ask for the least
+    // room, did better than the 100k one.
+    //
+    // Withheld below 1M on purpose. Handing the extra reach to every band lifts
+    // the small names as much as the large ones and just makes the map denser;
+    // this way the label count barely moves and the labels that exist are the
+    // ones that matter.
+    const corners: { dir: 'right' | 'left'; off: [number, number]; box: Box }[] = [
       { dir: 'right', off: [gapX, -gapY], box: { x: pt.x + gapX, y: pt.y - gapY - h / 2, w, h } },
       { dir: 'left',  off: [-gapX, gapY], box: { x: pt.x - gapX - w, y: pt.y + gapY - h / 2, w, h } },
+      { dir: 'right', off: [gapX, gapY], box: { x: pt.x + gapX, y: pt.y + gapY - h / 2, w, h } },
+      { dir: 'left',  off: [-gapX, -gapY], box: { x: pt.x - gapX - w, y: pt.y - gapY - h / 2, w, h } },
     ]
 
-    const valid = cands.filter(cd => !collides(cd.box))
-    let hit: (typeof cands)[number] | null
+    let valid = corners.slice(0, 2).filter(cd => !collides(cd.box))
+    if (!valid.length && rank <= FALLBACK_RANK) {
+      valid = corners.slice(2).filter(cd => !collides(cd.box))
+    }
+
+    let hit: (typeof corners)[number] | null
     if (valid.length === 2) {
       // Both fit: bury as few upcoming markers as possible, then keep
       // top-right unless bottom-left has clearly more room
@@ -1259,14 +1317,15 @@ function cityIcon(p: Placement, fade: boolean): L.DivIcon {
   const S = tier.radius * MARKER_PAD * 2
   const ink = isCapital(c) ? CAPITAL_INK : CITY_INK
   const svg = cityMarkerHtml(S, ink, tier.core)
-  const gapX = Math.abs(off[0])
-  const gapY = Math.abs(off[1])
-  const pos = dir === 'right'
-    ? `left:${S / 2 + gapX}px;top:${S / 2 - gapY}px`
-    : `right:${S / 2 + gapX}px;top:${S / 2 + gapY}px`
+  // dir picks the side, off[1] the vertical, signed — a fallback corner puts the
+  // name above on the left or below on the right, which the two defaults never do
+  const side = dir === 'right' ? 'left' : 'right'
+  const pos = `${side}:${S / 2 + Math.abs(off[0])}px;top:${S / 2 + off[1]}px`
+  const type =
+    `font-size:${tier.fontSize.toFixed(2)}px` + (tier.weight ? `;font-weight:${tier.weight}` : '')
   return L.divIcon({
     className: fade ? 'city-icon' : 'city-icon city-icon-still',
-    html: svg + `<span class="city-label city-fs-${tier.fontSize}" style="${pos}">${c.name}</span>`,
+    html: svg + `<span class="city-label" style="${pos};${type}">${c.name}</span>`,
     iconSize: [S, S],
     iconAnchor: [S / 2, S / 2],
   })
@@ -1303,7 +1362,7 @@ function updateCities() {
   // longest label reach so nothing partially visible is ever missing.
   let reach = 64
   for (const p of all) {
-    const r = p.c.name.length * p.tier.fontSize * 0.62 + 48
+    const r = p.c.name.length * p.tier.fontSize * advanceFor(p.tier.weight) + 48
     if (r > reach) reach = r
   }
   const pb = map.getPixelBounds()
@@ -3176,7 +3235,7 @@ const STATION_D = 11
 // Wraps past this. The CSS keeps nowrap and renders the breaks this decides, so
 // the collision box and the drawn text can never disagree about the line count.
 const STATION_MAX_W = 62
-const STATION_CHAR = 0.62 // same advance the city labels measure with
+const STATION_CHAR = 0.62 // the advance a city label measures with at weight 400, which is what these are
 
 const stationLayer = L.layerGroup().addTo(map)
 
