@@ -8148,6 +8148,18 @@
     "y": 817
   },
   {
+    "name": "San Pablo",
+    "nation": "Auritania",
+    "population": 494000,
+    "gdp": 3850000000,
+    "gdpPerCapita": 7794,
+    "nativeScript": "",
+    "irlParallel": "Iquitos",
+    "alpha3": "AUR",
+    "x": null,
+    "y": null
+  },
+  {
     "name": "Barram",
     "nation": "Calveria",
     "population": 494000,
@@ -8182,18 +8194,6 @@
     "alpha3": "VER",
     "x": 2565,
     "y": 4541
-  },
-  {
-    "name": "San Pablo",
-    "nation": "Auritania",
-    "population": 494000,
-    "gdp": 3850000000,
-    "gdpPerCapita": 7794,
-    "nativeScript": "",
-    "irlParallel": "Iquitos",
-    "alpha3": "AUR",
-    "x": null,
-    "y": null
   },
   {
     "name": "Passance",
@@ -14544,18 +14544,6 @@
     "y": 2421
   },
   {
-    "name": "Haléva",
-    "nation": "Genosa",
-    "population": 172000,
-    "gdp": 6500000000,
-    "gdpPerCapita": 37791,
-    "nativeScript": "",
-    "irlParallel": "Male",
-    "alpha3": "GEN",
-    "x": 3727,
-    "y": 2809
-  },
-  {
     "name": "Chernovar",
     "nation": "Giathka",
     "population": 172000,
@@ -15732,6 +15720,18 @@
     "y": 1786
   },
   {
+    "name": "Keynes",
+    "nation": "Hollosend",
+    "population": 142000,
+    "gdp": 740000000,
+    "gdpPerCapita": 5211,
+    "nativeScript": "",
+    "irlParallel": "Kayes",
+    "alpha3": "HOL",
+    "x": 2114,
+    "y": 3601
+  },
+  {
     "name": "Kota",
     "nation": "Noradia",
     "population": 142000,
@@ -15802,18 +15802,6 @@
     "alpha3": "VIC",
     "x": 2975,
     "y": 3120
-  },
-  {
-    "name": "Keynes",
-    "nation": "Hollosend",
-    "population": 142000,
-    "gdp": 740000000,
-    "gdpPerCapita": 5211,
-    "nativeScript": "",
-    "irlParallel": "Kayes",
-    "alpha3": "HOL",
-    "x": 2114,
-    "y": 3601
   },
   {
     "name": "Berenthal",

@@ -494,12 +494,12 @@
   {
     "text": "KEMET",
     "type": "nation",
-    "x": 3428,
-    "y": 3410,
+    "x": 3434,
+    "y": 3414,
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 200
+    "span": 138.60942798926538
   },
   {
     "text": "NORADIA",
@@ -799,15 +799,6 @@
     "type": "colony",
     "x": 3675,
     "y": 2933,
-    "minZoom": 3.5,
-    "maxZoom": 5,
-    "span": 200
-  },
-  {
-    "text": "UJ-HAJNAL",
-    "type": "colony",
-    "x": 3721,
-    "y": 2832,
     "minZoom": 3.5,
     "maxZoom": 5,
     "span": 200
@@ -1129,7 +1120,7 @@
     "x": 3060,
     "y": 4594,
     "minZoom": 3.5,
-    "span": 30.468668041353748
+    "span": 190.12930889768643
   },
   {
     "text": "GREAT PELAGONIAN CHANNEL",
