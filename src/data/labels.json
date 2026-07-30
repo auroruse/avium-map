@@ -80,8 +80,8 @@
   {
     "text": "SAHARA SEA",
     "type": "ocean",
-    "x": 2792,
-    "y": 3487,
+    "x": 2799,
+    "y": 3500,
     "minZoom": 2.5,
     "span": 750
   },
@@ -232,7 +232,7 @@
     "span": 300
   },
   {
-    "text": "ANAHUAC",
+    "text": "AURITANIA",
     "type": "nation",
     "x": 1364,
     "y": 3892,
@@ -372,14 +372,14 @@
     "span": 200
   },
   {
-    "text": "LECHIA",
+    "text": "EIVORIE",
     "type": "nation",
-    "x": 3086,
-    "y": 2447,
+    "x": 3080,
+    "y": 2438,
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 150
+    "span": 175
   },
   {
     "text": "GENOSA",
@@ -412,7 +412,7 @@
     "span": 175
   },
   {
-    "text": "THE THORNE",
+    "text": "SLYTLIA",
     "type": "nation",
     "x": 3312,
     "y": 2523,
@@ -493,7 +493,7 @@
   },
   {
     "text": "KEMET",
-    "type": "colony",
+    "type": "nation",
     "x": 3428,
     "y": 3410,
     "minZoom": 3.5,
@@ -552,14 +552,14 @@
     "span": 160.12198835693604
   },
   {
-    "text": "APHIRICA DEL NORD",
+    "text": "VICILIAN NORTH APHIRICA",
     "type": "colony",
     "x": 2961,
     "y": 4056,
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 300
+    "span": 400
   },
   {
     "text": "SOUTH PELAGONIA",
@@ -705,15 +705,6 @@
     "span": 536.1499355728083
   },
   {
-    "text": "EIVORIE",
-    "type": "nation",
-    "x": 2260,
-    "y": 3813,
-    "minZoom": 3.5,
-    "maxZoom": 5,
-    "span": 350
-  },
-  {
     "text": "FREDERIKKA ISLANDS",
     "type": "colony",
     "x": 4486,
@@ -786,15 +777,6 @@
     "span": 103.31848583683876
   },
   {
-    "text": "RAZA LUNGA DE ACTIUNE",
-    "type": "colony",
-    "x": 3656,
-    "y": 2716,
-    "minZoom": 3.5,
-    "maxZoom": 5,
-    "span": 300
-  },
-  {
     "text": "SALISHIA",
     "type": "nation",
     "x": 1414,
@@ -813,7 +795,7 @@
     "span": 228.5422842337607
   },
   {
-    "text": "SZARZATONY",
+    "text": "ALBATROSSINSELN",
     "type": "colony",
     "x": 3675,
     "y": 2933,
@@ -1030,7 +1012,7 @@
     "span": 85.15609539804672
   },
   {
-    "text": "LAKE YUCATAN",
+    "text": "LAKE NAHÁ",
     "type": "sea",
     "x": 1362,
     "y": 3922,
@@ -1038,7 +1020,7 @@
     "span": 72.2755837974945
   },
   {
-    "text": "LAKE GALAPAGOS",
+    "text": "LAKE TRANQUILITY",
     "type": "sea",
     "x": 1360,
     "y": 4203,
@@ -1046,12 +1028,12 @@
     "span": 63.28443972674661
   },
   {
-    "text": "NAHUA BAY",
+    "text": "BAY OF ANAHUAC",
     "type": "sea",
-    "x": 1216,
-    "y": 4059,
+    "x": 1222,
+    "y": 4058,
     "minZoom": 3.5,
-    "span": 103.1284684397216
+    "span": 125
   },
   {
     "text": "TERRANOVA GULF",

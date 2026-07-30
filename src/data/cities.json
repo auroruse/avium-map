@@ -72,14 +72,14 @@
     "y": 507
   },
   {
-    "name": "Cahira",
+    "name": "Memphipolis",
     "nation": "Kemet",
     "population": 23534000,
     "gdp": 534200000000,
     "gdpPerCapita": 22699,
     "nativeScript": "",
     "irlParallel": "Cairo",
-    "alpha3": "VIC",
+    "alpha3": "KMT",
     "x": 3560,
     "y": 3444
   },
@@ -109,13 +109,13 @@
   },
   {
     "name": "Auritania City",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 21942000,
     "gdp": 715000000000,
     "gdpPerCapita": 32586,
     "nativeScript": "",
     "irlParallel": "Mexico City",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1201,
     "y": 3874
   },
@@ -397,13 +397,13 @@
   },
   {
     "name": "Botai",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 9814000,
     "gdp": 255200000000,
     "gdpPerCapita": 26004,
     "nativeScript": "",
     "irlParallel": "Bogotá",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1507,
     "y": 3962
   },
@@ -708,14 +708,14 @@
     "y": 634
   },
   {
-    "name": "Alessandria",
+    "name": "Racotis",
     "nation": "Kemet",
     "population": 5921000,
     "gdp": 118400000000,
     "gdpPerCapita": 19997,
     "nativeScript": "",
     "irlParallel": "Alexandria",
-    "alpha3": "VIC",
+    "alpha3": "KMT",
     "x": 3546,
     "y": 3388
   },
@@ -865,13 +865,13 @@
   },
   {
     "name": "Cualācoyotl",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 5422000,
     "gdp": 118200000000,
     "gdpPerCapita": 21800,
     "nativeScript": "",
     "irlParallel": "Guadalajara",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1112,
     "y": 3774
   },
@@ -1189,13 +1189,13 @@
   },
   {
     "name": "Yoloxochitl",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 4124000,
     "gdp": 124500000000,
     "gdpPerCapita": 30189,
     "nativeScript": "",
     "irlParallel": "Medellín",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1445,
     "y": 3906
   },
@@ -1381,13 +1381,13 @@
   },
   {
     "name": "Los Ángeles",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 3244000,
     "gdp": 58600000000,
     "gdpPerCapita": 18064,
     "nativeScript": "",
     "irlParallel": "Puebla",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1220,
     "y": 3898
   },
@@ -1536,6 +1536,18 @@
     "y": 3688
   },
   {
+    "name": "Serra Nova",
+    "nation": "Hollosend",
+    "population": 3124000,
+    "gdp": 21560000000,
+    "gdpPerCapita": 6901,
+    "nativeScript": "",
+    "irlParallel": "Dakar",
+    "alpha3": "HOL",
+    "x": 1959,
+    "y": 3556
+  },
+  {
     "name": "Shiwane",
     "nation": "Hōrai",
     "population": 3114000,
@@ -1669,13 +1681,13 @@
   },
   {
     "name": "Santiago",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 2842000,
     "gdp": 78400000000,
     "gdpPerCapita": 27586,
     "nativeScript": "",
     "irlParallel": "Cali",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1450,
     "y": 4021
   },
@@ -2041,13 +2053,13 @@
   },
   {
     "name": "Królewice",
-    "nation": "Lechia",
+    "nation": "Eivorie",
     "population": 2342000,
     "gdp": 118500000000,
     "gdpPerCapita": 50598,
     "nativeScript": "",
     "irlParallel": "Katowice",
-    "alpha3": "LEC",
+    "alpha3": "EIV",
     "x": 3111,
     "y": 2511
   },
@@ -2448,6 +2460,18 @@
     "y": 738
   },
   {
+    "name": "Lyndermere",
+    "nation": "Hollosend",
+    "population": 1982000,
+    "gdp": 10310000000,
+    "gdpPerCapita": 5202,
+    "nativeScript": "",
+    "irlParallel": "Bamako",
+    "alpha3": "HOL",
+    "x": 2196,
+    "y": 3670
+  },
+  {
     "name": "Mêsul",
     "nation": "Divia",
     "population": 1961000,
@@ -2497,13 +2521,13 @@
   },
   {
     "name": "Nuevo Refugio",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 1894000,
     "gdp": 48200000000,
     "gdpPerCapita": 25449,
     "nativeScript": "",
     "irlParallel": "León, MX",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1153,
     "y": 3764
   },
@@ -2653,13 +2677,13 @@
   },
   {
     "name": "Wisłogród",
-    "nation": "Lechia",
+    "nation": "Eivorie",
     "population": 1801000,
     "gdp": 185000000000,
     "gdpPerCapita": 102721,
     "nativeScript": "",
     "irlParallel": "Warsaw",
-    "alpha3": "LEC",
+    "alpha3": "EIV",
     "x": 3082,
     "y": 2454
   },
@@ -2784,14 +2808,14 @@
     "y": 3171
   },
   {
-    "name": "Dâmbova",
-    "nation": "The Thorne",
+    "name": "Rětny",
+    "nation": "Slytlia",
     "population": 1750000,
     "gdp": 166000000000,
     "gdpPerCapita": 94857,
     "nativeScript": "",
     "irlParallel": "Bucharest",
-    "alpha3": "THO",
+    "alpha3": "SLY",
     "x": 3353,
     "y": 2514
   },
@@ -3349,13 +3373,13 @@
   },
   {
     "name": "Zalaya",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 1422000,
     "gdp": 54600000000,
     "gdpPerCapita": 38397,
     "nativeScript": "",
     "irlParallel": "Querétaro",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1188,
     "y": 3823
   },
@@ -3577,13 +3601,13 @@
   },
   {
     "name": "San Luis",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 1318000,
     "gdp": 31400000000,
     "gdpPerCapita": 23824,
     "nativeScript": "",
     "irlParallel": "San Luis Potosí",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1193,
     "y": 3761
   },
@@ -3901,13 +3925,13 @@
   },
   {
     "name": "Santa Alejandra",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 1214000,
     "gdp": 32600000000,
     "gdpPerCapita": 26853,
     "nativeScript": "",
     "irlParallel": "Mérida",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1333,
     "y": 3996
   },
@@ -3997,13 +4021,13 @@
   },
   {
     "name": "Aguastermales",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 1184000,
     "gdp": 24800000000,
     "gdpPerCapita": 20946,
     "nativeScript": "",
     "irlParallel": "Aguascalientes",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1141,
     "y": 3743
   },
@@ -4164,18 +4188,6 @@
     "y": 4685
   },
   {
-    "name": "Kaukásos",
-    "nation": "Anahuac",
-    "population": 1124000,
-    "gdp": 27450000000,
-    "gdpPerCapita": 24422,
-    "nativeScript": "",
-    "irlParallel": "Bucaramanga",
-    "alpha3": "ANA",
-    "x": 1509,
-    "y": 3834
-  },
-  {
     "name": "Tirisura",
     "nation": "Arunya",
     "population": 1124000,
@@ -4186,6 +4198,18 @@
     "alpha3": "ARU",
     "x": 3528,
     "y": 4786
+  },
+  {
+    "name": "Kaukásos",
+    "nation": "Auritania",
+    "population": 1124000,
+    "gdp": 27450000000,
+    "gdpPerCapita": 24422,
+    "nativeScript": "",
+    "irlParallel": "Bucaramanga",
+    "alpha3": "AUR",
+    "x": 1509,
+    "y": 3834
   },
   {
     "name": "Burghersville",
@@ -4573,13 +4597,13 @@
   },
   {
     "name": "Ciudad Araya",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 1048000,
     "gdp": 34600000000,
     "gdpPerCapita": 33015,
     "nativeScript": "",
     "irlParallel": "Cartagena, CO",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1429,
     "y": 3769
   },
@@ -4776,14 +4800,14 @@
     "y": 3386
   },
   {
-    "name": "Consta Pericuța",
-    "nation": "The Thorne",
+    "name": "Klonslava",
+    "nation": "Slytlia",
     "population": 1007000,
     "gdp": 28200000000,
     "gdpPerCapita": 28004,
     "nativeScript": "",
     "irlParallel": "Odesa",
-    "alpha3": "THO",
+    "alpha3": "SLY",
     "x": 3346,
     "y": 2395
   },
@@ -4837,13 +4861,13 @@
   },
   {
     "name": "Nizuc",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 982000,
     "gdp": 28400000000,
     "gdpPerCapita": 28921,
     "nativeScript": "",
     "irlParallel": "Cancun",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1425,
     "y": 4007
   },
@@ -5065,13 +5089,13 @@
   },
   {
     "name": "Atlalixpa",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 924000,
     "gdp": 14600000000,
     "gdpPerCapita": 15801,
     "nativeScript": "",
     "irlParallel": "Tampico",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1402,
     "y": 3842
   },
@@ -5161,13 +5185,13 @@
   },
   {
     "name": "El Paso del Norte",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 892000,
     "gdp": 26400000000,
     "gdpPerCapita": 29596,
     "nativeScript": "",
     "irlParallel": "Guadalupe",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1158,
     "y": 3715
   },
@@ -5194,6 +5218,18 @@
     "alpha3": "VER",
     "x": 2245,
     "y": 4599
+  },
+  {
+    "name": "Villaguja",
+    "nation": "Hollosend",
+    "population": 882000,
+    "gdp": 4230000000,
+    "gdpPerCapita": 4796,
+    "nativeScript": "",
+    "irlParallel": "Touba",
+    "alpha3": "HOL",
+    "x": 1992,
+    "y": 3563
   },
   {
     "name": "Permarello",
@@ -5605,13 +5641,13 @@
   },
   {
     "name": "Lenkurt",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 814000,
     "gdp": 15200000000,
     "gdpPerCapita": 18673,
     "nativeScript": "",
     "irlParallel": "Morelia",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1129,
     "y": 3816
   },
@@ -5797,13 +5833,13 @@
   },
   {
     "name": "Jagiellonów",
-    "nation": "Lechia",
+    "nation": "Eivorie",
     "population": 770000,
     "gdp": 68400000000,
     "gdpPerCapita": 88831,
     "nativeScript": "",
     "irlParallel": "Kraków",
-    "alpha3": "LEC",
+    "alpha3": "EIV",
     "x": 3131,
     "y": 2502
   },
@@ -5893,13 +5929,13 @@
   },
   {
     "name": "Villa Rica",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 742000,
     "gdp": 19200000000,
     "gdpPerCapita": 25876,
     "nativeScript": "",
     "irlParallel": "Veracruz",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1342,
     "y": 3945
   },
@@ -6061,13 +6097,13 @@
   },
   {
     "name": "Hermosaciudad",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 714000,
     "gdp": 21500000000,
     "gdpPerCapita": 30112,
     "nativeScript": "",
     "irlParallel": "Villahermosa",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1195,
     "y": 4113
   },
@@ -6097,13 +6133,13 @@
   },
   {
     "name": "Yaoyachimallan",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 712000,
     "gdp": 18400000000,
     "gdpPerCapita": 25843,
     "nativeScript": "",
     "irlParallel": "Acapulco",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1163,
     "y": 3973
   },
@@ -6276,18 +6312,6 @@
     "y": 2345
   },
   {
-    "name": "Holguín",
-    "nation": "Anahuac",
-    "population": 682000,
-    "gdp": 14500000000,
-    "gdpPerCapita": 21261,
-    "nativeScript": "",
-    "irlParallel": "Durango, MX",
-    "alpha3": "ANA",
-    "x": 1143,
-    "y": 3662
-  },
-  {
     "name": "Nandigrama",
     "nation": "Arunya",
     "population": 682000,
@@ -6298,6 +6322,18 @@
     "alpha3": "ARU",
     "x": 3770,
     "y": 4697
+  },
+  {
+    "name": "Holguín",
+    "nation": "Auritania",
+    "population": 682000,
+    "gdp": 14500000000,
+    "gdpPerCapita": 21261,
+    "nativeScript": "",
+    "irlParallel": "Durango, MX",
+    "alpha3": "AUR",
+    "x": 1143,
+    "y": 3662
   },
   {
     "name": "Styropol",
@@ -6445,13 +6481,13 @@
   },
   {
     "name": "Czółnów",
-    "nation": "Lechia",
+    "nation": "Eivorie",
     "population": 645000,
     "gdp": 41200000000,
     "gdpPerCapita": 63876,
     "nativeScript": "",
     "irlParallel": "Łódź",
-    "alpha3": "LEC",
+    "alpha3": "EIV",
     "x": 3070,
     "y": 2491
   },
@@ -6493,13 +6529,13 @@
   },
   {
     "name": "Tuchtlan",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 642000,
     "gdp": 11500000000,
     "gdpPerCapita": 17913,
     "nativeScript": "",
     "irlParallel": "Tuxtla Gutiérrez",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1160,
     "y": 4164
   },
@@ -6673,13 +6709,13 @@
   },
   {
     "name": "Montero",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 624000,
     "gdp": 11200000000,
     "gdpPerCapita": 17949,
     "nativeScript": "",
     "irlParallel": "Pereira",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1458,
     "y": 3953
   },
@@ -6780,18 +6816,6 @@
     "y": 2320
   },
   {
-    "name": "Ehecatépetl",
-    "nation": "Anahuac",
-    "population": 612000,
-    "gdp": 14800000000,
-    "gdpPerCapita": 24183,
-    "nativeScript": "",
-    "irlParallel": "Pachuca",
-    "alpha3": "ANA",
-    "x": 1231,
-    "y": 3856
-  },
-  {
     "name": "Maliwadi",
     "nation": "Arunya",
     "population": 612000,
@@ -6802,6 +6826,18 @@
     "alpha3": "ARU",
     "x": 3777,
     "y": 4603
+  },
+  {
+    "name": "Ehecatépetl",
+    "nation": "Auritania",
+    "population": 612000,
+    "gdp": 14800000000,
+    "gdpPerCapita": 24183,
+    "nativeScript": "",
+    "irlParallel": "Pachuca",
+    "alpha3": "AUR",
+    "x": 1231,
+    "y": 3856
   },
   {
     "name": "Hippone",
@@ -7284,8 +7320,8 @@
     "y": 4782
   },
   {
-    "name": "Port Pora",
-    "nation": "Genosa",
+    "name": "Albrechtshaven",
+    "nation": "Albatrossinseln",
     "population": 563000,
     "gdp": 14800000000,
     "gdpPerCapita": 26288,
@@ -7344,14 +7380,14 @@
     "y": 3394
   },
   {
-    "name": "Strâmboc",
-    "nation": "The Thorne",
+    "name": "Tsambok",
+    "nation": "Slytlia",
     "population": 551000,
     "gdp": 13800000000,
     "gdpPerCapita": 25045,
     "nativeScript": "",
     "irlParallel": "Kryvyi Rih",
-    "alpha3": "THO",
+    "alpha3": "SLY",
     "x": 3319,
     "y": 2378
   },
@@ -7512,42 +7548,6 @@
     "y": 3221
   },
   {
-    "name": "Montemayor",
-    "nation": "Anahuac",
-    "population": 542000,
-    "gdp": 11400000000,
-    "gdpPerCapita": 21033,
-    "nativeScript": "",
-    "irlParallel": "Xalapa",
-    "alpha3": "ANA",
-    "x": 1430,
-    "y": 3818
-  },
-  {
-    "name": "Villanueva",
-    "nation": "Anahuac",
-    "population": 542000,
-    "gdp": 11400000000,
-    "gdpPerCapita": 21033,
-    "nativeScript": "",
-    "irlParallel": "Villavicencio",
-    "alpha3": "ANA",
-    "x": 1530,
-    "y": 3971
-  },
-  {
-    "name": "Nauhcampa",
-    "nation": "Anahuac",
-    "population": 542000,
-    "gdp": 9850000000,
-    "gdpPerCapita": 18173,
-    "nativeScript": "",
-    "irlParallel": "Montería",
-    "alpha3": "ANA",
-    "x": 1297,
-    "y": 3907
-  },
-  {
     "name": "Tiranavalli",
     "nation": "Arunya",
     "population": 542000,
@@ -7558,6 +7558,42 @@
     "alpha3": "ARU",
     "x": 3511,
     "y": 4842
+  },
+  {
+    "name": "Montemayor",
+    "nation": "Auritania",
+    "population": 542000,
+    "gdp": 11400000000,
+    "gdpPerCapita": 21033,
+    "nativeScript": "",
+    "irlParallel": "Xalapa",
+    "alpha3": "AUR",
+    "x": 1430,
+    "y": 3818
+  },
+  {
+    "name": "Villanueva",
+    "nation": "Auritania",
+    "population": 542000,
+    "gdp": 11400000000,
+    "gdpPerCapita": 21033,
+    "nativeScript": "",
+    "irlParallel": "Villavicencio",
+    "alpha3": "AUR",
+    "x": 1530,
+    "y": 3971
+  },
+  {
+    "name": "Nauhcampa",
+    "nation": "Auritania",
+    "population": 542000,
+    "gdp": 9850000000,
+    "gdpPerCapita": 18173,
+    "nativeScript": "",
+    "irlParallel": "Montería",
+    "alpha3": "AUR",
+    "x": 1297,
+    "y": 3907
   },
   {
     "name": "Al-Gilfah",
@@ -7740,14 +7776,14 @@
     "y": 3193
   },
   {
-    "name": "Borsa'id",
+    "name": "Thonis",
     "nation": "Kemet",
     "population": 538000,
     "gdp": 12500000000,
     "gdpPerCapita": 23234,
     "nativeScript": "",
     "irlParallel": "Port Said",
-    "alpha3": "VIC",
+    "alpha3": "KMT",
     "x": 3605,
     "y": 3401
   },
@@ -7957,13 +7993,13 @@
   },
   {
     "name": "Wartosław",
-    "nation": "Lechia",
+    "nation": "Eivorie",
     "population": 516000,
     "gdp": 38500000000,
     "gdpPerCapita": 74612,
     "nativeScript": "",
     "irlParallel": "Poznań",
-    "alpha3": "LEC",
+    "alpha3": "EIV",
     "x": 3024,
     "y": 2503
   },
@@ -8004,18 +8040,6 @@
     "y": 4770
   },
   {
-    "name": "Lucas",
-    "nation": "Anahuac",
-    "population": 512000,
-    "gdp": 11400000000,
-    "gdpPerCapita": 22266,
-    "nativeScript": "",
-    "irlParallel": "Puerto Vallarta",
-    "alpha3": "ANA",
-    "x": 1035,
-    "y": 3740
-  },
-  {
     "name": "Kuntala",
     "nation": "Arunya",
     "population": 512000,
@@ -8026,6 +8050,18 @@
     "alpha3": "ARU",
     "x": null,
     "y": null
+  },
+  {
+    "name": "Lucas",
+    "nation": "Auritania",
+    "population": 512000,
+    "gdp": 11400000000,
+    "gdpPerCapita": 22266,
+    "nativeScript": "",
+    "irlParallel": "Puerto Vallarta",
+    "alpha3": "AUR",
+    "x": 1035,
+    "y": 3740
   },
   {
     "name": "Oreslavl",
@@ -8071,7 +8107,7 @@
     "gdpPerCapita": 19406,
     "nativeScript": "",
     "irlParallel": "Asyut",
-    "alpha3": "VIC",
+    "alpha3": "KMT",
     "x": 3530,
     "y": 3537
   },
@@ -8089,13 +8125,13 @@
   },
   {
     "name": "Krzyżakowo",
-    "nation": "Lechia",
+    "nation": "Eivorie",
     "population": 499000,
     "gdp": 18400000000,
     "gdpPerCapita": 36874,
     "nativeScript": "",
     "irlParallel": "Kaliningrad",
-    "alpha3": "LEC",
+    "alpha3": "EIV",
     "x": 3000,
     "y": 2403
   },
@@ -8146,6 +8182,18 @@
     "alpha3": "VER",
     "x": 2565,
     "y": 4541
+  },
+  {
+    "name": "San Pablo",
+    "nation": "Auritania",
+    "population": 494000,
+    "gdp": 3850000000,
+    "gdpPerCapita": 7794,
+    "nativeScript": "",
+    "irlParallel": "Iquitos",
+    "alpha3": "AUR",
+    "x": null,
+    "y": null
   },
   {
     "name": "Passance",
@@ -8232,18 +8280,6 @@
     "y": 2294
   },
   {
-    "name": "Teyolchimalistli",
-    "nation": "Anahuac",
-    "population": 488000,
-    "gdp": 6150000000,
-    "gdpPerCapita": 12602,
-    "nativeScript": "",
-    "irlParallel": "Poza Rica",
-    "alpha3": "ANA",
-    "x": 1280,
-    "y": 3840
-  },
-  {
     "name": "Bellecôte",
     "nation": "Arverne",
     "population": 488000,
@@ -8256,6 +8292,18 @@
     "y": 3035
   },
   {
+    "name": "Teyolchimalistli",
+    "nation": "Auritania",
+    "population": 488000,
+    "gdp": 6150000000,
+    "gdpPerCapita": 12602,
+    "nativeScript": "",
+    "irlParallel": "Poza Rica",
+    "alpha3": "AUR",
+    "x": 1280,
+    "y": 3840
+  },
+  {
     "name": "Al-Suways",
     "nation": "Kemet",
     "population": 488000,
@@ -8263,7 +8311,7 @@
     "gdpPerCapita": 21311,
     "nativeScript": "",
     "irlParallel": "Suez",
-    "alpha3": "VIC",
+    "alpha3": "KMT",
     "x": 3601,
     "y": 3451
   },
@@ -8316,14 +8364,14 @@
     "y": 1234
   },
   {
-    "name": "Izvorești",
-    "nation": "The Thorne",
+    "name": "Izovoretso",
+    "nation": "Slytlia",
     "population": 484000,
     "gdp": 15500000000,
     "gdpPerCapita": 32025,
     "nativeScript": "",
     "irlParallel": "Chișinău",
-    "alpha3": "THO",
+    "alpha3": "SLY",
     "x": 3314,
     "y": 2423
   },
@@ -8376,18 +8424,6 @@
     "y": 5533
   },
   {
-    "name": "Tia Juana",
-    "nation": "Anahuac",
-    "population": 474000,
-    "gdp": 13200000000,
-    "gdpPerCapita": 27848,
-    "nativeScript": "",
-    "irlParallel": "Mazatlán",
-    "alpha3": "ANA",
-    "x": 1059,
-    "y": 3658
-  },
-  {
     "name": "Korkai",
     "nation": "Arunya",
     "population": 474000,
@@ -8398,6 +8434,18 @@
     "alpha3": "ARU",
     "x": 3518,
     "y": 4865
+  },
+  {
+    "name": "Tia Juana",
+    "nation": "Auritania",
+    "population": 474000,
+    "gdp": 13200000000,
+    "gdpPerCapita": 27848,
+    "nativeScript": "",
+    "irlParallel": "Mazatlán",
+    "alpha3": "AUR",
+    "x": 1059,
+    "y": 3658
   },
   {
     "name": "Vistgarde",
@@ -8868,14 +8916,14 @@
     "y": 2284
   },
   {
-    "name": "Waset",
+    "name": "Thebas",
     "nation": "Kemet",
     "population": 422000,
     "gdp": 8400000000,
     "gdpPerCapita": 19905,
     "nativeScript": "",
     "irlParallel": "Luxor",
-    "alpha3": "VIC",
+    "alpha3": "KMT",
     "x": 3554,
     "y": 3584
   },
@@ -9025,25 +9073,25 @@
   },
   {
     "name": "Karpagó",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 414000,
     "gdp": 8150000000,
     "gdpPerCapita": 19686,
     "nativeScript": "",
     "irlParallel": "Pasto",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1469,
     "y": 4109
   },
   {
     "name": "Āxalpanco",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 414000,
     "gdp": 6850000000,
     "gdpPerCapita": 16546,
     "nativeScript": "",
     "irlParallel": "Tepic",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1060,
     "y": 3735
   },
@@ -9343,7 +9391,7 @@
     "gdpPerCapita": 21287,
     "nativeScript": "",
     "irlParallel": "Tanta",
-    "alpha3": "VIC",
+    "alpha3": "KMT",
     "x": 3564,
     "y": 3415
   },
@@ -9997,13 +10045,13 @@
   },
   {
     "name": "Pueblo del Prosperidad",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 346000,
     "gdp": 12800000000,
     "gdpPerCapita": 36994,
     "nativeScript": "",
     "irlParallel": "Victoria, MX",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1311,
     "y": 3706
   },
@@ -10056,42 +10104,6 @@
     "y": 890
   },
   {
-    "name": "Tzapotlan",
-    "nation": "Anahuac",
-    "population": 342000,
-    "gdp": 12400000000,
-    "gdpPerCapita": 36257,
-    "nativeScript": "",
-    "irlParallel": "Playa del Carmen",
-    "alpha3": "ANA",
-    "x": 1264,
-    "y": 4002
-  },
-  {
-    "name": "Playa del Climene",
-    "nation": "Anahuac",
-    "population": 342000,
-    "gdp": 9150000000,
-    "gdpPerCapita": 26754,
-    "nativeScript": "",
-    "irlParallel": "Oaxaca",
-    "alpha3": "ANA",
-    "x": 1416,
-    "y": 4034
-  },
-  {
-    "name": "Erlyors",
-    "nation": "Anahuac",
-    "population": 342000,
-    "gdp": 7250000000,
-    "gdpPerCapita": 21199,
-    "nativeScript": "",
-    "irlParallel": "Neiva",
-    "alpha3": "ANA",
-    "x": 1490,
-    "y": 4024
-  },
-  {
     "name": "Chuparosa",
     "nation": "Anticostia",
     "population": 342000,
@@ -10102,6 +10114,42 @@
     "alpha3": "REI",
     "x": 2342,
     "y": 3040
+  },
+  {
+    "name": "Tzapotlan",
+    "nation": "Auritania",
+    "population": 342000,
+    "gdp": 12400000000,
+    "gdpPerCapita": 36257,
+    "nativeScript": "",
+    "irlParallel": "Playa del Carmen",
+    "alpha3": "AUR",
+    "x": 1264,
+    "y": 4002
+  },
+  {
+    "name": "Playa del Climene",
+    "nation": "Auritania",
+    "population": 342000,
+    "gdp": 9150000000,
+    "gdpPerCapita": 26754,
+    "nativeScript": "",
+    "irlParallel": "Oaxaca",
+    "alpha3": "AUR",
+    "x": 1416,
+    "y": 4034
+  },
+  {
+    "name": "Erlyors",
+    "nation": "Auritania",
+    "population": 342000,
+    "gdp": 7250000000,
+    "gdpPerCapita": 21199,
+    "nativeScript": "",
+    "irlParallel": "Neiva",
+    "alpha3": "AUR",
+    "x": 1490,
+    "y": 4024
   },
   {
     "name": "Ku",
@@ -10186,6 +10234,18 @@
     "alpha3": "HOL",
     "x": 1794,
     "y": 3570
+  },
+  {
+    "name": "Santa Verena",
+    "nation": "Hollosend",
+    "population": 342000,
+    "gdp": 1740000000,
+    "gdpPerCapita": 5088,
+    "nativeScript": "",
+    "irlParallel": "Thies",
+    "alpha3": "HOL",
+    "x": 1971,
+    "y": 3558
   },
   {
     "name": "Aomizu",
@@ -10321,13 +10381,13 @@
   },
   {
     "name": "Brdoujście",
-    "nation": "Lechia",
+    "nation": "Eivorie",
     "population": 338000,
     "gdp": 19500000000,
     "gdpPerCapita": 57692,
     "nativeScript": "",
     "irlParallel": "Bydgoszcz",
-    "alpha3": "LEC",
+    "alpha3": "EIV",
     "x": 3021,
     "y": 2469
   },
@@ -10429,13 +10489,13 @@
   },
   {
     "name": "Kresów",
-    "nation": "Lechia",
+    "nation": "Eivorie",
     "population": 326000,
     "gdp": 16500000000,
     "gdpPerCapita": 50613,
     "nativeScript": "",
     "irlParallel": "Lublin",
-    "alpha3": "LEC",
+    "alpha3": "EIV",
     "x": 3135,
     "y": 2445
   },
@@ -10453,25 +10513,25 @@
   },
   {
     "name": "Serenidad",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 324000,
     "gdp": 4250000000,
     "gdpPerCapita": 13117,
     "nativeScript": "",
     "irlParallel": "Tehuacán",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1465,
     "y": 4051
   },
   {
     "name": "Tlatocan",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 324000,
     "gdp": 4150000000,
     "gdpPerCapita": 12809,
     "nativeScript": "",
     "irlParallel": "Popayán",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1255,
     "y": 3948
   },
@@ -10680,14 +10740,14 @@
     "y": 391
   },
   {
-    "name": "Bahluiava",
-    "nation": "The Thorne",
+    "name": "Bayunava",
+    "nation": "Slytlia",
     "population": 317000,
     "gdp": 15200000000,
     "gdpPerCapita": 47950,
     "nativeScript": "",
     "irlParallel": "Iaşi",
-    "alpha3": "THO",
+    "alpha3": "SLY",
     "x": 3296,
     "y": 2443
   },
@@ -10777,13 +10837,13 @@
   },
   {
     "name": "Tsitsikua",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 314000,
     "gdp": 6450000000,
     "gdpPerCapita": 20541,
     "nativeScript": "",
     "irlParallel": "Uruapan",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1105,
     "y": 3812
   },
@@ -10861,13 +10921,13 @@
   },
   {
     "name": "Cuauhxochic",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 312000,
     "gdp": 14200000000,
     "gdpPerCapita": 45513,
     "nativeScript": "",
     "irlParallel": "Coatzacoalcos",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1152,
     "y": 4084
   },
@@ -11004,26 +11064,26 @@
     "y": 5495
   },
   {
-    "name": "Claudiupol",
-    "nation": "The Thorne",
+    "name": "Kurǎpol",
+    "nation": "Slytlia",
     "population": 309000,
     "gdp": 23200000000,
     "gdpPerCapita": 75081,
     "nativeScript": "",
     "irlParallel": "Cluj-Napoca",
-    "alpha3": "THO",
+    "alpha3": "SLY",
     "x": 3268,
     "y": 2508
   },
   {
-    "name": "Câmpulviu",
-    "nation": "The Thorne",
+    "name": "Gamulvy",
+    "nation": "Slytlia",
     "population": 307000,
     "gdp": 20500000000,
     "gdpPerCapita": 66775,
     "nativeScript": "",
     "irlParallel": "Timişoara",
-    "alpha3": "THO",
+    "alpha3": "SLY",
     "x": 3269,
     "y": 2567
   },
@@ -11137,13 +11197,13 @@
   },
   {
     "name": "Puszczyn",
-    "nation": "Lechia",
+    "nation": "Eivorie",
     "population": 298000,
     "gdp": 14200000000,
     "gdpPerCapita": 47651,
     "nativeScript": "",
     "irlParallel": "Białystok",
-    "alpha3": "LEC",
+    "alpha3": "EIV",
     "x": 3085,
     "y": 2399
   },
@@ -11293,13 +11353,13 @@
   },
   {
     "name": "Gran Torre",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 284000,
     "gdp": 10800000000,
     "gdpPerCapita": 38028,
     "nativeScript": "",
     "irlParallel": "Campeche",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1289,
     "y": 4068
   },
@@ -11340,14 +11400,14 @@
     "y": 2307
   },
   {
-    "name": "Tomisava",
-    "nation": "The Thorne",
+    "name": "Domyslava",
+    "nation": "Slytlia",
     "population": 284000,
     "gdp": 14200000000,
     "gdpPerCapita": 50000,
     "nativeScript": "",
     "irlParallel": "Constanța",
-    "alpha3": "THO",
+    "alpha3": "SLY",
     "x": 3385,
     "y": 2463
   },
@@ -11460,14 +11520,14 @@
     "y": 4749
   },
   {
-    "name": "Dniprouș",
-    "nation": "The Thorne",
+    "name": "Driporus",
+    "nation": "Slytlia",
     "population": 276000,
     "gdp": 5500000000,
     "gdpPerCapita": 19928,
     "nativeScript": "",
     "irlParallel": "Kherson",
-    "alpha3": "THO",
+    "alpha3": "SLY",
     "x": 3337,
     "y": 2377
   },
@@ -11568,14 +11628,14 @@
     "y": 3316
   },
   {
-    "name": "Bănești",
-    "nation": "The Thorne",
+    "name": "Braneyětsi",
+    "nation": "Slytlia",
     "population": 270000,
     "gdp": 11300000000,
     "gdpPerCapita": 41852,
     "nativeScript": "",
     "irlParallel": "Craiova",
-    "alpha3": "THO",
+    "alpha3": "SLY",
     "x": 3340,
     "y": 2552
   },
@@ -11616,14 +11676,14 @@
     "y": 2454
   },
   {
-    "name": "Syene",
+    "name": "Sile",
     "nation": "Kemet",
     "population": 266000,
     "gdp": 5200000000,
     "gdpPerCapita": 19549,
     "nativeScript": "",
     "irlParallel": "Aswan",
-    "alpha3": "VIC",
+    "alpha3": "KMT",
     "x": 3555,
     "y": 3629
   },
@@ -11832,14 +11892,14 @@
     "y": 2683
   },
   {
-    "name": "Bârsava",
-    "nation": "The Thorne",
+    "name": "Bǎsavo",
+    "nation": "Slytlia",
     "population": 254000,
     "gdp": 14000000000,
     "gdpPerCapita": 55118,
     "nativeScript": "",
     "irlParallel": "Braşov",
-    "alpha3": "THO",
+    "alpha3": "SLY",
     "x": 3312,
     "y": 2485
   },
@@ -11856,26 +11916,26 @@
     "y": null
   },
   {
-    "name": "Hălicuța",
-    "nation": "The Thorne",
+    "name": "Hlašyta",
+    "nation": "Slytlia",
     "population": 250000,
     "gdp": 10000000000,
     "gdpPerCapita": 40000,
     "nativeScript": "",
     "irlParallel": "Galaţi",
-    "alpha3": "THO",
+    "alpha3": "SLY",
     "x": 3346,
     "y": 2467
   },
   {
     "name": "Tonatiuhpan",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 248000,
     "gdp": 8250000000,
     "gdpPerCapita": 33266,
     "nativeScript": "",
     "irlParallel": "Chetumal",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1376,
     "y": 4129
   },
@@ -12094,6 +12154,42 @@
     "alpha3": "HOL",
     "x": 1985,
     "y": 3608
+  },
+  {
+    "name": "Kahoney",
+    "nation": "Hollosend",
+    "population": 242000,
+    "gdp": 1180000000,
+    "gdpPerCapita": 4876,
+    "nativeScript": "",
+    "irlParallel": "Kaolack",
+    "alpha3": "HOL",
+    "x": 1982,
+    "y": 3578
+  },
+  {
+    "name": "Maybore",
+    "nation": "Hollosend",
+    "population": 242000,
+    "gdp": 1310000000,
+    "gdpPerCapita": 5413,
+    "nativeScript": "",
+    "irlParallel": "M'Bour",
+    "alpha3": "HOL",
+    "x": 1967,
+    "y": 3567
+  },
+  {
+    "name": "La Torre",
+    "nation": "Hollosend",
+    "population": 242000,
+    "gdp": 1140000000,
+    "gdpPerCapita": 4711,
+    "nativeScript": "",
+    "irlParallel": "Saint-Louis, SN",
+    "alpha3": "HOL",
+    "x": 1988,
+    "y": 3508
   },
   {
     "name": "Purushottamkshetra",
@@ -12529,13 +12625,13 @@
   },
   {
     "name": "Świętogóra",
-    "nation": "Lechia",
+    "nation": "Eivorie",
     "population": 220000,
     "gdp": 11800000000,
     "gdpPerCapita": 53636,
     "nativeScript": "",
     "irlParallel": "Częstochowa",
-    "alpha3": "LEC",
+    "alpha3": "EIV",
     "x": 3111,
     "y": 2476
   },
@@ -12637,25 +12733,25 @@
   },
   {
     "name": "Barranco",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 214000,
     "gdp": 4920000000,
     "gdpPerCapita": 22991,
     "nativeScript": "",
     "irlParallel": "Barrancabermeja",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1493,
     "y": 3844
   },
   {
     "name": "Villa del Sol",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 214000,
     "gdp": 3450000000,
     "gdpPerCapita": 16121,
     "nativeScript": "",
     "irlParallel": "San Cristóbal de las Casas",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1177,
     "y": 4174
   },
@@ -13195,7 +13291,7 @@
     "gdpPerCapita": 20388,
     "nativeScript": "",
     "irlParallel": "Damietta",
-    "alpha3": "VIC",
+    "alpha3": "KMT",
     "x": 3582,
     "y": 3393
   },
@@ -13345,13 +13441,13 @@
   },
   {
     "name": "Koperników",
-    "nation": "Lechia",
+    "nation": "Eivorie",
     "population": 202000,
     "gdp": 12200000000,
     "gdpPerCapita": 60396,
     "nativeScript": "",
     "irlParallel": "Toruń",
-    "alpha3": "LEC",
+    "alpha3": "EIV",
     "x": 3034,
     "y": 2464
   },
@@ -13465,13 +13561,13 @@
   },
   {
     "name": "Sanogród",
-    "nation": "Lechia",
+    "nation": "Eivorie",
     "population": 197000,
     "gdp": 12800000000,
     "gdpPerCapita": 64975,
     "nativeScript": "",
     "irlParallel": "Rzeszów",
-    "alpha3": "LEC",
+    "alpha3": "EIV",
     "x": 3159,
     "y": 2472
   },
@@ -13536,14 +13632,14 @@
     "y": 834
   },
   {
-    "name": "San Beneto",
+    "name": "Ramsapolis",
     "nation": "Kemet",
     "population": 193000,
     "gdp": 3850000000,
     "gdpPerCapita": 19948,
     "nativeScript": "",
     "irlParallel": "Beni Suef",
-    "alpha3": "VIC",
+    "alpha3": "KMT",
     "x": 3537,
     "y": 3477
   },
@@ -13561,13 +13657,13 @@
   },
   {
     "name": "González Perfecto",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 192000,
     "gdp": 12200000000,
     "gdpPerCapita": 63542,
     "nativeScript": "",
     "irlParallel": "Ciudad del Carmen",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1242,
     "y": 4104
   },
@@ -13848,18 +13944,6 @@
     "y": 1907
   },
   {
-    "name": "Nuevo Hammerford",
-    "nation": "Anahuac",
-    "population": 184000,
-    "gdp": 9250000000,
-    "gdpPerCapita": 50272,
-    "nativeScript": "",
-    "irlParallel": "Lazaro Cárdenas",
-    "alpha3": "ANA",
-    "x": 1095,
-    "y": 3863
-  },
-  {
     "name": "Udupa",
     "nation": "Arunya",
     "population": 184000,
@@ -13870,6 +13954,18 @@
     "alpha3": "ARU",
     "x": 3581,
     "y": 4693
+  },
+  {
+    "name": "Nuevo Hammerford",
+    "nation": "Auritania",
+    "population": 184000,
+    "gdp": 9250000000,
+    "gdpPerCapita": 50272,
+    "nativeScript": "",
+    "irlParallel": "Lazaro Cárdenas",
+    "alpha3": "AUR",
+    "x": 1095,
+    "y": 3863
   },
   {
     "name": "Cochinay",
@@ -13918,6 +14014,18 @@
     "alpha3": "NCH",
     "x": 2525,
     "y": 745
+  },
+  {
+    "name": "Reedbank",
+    "nation": "Recolotta",
+    "population": 184000,
+    "gdp": 810000000,
+    "gdpPerCapita": 4402,
+    "nativeScript": "",
+    "irlParallel": "Tete",
+    "alpha3": "REC",
+    "x": 3128,
+    "y": 4859
   },
   {
     "name": "Sykaran",
@@ -13980,7 +14088,7 @@
     "y": 5270
   },
   {
-    "name": "Chapéko",
+    "name": "Chapécu",
     "nation": "The Verdanie",
     "population": 184000,
     "gdp": 7150000000,
@@ -14256,18 +14364,6 @@
     "y": 5269
   },
   {
-    "name": "Suague",
-    "nation": "Anahuac",
-    "population": 174000,
-    "gdp": 3850000000,
-    "gdpPerCapita": 22126,
-    "nativeScript": "",
-    "irlParallel": "Tunja",
-    "alpha3": "ANA",
-    "x": 1513,
-    "y": 3912
-  },
-  {
     "name": "Balni",
     "nation": "Arunya",
     "population": 174000,
@@ -14278,6 +14374,18 @@
     "alpha3": "ARU",
     "x": 3746,
     "y": 4664
+  },
+  {
+    "name": "Suague",
+    "nation": "Auritania",
+    "population": 174000,
+    "gdp": 3850000000,
+    "gdpPerCapita": 22126,
+    "nativeScript": "",
+    "irlParallel": "Tunja",
+    "alpha3": "AUR",
+    "x": 1513,
+    "y": 3912
   },
   {
     "name": "Kemena",
@@ -14424,6 +14532,18 @@
     "y": null
   },
   {
+    "name": "Jeziorowsk",
+    "nation": "Eivorie",
+    "population": 172000,
+    "gdp": 8800000000,
+    "gdpPerCapita": 51163,
+    "nativeScript": "",
+    "irlParallel": "Olsztyn",
+    "alpha3": "EIV",
+    "x": 3037,
+    "y": 2421
+  },
+  {
     "name": "Haléva",
     "nation": "Genosa",
     "population": 172000,
@@ -14470,18 +14590,6 @@
     "alpha3": "HOL",
     "x": 1904,
     "y": 3586
-  },
-  {
-    "name": "Jeziorowsk",
-    "nation": "Lechia",
-    "population": 172000,
-    "gdp": 8800000000,
-    "gdpPerCapita": 51163,
-    "nativeScript": "",
-    "irlParallel": "Olsztyn",
-    "alpha3": "LEC",
-    "x": 3037,
-    "y": 2421
   },
   {
     "name": "Titanes",
@@ -14760,30 +14868,6 @@
     "y": 3561
   },
   {
-    "name": "San Bonifacio",
-    "nation": "Anahuac",
-    "population": 162000,
-    "gdp": 3120000000,
-    "gdpPerCapita": 19259,
-    "nativeScript": "",
-    "irlParallel": "Florencia",
-    "alpha3": "ANA",
-    "x": 1503,
-    "y": 4079
-  },
-  {
-    "name": "Acatlazohuacan",
-    "nation": "Anahuac",
-    "population": 162000,
-    "gdp": 2150000000,
-    "gdpPerCapita": 13272,
-    "nativeScript": "",
-    "irlParallel": "Tuxtepec",
-    "alpha3": "ANA",
-    "x": 1298,
-    "y": 3990
-  },
-  {
     "name": "Johannshafen",
     "nation": "Andam Islands",
     "population": 162000,
@@ -14794,6 +14878,30 @@
     "alpha3": "ALE",
     "x": 4307,
     "y": 1812
+  },
+  {
+    "name": "San Bonifacio",
+    "nation": "Auritania",
+    "population": 162000,
+    "gdp": 3120000000,
+    "gdpPerCapita": 19259,
+    "nativeScript": "",
+    "irlParallel": "Florencia",
+    "alpha3": "AUR",
+    "x": 1503,
+    "y": 4079
+  },
+  {
+    "name": "Acatlazohuacan",
+    "nation": "Auritania",
+    "population": 162000,
+    "gdp": 2150000000,
+    "gdpPerCapita": 13272,
+    "nativeScript": "",
+    "irlParallel": "Tuxtepec",
+    "alpha3": "AUR",
+    "x": 1298,
+    "y": 3990
   },
   {
     "name": "Biram",
@@ -15060,6 +15168,18 @@
     "y": 3100
   },
   {
+    "name": "Sankt Michell",
+    "nation": "Albatrossinseln",
+    "population": 156000,
+    "gdp": 5450000000,
+    "gdpPerCapita": 34936,
+    "nativeScript": "",
+    "irlParallel": "Saint-Denis, RE",
+    "alpha3": "GEN",
+    "x": 3655,
+    "y": 2967
+  },
+  {
     "name": "Sattarapur",
     "nation": "Arunya",
     "population": 156000,
@@ -15070,18 +15190,6 @@
     "alpha3": "ARU",
     "x": 3686,
     "y": 4614
-  },
-  {
-    "name": "Szentárd",
-    "nation": "Genosa",
-    "population": 156000,
-    "gdp": 5450000000,
-    "gdpPerCapita": 34936,
-    "nativeScript": "",
-    "irlParallel": "Saint-Denis, RE",
-    "alpha3": "GEN",
-    "x": 3655,
-    "y": 2967
   },
   {
     "name": "Zoryansk",
@@ -15540,18 +15648,6 @@
     "y": null
   },
   {
-    "name": "Tlaxco",
-    "nation": "Anahuac",
-    "population": 142000,
-    "gdp": 2450000000,
-    "gdpPerCapita": 17254,
-    "nativeScript": "",
-    "irlParallel": "Iguala",
-    "alpha3": "ANA",
-    "x": 1172,
-    "y": 3894
-  },
-  {
     "name": "Kaandiva",
     "nation": "Arunya",
     "population": 142000,
@@ -15562,6 +15658,18 @@
     "alpha3": "ARU",
     "x": 3414,
     "y": 4856
+  },
+  {
+    "name": "Tlaxco",
+    "nation": "Auritania",
+    "population": 142000,
+    "gdp": 2450000000,
+    "gdpPerCapita": 17254,
+    "nativeScript": "",
+    "irlParallel": "Iguala",
+    "alpha3": "AUR",
+    "x": 1172,
+    "y": 3894
   },
   {
     "name": "Ligor",
@@ -15694,6 +15802,18 @@
     "alpha3": "VIC",
     "x": 2975,
     "y": 3120
+  },
+  {
+    "name": "Keynes",
+    "nation": "Hollosend",
+    "population": 142000,
+    "gdp": 740000000,
+    "gdpPerCapita": 5211,
+    "nativeScript": "",
+    "irlParallel": "Kayes",
+    "alpha3": "HOL",
+    "x": 2114,
+    "y": 3601
   },
   {
     "name": "Berenthal",
@@ -16020,18 +16140,6 @@
     "y": 864
   },
   {
-    "name": "Tencepantic",
-    "nation": "Anahuac",
-    "population": 128000,
-    "gdp": 2850000000,
-    "gdpPerCapita": 22266,
-    "nativeScript": "",
-    "irlParallel": "Comitán",
-    "alpha3": "ANA",
-    "x": 1195,
-    "y": 4193
-  },
-  {
     "name": "Kiriya-Muguli",
     "nation": "Arunya",
     "population": 128000,
@@ -16042,6 +16150,18 @@
     "alpha3": "ARU",
     "x": 3597,
     "y": 4723
+  },
+  {
+    "name": "Tencepantic",
+    "nation": "Auritania",
+    "population": 128000,
+    "gdp": 2850000000,
+    "gdpPerCapita": 22266,
+    "nativeScript": "",
+    "irlParallel": "Comitán",
+    "alpha3": "AUR",
+    "x": 1195,
+    "y": 4193
   },
   {
     "name": "Cumberland Falls",
@@ -16429,13 +16549,13 @@
   },
   {
     "name": "Doborá",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 116000,
     "gdp": 2440000000,
     "gdpPerCapita": 21034,
     "nativeScript": "",
     "irlParallel": "Girardot",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1491,
     "y": 3977
   },
@@ -16632,30 +16752,6 @@
     "y": 2605
   },
   {
-    "name": "Santa María",
-    "nation": "Anahuac",
-    "population": 114000,
-    "gdp": 2420000000,
-    "gdpPerCapita": 21228,
-    "nativeScript": "",
-    "irlParallel": "Sogamoso",
-    "alpha3": "ANA",
-    "x": 1527,
-    "y": 3900
-  },
-  {
-    "name": "El Dorado",
-    "nation": "Anahuac",
-    "population": 114000,
-    "gdp": 1940000000,
-    "gdpPerCapita": 17018,
-    "nativeScript": "",
-    "irlParallel": "Tumaco",
-    "alpha3": "ANA",
-    "x": 1407,
-    "y": 4113
-  },
-  {
     "name": "Gimhathitha",
     "nation": "Arunya",
     "population": 114000,
@@ -16666,6 +16762,30 @@
     "alpha3": "ARU",
     "x": 3372,
     "y": 4869
+  },
+  {
+    "name": "Santa María",
+    "nation": "Auritania",
+    "population": 114000,
+    "gdp": 2420000000,
+    "gdpPerCapita": 21228,
+    "nativeScript": "",
+    "irlParallel": "Sogamoso",
+    "alpha3": "AUR",
+    "x": 1527,
+    "y": 3900
+  },
+  {
+    "name": "Áureo",
+    "nation": "Auritania",
+    "population": 114000,
+    "gdp": 1940000000,
+    "gdpPerCapita": 17018,
+    "nativeScript": "",
+    "irlParallel": "Tumaco",
+    "alpha3": "AUR",
+    "x": 1407,
+    "y": 4113
   },
   {
     "name": "Lampam",
@@ -16702,6 +16822,30 @@
     "alpha3": "HOL",
     "x": 1649,
     "y": 3602
+  },
+  {
+    "name": "Ricomonte",
+    "nation": "Hollosend",
+    "population": 114000,
+    "gdp": 540000000,
+    "gdpPerCapita": 4737,
+    "nativeScript": "",
+    "irlParallel": "Tambacounda",
+    "alpha3": "HOL",
+    "x": 2035,
+    "y": 3595
+  },
+  {
+    "name": "Lugan",
+    "nation": "Hollosend",
+    "population": 114000,
+    "gdp": 510000000,
+    "gdpPerCapita": 4474,
+    "nativeScript": "",
+    "irlParallel": "Louga",
+    "alpha3": "HOL",
+    "x": 1993,
+    "y": 3522
   },
   {
     "name": "Bayetovo",
@@ -17083,7 +17227,7 @@
     "gdpPerCapita": 17778,
     "nativeScript": "",
     "irlParallel": "Mersa Matruh",
-    "alpha3": "VIC",
+    "alpha3": "KMT",
     "x": 3471,
     "y": 3372
   },
@@ -17472,14 +17616,14 @@
     "y": 2980
   },
   {
-    "name": "Olteanca",
-    "nation": "The Thorne",
+    "name": "Lerekya",
+    "nation": "Slytlia",
     "population": 99000,
     "gdp": 4500000000,
     "gdpPerCapita": 45455,
     "nativeScript": "",
     "irlParallel": "Râmnicu Vâlcea",
-    "alpha3": "THO",
+    "alpha3": "SLY",
     "x": 3318,
     "y": 2528
   },
@@ -17772,14 +17916,14 @@
     "y": null
   },
   {
-    "name": "Drobetava",
-    "nation": "The Thorne",
+    "name": "Trobletevu",
+    "nation": "Slytlia",
     "population": 93000,
     "gdp": 3500000000,
     "gdpPerCapita": 37634,
     "nativeScript": "",
     "irlParallel": "Drobeta-Turnu Severin",
-    "alpha3": "THO",
+    "alpha3": "SLY",
     "x": 3314,
     "y": 2579
   },
@@ -17880,6 +18024,18 @@
     "y": 3687
   },
   {
+    "name": "Teiburg",
+    "nation": "Hollosend",
+    "population": 92000,
+    "gdp": 420000000,
+    "gdpPerCapita": 4565,
+    "nativeScript": "",
+    "irlParallel": "Tiébo",
+    "alpha3": "HOL",
+    "x": 1983,
+    "y": 3568
+  },
+  {
     "name": "Melden",
     "nation": "Ponurvia",
     "population": 92000,
@@ -17940,18 +18096,6 @@
     "y": 2828
   },
   {
-    "name": "Ojo de Águila",
-    "nation": "Anahuac",
-    "population": 88000,
-    "gdp": 3150000000,
-    "gdpPerCapita": 35795,
-    "nativeScript": "",
-    "irlParallel": "Salina Cruz",
-    "alpha3": "ANA",
-    "x": 1290,
-    "y": 4040
-  },
-  {
     "name": "Pandavagram",
     "nation": "Arunya",
     "population": 88000,
@@ -17962,6 +18106,18 @@
     "alpha3": "ARU",
     "x": 3640,
     "y": 4599
+  },
+  {
+    "name": "Ojo de Águila",
+    "nation": "Auritania",
+    "population": 88000,
+    "gdp": 3150000000,
+    "gdpPerCapita": 35795,
+    "nativeScript": "",
+    "irlParallel": "Salina Cruz",
+    "alpha3": "AUR",
+    "x": 1290,
+    "y": 4040
   },
   {
     "name": "Maython",
@@ -18553,13 +18709,13 @@
   },
   {
     "name": "Iztatlac",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 74000,
     "gdp": 820000000,
     "gdpPerCapita": 11081,
     "nativeScript": "",
     "irlParallel": "Las Choapas",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1175,
     "y": 4106
   },
@@ -18625,13 +18781,13 @@
   },
   {
     "name": "Los Ranchos",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 72000,
     "gdp": 1450000000,
     "gdpPerCapita": 20139,
     "nativeScript": "",
     "irlParallel": "Rioverde",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1221,
     "y": 3789
   },
@@ -18768,18 +18924,6 @@
     "y": 3199
   },
   {
-    "name": "Lachaven",
-    "nation": "Anahuac",
-    "population": 68000,
-    "gdp": 1450000000,
-    "gdpPerCapita": 21324,
-    "nativeScript": "",
-    "irlParallel": "Valladolid, MX",
-    "alpha3": "ANA",
-    "x": 1371,
-    "y": 4016
-  },
-  {
     "name": "Federico",
     "nation": "Anticostia",
     "population": 68000,
@@ -18790,6 +18934,18 @@
     "alpha3": "REI",
     "x": 2336,
     "y": 3014
+  },
+  {
+    "name": "Lachaven",
+    "nation": "Auritania",
+    "population": 68000,
+    "gdp": 1450000000,
+    "gdpPerCapita": 21324,
+    "nativeScript": "",
+    "irlParallel": "Valladolid, MX",
+    "alpha3": "AUR",
+    "x": 1371,
+    "y": 4016
   },
   {
     "name": "Derkan",
@@ -19224,14 +19380,14 @@
     "y": 2146
   },
   {
-    "name": "El Batras",
+    "name": "Thermas",
     "nation": "Kemet",
     "population": 59000,
     "gdp": 980000000,
     "gdpPerCapita": 16610,
     "nativeScript": "",
     "irlParallel": "El Hamam",
-    "alpha3": "VIC",
+    "alpha3": "KMT",
     "x": 3520,
     "y": 3398
   },
@@ -19429,13 +19585,13 @@
   },
   {
     "name": "Omilpan",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 54000,
     "gdp": 410000000,
     "gdpPerCapita": 7593,
     "nativeScript": "",
     "irlParallel": "Tlapa de Comonfort",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1179,
     "y": 3937
   },
@@ -19597,13 +19753,13 @@
   },
   {
     "name": "Tlalticpac",
-    "nation": "Anahuac",
+    "nation": "Auritania",
     "population": 52000,
     "gdp": 1150000000,
     "gdpPerCapita": 22115,
     "nativeScript": "",
     "irlParallel": "Cintalapa de Figueroa",
-    "alpha3": "ANA",
+    "alpha3": "AUR",
     "x": 1141,
     "y": 4173
   },
@@ -19824,18 +19980,6 @@
     "y": 4864
   },
   {
-    "name": "San Mateo",
-    "nation": "Anahuac",
-    "population": 42000,
-    "gdp": 1150000000,
-    "gdpPerCapita": 27381,
-    "nativeScript": "",
-    "irlParallel": "San Fernando, MX",
-    "alpha3": "ANA",
-    "x": 1393,
-    "y": 3758
-  },
-  {
     "name": "Gortari",
     "nation": "Arunya",
     "population": 42000,
@@ -19846,6 +19990,18 @@
     "alpha3": "ARU",
     "x": 3671,
     "y": 4912
+  },
+  {
+    "name": "San Mateo",
+    "nation": "Auritania",
+    "population": 42000,
+    "gdp": 1150000000,
+    "gdpPerCapita": 27381,
+    "nativeScript": "",
+    "irlParallel": "San Fernando, MX",
+    "alpha3": "AUR",
+    "x": 1393,
+    "y": 3758
   },
   {
     "name": "Naqissuserpaa",
@@ -20724,18 +20880,6 @@
     "y": 3955
   },
   {
-    "name": "Victoara",
-    "nation": "The Thorne",
-    "population": 13000,
-    "gdp": 740000000,
-    "gdpPerCapita": 56923,
-    "nativeScript": "",
-    "irlParallel": "Victoria, SC",
-    "alpha3": "THO",
-    "x": 3673,
-    "y": 2742
-  },
-  {
     "name": "Ciudad de Manteca",
     "nation": "Anticostia",
     "population": 12000,
@@ -20844,14 +20988,14 @@
     "y": 787
   },
   {
-    "name": "Nuovo Brellino",
+    "name": "Avaris",
     "nation": "Kemet",
     "population": 11000,
     "gdp": 85000000,
     "gdpPerCapita": 7727,
     "nativeScript": "",
     "irlParallel": "New Dongola",
-    "alpha3": "VIC",
+    "alpha3": "KMT",
     "x": 3417,
     "y": 3769
   },
