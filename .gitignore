@@ -4,3 +4,5 @@ layers/*.png
 layers/*.PNG
 .DS_Store
 banners-original/
+# derived from src/assets/cities by scripts/thumbs.mjs, rebuilt on every build
+src/assets/city-thumbs/

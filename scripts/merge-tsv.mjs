@@ -6,6 +6,7 @@
 import { readFileSync, writeFileSync } from 'fs'
 import { resolve, dirname } from 'path'
 import { fileURLToPath } from 'url'
+import { writeCoords } from './coords.mjs'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const tsvPath = resolve(process.argv[2] || `${root}/src/data/cities.tsv`)
@@ -90,6 +91,9 @@ for (const city of cities) {
 }
 
 writeFileSync(jsonPath, JSON.stringify(cities, null, 2) + '\n')
+
+// Positions just changed, so the derived table has to follow them
+writeCoords()
 
 const placed = cities.filter(c => c.x != null).length
 const added = cities.filter(c => !coordMap.has(key(c))).length

@@ -1,6 +1,8 @@
 import { defineConfig, type Plugin } from 'vite'
 import { writeFileSync } from 'fs'
 import { join, resolve } from 'path'
+// @ts-expect-error plain Node script, no types
+import { writeCoords } from './scripts/coords.mjs'
 
 // The placer's Save button writes straight into src/data instead of pushing three
 // downloads through the browser. A page cannot write to disk on its own, so the
@@ -30,6 +32,9 @@ function placerSave(): Plugin {
             const { file, data } = JSON.parse(body) as { file: string; data: unknown }
             if (!SAVEABLE.has(file)) throw new Error(`refusing to write ${file}`)
             writeFileSync(join(dir, file), JSON.stringify(data, null, 2) + '\n')
+            // coordinates.tsv is derived from these, so it is rewritten here
+            // rather than left for someone to remember
+            writeCoords(dir)
             res.setHeader('content-type', 'application/json')
             res.end(JSON.stringify({ ok: true, file }))
           } catch (err) {
