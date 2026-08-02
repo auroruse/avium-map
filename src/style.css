@@ -248,6 +248,41 @@ html, body {
   margin: -18px -18px 14px;
   border-radius: 14px 14px 0 0;
   overflow: hidden;
+  cursor: zoom-in;
+}
+
+/* Full view. display:flex is an author rule and outranks the UA's [hidden], so
+   the hidden case has to be stated — the same trap the placer's edit row fell
+   into, where a panel stayed on screen with its buttons live. */
+#lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  background: rgba(0, 0, 0, 0.84);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  cursor: zoom-out;
+  animation: lb-in 0.18s ease-out;
+}
+
+#lightbox[hidden] {
+  display: none;
+}
+
+#lightbox img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.6);
+}
+
+@keyframes lb-in {
+  from { opacity: 0; }
 }
 
 .cp-banner.cp-banner-show {
@@ -257,7 +292,10 @@ html, body {
 .cp-banner img {
   display: block;
   width: 100%;
-  height: 150px;
+  /* 16:9 rather than a fixed height, so the frame is the same shape in the
+     narrow desktop column and full-bleed on a phone. cover still crops whatever
+     the source image happens to be, so nothing is stretched to fit. */
+  aspect-ratio: 16 / 9;
   object-fit: cover;
 }
 
@@ -2007,22 +2045,6 @@ html, body {
   }
 }
 
-/* The exact population needs 15.5px at most in a 107px cell, so 15px shows it in
-   full on desktop. A phone cell is 81px and cannot, so the short form takes over
-   there — same markup, one of the two always hidden. */
-.cp-cell-value .v-short {
-  display: none;
-}
-
-@media (max-width: 430px) {
-  .cp-cell-value .v-full {
-    display: none;
-  }
-
-  .cp-cell-value .v-short {
-    display: inline;
-  }
-}
 
 
 /* ============================================================
@@ -2182,18 +2204,17 @@ html, body {
     background: rgba(255,255,255,0.09);
   }
 
-  /* Which list is open. Stronger than hover, and it survives the pointer moving
-     away — the whole point is that it reads while you are looking at the list. */
+  /* Which tab is open. Stronger than hover, and it survives the pointer moving
+     away — the whole point is that it reads while you are looking at the tab.
+     Clicking it again closes it, so this doubles as the affordance for that. */
   .bs-btn.is-on {
-    background: rgba(255,255,255,0.16);
+    background: rgba(255,255,255,0.22);
+    box-shadow: inset 2px 0 0 #fff;
   }
 
   .bs-btn.is-on .bs-btn-label {
     color: #fff;
-  }
-
-  .bs-btn.is-on .bs-circle {
-    color: #fff;
+    font-weight: 700;
   }
 
   .bs-circle {

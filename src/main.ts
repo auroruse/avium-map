@@ -60,6 +60,10 @@ function toPx(latlng: L.LatLng): [number, number] {
 // Reading longitude off the raw diagonal instead would leave half the globe
 // with nowhere to be, and every pixel outside the inscribed diamond would sit at
 // coordinates that do not exist.
+//
+// scripts/coords.mjs carries the same projection, to write src/data/coordinates.tsv
+// for anything that needs a place's position without running the map. It is a
+// Node script and cannot import this, so a change here has to be made there too.
 const GEO_ORIGIN = CONTENT / 2
 const GEO_R = Math.hypot(GEO_ORIGIN, GEO_ORIGIN) // half-diagonal: pole and antimeridian distance
 const SQRT1_2 = Math.SQRT1_2
@@ -958,7 +962,7 @@ function minPop(z: number): number {
   return CITY_TIERS[ZOOM_BANDS[step]].minPop
 }
 
-type Box = { x: number; y: number; w: number; h: number }
+type Box = { x: number; y: number; w: number; h: number; area?: boolean }
 
 function boxesOverlap(a: Box, b: Box): boolean {
   return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y
@@ -988,18 +992,24 @@ interface Placement {
   tier: CityTier
   dir: 'right' | 'left'
   off: [number, number]
+  corner: number // index into the candidate list, so the next zoom can reuse it
 }
 
 // Greedy label placement at one zoom level: every placed city is attempted,
 // priority-ordered, and space decides. `pinned` cities (survivors of the
 // previous half-zoom) place first, so zooming in only ever adds cities.
-function computePlacement(z: number, pinned: City[]): Placement[] {
+function computePlacement(z: number, pinned: Placement[]): Placement[] {
   const threshold = minPop(z)
-  const pinnedSet = new Set(pinned)
+  // Which corner each survivor used last time. A greedy pass is not stable under
+  // new candidates: futureCost weighs every marker still to come, so one more
+  // band changes the arithmetic for cities placed long before it and they flip
+  // sides, and each flip moves boxes that everything after it collides against.
+  // Holding a survivor's corner stops that cascade at the source.
+  const held = new Map(pinned.map(p => [p.c, p.corner]))
   const order = [
-    ...pinned,
+    ...pinned.map(p => p.c),
     ...citiesByPriority.filter(
-      c => !pinnedSet.has(c) && c.x != null && c.y != null && c.population >= threshold
+      c => !held.has(c) && c.x != null && c.y != null && c.population >= threshold
     ),
   ]
 
@@ -1050,14 +1060,17 @@ function computePlacement(z: number, pinned: City[]): Placement[] {
     if (x1 > sMax) sMax = x1
   }
 
-  function collides(b: Box): boolean {
+  function collides(b: Box, skipArea = false): boolean {
     const x0 = Math.floor(b.x / CELL), x1 = Math.floor((b.x + b.w) / CELL)
     const y0 = Math.floor(b.y / CELL), y1 = Math.floor((b.y + b.h) / CELL)
     for (let cx = x0; cx <= x1; cx++) {
       for (let cy = y0; cy <= y1; cy++) {
         const cell = boxGrid.get(`${cx},${cy}`)
         if (!cell) continue
-        for (const o of cell) if (boxesOverlap(b, o)) return true
+        for (const o of cell) {
+          if (skipArea && o.area) continue
+          if (boxesOverlap(b, o)) return true
+        }
       }
     }
     return false
@@ -1077,9 +1090,16 @@ function computePlacement(z: number, pinned: City[]): Placement[] {
   maxDotR += 0.5
 
   // Area names claim their space before any city competes for it, and never
-  // move. A city label that would cross one is pushed to its other side; a
-  // city with no free side, or whose dot the name covers outright, does not
-  // render at all.
+  // move. A city label that would cross one is pushed to its other side, and a
+  // city with no free side does not render.
+  //
+  // Marked `area`, because a marker is allowed to sit on one where a label is
+  // not. A name is text with air in it and a marker is a 4px dot; a dot over a
+  // sea name is what every atlas does, whereas two names crossing is unreadable.
+  // Treating them alike cost real cities: Satsuno, 2.6M, sits inside the label
+  // LAKE SATSUNO, so it vanished from the map for three zoom levels while its
+  // 325k neighbour — whose dot happened to fall in a gap between glyphs — kept a
+  // name the whole way.
   for (const def of labelDefs) {
     if (!labelShown(def, z)) continue
     const fs = areaFontSize(def, z)
@@ -1088,7 +1108,7 @@ function computePlacement(z: number, pinned: City[]): Placement[] {
     const s = scaleAt(z)
     const w = def.text.length * fs * advanceOf(def)
     const h = fs * 1.4
-    addBox({ x: pos[0] * s - w / 2, y: pos[1] * s - h / 2, w, h })
+    addBox({ x: pos[0] * s - w / 2, y: pos[1] * s - h / 2, w, h, area: true })
   }
 
   const placed: Placement[] = []
@@ -1147,8 +1167,9 @@ function computePlacement(z: number, pinned: City[]): Placement[] {
     const dotBox: Box = { x: pt.x - dotR, y: pt.y - dotR, w: dotR * 2, h: dotR * 2 }
 
     // A city that can't place still reserves its dot area — a less important
-    // neighbor must never render over where a more important city belongs
-    if (collides(dotBox)) {
+    // neighbor must never render over where a more important city belongs.
+    // Area names are skipped here: they block this city's name, not its marker.
+    if (collides(dotBox, true)) {
       addBox(dotBox)
       continue
     }
@@ -1179,6 +1200,18 @@ function computePlacement(z: number, pinned: City[]): Placement[] {
       { dir: 'left',  off: [-gapX, -gapY], box: { x: pt.x - gapX - w, y: pt.y - gapY - h / 2, w, h } },
     ]
 
+    // A survivor keeps the corner it already had if it is still free, without
+    // consulting futureCost. Its name staying put across a zoom is worth more
+    // than the marginally better corner the new arithmetic would pick — and the
+    // flip is what used to knock it off the map entirely.
+    const keep = held.get(c)
+    if (keep !== undefined && !collides(corners[keep].box)) {
+      addBox(dotBox)
+      addBox(corners[keep].box)
+      placed.push({ c, tier, dir: corners[keep].dir, off: corners[keep].off, corner: keep })
+      continue
+    }
+
     let valid = corners.slice(0, 2).filter(cd => !collides(cd.box))
     if (!valid.length && rank <= FALLBACK_RANK) {
       valid = corners.slice(2).filter(cd => !collides(cd.box))
@@ -1200,7 +1233,7 @@ function computePlacement(z: number, pinned: City[]): Placement[] {
     if (hit) {
       addBox(dotBox)
       addBox(hit.box)
-      placed.push({ c, tier, dir: hit.dir, off: hit.off })
+      placed.push({ c, tier, dir: hit.dir, off: hit.off, corner: corners.indexOf(hit) })
     } else {
       addBox(dotBox)
     }
@@ -1217,7 +1250,9 @@ const placementCache = new Map<number, Placement[]>()
 function placementsAt(z: number): Placement[] {
   const cached = placementCache.get(z)
   if (cached) return cached
-  const pinned = z <= 2.5 ? [] : placementsAt(z - 0.5).map(p => p.c)
+  // The whole placement, not just the city: the corner each one settled on is
+  // what the next level reuses to keep it where it is
+  const pinned = z <= 2.5 ? [] : placementsAt(z - 0.5)
   const result = computePlacement(z, pinned)
   placementCache.set(z, result)
   return result
@@ -1479,6 +1514,14 @@ function fmtRank(n: number): string {
 // the whole set at build time, so a lookup is a Map hit — the old approach
 // probed up to six candidate URLs per open and missed on nearly every city.
 // Keys are norm()'d, so file and city names need not agree on diacritics.
+// Two sets keyed the same way: the photograph as maintained, and the 1000px 16:9
+// crop scripts/thumbs.mjs derives from it. The panel loads the crop — 125KB
+// against 4.5MB for a frame 380px wide — and the full view loads the original.
+// The crops are generated at build time and not in git, so the only city image
+// to keep up to date is the full one.
+const cityImageKey = (path: string) =>
+  norm(path.slice(path.lastIndexOf('/') + 1).replace(/\.[^.]+$/, ''))
+
 const banners = new Map<string, string>()
 for (const [path, url] of Object.entries(
   import.meta.glob('./assets/cities/*.{png,jpg,jpeg,PNG,JPG,JPEG}', {
@@ -1487,7 +1530,20 @@ for (const [path, url] of Object.entries(
     import: 'default',
   }) as Record<string, string>
 )) {
-  banners.set(norm(path.slice(path.lastIndexOf('/') + 1).replace(/\.[^.]+$/, '')), url)
+  banners.set(cityImageKey(path), url)
+}
+
+// Empty on a checkout where the script has not run yet, which just means the
+// panel falls back to the full image rather than failing
+const thumbs = new Map<string, string>()
+for (const [path, url] of Object.entries(
+  import.meta.glob('./assets/city-thumbs/*.jpg', {
+    eager: true,
+    query: '?url',
+    import: 'default',
+  }) as Record<string, string>
+)) {
+  thumbs.set(cityImageKey(path), url)
 }
 
 const talopediaByCity = new Map<string, TalopediaEntry>()
@@ -1507,11 +1563,41 @@ function byCityName<T>(m: Map<string, T>, name: string): T | undefined {
 function loadBanner(name: string) {
   const holder = cityPanel.querySelector('.cp-banner') as HTMLElement
   const img = holder.querySelector('img') as HTMLImageElement
-  const url = byCityName(banners, name)
-  if (!url) return
-  img.src = url
+  const full = byCityName(banners, name)
+  if (!full) return
+  img.src = byCityName(thumbs, name) ?? full
+  img.dataset.full = full
+  img.alt = name
   holder.classList.add('cp-banner-show')
 }
+
+// --- Full view ---
+//
+// The panel crops its banner to 16:9 at 380px, which is a long way from what
+// these images actually are. Clicking one opens it whole.
+//
+// Delegated from the panel rather than bound in loadBanner: the panel rebuilds
+// its innerHTML on every open, so a listener on the banner itself would have to
+// be re-attached each time and the old one would leak until GC.
+const lightbox = document.getElementById('lightbox')!
+const lightboxImg = lightbox.querySelector('img') as HTMLImageElement
+
+cityPanel.addEventListener('click', e => {
+  const banner = (e.target as HTMLElement).closest('.cp-banner') as HTMLElement | null
+  if (!banner) return
+  const img = banner.querySelector('img') as HTMLImageElement
+  if (!img.src) return
+  // The panel is showing a crop; this is what the full view is for
+  lightboxImg.src = img.dataset.full ?? img.src
+  lightboxImg.alt = img.alt
+  lightbox.hidden = false
+})
+
+// Anywhere, including the image — the whole overlay is the dismiss target, which
+// is why it carries a zoom-out cursor rather than putting a close button on it.
+lightbox.addEventListener('click', () => {
+  lightbox.hidden = true
+})
 
 // The blurb is clamped to a few lines; the toggle only appears when there is
 // actually something hidden, which can only be known once the panel is laid out
@@ -1601,10 +1687,9 @@ const STAT_ICON = {
 interface Stat {
   label: string
   icon: string
+  /** Always the compact form. The exact figure is a hover away, and a cell is
+   *  107px on a desktop and 81px on a phone — a full population overran both. */
   value: string
-  /** Narrow-screen stand-in. CSS swaps to it below 430px, where the exact figure
-   *  no longer fits the cell. Omit when the value is short enough either way. */
-  short?: string
   more?: Reveal[]
 }
 
@@ -1620,11 +1705,7 @@ function statStrip(stats: Stat[]): string {
         s =>
           `<div class="cp-cell">` +
           `<div class="cp-cell-label">${s.label}</div>` +
-          `<div class="cp-cell-value">${s.icon}` +
-          (s.short
-            ? `<span class="v-full">${s.value}</span><span class="v-short">${s.short}</span>`
-            : `<span>${s.value}</span>`) +
-          `</div>` +
+          `<div class="cp-cell-value">${s.icon}<span>${s.value}</span></div>` +
           (s.more?.length
             ? `<div class="cp-row-more">${s.more.map(([l, v]) => detailRow(l, v)).join('')}</div>`
             : '') +
@@ -1655,8 +1736,7 @@ function openCityPanel(c: City) {
       {
         label: 'Population',
         icon: STAT_ICON.population,
-        value: c.population.toLocaleString('en-US'),
-        short: fmtCompact(c.population),
+        value: fmtCompact(c.population),
         more: [['Population', c.population.toLocaleString('en-US') + fmtRank(popRank), STAT_ICON.population]],
       },
       {
@@ -1755,8 +1835,7 @@ function openNationPanel(n: Nation) {
       {
         label: 'Population',
         icon: STAT_ICON.population,
-        value: n.population.toLocaleString('en-US'),
-        short: fmtCompact(n.population),
+        value: fmtCompact(n.population),
         more: [
           [
             'Population',
@@ -1860,7 +1939,10 @@ map.on('click', () => {
 })
 document.addEventListener('keydown', e => {
   if (e.key !== 'Escape') return
-  if (measuring) endMeasure()
+  // Innermost first: the full view sits over the panel that opened it, so it has
+  // to take the key before the panel does
+  if (!lightbox.hidden) lightbox.hidden = true
+  else if (measuring) endMeasure()
   else if (!cityPanel.hidden) closeCityPanel()
   else closeSheetList()
 })
@@ -2502,10 +2584,14 @@ function idx(): SearchEntry[] {
 }
 
 function fmtCompact(n: number): string {
-  if (n >= 1e12) return (n / 1e12).toFixed(2) + 'T'
-  if (n >= 1e9) return (n / 1e9).toFixed(2) + 'B'
-  if (n >= 1e6) return (n / 1e6).toFixed(2) + 'M'
-  if (n >= 1e3) return (n / 1e3).toFixed(1) + 'k'
+  // Number() drops a trailing .00 or .0 that toFixed leaves behind, so a round
+  // figure reads as 2M rather than 2.00M
+  const cut = (div: number, places: number, suffix: string) =>
+    String(Number((n / div).toFixed(places))) + suffix
+  if (n >= 1e12) return cut(1e12, 2, 'T')
+  if (n >= 1e9) return cut(1e9, 2, 'B')
+  if (n >= 1e6) return cut(1e6, 2, 'M')
+  if (n >= 1e3) return cut(1e3, 1, 'k')
   return String(n)
 }
 
@@ -2767,11 +2853,25 @@ function openListView(mode: 'cities' | 'nations', filter = '') {
   rebuildList(false)
 }
 
-document.querySelector('.bs-btn[data-view="all"]')!.addEventListener('click', () => openListView('cities'))
-document.querySelector('.bs-btn[data-view="nations"]')!.addEventListener('click', () => openListView('nations'))
+// Which tab is open, read off the highlight rather than tracked alongside it.
+// One source of truth, and nothing to initialise before the hash restore runs.
+const navOpen = () =>
+  (document.querySelector('.bs-btn.is-on') as HTMLElement | null)?.dataset.view ?? null
+
+// Clicking the open tab closes it. Export and Measure are actions, not tabs —
+// they leave nothing open to click a second time.
+function navTab(view: string, open: () => void) {
+  document.querySelector(`.bs-btn[data-view="${view}"]`)!.addEventListener('click', () => {
+    if (navOpen() === view) closeSheetList()
+    else open()
+  })
+}
+
+navTab('all', () => openListView('cities'))
+navTab('nations', () => openListView('nations'))
+navTab('settings', () => openSettings())
 document.querySelector('.bs-btn[data-view="export"]')!.addEventListener('click', () => exportView())
 document.querySelector('.bs-btn[data-view="measure"]')!.addEventListener('click', () => startMeasure())
-document.querySelector('.bs-btn[data-view="settings"]')!.addEventListener('click', () => openSettings())
 
 // --- Settings tab ---
 //
