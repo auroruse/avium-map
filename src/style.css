@@ -9,7 +9,8 @@ html, body {
 #map {
   width: 100%;
   height: 100%;
-  background: #2d4a5e;
+  /* The sea, matching OCEAN in scripts/tile.mjs — see the note there */
+  background: #3e4e6f;
 }
 
 /* Night mode. The darkness itself is a Leaflet rectangle over the tiles, not a
@@ -31,12 +32,28 @@ html, body {
   will-change: transform;
 }
 
+/* Nearest-neighbour, not the browser's smoothing. Native tile detail stops at z5
+   and the top two user zooms are upscaled from it, so by default those levels are
+   an interpolated blur of pixels that do not exist. Showing the pixels is the
+   honest rendering: a coastline reads as a hard staircase rather than a soft
+   guess, which also makes the placer's pixel coordinates mean what they say. */
+.leaflet-tile {
+  image-rendering: pixelated;
+}
+
 /* Text labels */
 .map-label {
   white-space: nowrap;
+  /* Three layers, and the 1px one is the point. A blurred shadow is only about
+     half opaque at the glyph edge itself, which is fine over water and useless
+     over the white coastline the base map now draws — white letters on white
+     ground separated by a grey smear. The tight inner ring puts near-solid dark
+     against the letterform whatever is behind it; the wider two do the softer
+     separation they always did. */
   text-shadow:
+    0 0 1px rgba(0,0,0,0.95),
     0 0 2px rgba(0,0,0,0.9),
-    0 0 3px rgba(0,0,0,0.7);
+    0 0 4px rgba(0,0,0,0.6);
   pointer-events: none !important;
   font-family: 'SF Pro Display', 'SF UI Display', -apple-system, 'Inter', system-ui, sans-serif;
   /* Same curve and duration as .city-icon's city-fade, so a label and a city
@@ -168,9 +185,12 @@ html, body {
      !important here would beat them. */
   font-size: 11px;
   font-weight: 400;
+  /* See .map-label — the 1px ring is what keeps a name readable where it crosses
+     the white coastline stroke. */
   text-shadow:
-    0 0 2px rgba(0,0,0,0.95),
-    0 0 3px rgba(0,0,0,0.8);
+    0 0 1px rgba(0,0,0,0.95),
+    0 0 2px rgba(0,0,0,0.9),
+    0 0 4px rgba(0,0,0,0.6);
   padding: 0 !important;
   margin: 0 !important;
   white-space: nowrap;
@@ -186,6 +206,10 @@ html, body {
   background: none !important;
   border: none !important;
   animation: city-fade 0.15s ease-out;
+  /* Each marker's layout and style work is its own — with a couple of thousand
+     of them in one pane, that is worth telling the browser. Deliberately not
+     `paint`, which clips to the border box and would cut the name off. */
+  contain: layout style;
 }
 
 /* Re-added by viewport culling or zoom-out: appear instantly, no fade */
@@ -193,8 +217,40 @@ html, body {
   animation: none;
 }
 
-.city-icon svg {
+/* The marker: a white halo, the ink disc, and for the top four bands a white
+   core. One element and two pseudo-elements — pseudos paint but are not DOM
+   nodes, so the whole thing costs the browser a single node where the inline
+   <svg> it replaced cost four.
+
+   Nested border-radius circles rather than one hard-stop radial-gradient, which
+   was the first attempt: a gradient stop is not antialiased the way a circle's
+   edge is, and at 2-5px across the markers came out visibly square.
+
+   The insets are (1 - 1/HALO)/2 and (1 - CORE/HALO)/2 from main.ts, so each ring
+   lands where the tier ladder says. Change HALO or CORE there and these follow. */
+.city-dot {
   display: block;
+  position: relative;
+  width: var(--d);
+  height: var(--d);
+  border-radius: 50%;
+  background: #fff;
+}
+
+.city-dot::before {
+  content: '';
+  position: absolute;
+  inset: 13.07%;
+  border-radius: 50%;
+  background: var(--ink);
+}
+
+.city-dot.has-core::after {
+  content: '';
+  position: absolute;
+  inset: 32.83%;
+  border-radius: 50%;
+  background: #fff;
 }
 
 .city-icon .city-label {
@@ -1460,9 +1516,11 @@ html, body {
   line-height: 1.25;
   color: #c3cbf5;
   white-space: nowrap;
+  /* Same three-layer halo the city and territory names use */
   text-shadow:
-    0 0 2px rgba(0,0,0,0.95),
-    0 0 3px rgba(0,0,0,0.8);
+    0 0 1px rgba(0,0,0,0.95),
+    0 0 2px rgba(0,0,0,0.9),
+    0 0 4px rgba(0,0,0,0.6);
 }
 
 /* Placer tabs */

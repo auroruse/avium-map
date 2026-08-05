@@ -170,6 +170,12 @@ function tiledLayer(name: string, pane = 'overlayPane'): L.TileLayer {
     maxZoom: MAX_ZOOM,
     bounds: contentBounds,
     pane,
+    // Three of these layers request tiles together, and a zoom is exactly when
+    // the frame budget is tightest — the markers are being rebuilt in the same
+    // moment. Leaflet scales what it already has for the length of the animation
+    // and fetches once it settles. keepBuffer is left at its default: 1 saves
+    // memory and 3 cuts pop-in when panning, and neither is obviously right.
+    updateWhenZooming: false,
   })
 }
 
@@ -336,7 +342,7 @@ nightPane.style.pointerEvents = 'none'
 // edge stays the page colour it is by day.
 //
 // The blue strip this once showed was never the veil's size. tile.mjs pads the
-// edge tiles out to 6144 with #2d4a5e, the same colour as #map's background, so
+// edge tiles out to 6144 with the sea colour, the same value as #map's background, so
 // the padding and the page behind it are indistinguishable — until night gave
 // #map a darker background and stranded the padding as a lit band between them.
 // Widening the veil to cover it only moved the seam out to the veil's own edge,
@@ -837,32 +843,19 @@ const CORE = 0.465 // white centre, the same proportion in every band that draws
 // than the halo it draws, so two markers at the limit still have air between them.
 const MARKER_RESERVE = 6.05 / 4.095
 
-// Transparent slack around the halo, in CSS pixels — not in ink radii. The flat
-// edge this prevents is a rasterisation artefact: the anti-aliased rim needs
-// somewhere to land, and that need is a fixed number of pixels wide however
-// large the marker is. Held as a ratio it shrank with the marker, and by the
-// bottom band there was 0.16px of it, under a third of a device pixel at 2x, so
-// the rim was clipped square. It went unnoticed while the small markers ended in
-// a grey stroke, which reads as nothing against grey land; the white halo made
-// the same clipping obvious.
+// Three concentric circles at fixed ratios is one radial-gradient, so the marker
+// is a single empty element carrying a size and an ink colour. It used to be an
+// inline <svg> with two or three <circle> children: 276 bytes apiece, 462KB of
+// markup across the map, and an SVG subtree per city for the browser to parse
+// and lay out. The gradient stops are those same ratios as fractions of the
+// radius, and they live in the stylesheet.
 //
-// Costs nothing elsewhere: the box cancels out of the label offset, and the
-// collision radius is MARKER_RESERVE, computed without reference to it.
-const MARKER_SLACK = 1
-
-// Whether a band draws the core is the only thing that varies, and it is not a
-// style choice: below 1M the whole marker is under 5px across, and a core at any
-// size renders as a grey smudge in the middle of the ink rather than a lit
-// centre. Those bands draw a solid disc.
-function cityMarkerHtml(S: number, pad: number, ink: string, core?: boolean): string {
-  return (
-    `<svg width="${S}" height="${S}" viewBox="${-pad} ${-pad} ${pad * 2} ${pad * 2}" ` +
-    `xmlns="http://www.w3.org/2000/svg">` +
-    `<circle r="${HALO}" fill="#fff"/>` +
-    `<circle r="1" fill="${ink}"/>` +
-    (core ? `<circle r="${CORE}" fill="#fff" fill-opacity="0.95"/>` : '') +
-    `</svg>`
-  )
+// This is also what retired MARKER_SLACK. That 1px of transparent margin existed
+// only because an SVG viewBox clips its own circle and squared the rim off at
+// small sizes. A border-radius circle has no viewBox and nothing to clip
+// against, so the element is now exactly the halo.
+function cityMarkerHtml(d: number, ink: string, core?: boolean): string {
+  return `<i class="city-dot${core ? ' has-core' : ''}" style="--d:${d.toFixed(2)}px;--ink:${ink}"></i>`
 }
 
 // A city at night is a light, so the day marker's white ring and pale core both
@@ -962,7 +955,7 @@ function minPop(z: number): number {
   return CITY_TIERS[ZOOM_BANDS[step]].minPop
 }
 
-type Box = { x: number; y: number; w: number; h: number; area?: boolean }
+type Box = { x: number; y: number; w: number; h: number; water?: boolean }
 
 function boxesOverlap(a: Box, b: Box): boolean {
   return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y
@@ -1060,7 +1053,7 @@ function computePlacement(z: number, pinned: Placement[]): Placement[] {
     if (x1 > sMax) sMax = x1
   }
 
-  function collides(b: Box, skipArea = false): boolean {
+  function collides(b: Box, skipWater = false): boolean {
     const x0 = Math.floor(b.x / CELL), x1 = Math.floor((b.x + b.w) / CELL)
     const y0 = Math.floor(b.y / CELL), y1 = Math.floor((b.y + b.h) / CELL)
     for (let cx = x0; cx <= x1; cx++) {
@@ -1068,7 +1061,7 @@ function computePlacement(z: number, pinned: Placement[]): Placement[] {
         const cell = boxGrid.get(`${cx},${cy}`)
         if (!cell) continue
         for (const o of cell) {
-          if (skipArea && o.area) continue
+          if (skipWater && o.water) continue
           if (boxesOverlap(b, o)) return true
         }
       }
@@ -1093,13 +1086,16 @@ function computePlacement(z: number, pinned: Placement[]): Placement[] {
   // move. A city label that would cross one is pushed to its other side, and a
   // city with no free side does not render.
   //
-  // Marked `area`, because a marker is allowed to sit on one where a label is
-  // not. A name is text with air in it and a marker is a 4px dot; a dot over a
-  // sea name is what every atlas does, whereas two names crossing is unreadable.
-  // Treating them alike cost real cities: Satsuno, 2.6M, sits inside the label
-  // LAKE SATSUNO, so it vanished from the map for three zoom levels while its
-  // 325k neighbour — whose dot happened to fall in a gap between glyphs — kept a
-  // name the whole way.
+  // Water names are marked, because a marker may sit on one where it may not sit
+  // on a land name. A sea name is italic text drifting over empty blue and a
+  // marker is a 4px dot: an atlas puts one over the other without comment. A
+  // nation name is a claim on the ground the city stands in, and a dot landing
+  // in the middle of it reads as a mistake, so those still turn a city away.
+  //
+  // Letting a sea name bury a marker cost real cities. Satsuno, 2.6M, sits
+  // inside the label LAKE SATSUNO, so it vanished from the map for three zoom
+  // levels while its 325k neighbour — whose dot happened to fall in a gap
+  // between glyphs — kept a name the whole way.
   for (const def of labelDefs) {
     if (!labelShown(def, z)) continue
     const fs = areaFontSize(def, z)
@@ -1108,7 +1104,13 @@ function computePlacement(z: number, pinned: Placement[]): Placement[] {
     const s = scaleAt(z)
     const w = def.text.length * fs * advanceOf(def)
     const h = fs * 1.4
-    addBox({ x: pos[0] * s - w / 2, y: pos[1] * s - h / 2, w, h, area: true })
+    addBox({
+      x: pos[0] * s - w / 2,
+      y: pos[1] * s - h / 2,
+      w,
+      h,
+      water: WATER.has(def.type),
+    })
   }
 
   const placed: Placement[] = []
@@ -1168,7 +1170,8 @@ function computePlacement(z: number, pinned: Placement[]): Placement[] {
 
     // A city that can't place still reserves its dot area — a less important
     // neighbor must never render over where a more important city belongs.
-    // Area names are skipped here: they block this city's name, not its marker.
+    // Water names are skipped here: a sea name blocks this city's label, not its
+    // marker. Every other name, territory or city, still blocks both.
     if (collides(dotBox, true)) {
       addBox(dotBox)
       continue
@@ -1360,12 +1363,10 @@ function invalidatePlacements() {
 // per-label layout passes were the main zoom cost
 function cityIcon(p: Placement, fade: boolean): L.DivIcon {
   const { c, tier, dir, off } = p
-  // Sized off the halo plus a fixed pixel margin, so the box grows with the
-  // drawing rather than in proportion to it
-  const pad = HALO + MARKER_SLACK / tier.radius
-  const S = tier.radius * pad * 2
+  // The element is the halo, exactly — no margin, because nothing clips it now
+  const S = tier.radius * HALO * 2
   const ink = isCapital(c) ? CAPITAL_INK : CITY_INK
-  const svg = cityMarkerHtml(S, pad, ink, tier.core)
+  const svg = cityMarkerHtml(S, ink, tier.core)
   // dir picks the side, off[1] the vertical, signed — a fallback corner puts the
   // name above on the left or below on the right, which the two defaults never do
   const side = dir === 'right' ? 'left' : 'right'
@@ -2332,6 +2333,24 @@ importInput.addEventListener('change', () => {
   importInput.value = ''
 })
 
+// How well a city answers the query, lowest first. The nation is searchable
+// because "guandong" is a reasonable way to ask for its cities — but a nation is
+// also a long word that swallows short queries, and matching on it alone used to
+// win on equal terms. Typing Andō returned ten Guandong cities and not Andō:
+// "ando" sits inside "gu-ando-ng", 54 of its cities matched, and the list was
+// full before the two name matches were reached.
+const MISS = 5
+function matchRank(c: City, q: string): number {
+  const name = norm(c.name)
+  if (name === q) return 0
+  if (name.startsWith(q)) return 1
+  if (name.includes(q)) return 2
+  const nation = norm(c.nation)
+  if (nation.startsWith(q)) return 3
+  if (nation.includes(q)) return 4
+  return MISS
+}
+
 function renderResults() {
   const q = norm(searchInput.value.trim())
   resultsList.innerHTML = ''
@@ -2342,9 +2361,13 @@ function renderResults() {
   const browsing = tab === 'labels' && !q
   if (!browsing && q.length < 2) return
 
-  const matches = tab === 'cities'
-    ? cities.filter(c => norm(c.name).includes(q) || norm(c.nation).includes(q)).slice(0, 10)
-    : []
+  const matches =
+    tab === 'cities'
+      ? cities
+          .filter(c => matchRank(c, q) < MISS)
+          .sort((a, b) => matchRank(a, q) - matchRank(b, q) || b.population - a.population)
+          .slice(0, 10)
+      : []
 
   for (const c of matches) {
     const li = document.createElement('li')
@@ -3576,6 +3599,41 @@ kindSelect.addEventListener('change', () => {
 // keeps the interaction in the panel.
 let armed = false
 let armedTimer = 0
+
+// The placer keeps its own copy of every placement in localStorage and lays it
+// over the files on load, which is what makes a refresh safe mid-session. The
+// same thing makes it a trap: after cities.json is changed out from under it —
+// by a merge, or by scripts/nudge.mjs — the browser is still holding the old
+// coordinates, and the next Save writes them straight back over the new ones.
+//
+// This drops all three stores and reloads, so the files on disk win. Armed like
+// Delete, because it throws away unsaved work as readily as stale work.
+const dropLocalBtn = document.getElementById('place-drop-local') as HTMLButtonElement
+let dropArmed = false
+let dropTimer = 0
+
+function disarmDrop() {
+  dropArmed = false
+  clearTimeout(dropTimer)
+  dropLocalBtn.textContent = 'Drop local'
+  dropLocalBtn.classList.remove('is-armed')
+}
+
+dropLocalBtn.addEventListener('click', () => {
+  if (!dropArmed) {
+    dropArmed = true
+    dropLocalBtn.textContent = 'Sure?'
+    dropLocalBtn.classList.add('is-armed')
+    dropTimer = window.setTimeout(disarmDrop, 3000)
+    return
+  }
+  disarmDrop()
+  for (const k of [SAVE_KEY, LABEL_KEY, STATION_KEY]) localStorage.removeItem(k)
+  // Reload rather than re-read: the coordinates are already spread across the
+  // city array, the markers and the placement cache, and putting the files back
+  // over all of that is exactly what a fresh load does.
+  location.reload()
+})
 
 function disarmDelete() {
   armed = false
