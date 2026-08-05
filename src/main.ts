@@ -1,6 +1,5 @@
 import L from 'leaflet'
-import 'leaflet/dist/leaflet.css'
-import './style.css'
+// Both stylesheets are linked from index.html — see the note there
 import citiesData from './data/cities.json'
 import labelsData from './data/labels.json'
 // Vite fingerprints and emits it; the element lives in index.html so the column
@@ -843,19 +842,50 @@ const CORE = 0.465 // white centre, the same proportion in every band that draws
 // than the halo it draws, so two markers at the limit still have air between them.
 const MARKER_RESERVE = 6.05 / 4.095
 
-// Three concentric circles at fixed ratios is one radial-gradient, so the marker
-// is a single empty element carrying a size and an ink colour. It used to be an
-// inline <svg> with two or three <circle> children: 276 bytes apiece, 462KB of
-// markup across the map, and an SVG subtree per city for the browser to parse
-// and lay out. The gradient stops are those same ratios as fractions of the
-// radius, and they live in the stylesheet.
+// Three concentric circles at fixed ratios, painted as one element carrying a
+// size and an ink colour. It used to be an inline <svg> with two or three
+// <circle> children: 276 bytes apiece, 462KB of markup across the map, and an
+// SVG subtree per city for the browser to parse and lay out.
 //
 // This is also what retired MARKER_SLACK. That 1px of transparent margin existed
 // only because an SVG viewBox clips its own circle and squared the rim off at
 // small sizes. A border-radius circle has no viewBox and nothing to clip
-// against, so the element is now exactly the halo.
-function cityMarkerHtml(d: number, ink: string, core?: boolean): string {
-  return `<i class="city-dot${core ? ' has-core' : ''}" style="--d:${d.toFixed(2)}px;--ink:${ink}"></i>`
+// against, so the element is exactly the halo.
+//
+// The rings are painted inward from one box's own edge rather than as nested
+// boxes. A nested box is laid out symmetrically but rasterised on its own: at
+// these sizes the browser rounded the outer and inner circles apart, and six of
+// the sixteen tier-by-zoom combinations came out with a white rim one pixel
+// thick on one side and none on the other, which reads as the ink disc sitting
+// off centre. Two lost the rim entirely down one side. Sharing a box makes that
+// impossible, whatever the device pixel ratio.
+//
+// The halo and the rim are whole pixels because those two are what the eye reads
+// as the marker's edge, and a fractional one lands differently per band. The
+// core keeps its exact fraction: quantising it too is the one thing that cannot
+// be done here, because a whole-pixel core has to share the halo's parity, and
+// over d = 5..10 the only ladder that satisfies that and still grows with the
+// band is core = d - 4 — a one-pixel ink ring around a hole, which is not the
+// marker. Measured against a mirror-symmetry check on the rendered pixels, the
+// exact core also comes out the most symmetric of the three drawings tried.
+function markerGeom(tier: CityTier): { d: number; rim: number; ring: number } {
+  const ink = tier.radius * 2
+  const halo = ink * HALO
+  const d = Math.max(3, Math.round(halo))
+  // Leave the centre at least a pixel, however thin the arithmetic wants a ring
+  const rim = Math.min(Math.floor((d - 1) / 2), Math.max(1, Math.round((halo - ink) / 2)))
+  // How far in the ink reaches. Past the centre for the bands with no core.
+  const ring = tier.core
+    ? Math.min((d - 1) / 2, rim + Math.max(0.5, (ink - ink * CORE) / 2))
+    : d
+  return { d, rim, ring }
+}
+
+function cityMarkerHtml(g: { d: number; rim: number; ring: number }, ink: string): string {
+  return (
+    `<i class="city-dot" style="--d:${g.d}px;--rim:${g.rim}px;` +
+    `--ring:${g.ring.toFixed(2)}px;--ink:${ink}"></i>`
+  )
 }
 
 // A city at night is a light, so the day marker's white ring and pale core both
@@ -1364,9 +1394,10 @@ function invalidatePlacements() {
 function cityIcon(p: Placement, fade: boolean): L.DivIcon {
   const { c, tier, dir, off } = p
   // The element is the halo, exactly — no margin, because nothing clips it now
-  const S = tier.radius * HALO * 2
+  const g = markerGeom(tier)
+  const S = g.d
   const ink = isCapital(c) ? CAPITAL_INK : CITY_INK
-  const svg = cityMarkerHtml(S, ink, tier.core)
+  const svg = cityMarkerHtml(g, ink)
   // dir picks the side, off[1] the vertical, signed — a fallback corner puts the
   // name above on the left or below on the right, which the two defaults never do
   const side = dir === 'right' ? 'left' : 'right'

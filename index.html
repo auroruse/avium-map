@@ -7,6 +7,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <!-- Linked here rather than imported from main.ts. An import only reaches the
+       page once the module graph has loaded, and the dev server serves that graph
+       a file at a time, so the browser painted the whole unstyled document first:
+       Leaflet's controls in the normal flow, every panel stacked down the page.
+       A link in the head blocks the first paint until the styles are there. -->
+  <link rel="stylesheet" href="/src/style.css">
 </head>
 <body>
   <div id="map"></div>

@@ -1,3 +1,7 @@
+/* Leaflet's own stylesheet rides along with this one so the page needs a single
+   link in the head. Imported from main.ts it arrived after the first paint. */
+@import 'leaflet/dist/leaflet.css';
+
 html, body {
   margin: 0;
   padding: 0;
@@ -218,39 +222,28 @@ html, body {
 }
 
 /* The marker: a white halo, the ink disc, and for the top four bands a white
-   core. One element and two pseudo-elements — pseudos paint but are not DOM
-   nodes, so the whole thing costs the browser a single node where the inline
-   <svg> it replaced cost four.
+   core. All three rings come off one box — the background is the core, and two
+   inset shadows cut inward from the same edge, the white one painted over the
+   ink because an earlier shadow in the list wins. One element, no pseudos, and
+   nothing nested, which is the point: nested boxes are laid out symmetrically
+   but rasterised independently, so at 3-10px the browser rounded the rings apart
+   and the ink came out visibly off centre. Sharing a box makes that impossible.
 
-   Nested border-radius circles rather than one hard-stop radial-gradient, which
-   was the first attempt: a gradient stop is not antialiased the way a circle's
-   edge is, and at 2-5px across the markers came out visibly square.
+   border-radius circles rather than one hard-stop radial-gradient, which was the
+   first attempt: a gradient stop is not antialiased the way a circle's edge is,
+   and at 2-5px across the markers came out visibly square.
 
-   The insets are (1 - 1/HALO)/2 and (1 - CORE/HALO)/2 from main.ts, so each ring
-   lands where the tier ladder says. Change HALO or CORE there and these follow. */
+   Every length is a whole pixel from markerGeom() in main.ts, which is where the
+   HALO and CORE ratios turn into the ring widths. */
 .city-dot {
   display: block;
-  position: relative;
   width: var(--d);
   height: var(--d);
   border-radius: 50%;
   background: #fff;
-}
-
-.city-dot::before {
-  content: '';
-  position: absolute;
-  inset: 13.07%;
-  border-radius: 50%;
-  background: var(--ink);
-}
-
-.city-dot.has-core::after {
-  content: '';
-  position: absolute;
-  inset: 32.83%;
-  border-radius: 50%;
-  background: #fff;
+  box-shadow:
+    inset 0 0 0 var(--rim) #fff,
+    inset 0 0 0 var(--ring) var(--ink);
 }
 
 .city-icon .city-label {
