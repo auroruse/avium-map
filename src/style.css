@@ -679,6 +679,11 @@ html, body {
   color: #34c759;
 }
 
+/* Only used by Drop local, and only when there is unsaved work to lose */
+.status-warn {
+  color: #ff9f0a;
+}
+
 .pp-toolbar {
   display: flex;
   gap: 4px;

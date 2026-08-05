@@ -3622,8 +3622,17 @@ function disarmDrop() {
 dropLocalBtn.addEventListener('click', () => {
   if (!dropArmed) {
     dropArmed = true
-    dropLocalBtn.textContent = 'Sure?'
+    // A refresh is safe on its own — every placement is written to localStorage
+    // as it is made, so reloading restores the session. This button is the one
+    // thing that is not safe, because it clears exactly that store and then
+    // reloads. Said plainly here, because "Sure?" is not: an edit session was
+    // lost to this, and the button gave no sign it was about to happen.
+    dropLocalBtn.textContent = dirty ? 'Lose edits?' : 'Sure?'
     dropLocalBtn.classList.add('is-armed')
+    if (dirty) {
+      statusEl.textContent = 'Unsaved placements will be lost — Save first to keep them'
+      statusEl.className = 'status-warn'
+    }
     dropTimer = window.setTimeout(disarmDrop, 3000)
     return
   }
