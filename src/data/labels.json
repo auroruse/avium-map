@@ -302,16 +302,6 @@
     "span": 250
   },
   {
-    "text": "THE VERDANIE",
-    "type": "nation",
-    "x": 2288,
-    "y": 4671,
-    "minZoom": 3.5,
-    "maxZoom": 5,
-    "tier": 13,
-    "span": 425
-  },
-  {
     "text": "AXERFREDITENSHIN",
     "type": "nation",
     "x": 3176,

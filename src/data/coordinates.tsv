@@ -67,7 +67,6 @@ city	Aperton	Elvester		2782	2744	7.1100	1.2378	7.11°N 1.24°E
 city	Aqmescit	East Kaukasos		3412	2356	3.4800	32.9542	3.48°N 32.95°E
 city	Aquarias	E.S.U.		2120	3036	12.6600	-31.9783	12.66°N 31.98°W
 city	Aquilla	E.S.U.		2069	3228	10.5450	-39.3846	10.54°N 39.38°W
-city	Arachas	The Verdanie		2413	4522	-14.0250	-74.9497	14.02°S 74.95°W
 city	Arado	Cahaya		4588	969	6.6450	117.2251	6.64°N 117.23°E
 city	Arakawa	Nichirin		2687	864	36.7350	92.4078	36.73°N 92.41°E
 city	Aram	Shivon		3699	3291	-14.8500	14.6587	14.85°S 14.66°E
@@ -76,7 +75,6 @@ city	Araytan	Seignid		3896	507	23.9550	138.5464	23.96°N 138.55°E
 city	Arbel	Shivon		3673	3403	-16.1400	9.8700	16.14°S 9.87°E
 city	Archtessa	Giathka		3739	1790	7.0650	63.4509	7.06°N 63.45°E
 city	Arcturus	Skjarnland		2759	2207	15.5100	20.0081	15.51°N 20.01°E
-city	Arèçatobie	The Verdanie		2364	4598	-14.4300	-79.8174	14.43°S 79.82°W
 city	Arecaváros	Uj-Pannonia		4197	5077	-49.1100	-58.1071	49.11°S 58.11°W
 city	Argungu	Côte de Saumon		2552	3750	-4.5300	-37.8449	4.53°S 37.84°W
 city	Århaus	Skjarnland		2879	2497	9.3600	12.7902	9.36°N 12.79°E
@@ -89,7 +87,6 @@ city	Arpi	Vicily		3085	3099	-2.7600	-0.4333	2.76°S 0.43°W
 city	Artevil	East Kaukasos		3633	2293	1.1100	40.7020	1.11°N 40.70°E
 city	Arvada	E.S.U.		1863	3057	16.2000	-43.6829	16.20°N 43.68°W
 city	Arverdun	Arverne		2942	2833	3.3750	3.3974	3.37°N 3.40°E
-city	Arvernie	The Verdanie		2428	4545	-14.5950	-75.8027	14.60°S 75.80°W
 city	Aryapur	Noradia		3989	4949	-44.0700	-56.4337	44.07°S 56.43°W
 city	Arza	Costaserá		2438	3174	5.8200	-23.6066	5.82°N 23.61°W
 city	Arzalma	Rudania		3320	1669	15.1650	59.5670	15.16°N 59.57°E
@@ -133,7 +130,6 @@ city	Bachstadt	Divia		3917	3412	-19.9350	19.4605	19.93°S 19.46°E
 city	Baergrund	Ponurvia		1088	2941	29.5650	-82.7848	29.56°N 82.78°W
 city	Bahārabad	Varahmehr		4044	3493	-23.0550	22.2227	23.05°S 22.22°E
 city	Baiding	Guandong		3125	695	32.7000	114.5026	32.70°N 114.50°E
-city	Baie-des-Baleines	The Verdanie		2489	4879	-20.5200	-92.8756	20.52°S 92.88°W
 city	Baie-des-Moules	South Pelagonia		2565	5267	-27.4800	-116.6891	27.48°S 116.69°W
 city	Baigau	Cahaya		4439	949	9.1800	116.5924	9.18°N 116.59°E
 city	Baile-tuath	Elvester		2783	2549	10.0200	7.8995	10.02°N 7.90°E
@@ -162,7 +158,6 @@ city	Barranco	Auritania		1493	3844	9.9450	-79.2917	9.95°N 79.29°W
 city	Bǎsavo	Slytlia		3312	2485	3.0450	25.6788	3.04°N 25.68°E
 city	Bastsova	Rudania		3289	1604	16.6050	61.9865	16.61°N 61.99°E
 city	Batasa	Seignid		4037	706	18.8550	126.4137	18.85°N 126.41°E
-city	Bateaux	The Verdanie		2450	4920	-20.5500	-96.0259	20.55°S 96.03°W
 city	Batman	Barbary		2864	3104	0.4800	-7.2386	0.48°N 7.24°W
 city	Batoum	East Kaukasos		3488	2361	2.2650	34.6829	2.26°N 34.68°E
 city	Batu Hitam	Cahaya		4526	1263	3.1650	101.4579	3.16°N 101.46°E
@@ -175,8 +170,6 @@ city	Beauchis	Côte de Saumon		2681	3866	-8.2050	-39.1161	8.21°S 39.12°W
 city	Beaver Hollow	Hollosend		1639	3236	16.8750	-58.9662	16.88°N 58.97°W
 city	Beining	Guandong		3083	691	33.3900	114.0859	33.39°N 114.09°E
 city	Beizhou	Furan		3530	802	25.0200	113.3518	25.02°N 113.35°E
-city	Bel-Éclat	The Verdanie		2316	4821	-17.0550	-92.7205	17.05°S 92.72°W
-city	Bel-Horizon	The Verdanie		2503	4491	-14.9100	-71.4822	14.91°S 71.48°W
 city	Belkamen	Rudania		3273	1487	18.6000	67.5378	18.60°N 67.54°E
 city	Bella Utis	Hollosend		1940	3499	8.4150	-51.5940	8.41°N 51.59°W
 city	Bellecôte	Arverne		2791	3027	2.7300	-7.3015	2.73°N 7.30°W
@@ -208,13 +201,10 @@ city	Bitsik-Tura	Rudania		3152	1549	19.4850	61.3784	19.48°N 61.38°E
 city	Blackwater	Hollosend		1448	3374	17.6700	-71.8955	17.67°N 71.90°W
 city	Blaulohn	Ponurvia		1089	2855	30.8400	-80.5984	30.84°N 80.60°W
 city	Blevins	Hollosend		1569	3438	14.8950	-67.1899	14.89°N 67.19°W
-city	Blomaù	The Verdanie		2451	4750	-18.0150	-86.2305	18.02°S 86.23°W
 city	Bochier	Barbary		2565	3146	4.3350	-18.3120	4.33°N 18.31°W
 city	Bogalang	Seignid		3992	889	16.7850	114.4315	16.79°N 114.43°E
 city	Bolao	Furan		3563	517	28.8000	134.3824	28.80°N 134.38°E
 city	Bolsem	E.S.U.		1852	3142	15.0900	-46.4958	15.09°N 46.50°W
-city	Bon-Repos	The Verdanie		2474	4589	-15.9450	-77.1116	15.94°S 77.11°W
-city	Bon-Vents	The Verdanie		2365	5044	-21.1350	-105.0359	21.13°S 105.04°W
 city	Bonnen	Alemannia		2965	2685	5.2500	8.9204	5.25°N 8.92°E
 city	Borbagne	Ponurvia		1145	2977	28.1700	-80.0000	28.17°N 80.00°W
 city	Bordigal	Arverne		2856	2863	4.2150	-0.2203	4.21°N 0.22°W
@@ -222,8 +212,6 @@ city	Borgund	Skjarnland		2738	2417	12.6750	11.2085	12.67°N 11.21°E
 city	Bossina	Vicily		3117	3042	-2.3850	2.3112	2.38°S 2.31°E
 city	Boston	Salishia		1327	2607	30.9900	-58.5663	30.99°N 58.57°W
 city	Botai	Auritania		1507	3962	7.9650	-80.8009	7.96°N 80.80°W
-city	Bouche-du-Suècop	The Verdanie		2492	4865	-20.3550	-91.9966	20.35°S 92.00°W
-city	Bouche-Grand'Eau	The Verdanie		2307	4751	-15.8700	-89.0166	15.87°S 89.02°W
 city	Bougie	Barbary		2827	3055	1.7700	-6.9772	1.77°N 6.98°W
 city	Bracetara	Hollosend		1621	3132	18.7050	-57.2228	18.70°N 57.22°W
 city	Brado	Reino		2709	2980	4.6650	-8.5744	4.67°N 8.57°W
@@ -253,18 +241,15 @@ city	Cairenza	Vicily		2975	3120	-1.4250	-4.4200	1.42°S 4.42°W
 city	Cakobau	New Celyddon		4213	466	19.8150	144.1462	19.81°N 144.15°E
 city	Caldrin	E.S.U.		1716	2944	20.1000	-47.4335	20.10°N 47.43°W
 city	Calgaich	Elvester		2721	2613	9.9900	3.6445	9.99°N 3.64°E
-city	Calme-Lac	The Verdanie		2577	4566	-17.1450	-73.7122	17.14°S 73.71°W
 city	Calumet	Hollosend		1572	3210	18.2700	-61.6562	18.27°N 61.66°W
 city	Camberford	Hollosend		2037	3701	3.9300	-52.1994	3.93°N 52.20°W
 city	Camberlyn	Hollosend		1513	3443	15.6600	-70.0969	15.66°N 70.10°W
-city	Campagnes	The Verdanie		2457	4614	-16.0650	-78.7705	16.06°S 78.77°W
 city	Çanakalesi	Selmira		3358	3229	-8.8050	4.2897	8.80°S 4.29°E
 city	Canebreak	Hollosend		1652	3364	14.7600	-61.4354	14.76°N 61.44°W
 city	Cangyuan	Guandong		3128	658	33.2100	117.4326	33.21°N 117.43°E
 city	Canot	Côte de Saumon		2702	3833	-8.0250	-37.2516	8.03°S 37.25°W
 city	Cap de Bonne-Espérance	South Pelagonia		2493	5229	-25.8300	-115.1192	25.83°S 115.12°W
 city	Cap-des-Flammes	South Pelagonia		2708	5326	-30.5100	-118.8200	30.51°S 118.82°W
-city	Cap-Froid	The Verdanie		2559	4556	-16.7250	-73.5844	16.72°S 73.58°W
 city	Capsa	Vicily		2922	3139	-0.9150	-6.5769	0.91°S 6.58°W
 city	Carapour	West Bangala		4032	5027	-45.8850	-60.8977	45.88°S 60.90°W
 city	Caravigna	Vicily		2970	3061	-0.4650	-2.7442	0.46°S 2.74°W
@@ -283,18 +268,13 @@ city	Catloban	Seignid		3960	768	19.0800	121.5228	19.08°N 121.52°E
 city	Cavares	Arverne		2953	2878	2.5350	2.3152	2.53°N 2.32°E
 city	Cengkeh	Cahaya		4696	1202	1.5300	106.6328	1.53°N 106.63°E
 city	Chakalov	Rudania		3287	1958	11.3250	45.6092	11.32°N 45.61°E
-city	Champ-de-Bruges	The Verdanie		2415	4828	-18.6450	-91.3054	18.64°S 91.31°W
-city	Champs-des-Goitacés	The Verdanie		2565	4541	-16.5900	-72.6767	16.59°S 72.68°W
 city	Chang'an	Furan		3516	777	25.6050	114.8428	25.61°N 114.84°E
 city	Changsu	Furan		3727	844	21.4350	113.5288	21.43°N 113.53°E
 city	Changzhou	Furan		3733	466	27.0150	140.0476	27.01°N 140.05°E
-city	Chanteloup	The Verdanie		2375	4717	-16.3800	-85.8924	16.38°S 85.89°W
-city	Chapécu	The Verdanie		2378	4776	-17.3100	-89.0714	17.31°S 89.07°W
 city	Charlotte	E.S.U.		2167	3039	11.9100	-30.1498	11.91°N 30.15°W
 city	Cheman	Tonkin		4200	833	14.5050	120.4172	14.50°N 120.42°E
 city	Chemeketa	Salishia		1295	2641	30.9600	-61.5549	30.96°N 61.55°W
 city	Chernovar	Giathka		3652	1751	8.9550	63.3315	8.95°N 63.33°E
-city	Chevalier	The Verdanie		2246	4687	-13.9950	-86.7140	14.00°S 86.71°W
 city	Chicazos	Hollosend		1665	3687	9.7200	-68.0045	9.72°N 68.00°W
 city	Chikepnay	Nichirin		2234	834	43.9800	82.1382	43.98°N 82.14°E
 city	Chinger	Axerfreditenshin		2936	973	31.3650	90.3914	31.36°N 90.39°E
@@ -315,9 +295,7 @@ city	Ciudad Primada	Hollosend		1815	3604	8.7150	-59.4242	8.71°N 59.42°W
 city	Ciudad Tranquila	Hollosend		2015	3616	5.5350	-51.1774	5.53°N 51.18°W
 city	Claremont	E.S.U.		1754	2968	19.1700	-46.2770	19.17°N 46.28°W
 city	Cochinay	Hollosend		1752	3280	14.5200	-54.6582	14.52°N 54.66°W
-city	Colatine	The Verdanie		2566	4480	-15.6900	-69.5438	15.69°S 69.54°W
 city	Coldharbor	Hollosend		1917	3708	5.6250	-57.3120	5.63°N 57.31°W
-city	Colline d'Unité	The Verdanie		2344	4658	-15.0300	-83.3373	15.03°S 83.34°W
 city	Colter	Elvester		2758	2701	8.1150	1.8795	8.12°N 1.88°E
 city	Conhawa	Seignid		3805	821	20.6100	116.1089	20.61°N 116.11°E
 city	Conriat	Reino		2791	2914	4.4250	-3.8808	4.42°N 3.88°W
@@ -328,7 +306,6 @@ city	Cosgale	E.S.U.		1914	3050	15.5400	-41.1926	15.54°N 41.19°W
 city	Cotorra	Hollosend		1522	3268	18.1500	-65.6117	18.15°N 65.61°W
 city	Coulne	West Bangala		4056	5099	-47.3250	-65.9895	47.32°S 65.99°W
 city	Creston	Hollosend		2059	3672	4.0350	-50.6613	4.03°N 50.66°W
-city	Criumécie	The Verdanie		2464	4811	-19.1250	-89.4095	19.12°S 89.41°W
 city	Cromsine	E.S.U.		1872	3194	14.0100	-46.9720	14.01°N 46.97°W
 city	Cromwell Beach	Hollosend		2022	3461	7.7550	-47.2406	7.76°N 47.24°W
 city	Csernovic	Genosa		3239	2454	4.6050	24.8200	4.61°N 24.82°E
@@ -465,9 +442,7 @@ city	Fehérváros	Alemannia		3170	2590	3.6000	18.1250	3.60°N 18.13°E
 city	Fengzhou	Guandong		3280	550	32.5500	128.3029	32.55°N 128.30°E
 city	Fezagona	Costaserá		2493	3070	6.5550	-18.6698	6.55°N 18.67°W
 city	Fiorentina	Vicily		2998	2983	0.2850	0.4514	0.28°N 0.45°E
-city	Fleuve-Calme	The Verdanie		2292	4827	-16.7850	-93.4849	16.79°S 93.48°W
 city	Flutheim	Neuhollmar		3183	5650	-42.4950	-140.2147	42.49°S 140.21°W
-city	Flux	The Verdanie		2235	4837	-16.0800	-95.0406	16.08°S 95.04°W
 city	Fönigsfeld	Ponurvia		1134	3136	25.9500	-84.3934	25.95°N 84.39°W
 city	Fort Abigail	Salishia		1322	2699	29.6850	-61.6414	29.68°N 61.64°W
 city	Fort Freedom	E.S.U.		1913	3171	13.7400	-44.5397	13.74°N 44.54°W
@@ -531,7 +506,6 @@ city	Gortari	Arunya		3673	4914	-38.8050	-65.4498	38.80°S 65.45°W
 city	Goryūno	Nichirin		2475	914	39.1650	82.9094	39.16°N 82.91°E
 city	Govnovka	Rudania		2962	1626	21.1800	52.4150	21.18°N 52.41°E
 city	Gran Torre	Auritania		1293	4071	9.5400	-93.2215	9.54°N 93.22°W
-city	Grand-Champ	The Verdanie		2245	4599	-12.6600	-82.1800	12.66°S 82.18°W
 city	Gravil	Sidanya		3345	2272	5.7450	34.3849	5.74°N 34.38°E
 city	Grestopol	Sidanya		3379	2237	5.7600	36.6026	5.76°N 36.60°E
 city	Greywick	Hollosend		1901	3635	6.9600	-56.3801	6.96°N 56.38°W
@@ -652,7 +626,6 @@ city	Izovoretso	Slytlia		3314	2423	3.9450	27.9554	3.95°N 27.96°E
 city	Iztatlac	Auritania		1175	4106	10.7850	-99.9015	10.78°N 99.90°W
 city	Izuminone	Nichirin		2862	547	38.8650	122.2353	38.87°N 122.24°E
 city	Jagiellonów	Eivorie		3131	2502	5.5050	20.0994	5.50°N 20.10°E
-city	Jaguarière	The Verdanie		2303	4996	-19.4850	-103.1142	19.48°S 103.11°W
 city	Jangsak	Cahaya		4490	1171	5.0850	105.5326	5.08°N 105.53°E
 city	Jelutong	Cahaya		4497	1283	3.3000	100.0900	3.30°N 100.09°E
 city	Jernigan	Hollosend		1928	3613	6.8850	-54.7374	6.88°N 54.74°W
@@ -670,11 +643,9 @@ city	Jingxi	Furan		3607	699	25.4100	121.5606	25.41°N 121.56°E
 city	Jinkou	Furan		3700	436	27.9600	142.0503	27.96°N 142.05°E
 city	Jinyang	Guandong		3358	740	28.5300	114.9927	28.53°N 114.99°E
 city	Johannshafen	Andam Islands		4308	1813	-1.8150	76.3905	1.81°S 76.39°E
-city	Joliet	The Verdanie		2448	4736	-17.7600	-85.5150	17.76°S 85.51°W
 city	Jousse	Côte de Saumon		2641	3877	-7.7700	-40.5837	7.77°S 40.58°W
 city	Jovellano	Hollosend		1608	3619	11.5950	-69.2520	11.60°N 69.25°W
 city	Juana	Hollosend		1695	3596	10.6350	-64.6721	10.63°N 64.67°W
-city	Juge-Forain	The Verdanie		2527	4546	-16.0950	-73.7609	16.10°S 73.76°W
 city	Kaandiva	Arunya		3414	4856	-34.0500	-69.5871	34.05°S 69.59°W
 city	Kabagishi	Nichirin		2110	778	46.6800	83.0194	46.68°N 83.02°E
 city	Kabimas	Hollosend		1525	3707	11.5200	-75.0688	11.52°N 75.07°W
@@ -836,13 +807,7 @@ city	Kut	Divia		4010	3569	-23.6850	17.9552	23.68°S 17.96°E
 city	Kuybyshev	Rudania		3239	2025	11.0400	41.5122	11.04°N 41.51°E
 city	Kyakhta	Perovska		3584	1586	12.4500	69.5629	12.45°N 69.56°E
 city	Kyzyl-Perovsk	Rudania		3581	1787	9.4800	60.1565	9.48°N 60.16°E
-city	L'Assomption de Marie	The Verdanie		2224	4761	-14.7750	-91.0588	14.77°S 91.06°W
 city	La Capilla	Costaserá		2546	3072	5.7300	-16.8530	5.73°N 16.85°W
-city	La Conception	The Verdanie		2211	4713	-13.8600	-88.7234	13.86°S 88.72°W
-city	La Concorde	The Verdanie		2290	4942	-18.4800	-100.1174	18.48°S 100.12°W
-city	La Fraternelle	The Verdanie		2148	4708	-12.8400	-89.5801	12.84°S 89.58°W
-city	La Fromagerie	The Verdanie		2238	4888	-16.8900	-97.8662	16.89°S 97.87°W
-city	La Plate	The Verdanie		2379	5043	-21.3300	-104.7444	21.33°S 104.74°W
 city	La Torre	Hollosend		1988	3509	7.5450	-49.8053	7.54°N 49.81°W
 city	Lacan-Pier	Seignid		3802	715	22.2450	123.0153	22.25°N 123.02°E
 city	Lachaven	Reino		2725	2862	6.1950	-4.4138	6.20°N 4.41°W
@@ -855,7 +820,6 @@ city	Lánkon	East Kaukasos		3620	2274	1.5900	41.1062	1.59°N 41.11°E
 city	Lannahechee	E.S.U.		1749	3000	18.7650	-47.4163	18.77°N 47.42°W
 city	Laodicea	Selmira		3660	3296	-14.3400	12.9897	14.34°S 12.99°E
 city	Lapsikan	Seignid		3950	868	17.7300	115.1432	17.73°N 115.14°E
-city	Le Crotale	The Verdanie		2332	4718	-15.7500	-86.7636	15.75°S 86.76°W
 city	Lebaron	E.S.U.		2079	3193	10.9200	-38.0349	10.92°N 38.03°W
 city	Leclerc	Arverne		3084	2851	0.9750	7.0666	0.97°N 7.07°E
 city	Leetown	Hollosend		1805	3502	10.3950	-57.5579	10.39°N 57.56°W
@@ -866,7 +830,6 @@ city	Lenkurt	Auritania		1129	3816	15.8250	-97.8079	15.82°N 97.81°W
 city	Lenkurt	Reino		2685	2831	7.2600	-4.7643	7.26°N 4.76°W
 city	Leonidgrad	Giathka		3693	1803	7.5600	61.8996	7.56°N 61.90°E
 city	Lerekya	Slytlia		3318	2528	2.3100	24.3243	2.31°N 24.32°E
-city	Les Bambouières	The Verdanie		2360	4948	-19.6200	-99.2839	19.62°S 99.28°W
 city	Leuwen	Alemannia		2879	2632	7.3350	8.0675	7.33°N 8.07°E
 city	Lianchong	Guandong		3196	652	32.2800	119.0021	32.28°N 119.00°E
 city	Libaca	Livonia		2959	2359	10.2300	20.3084	10.23°N 20.31°E
@@ -914,7 +877,6 @@ city	Lyonara	Arverne		2990	2828	2.7300	5.0120	2.73°N 5.01°E
 city	Lyubechna	Nozhnorstan		3574	1358	16.0200	80.8759	16.02°N 80.88°E
 city	Maasvik	Adelsköldland		1470	2305	33.3750	-39.8146	33.38°N 39.81°W
 city	Macandé	South Pelagonia		2715	5283	-29.9700	-115.5022	29.97°S 115.50°W
-city	Macé	The Verdanie		2572	4553	-16.8750	-73.1446	16.88°S 73.14°W
 city	Madinat Al-Dosser	Divia		4057	3689	-26.1900	15.5712	26.19°S 15.57°E
 city	Madre Bosque	Reino		2680	2969	5.2650	-9.2087	5.26°N 9.21°W
 city	Maestra	Reino		2693	3008	4.4850	-9.9456	4.48°N 9.95°W
@@ -947,7 +909,6 @@ city	Maraş	Selmira		3668	3230	-13.4700	15.4528	13.47°S 15.45°E
 city	Maravento	Vicilian North Aphirica		2833	3895	-10.9200	-36.2595	10.92°S 36.26°W
 city	Marienhafen	Kogelland		2107	5187	-19.4100	-117.8071	19.41°S 117.81°W
 city	Marijnovo	Nozhnorstan		3539	904	23.3550	106.7522	23.35°N 106.75°E
-city	Marilé	The Verdanie		2381	4617	-14.9700	-80.4638	14.97°S 80.46°W
 city	Marintov	Sidanya		3178	2430	5.8800	24.0086	5.88°N 24.01°E
 city	Marnelui	Dämmerung Islands		885	2642	37.0950	-89.6683	37.09°N 89.67°W
 city	Marrowby	Hollosend		1974	3707	4.7850	-54.9093	4.78°N 54.91°W
@@ -970,7 +931,6 @@ city	McFarlane	Hollosend		1378	3356	18.9900	-75.2091	18.99°N 75.21°W
 city	Medinina	Vicily		2965	3202	-2.5050	-7.3136	2.50°S 7.31°W
 city	Médouris	Côte de Saumon		2813	3843	-9.8400	-34.6931	9.84°S 34.69°W
 city	Mehrāvar	Varahmehr		4118	3679	-26.9550	18.8009	26.95°S 18.80°E
-city	Meiembipé	The Verdanie		2476	4770	-18.6900	-86.8574	18.69°S 86.86°W
 city	Melcarta	East Astriya		3244	3136	-5.7000	3.4591	5.70°S 3.46°E
 city	Melden	Ponurvia		1124	2866	30.1500	-78.5865	30.15°N 78.59°W
 city	Melidene	Selmira		3709	3202	-13.6650	17.9328	13.66°S 17.93°E
@@ -1015,8 +975,6 @@ city	Mogeyov	Rudania		3113	2297	8.8500	27.1497	8.85°N 27.15°E
 city	Mohonon	Shivon		3654	3466	-16.8000	6.9344	16.80°S 6.93°E
 city	Mokissos	Selmira		3592	3196	-11.8200	13.6761	11.82°S 13.68°E
 city	Molotovska	Rudania		3060	1892	15.7200	42.4556	15.72°N 42.46°E
-city	Mont-de-Vue	The Verdanie		2411	5024	-21.5250	-103.0318	21.52°S 103.03°W
-city	Mont-Maldon	The Verdanie		2444	5016	-21.9000	-101.9736	21.90°S 101.97°W
 city	Montbach	Kogelland		2229	5273	-22.5300	-121.8141	22.53°S 121.81°W
 city	Monte Claro	Hollosend		1607	3673	10.8000	-70.4318	10.80°N 70.43°W
 city	Montemayor	Auritania		1430	3818	11.2800	-81.9055	11.28°N 81.91°W
@@ -1170,7 +1128,6 @@ city	Östra	Skjarnland		2788	2316	13.4400	16.6458	13.44°N 16.65°E
 city	Ostrau	Alemannia		3118	2537	5.1750	18.4934	5.17°N 18.49°E
 city	Ostrig	E.S.U.		1945	3134	13.8150	-42.1382	13.81°N 42.14°W
 city	Ōtase	Nichirin		2685	629	40.2900	111.6717	40.29°N 111.67°E
-city	Ouberabé	The Verdanie		2397	4528	-13.8750	-75.5823	13.87°S 75.58°W
 city	Outnia	E.S.U.		1835	3110	15.8250	-46.4105	15.82°N 46.41°W
 city	Owanjila	Hollosend		1400	3258	20.1300	-71.7991	20.13°N 71.80°W
 city	Ōyashiro	Nichirin		2706	641	39.7950	111.0547	39.79°N 111.05°E
@@ -1186,7 +1143,6 @@ city	Paraliton	Hollosend		1725	3514	11.4150	-61.4659	11.41°N 61.47°W
 city	Parata	Arunya		3554	4895	-36.7350	-67.9752	36.73°S 67.98°W
 city	Parish Rapids	Hollosend		1593	3552	12.8250	-68.5364	12.82°N 68.54°W
 city	Passance	Arverne		3018	2745	3.5550	8.5268	3.56°N 8.53°E
-city	Passe-Profond	The Verdanie		2389	4817	-18.0900	-91.1640	18.09°S 91.16°W
 city	Pato	Hollosend		1512	3806	10.2300	-77.6457	10.23°N 77.65°W
 city	Patria	Vicily		3171	3283	-6.8100	-3.6351	6.81°S 3.64°W
 city	Payahan	Cahaya		4557	984	6.8850	116.0693	6.88°N 116.07°E
@@ -1195,7 +1151,6 @@ city	Peggano	Vicily		3196	3104	-4.5000	2.9053	4.50°S 2.91°E
 city	Pélyes	Genosa		3221	2613	2.4900	18.7590	2.49°N 18.76°E
 city	Penance	Salishia		1394	2657	29.2350	-56.1195	29.23°N 56.12°W
 city	Pengcheng	Guandong		3235	596	32.5350	123.9937	32.53°N 123.99°E
-city	Pérana	The Verdanie		2249	4984	-18.4950	-103.2725	18.49°S 103.27°W
 city	Perangat	Cahaya		4549	1094	5.3550	110.2073	5.35°N 110.21°E
 city	Pergamis	Hollosend		1923	3332	11.1750	-48.2626	11.17°N 48.26°W
 city	Perisapora	Divia		3890	3399	-19.3350	18.7603	19.34°S 18.76°E
@@ -1210,8 +1165,6 @@ city	Petarovo	Polabiny		3603	2161	3.5400	45.0312	3.54°N 45.03°E
 city	Petrilovzhka	Nozhnorstan		3521	1329	17.2500	81.3526	17.25°N 81.35°E
 city	Petrovskaya	Giathka		3919	1833	3.7200	65.2782	3.72°N 65.28°E
 city	Pezan	Rudania		3205	2095	10.5000	37.6981	10.50°N 37.70°E
-city	Pierrefitte	The Verdanie		2158	4583	-11.1150	-83.0006	11.11°S 83.00°W
-city	Pierres	The Verdanie		2430	4782	-18.1800	-88.4211	18.18°S 88.42°W
 city	Pietari	Karjania		2931	2205	12.9600	25.4439	12.96°N 25.44°E
 city	Pilzbrück	Alemannia		3063	2606	4.9650	14.5105	4.96°N 14.51°E
 city	Pingbang	Furan		3485	813	25.5300	111.9032	25.53°N 111.90°E
@@ -1222,7 +1175,6 @@ city	Pleasance	Hollosend		1626	3467	13.6050	-65.0658	13.61°N 65.07°W
 city	Plimuth	Elvester		2773	2773	6.8100	0.0000	6.81°N 0.00°E
 city	Pochang	Guandong		3273	664	30.9450	119.2837	30.94°N 119.28°E
 city	Poddol̂e	Polabiny		3511	2229	3.9000	40.2021	3.90°N 40.20°E
-city	Pointe-Épaisse	The Verdanie		2404	4692	-16.4400	-83.9804	16.44°S 83.98°W
 city	Pomorźie	Polabiny		3566	2165	4.0350	44.0028	4.03°N 44.00°E
 city	Port Chinook	Salishia		1345	2590	30.9750	-56.9504	30.97°N 56.95°W
 city	Port Columbia	Salishia		1396	2533	31.0650	-52.0896	31.07°N 52.09°W
@@ -1230,7 +1182,6 @@ city	Port Gabéra	South Pelagonia		2683	5291	-29.6100	-116.6021	29.61°S 116.60�
 city	Port Lox	Recolotta		3128	4973	-31.5150	-85.1757	31.51°S 85.18°W
 city	Port Mercer	Salishia		1373	2580	30.7050	-54.9608	30.70°N 54.96°W
 city	Port of Muscovite	E.S.U.		2237	3143	9.3000	-30.3123	9.30°N 30.31°W
-city	Port-de-Joie	The Verdanie		2441	4865	-19.5900	-92.9527	19.59°S 92.95°W
 city	Port-de-Orssier	Napolyon Bonparterre Islands		4406	497	16.4550	143.5081	16.45°N 143.51°E
 city	Porta Ferrata	Vicily		3027	3225	-3.7800	-6.2004	3.78°S 6.20°W
 city	Postupim	Polabiny		3446	2156	5.9700	41.4495	5.97°N 41.45°E
@@ -1238,11 +1189,9 @@ city	Prabhavati	Arunya		3769	4684	-36.7950	-46.4336	36.79°S 46.43°W
 city	Pradera	Hollosend		1649	3602	11.2350	-66.9472	11.23°N 66.95°W
 city	Prauvenberg	Alemannia		3063	2581	5.3400	15.3721	5.34°N 15.37°E
 city	Pravdinsk	Giathka		3723	2030	3.7050	52.9706	3.71°N 52.97°E
-city	Près-Ange	The Verdanie		2490	4661	-17.2650	-80.5898	17.26°S 80.59°W
 city	Pribalhashstroy	Rudania		3455	1601	14.1600	66.0047	14.16°N 66.00°E
 city	Pris	Hollosend		1786	3359	12.8250	-55.0321	12.82°N 55.03°W
 city	Pristinia	East Astriya		3323	3115	-6.5700	6.7314	6.57°S 6.73°E
-city	Prudentiale	The Verdanie		2345	4625	-14.5500	-81.5905	14.55°S 81.59°W
 city	Pueblo del Prosperidad	Auritania		1311	3706	14.7450	-85.9278	14.74°N 85.93°W
 city	Puerta de Testudera	Hollosend		1783	3641	8.6400	-61.6593	8.64°N 61.66°W
 city	Puerta Waiyana	Hollosend		1738	3687	8.6250	-64.6673	8.63°N 64.67°W
@@ -1292,17 +1241,12 @@ city	Reqa	Divia		3751	3298	-15.7350	16.4694	15.73°S 16.47°E
 city	Rětny	Slytlia		3353	2514	1.9950	25.7406	2.00°N 25.74°E
 city	Reykawick	Elvester		2685	2581	11.0100	3.5549	11.01°N 3.55°E
 city	Ricewall	Elvester		2792	2773	6.5250	0.6146	6.52°N 0.61°E
-city	Richeville	The Verdanie		2270	4774	-15.6600	-90.9443	15.66°S 90.94°W
 city	Ricomonte	Hollosend		2035	3595	5.5500	-49.8757	5.55°N 49.88°W
 city	Riege	Livonia		2957	2324	10.7850	21.5755	10.78°N 21.58°E
 city	Riluo	Guandong		3148	605	33.7050	121.9664	33.70°N 121.97°E
 city	Rio Esmeralda	Hollosend		1969	3596	6.5250	-52.6253	6.52°N 52.63°W
-city	Rive-de-Janvier	The Verdanie		2513	4590	-16.5450	-76.3447	16.55°S 76.34°W
-city	Rive-Haute	The Verdanie		2358	4928	-19.2900	-98.1332	19.29°S 98.13°W
-city	Rive-Rapide	The Verdanie		2370	4641	-15.1650	-81.9363	15.16°S 81.94°W
 city	Riveren City	E.S.U.		2131	3101	11.5200	-33.3716	11.52°N 33.37°W
 city	Riverfront	Salishia		1394	2547	30.8850	-52.6618	30.88°N 52.66°W
-city	Rivière-Noire	The Verdanie		2430	4574	-15.0600	-77.2458	15.06°S 77.25°W
 city	Rizzana	Vicily		3179	3120	-4.4850	1.8628	4.48°S 1.86°E
 city	Roanoke	Hollosend		1673	3300	15.4050	-58.8900	15.40°N 58.89°W
 city	Robbenboden	Verwustung Islands		4610	4965	-53.6250	-26.3505	53.63°S 26.35°W
@@ -1335,12 +1279,7 @@ city	Sagramundel	Ponurvia		1164	2793	30.6450	-74.1016	30.64°N 74.10°W
 city	Sahagalli	Arunya		3667	4651	-34.7700	-48.1043	34.77°S 48.10°W
 city	Sahara City	E.S.U.		2147	3220	9.4950	-35.9866	9.49°N 35.99°W
 city	Saikarsk	Rudania		3436	1913	9.7650	51.2507	9.76°N 51.25°E
-city	Saint-Charles	The Verdanie		2417	4598	-15.2250	-78.7523	15.22°S 78.75°W
 city	Saint-Georges	South Pelagonia		2577	5263	-27.6000	-116.2212	27.60°S 116.22°W
-city	Saint-Jean-de-Rive-Noir	The Verdanie		2387	4573	-14.4000	-78.0714	14.40°S 78.07°W
-city	Saint-Jean-des-Champs	The Verdanie		2489	4613	-16.5300	-78.0563	16.53°S 78.06°W
-city	Saint-Marie	The Verdanie		2374	4865	-18.5850	-94.1777	18.58°S 94.18°W
-city	Saint-Paul	The Verdanie		2477	4635	-16.6800	-79.4681	16.68°S 79.47°W
 city	Sakabayashi	Nichirin		2838	539	39.3450	122.5407	39.34°N 122.54°E
 city	Sakaimori	Nichirin		2646	685	40.0350	105.9682	40.03°N 105.97°E
 city	Sakez	East Kaukasos		3680	2364	-0.6600	39.7717	0.66°S 39.77°E
@@ -1377,7 +1316,6 @@ city	Santa Verena	Hollosend		1971	3558	7.0650	-51.6658	7.06°N 51.67°W
 city	Santiago	Auritania		1450	4021	7.9350	-84.5878	7.93°N 84.59°W
 city	Santiago del Valle	Hollosend		1617	3658	10.8750	-69.6455	10.87°N 69.65°W
 city	Sanzhen	Furan		3576	674	26.2500	122.9082	26.25°N 122.91°E
-city	Sarocaba	The Verdanie		2450	4634	-16.2600	-79.9675	16.26°S 79.97°W
 city	Satsuno	Nichirin		2224	858	43.7700	79.7794	43.77°N 79.78°E
 city	Sattarapur	Arunya		3686	4614	-34.5000	-45.1459	34.50°S 45.15°W
 city	Saucoté	Côte de Saumon		2586	3751	-5.0550	-37.0298	5.05°S 37.03°W
@@ -1445,7 +1383,6 @@ city	Sikov	Rudania		2987	2239	11.6100	25.7635	11.61°N 25.76°E
 city	Sile	Kemet		3557	3630	-17.8050	-2.7301	17.80°S 2.73°W
 city	Silemani	Divia		3928	3326	-18.8100	22.8319	18.81°S 22.83°E
 city	Sillóng	Uj-Pannonia		4188	5114	-49.5300	-61.7791	49.53°S 61.78°W
-city	Silurière	The Verdanie		2466	4622	-16.3200	-79.0065	16.32°S 79.01°W
 city	Silvastria	Hollosend		1978	3384	9.5700	-47.1988	9.57°N 47.20°W
 city	Simbirsk	Rudania		3194	2031	11.6250	40.0651	11.62°N 40.07°E
 city	Simhapuri	Arunya		3680	4887	-38.5050	-63.2858	38.51°S 63.29°W
@@ -1580,7 +1517,6 @@ city	Tōhara	Nichirin		3052	663	34.2750	115.7524	34.28°N 115.75°E
 city	Tokisaka	Mizuho		1448	4486	0.9900	-92.1537	0.99°N 92.15°W
 city	Toksavaara	Karjania		2960	2255	11.7750	24.3337	11.78°N 24.33°E
 city	Tokuyama	Nichirin		2729	619	39.7800	113.4409	39.78°N 113.44°E
-city	Tolède	The Verdanie		2319	4719	-15.5700	-87.0617	15.57°S 87.06°W
 city	Tolosa	Arverne		2870	2938	2.8800	-2.1074	2.88°N 2.11°W
 city	Tolvajärvi	Karjania		2950	2146	13.5600	28.3987	13.56°N 28.40°E
 city	Tomon	Nichirin		2675	685	39.6000	106.6071	39.60°N 106.61°E
@@ -1595,7 +1531,6 @@ city	Trinacria	Vicily		2995	3040	-0.5250	-1.3579	0.52°S 1.36°W
 city	Trioyka	Rudania		2950	1752	19.4700	45.8613	19.47°N 45.86°E
 city	Trobletevu	Slytlia		3318	2573	1.6350	22.7635	1.64°N 22.76°E
 city	Trodes	E.S.U.		1807	3192	15.0150	-49.8700	15.01°N 49.87°W
-city	Trois-Lagons	The Verdanie		2322	4605	-13.9050	-81.0053	13.90°S 81.01°W
 city	Trossö	Skjarnland		2944	2440	9.2400	16.8499	9.24°N 16.85°E
 city	Tsambok	Slytlia		3319	2378	4.5450	29.7314	4.54°N 29.73°E
 city	Tsirvakka	Karjania		2868	2254	13.1700	21.5775	13.17°N 21.58°E
@@ -1628,15 +1563,12 @@ city	Umbravati	Arunya		3833	4725	-38.3700	-46.6473	38.37°S 46.65°W
 city	Umetsuji	Nichirin		2797	704	37.4850	107.6093	37.48°N 107.61°E
 city	Ūmqêsir	Divia		4007	3534	-23.1150	19.0940	23.11°S 19.09°E
 city	Union Creek	Hollosend		1882	3350	11.5200	-50.5046	11.52°N 50.50°W
-city	Upatangi	The Verdanie		2541	4476	-15.2550	-69.8977	15.25°S 69.90°W
-city	Uruguaiané	The Verdanie		2310	4878	-17.8200	-96.0599	17.82°S 96.06°W
 city	Utamichi	Nichirin		2860	556	38.7600	121.4052	38.76°N 121.41°E
 city	Utinenza	Vicily		3081	2922	-0.0450	4.7724	0.05°S 4.77°E
 city	Utopia	Salishia		1456	2527	30.2550	-48.4007	30.25°N 48.40°W
 city	Utsinsk	Rudania		2944	1188	28.0200	76.4956	28.02°N 76.50°E
 city	Uzuiwa	Nichirin		2299	754	44.2050	91.0907	44.20°N 91.09°E
 city	Väärnitsa	Karjania		3003	2072	13.8750	33.0207	13.87°N 33.02°E
-city	Val-de-Melot	The Verdanie		2406	4957	-20.4450	-99.0252	20.45°S 99.03°W
 city	Valcœur	Tonkin		4131	912	14.3550	114.8959	14.35°N 114.90°E
 city	Valden	Hollosend		1859	3733	6.1200	-60.3219	6.12°N 60.32°W
 city	Valentine	Hollosend		1546	3307	17.2050	-65.3163	17.20°N 65.32°W
@@ -1658,14 +1590,12 @@ city	Veltridge	E.S.U.		1911	3100	14.8350	-42.7100	14.83°N 42.71°W
 city	Venesia	Vicily		3047	2939	0.2100	3.2476	0.21°N 3.25°E
 city	Venugram	Arunya		3632	4660	-34.3800	-49.9029	34.38°S 49.90°W
 city	Verishaya	Nozhnorstan		3522	1083	20.9250	95.3355	20.92°N 95.34°E
-city	Véritable	The Verdanie		2436	4708	-17.1600	-84.2175	17.16°S 84.22°W
 city	Versberre	Arverne		2910	2925	2.4750	-0.4627	2.47°N 0.46°W
 city	Veshkingrad	Giathka		3683	2061	3.8400	50.8287	3.84°N 50.83°E
 city	Vestfold	Skjarnland		2752	2462	11.7900	10.0115	11.79°N 10.01°E
 city	Vestvind	E.S.U.		1962	3090	14.2200	-40.1900	14.22°N 40.19°W
 city	Veynach	Alemannia		3138	2597	3.9750	16.9799	3.97°N 16.98°E
 city	Vicestra	Hollosend		2028	3380	8.8800	-45.0000	8.88°N 45.00°W
-city	Victoire	The Verdanie		2579	4505	-16.2600	-70.5207	16.26°S 70.52°W
 city	Vidyapura	Arunya		3681	4691	-35.5800	-50.1103	35.58°S 50.11°W
 city	Vihar	Noradia		4033	4891	-43.8600	-50.2081	43.86°S 50.21°W
 city	Vijeyara	Arunya		3746	4871	-39.2550	-59.8581	39.25°S 59.86°W
@@ -1676,8 +1606,6 @@ city	Villaguja	Hollosend		1992	3563	6.6750	-50.9055	6.67°N 50.91°W
 city	Villanova	Vicily		3115	3016	-1.9650	3.0363	1.97°S 3.04°E
 city	Villanueva	Auritania		1530	3971	7.4850	-79.8728	7.48°N 79.87°W
 city	Ville Tonkinoise	Tonkin		4123	879	14.9700	116.7373	14.97°N 116.74°E
-city	Ville-Divine	The Verdanie		2485	4504	-14.8350	-72.5244	14.83°S 72.52°W
-city	Ville-Doré	The Verdanie		2273	4666	-14.0850	-85.1097	14.08°S 85.11°W
 city	Vindvik	Skjarnland		2807	2514	10.1850	9.9117	10.18°N 9.91°E
 city	Viseramünde	Alemannia		2892	2603	7.5750	9.4668	7.57°N 9.47°E
 city	Visibinsk	Rudania		3070	2268	9.9300	27.0438	9.93°N 27.04°E
@@ -1938,7 +1866,6 @@ label	TARTARUS		continent	5657	5148	-72.0750	76.6695	72.07°S 76.67°E
 label	TEPID SEA		sea	3425	4600	-30.3750	-53.2075	30.37°S 53.21°W
 label	TERRANOVA GULF		sea	1744	3869	5.8050	-68.1454	5.80°N 68.15°W
 label	TETHYS SEA		sea	3386	2834	-3.3000	17.1903	3.30°S 17.19°E
-label	THE VERDANIE		nation	2288	4671	-14.3850	-85.0903	14.38°S 85.09°W
 label	THULE		colony	2291	2693	15.2400	-14.5185	15.24°N 14.52°W
 label	TONKIN		colony	4124	869	15.1050	117.3443	15.10°N 117.34°E
 label	UNGAVA BAY		sea	2328	2635	15.5550	-11.1344	15.55°N 11.13°W

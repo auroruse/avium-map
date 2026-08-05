@@ -132,18 +132,6 @@
     "y": 520
   },
   {
-    "name": "Saint-Paul",
-    "nation": "The Verdanie",
-    "population": 19416000,
-    "gdp": 695000000000,
-    "gdpPerCapita": 35795,
-    "nativeScript": "",
-    "irlParallel": "São Paulo",
-    "alpha3": "VER",
-    "x": 2477,
-    "y": 4635
-  },
-  {
     "name": "Axiom",
     "nation": "E.S.U.",
     "population": 19211000,
@@ -190,18 +178,6 @@
     "alpha3": "NCH",
     "x": 4116,
     "y": 5107
-  },
-  {
-    "name": "Bon-Vents",
-    "nation": "The Verdanie",
-    "population": 15114000,
-    "gdp": 725470000000,
-    "gdpPerCapita": 48000,
-    "nativeScript": "",
-    "irlParallel": "Buenos Aires",
-    "alpha3": "VER",
-    "x": 2365,
-    "y": 5044
   },
   {
     "name": "Tianji",
@@ -262,18 +238,6 @@
     "alpha3": "ARU",
     "x": 3637,
     "y": 4891
-  },
-  {
-    "name": "Rive-de-Janvier",
-    "nation": "The Verdanie",
-    "population": 12114000,
-    "gdp": 268000000000,
-    "gdpPerCapita": 22123,
-    "nativeScript": "",
-    "irlParallel": "Rio de Janeiro",
-    "alpha3": "VER",
-    "x": 2513,
-    "y": 4590
   },
   {
     "name": "Xianzhou",
@@ -864,18 +828,6 @@
     "y": 3774
   },
   {
-    "name": "Bel-Horizon",
-    "nation": "The Verdanie",
-    "population": 5416000,
-    "gdp": 171150000000,
-    "gdpPerCapita": 31601,
-    "nativeScript": "",
-    "irlParallel": "Belo Horizonte",
-    "alpha3": "VER",
-    "x": 2503,
-    "y": 4491
-  },
-  {
     "name": "Hengliu",
     "nation": "Guandong",
     "population": 5321000,
@@ -1212,18 +1164,6 @@
     "y": 3057
   },
   {
-    "name": "Port-de-Joie",
-    "nation": "The Verdanie",
-    "population": 3842000,
-    "gdp": 118500000000,
-    "gdpPerCapita": 30843,
-    "nativeScript": "",
-    "irlParallel": "Porto Alegre",
-    "alpha3": "VER",
-    "x": 2441,
-    "y": 4865
-  },
-  {
     "name": "Charlotte",
     "nation": "E.S.U.",
     "population": 3782000,
@@ -1450,18 +1390,6 @@
     "alpha3": "SEL",
     "x": 3391,
     "y": 3264
-  },
-  {
-    "name": "Véritable",
-    "nation": "The Verdanie",
-    "population": 3184000,
-    "gdp": 106200000000,
-    "gdpPerCapita": 33354,
-    "nativeScript": "",
-    "irlParallel": "Curitiba",
-    "alpha3": "VER",
-    "x": 2436,
-    "y": 4708
   },
   {
     "name": "Tiruvana",
@@ -1990,18 +1918,6 @@
     "alpha3": "HOL",
     "x": 2008,
     "y": 3711
-  },
-  {
-    "name": "L'Assomption de Marie",
-    "nation": "The Verdanie",
-    "population": 2414000,
-    "gdp": 36500000000,
-    "gdpPerCapita": 15120,
-    "nativeScript": "",
-    "irlParallel": "Asunción",
-    "alpha3": "VER",
-    "x": 2224,
-    "y": 4761
   },
   {
     "name": "Vijeyara",
@@ -2580,18 +2496,6 @@
     "y": 2255
   },
   {
-    "name": "Victoire",
-    "nation": "The Verdanie",
-    "population": 1846000,
-    "gdp": 68120000000,
-    "gdpPerCapita": 36901,
-    "nativeScript": "",
-    "irlParallel": "Vitória",
-    "alpha3": "VER",
-    "x": 2579,
-    "y": 4505
-  },
-  {
     "name": "Manukan",
     "nation": "Cahaya",
     "population": 1844000,
@@ -2830,18 +2734,6 @@
     "alpha3": "SLY",
     "x": 3353,
     "y": 2514
-  },
-  {
-    "name": "Mont-de-Vue",
-    "nation": "The Verdanie",
-    "population": 1746000,
-    "gdp": 72400000000,
-    "gdpPerCapita": 41466,
-    "nativeScript": "",
-    "irlParallel": "Montevideo",
-    "alpha3": "VER",
-    "x": 2411,
-    "y": 5024
   },
   {
     "name": "Shikisen",
@@ -3682,18 +3574,6 @@
     "alpha3": "HOL",
     "x": 2019,
     "y": 3754
-  },
-  {
-    "name": "Campagnes",
-    "nation": "The Verdanie",
-    "population": 1314000,
-    "gdp": 54800000000,
-    "gdpPerCapita": 41705,
-    "nativeScript": "",
-    "irlParallel": "Campinas",
-    "alpha3": "VER",
-    "x": 2457,
-    "y": 4614
   },
   {
     "name": "Anxing",
@@ -5244,18 +5124,6 @@
     "y": 1847
   },
   {
-    "name": "Grand-Champ",
-    "nation": "The Verdanie",
-    "population": 892000,
-    "gdp": 29600000000,
-    "gdpPerCapita": 33184,
-    "nativeScript": "",
-    "irlParallel": "Campo Grande",
-    "alpha3": "VER",
-    "x": 2245,
-    "y": 4599
-  },
-  {
     "name": "Villaguja",
     "nation": "Hollosend",
     "population": 882000,
@@ -5290,18 +5158,6 @@
     "alpha3": "SHI",
     "x": 3632,
     "y": 3405
-  },
-  {
-    "name": "La Plate",
-    "nation": "The Verdanie",
-    "population": 882000,
-    "gdp": 29980000000,
-    "gdpPerCapita": 33991,
-    "nativeScript": "",
-    "irlParallel": "La Plata",
-    "alpha3": "VER",
-    "x": 2379,
-    "y": 5043
   },
   {
     "name": "Sultanönü",
@@ -6216,18 +6072,6 @@
     "y": 1714
   },
   {
-    "name": "Rivière-Noire",
-    "nation": "The Verdanie",
-    "population": 694000,
-    "gdp": 26400000000,
-    "gdpPerCapita": 38040,
-    "nativeScript": "",
-    "irlParallel": "Ribeirão Preto",
-    "alpha3": "VER",
-    "x": 2430,
-    "y": 4574
-  },
-  {
     "name": "Liévres",
     "nation": "Arverne",
     "population": 691000,
@@ -6504,18 +6348,6 @@
     "y": 883
   },
   {
-    "name": "Sarocaba",
-    "nation": "The Verdanie",
-    "population": 646000,
-    "gdp": 24100000000,
-    "gdpPerCapita": 37307,
-    "nativeScript": "",
-    "irlParallel": "Sorocaba",
-    "alpha3": "VER",
-    "x": 2450,
-    "y": 4634
-  },
-  {
     "name": "Czółnów",
     "nation": "Eivorie",
     "population": 645000,
@@ -6646,18 +6478,6 @@
     "alpha3": "SGD",
     "x": 3969,
     "y": 576
-  },
-  {
-    "name": "Saint-Jean-des-Champs",
-    "nation": "The Verdanie",
-    "population": 642000,
-    "gdp": 25100000000,
-    "gdpPerCapita": 39097,
-    "nativeScript": "",
-    "irlParallel": "São José dos Campos",
-    "alpha3": "VER",
-    "x": 2489,
-    "y": 4613
   },
   {
     "name": "Bariccia",
@@ -7572,18 +7392,6 @@
     "y": 4962
   },
   {
-    "name": "Rive-Rapide",
-    "nation": "The Verdanie",
-    "population": 546000,
-    "gdp": 16400000000,
-    "gdpPerCapita": 30037,
-    "nativeScript": "",
-    "irlParallel": "Londrina",
-    "alpha3": "VER",
-    "x": 2370,
-    "y": 4641
-  },
-  {
     "name": "Haneburg",
     "nation": "Alemannia",
     "population": 544000,
@@ -7798,42 +7606,6 @@
     "alpha3": "RUD",
     "x": 3066,
     "y": 1462
-  },
-  {
-    "name": "Joliet",
-    "nation": "The Verdanie",
-    "population": 542000,
-    "gdp": 24800000000,
-    "gdpPerCapita": 45756,
-    "nativeScript": "",
-    "irlParallel": "Joinville",
-    "alpha3": "VER",
-    "x": 2448,
-    "y": 4736
-  },
-  {
-    "name": "Juge-Forain",
-    "nation": "The Verdanie",
-    "population": 542000,
-    "gdp": 16420000000,
-    "gdpPerCapita": 30295,
-    "nativeScript": "",
-    "irlParallel": "Juiz de Fora",
-    "alpha3": "VER",
-    "x": 2527,
-    "y": 4546
-  },
-  {
-    "name": "Calme-Lac",
-    "nation": "The Verdanie",
-    "population": 542000,
-    "gdp": 7600000000,
-    "gdpPerCapita": 14022,
-    "nativeScript": "",
-    "irlParallel": "Benguela",
-    "alpha3": "VER",
-    "x": 2577,
-    "y": 4566
   },
   {
     "name": "Kurozuyama",
@@ -8112,18 +7884,6 @@
     "y": 1470
   },
   {
-    "name": "Meiembipé",
-    "nation": "The Verdanie",
-    "population": 514000,
-    "gdp": 21400000000,
-    "gdpPerCapita": 41634,
-    "nativeScript": "",
-    "irlParallel": "Florianópolis",
-    "alpha3": "VER",
-    "x": 2476,
-    "y": 4770
-  },
-  {
     "name": "Kuntala",
     "nation": "Arunya",
     "population": 512000,
@@ -8158,18 +7918,6 @@
     "alpha3": "RUD",
     "x": 3150,
     "y": 2155
-  },
-  {
-    "name": "Champ-de-Bruges",
-    "nation": "The Verdanie",
-    "population": 512000,
-    "gdp": 21200000000,
-    "gdpPerCapita": 41406,
-    "nativeScript": "",
-    "irlParallel": "Caxias do Sul",
-    "alpha3": "VER",
-    "x": 2415,
-    "y": 4828
   },
   {
     "name": "Futahashi",
@@ -8290,18 +8038,6 @@
     "alpha3": "NZH",
     "x": 3574,
     "y": 1358
-  },
-  {
-    "name": "Champs-des-Goitacés",
-    "nation": "The Verdanie",
-    "population": 494000,
-    "gdp": 14230000000,
-    "gdpPerCapita": 28806,
-    "nativeScript": "",
-    "irlParallel": "Campos dos Goytacazes",
-    "alpha3": "VER",
-    "x": 2565,
-    "y": 4541
   },
   {
     "name": "Haganeguchi",
@@ -8638,30 +8374,6 @@
     "alpha3": "RUD",
     "x": 3144,
     "y": 2024
-  },
-  {
-    "name": "Saint-Jean-de-Rive-Noir",
-    "nation": "The Verdanie",
-    "population": 464000,
-    "gdp": 17100000000,
-    "gdpPerCapita": 36853,
-    "nativeScript": "",
-    "irlParallel": "São José do Rio Preto",
-    "alpha3": "VER",
-    "x": 2387,
-    "y": 4573
-  },
-  {
-    "name": "Colline d'Unité",
-    "nation": "The Verdanie",
-    "population": 464000,
-    "gdp": 14200000000,
-    "gdpPerCapita": 30603,
-    "nativeScript": "",
-    "irlParallel": "Maringá",
-    "alpha3": "VER",
-    "x": 2344,
-    "y": 4658
   },
   {
     "name": "Argungu",
@@ -9324,30 +9036,6 @@
     "y": 889
   },
   {
-    "name": "Silurière",
-    "nation": "The Verdanie",
-    "population": 414000,
-    "gdp": 16800000000,
-    "gdpPerCapita": 40580,
-    "nativeScript": "",
-    "irlParallel": "Jundial",
-    "alpha3": "VER",
-    "x": 2466,
-    "y": 4622
-  },
-  {
-    "name": "Flux",
-    "nation": "The Verdanie",
-    "population": 414000,
-    "gdp": 11200000000,
-    "gdpPerCapita": 27053,
-    "nativeScript": "",
-    "irlParallel": "Corrientes",
-    "alpha3": "VER",
-    "x": 2235,
-    "y": 4837
-  },
-  {
     "name": "Khandkyapur",
     "nation": "Arunya",
     "population": 412000,
@@ -9646,18 +9334,6 @@
     "alpha3": "SAL",
     "x": 1361,
     "y": 2539
-  },
-  {
-    "name": "Fleuve-Calme",
-    "nation": "The Verdanie",
-    "population": 394000,
-    "gdp": 10240000000,
-    "gdpPerCapita": 25990,
-    "nativeScript": "",
-    "irlParallel": "Posadas",
-    "alpha3": "VER",
-    "x": 2292,
-    "y": 4827
   },
   {
     "name": "Kusurigura",
@@ -10560,54 +10236,6 @@
     "y": 2473
   },
   {
-    "name": "Blomaù",
-    "nation": "The Verdanie",
-    "population": 342000,
-    "gdp": 14900000000,
-    "gdpPerCapita": 43567,
-    "nativeScript": "",
-    "irlParallel": "Blumenau",
-    "alpha3": "VER",
-    "x": 2451,
-    "y": 4750
-  },
-  {
-    "name": "Pointe-Épaisse",
-    "nation": "The Verdanie",
-    "population": 342000,
-    "gdp": 11900000000,
-    "gdpPerCapita": 34795,
-    "nativeScript": "",
-    "irlParallel": "Ponta Grossa",
-    "alpha3": "VER",
-    "x": 2404,
-    "y": 4692
-  },
-  {
-    "name": "Ouberabé",
-    "nation": "The Verdanie",
-    "population": 342000,
-    "gdp": 11620000000,
-    "gdpPerCapita": 33977,
-    "nativeScript": "",
-    "irlParallel": "Uberaba",
-    "alpha3": "VER",
-    "x": 2397,
-    "y": 4528
-  },
-  {
-    "name": "Arvernie",
-    "nation": "The Verdanie",
-    "population": 342000,
-    "gdp": 10400000000,
-    "gdpPerCapita": 30409,
-    "nativeScript": "",
-    "irlParallel": "Franca",
-    "alpha3": "VER",
-    "x": 2428,
-    "y": 4545
-  },
-  {
     "name": "Aqmescit",
     "nation": "East Kaukasos",
     "population": 339000,
@@ -10860,18 +10488,6 @@
     "y": 1996
   },
   {
-    "name": "Bateaux",
-    "nation": "The Verdanie",
-    "population": 324000,
-    "gdp": 10800000000,
-    "gdpPerCapita": 33333,
-    "nativeScript": "",
-    "irlParallel": "Pelotas",
-    "alpha3": "VER",
-    "x": 2450,
-    "y": 4920
-  },
-  {
     "name": "Anaatasagaram",
     "nation": "Arunya",
     "population": 322000,
@@ -11028,30 +10644,6 @@
     "y": 2227
   },
   {
-    "name": "Le Crotale",
-    "nation": "The Verdanie",
-    "population": 316000,
-    "gdp": 11850000000,
-    "gdpPerCapita": 37500,
-    "nativeScript": "",
-    "irlParallel": "Cascavel",
-    "alpha3": "VER",
-    "x": 2332,
-    "y": 4718
-  },
-  {
-    "name": "Bouche-Grand'Eau",
-    "nation": "The Verdanie",
-    "population": 316000,
-    "gdp": 11400000000,
-    "gdpPerCapita": 36076,
-    "nativeScript": "",
-    "irlParallel": "Foz do Iguaçu",
-    "alpha3": "VER",
-    "x": 2307,
-    "y": 4751
-  },
-  {
     "name": "Mannenheim",
     "nation": "Alemannia",
     "population": 315000,
@@ -11134,18 +10726,6 @@
     "alpha3": "REI",
     "x": 2659,
     "y": 2815
-  },
-  {
-    "name": "Pérana",
-    "nation": "The Verdanie",
-    "population": 314000,
-    "gdp": 8800000000,
-    "gdpPerCapita": 28025,
-    "nativeScript": "",
-    "irlParallel": "Paraná",
-    "alpha3": "VER",
-    "x": 2249,
-    "y": 4984
   },
   {
     "name": "Akaishi",
@@ -12000,18 +11580,6 @@
     "y": 3573
   },
   {
-    "name": "Saint-Marie",
-    "nation": "The Verdanie",
-    "population": 268000,
-    "gdp": 9400000000,
-    "gdpPerCapita": 35075,
-    "nativeScript": "",
-    "irlParallel": "Santa Maria, BR",
-    "alpha3": "VER",
-    "x": 2374,
-    "y": 4865
-  },
-  {
     "name": "Csernovic",
     "nation": "Genosa",
     "population": 267000,
@@ -12684,54 +12252,6 @@
     "y": 2514
   },
   {
-    "name": "Macé",
-    "nation": "The Verdanie",
-    "population": 242000,
-    "gdp": 15640000000,
-    "gdpPerCapita": 64628,
-    "nativeScript": "",
-    "irlParallel": "Macaé",
-    "alpha3": "VER",
-    "x": 2572,
-    "y": 4553
-  },
-  {
-    "name": "Saint-Charles",
-    "nation": "The Verdanie",
-    "population": 242000,
-    "gdp": 9150000000,
-    "gdpPerCapita": 37810,
-    "nativeScript": "",
-    "irlParallel": "São Carlos",
-    "alpha3": "VER",
-    "x": 2417,
-    "y": 4598
-  },
-  {
-    "name": "Upatangi",
-    "nation": "The Verdanie",
-    "population": 242000,
-    "gdp": 7620000000,
-    "gdpPerCapita": 31488,
-    "nativeScript": "",
-    "irlParallel": "Ipatinga",
-    "alpha3": "VER",
-    "x": 2541,
-    "y": 4476
-  },
-  {
-    "name": "Ville-Divine",
-    "nation": "The Verdanie",
-    "population": 242000,
-    "gdp": 7480000000,
-    "gdpPerCapita": 30909,
-    "nativeScript": "",
-    "irlParallel": "Divinopolis",
-    "alpha3": "VER",
-    "x": 2485,
-    "y": 4504
-  },
-  {
     "name": "Kadohara",
     "nation": "Nichirin",
     "population": 242000,
@@ -13260,18 +12780,6 @@
     "y": 466
   },
   {
-    "name": "Marilé",
-    "nation": "The Verdanie",
-    "population": 216000,
-    "gdp": 7350000000,
-    "gdpPerCapita": 34028,
-    "nativeScript": "",
-    "irlParallel": "Marília",
-    "alpha3": "VER",
-    "x": 2381,
-    "y": 4617
-  },
-  {
     "name": "Luviania",
     "nation": "Vicily",
     "population": 216000,
@@ -13450,42 +12958,6 @@
     "alpha3": "SGD",
     "x": 3811,
     "y": 749
-  },
-  {
-    "name": "Criumécie",
-    "nation": "The Verdanie",
-    "population": 214000,
-    "gdp": 8100000000,
-    "gdpPerCapita": 37850,
-    "nativeScript": "",
-    "irlParallel": "Criciúma",
-    "alpha3": "VER",
-    "x": 2464,
-    "y": 4811
-  },
-  {
-    "name": "Ville-Doré",
-    "nation": "The Verdanie",
-    "population": 214000,
-    "gdp": 7450000000,
-    "gdpPerCapita": 34813,
-    "nativeScript": "",
-    "irlParallel": "Dourados",
-    "alpha3": "VER",
-    "x": 2273,
-    "y": 4666
-  },
-  {
-    "name": "Prudentiale",
-    "nation": "The Verdanie",
-    "population": 214000,
-    "gdp": 7400000000,
-    "gdpPerCapita": 34579,
-    "nativeScript": "",
-    "irlParallel": "Presidente Prudente",
-    "alpha3": "VER",
-    "x": 2345,
-    "y": 4625
   },
   {
     "name": "Nowgorod",
@@ -13920,18 +13392,6 @@
     "y": 4086
   },
   {
-    "name": "La Concorde",
-    "nation": "The Verdanie",
-    "population": 204000,
-    "gdp": 5710000000,
-    "gdpPerCapita": 27990,
-    "nativeScript": "",
-    "irlParallel": "Concordia",
-    "alpha3": "VER",
-    "x": 2290,
-    "y": 4942
-  },
-  {
     "name": "Harusame",
     "nation": "Nichirin",
     "population": 204000,
@@ -14158,18 +13618,6 @@
     "alpha3": "SKJ",
     "x": 2865,
     "y": 2327
-  },
-  {
-    "name": "Arèçatobie",
-    "nation": "The Verdanie",
-    "population": 194000,
-    "gdp": 7250000000,
-    "gdpPerCapita": 37371,
-    "nativeScript": "",
-    "irlParallel": "Araçatuba",
-    "alpha3": "VER",
-    "x": 2364,
-    "y": 4598
   },
   {
     "name": "Hongay",
@@ -14662,30 +14110,6 @@
     "alpha3": "ARV",
     "x": 2803,
     "y": 5270
-  },
-  {
-    "name": "Chapécu",
-    "nation": "The Verdanie",
-    "population": 184000,
-    "gdp": 7150000000,
-    "gdpPerCapita": 38859,
-    "nativeScript": "",
-    "irlParallel": "Chapecó",
-    "alpha3": "VER",
-    "x": 2378,
-    "y": 4776
-  },
-  {
-    "name": "Passe-Profond",
-    "nation": "The Verdanie",
-    "population": 184000,
-    "gdp": 6900000000,
-    "gdpPerCapita": 37500,
-    "nativeScript": "",
-    "irlParallel": "Passo Fundo",
-    "alpha3": "VER",
-    "x": 2389,
-    "y": 4817
   },
   {
     "name": "Ndorena",
@@ -15612,30 +15036,6 @@
     "y": 869
   },
   {
-    "name": "Chanteloup",
-    "nation": "The Verdanie",
-    "population": 162000,
-    "gdp": 5320000000,
-    "gdpPerCapita": 32840,
-    "nativeScript": "",
-    "irlParallel": "Guarapuava",
-    "alpha3": "VER",
-    "x": 2375,
-    "y": 4717
-  },
-  {
-    "name": "Cap-Froid",
-    "nation": "The Verdanie",
-    "population": 162000,
-    "gdp": 4670000000,
-    "gdpPerCapita": 28827,
-    "nativeScript": "",
-    "irlParallel": "Cabo Frio",
-    "alpha3": "VER",
-    "x": 2559,
-    "y": 4556
-  },
-  {
     "name": "Rosthollow",
     "nation": "Hollosend",
     "population": 161000,
@@ -16248,30 +15648,6 @@
     "y": 5237
   },
   {
-    "name": "Mont-Maldon",
-    "nation": "The Verdanie",
-    "population": 144000,
-    "gdp": 5960000000,
-    "gdpPerCapita": 41389,
-    "nativeScript": "",
-    "irlParallel": "Maldonado",
-    "alpha3": "VER",
-    "x": 2444,
-    "y": 5016
-  },
-  {
-    "name": "Tolède",
-    "nation": "The Verdanie",
-    "population": 144000,
-    "gdp": 5480000000,
-    "gdpPerCapita": 38056,
-    "nativeScript": "",
-    "irlParallel": "Toledo, BR",
-    "alpha3": "VER",
-    "x": 2319,
-    "y": 4719
-  },
-  {
     "name": "Pingbang",
     "nation": "Furan",
     "population": 143000,
@@ -16426,18 +15802,6 @@
     "alpha3": "REI",
     "x": 2725,
     "y": 2862
-  },
-  {
-    "name": "Bon-Repos",
-    "nation": "The Verdanie",
-    "population": 142000,
-    "gdp": 4950000000,
-    "gdpPerCapita": 34859,
-    "nativeScript": "",
-    "irlParallel": "Pouso Alegre",
-    "alpha3": "VER",
-    "x": 2474,
-    "y": 4589
   },
   {
     "name": "Cairenza",
@@ -17232,18 +16596,6 @@
     "y": 1868
   },
   {
-    "name": "La Fromagerie",
-    "nation": "The Verdanie",
-    "population": 118000,
-    "gdp": 3190000000,
-    "gdpPerCapita": 27034,
-    "nativeScript": "",
-    "irlParallel": "Goya",
-    "alpha3": "VER",
-    "x": 2238,
-    "y": 4888
-  },
-  {
     "name": "Ōyashiro",
     "nation": "Nichirin",
     "population": 118000,
@@ -17424,42 +16776,6 @@
     "y": 2459
   },
   {
-    "name": "Trois-Lagons",
-    "nation": "The Verdanie",
-    "population": 116000,
-    "gdp": 4980000000,
-    "gdpPerCapita": 42931,
-    "nativeScript": "",
-    "irlParallel": "Tres Lagoas",
-    "alpha3": "VER",
-    "x": 2322,
-    "y": 4605
-  },
-  {
-    "name": "Pierres",
-    "nation": "The Verdanie",
-    "population": 116000,
-    "gdp": 4220000000,
-    "gdpPerCapita": 36379,
-    "nativeScript": "",
-    "irlParallel": "Lages",
-    "alpha3": "VER",
-    "x": 2430,
-    "y": 4782
-  },
-  {
-    "name": "Jaguarière",
-    "nation": "The Verdanie",
-    "population": 116000,
-    "gdp": 3250000000,
-    "gdpPerCapita": 28017,
-    "nativeScript": "",
-    "irlParallel": "Gualeguaychú",
-    "alpha3": "VER",
-    "x": 2303,
-    "y": 4996
-  },
-  {
     "name": "Subrotira",
     "nation": "Vicily",
     "population": 116000,
@@ -17501,7 +16817,7 @@
     "population": 114000,
     "gdp": 1850000000,
     "gdpPerCapita": 16228,
-    "nativeScript": "ගිම්හා���ිත්ත",
+    "nativeScript": "ගිම්හාතිත්ත",
     "irlParallel": "Galle",
     "alpha3": "ARU",
     "x": 3372,
@@ -17686,66 +17002,6 @@
     "alpha3": "SKJ",
     "x": 2875,
     "y": 2467
-  },
-  {
-    "name": "Arachas",
-    "nation": "The Verdanie",
-    "population": 114000,
-    "gdp": 4210000000,
-    "gdpPerCapita": 36930,
-    "nativeScript": "",
-    "irlParallel": "Araxa",
-    "alpha3": "VER",
-    "x": 2413,
-    "y": 4522
-  },
-  {
-    "name": "Uruguaiané",
-    "nation": "The Verdanie",
-    "population": 114000,
-    "gdp": 3950000000,
-    "gdpPerCapita": 34649,
-    "nativeScript": "",
-    "irlParallel": "Uruguaiana",
-    "alpha3": "VER",
-    "x": 2310,
-    "y": 4878
-  },
-  {
-    "name": "Chevalier",
-    "nation": "The Verdanie",
-    "population": 114000,
-    "gdp": 3850000000,
-    "gdpPerCapita": 33772,
-    "nativeScript": "",
-    "irlParallel": "Pedro Juan Caballero",
-    "alpha3": "VER",
-    "x": 2246,
-    "y": 4687
-  },
-  {
-    "name": "Colatine",
-    "nation": "The Verdanie",
-    "population": 114000,
-    "gdp": 3420000000,
-    "gdpPerCapita": 30000,
-    "nativeScript": "",
-    "irlParallel": "Colatina",
-    "alpha3": "VER",
-    "x": 2566,
-    "y": 4480
-  },
-  {
-    "name": "Pierrefitte",
-    "nation": "The Verdanie",
-    "population": 114000,
-    "gdp": 3150000000,
-    "gdpPerCapita": 27632,
-    "nativeScript": "",
-    "irlParallel": "Corumbá",
-    "alpha3": "VER",
-    "x": 2158,
-    "y": 4583
   },
   {
     "name": "Golestan",
@@ -18732,18 +17988,6 @@
     "y": 2547
   },
   {
-    "name": "Près-Ange",
-    "nation": "The Verdanie",
-    "population": 94000,
-    "gdp": 1180000000,
-    "gdpPerCapita": 12553,
-    "nativeScript": "",
-    "irlParallel": "Moçâmedes",
-    "alpha3": "VER",
-    "x": 2490,
-    "y": 4661
-  },
-  {
     "name": "Rüchenberg",
     "nation": "Alemannia",
     "population": 93000,
@@ -19344,18 +18588,6 @@
     "y": 5362
   },
   {
-    "name": "Bel-Éclat",
-    "nation": "The Verdanie",
-    "population": 82000,
-    "gdp": 2130000000,
-    "gdpPerCapita": 25976,
-    "nativeScript": "",
-    "irlParallel": "Oberá",
-    "alpha3": "VER",
-    "x": 2316,
-    "y": 4821
-  },
-  {
     "name": "Chirimen",
     "nation": "Nichirin",
     "population": 82000,
@@ -19728,18 +18960,6 @@
     "y": 5283
   },
   {
-    "name": "Rive-Haute",
-    "nation": "The Verdanie",
-    "population": 72000,
-    "gdp": 2640000000,
-    "gdpPerCapita": 36667,
-    "nativeScript": "",
-    "irlParallel": "Rivera, UY",
-    "alpha3": "VER",
-    "x": 2358,
-    "y": 4928
-  },
-  {
     "name": "Canebreak",
     "nation": "Hollosend",
     "population": 71000,
@@ -20052,18 +19272,6 @@
     "y": 1692
   },
   {
-    "name": "Richeville",
-    "nation": "The Verdanie",
-    "population": 64000,
-    "gdp": 2150000000,
-    "gdpPerCapita": 33594,
-    "nativeScript": "",
-    "irlParallel": "Villarica",
-    "alpha3": "VER",
-    "x": 2270,
-    "y": 4774
-  },
-  {
     "name": "Rautaniemi",
     "nation": "Karjania",
     "population": 63000,
@@ -20158,30 +19366,6 @@
     "alpha3": "SEL",
     "x": 3419,
     "y": 3319
-  },
-  {
-    "name": "Baie-des-Baleines",
-    "nation": "The Verdanie",
-    "population": 62000,
-    "gdp": 2450000000,
-    "gdpPerCapita": 39516,
-    "nativeScript": "",
-    "irlParallel": "Walvis Bay",
-    "alpha3": "VER",
-    "x": 2489,
-    "y": 4879
-  },
-  {
-    "name": "La Conception",
-    "nation": "The Verdanie",
-    "population": 62000,
-    "gdp": 1980000000,
-    "gdpPerCapita": 31935,
-    "nativeScript": "",
-    "irlParallel": "Concepcion, PY",
-    "alpha3": "VER",
-    "x": 2211,
-    "y": 4713
   },
   {
     "name": "Xia'an",
@@ -20544,18 +19728,6 @@
     "y": 1088
   },
   {
-    "name": "Les Bambouières",
-    "nation": "The Verdanie",
-    "population": 54000,
-    "gdp": 1980000000,
-    "gdpPerCapita": 36667,
-    "nativeScript": "",
-    "irlParallel": "Tacuarembó",
-    "alpha3": "VER",
-    "x": 2360,
-    "y": 4948
-  },
-  {
     "name": "Valcœur",
     "nation": "Tonkin",
     "population": 54000,
@@ -20686,18 +19858,6 @@
     "alpha3": "RUD",
     "x": 3461,
     "y": 2006
-  },
-  {
-    "name": "Val-de-Melot",
-    "nation": "The Verdanie",
-    "population": 52000,
-    "gdp": 1910000000,
-    "gdpPerCapita": 36731,
-    "nativeScript": "",
-    "irlParallel": "Melo",
-    "alpha3": "VER",
-    "x": 2406,
-    "y": 4957
   },
   {
     "name": "Zwilingstürme",
@@ -20854,18 +20014,6 @@
     "alpha3": "SKJ",
     "x": 2696,
     "y": 2271
-  },
-  {
-    "name": "Bouche-du-Suècop",
-    "nation": "The Verdanie",
-    "population": 44000,
-    "gdp": 1620000000,
-    "gdpPerCapita": 36818,
-    "nativeScript": "",
-    "irlParallel": "Swakopmund",
-    "alpha3": "VER",
-    "x": 2492,
-    "y": 4865
   },
   {
     "name": "Gortari",
@@ -21814,18 +20962,6 @@
     "alpha3": "NCH",
     "x": 2591,
     "y": 699
-  },
-  {
-    "name": "La Fraternelle",
-    "nation": "The Verdanie",
-    "population": 12000,
-    "gdp": 1250000000,
-    "gdpPerCapita": 104167,
-    "nativeScript": "",
-    "irlParallel": "Filadelfia",
-    "alpha3": "VER",
-    "x": 2148,
-    "y": 4708
   },
   {
     "name": "Cartishire",
