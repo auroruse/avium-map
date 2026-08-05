@@ -2186,12 +2186,19 @@ function importJSON(file: File) {
   reader.readAsText(file)
 }
 
-const loaded = loadProgress()
+// Dev only, all three of these. The placer's localStorage is a scratch copy of
+// an editing session, and laying it over the shipped data on the public site
+// means anyone who has ever opened ?dev on that origin keeps seeing their old
+// coordinates — for good, because it is not a cache and clearing the cache does
+// not touch it. Which is exactly what happened: the deployed map rendered
+// positions from a stale editing session in one profile and the committed ones
+// in a private window, with the file, the bundle and the tiles all identical.
+const loaded = DEV ? loadProgress() : 0
 if (loaded > 0) {
   updateCities()
 }
 
-loadLabelProgress()
+if (DEV) loadLabelProgress()
 // mountLabel, not refreshLabel: one placement rebuild at the end rather than
 // one per label
 for (const def of labelDefs) mountLabel(def)
@@ -3487,7 +3494,7 @@ function loadStationProgress() {
   for (const p of stations) if (coords[p.name]) [p.x, p.y] = coords[p.name]
 }
 
-loadStationProgress()
+if (DEV) loadStationProgress()
 updateStations()
 map.on('zoomend', updateStations)
 
