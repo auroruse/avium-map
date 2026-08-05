@@ -7,7 +7,13 @@ const root = resolve(import.meta.dirname, '..')
 const layersDir = join(root, 'layers')
 const tilesDir = join(root, 'public', 'tiles')
 
-const OCEAN = { r: 45, g: 74, b: 94, alpha: 255 }
+// The sea itself, sampled from base.PNG. Edge tiles are padded with it and
+// #map's CSS background is the same value, so the strip of padding past the
+// 6000px world and the page behind that are indistinguishable from the water —
+// the white hairline is what marks where the world actually stops. Change the
+// base map's palette and both of these move together, or a band appears down the
+// right and bottom edges.
+const OCEAN = { r: 62, g: 78, b: 111, alpha: 255 }
 const CLEAR = { r: 0, g: 0, b: 0, alpha: 0 }
 
 const LAYERS = {
