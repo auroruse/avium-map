@@ -24,7 +24,7 @@
     "y": 1284,
     "minZoom": 2.5,
     "maxZoom": 3,
-    "span": 1300
+    "span": 1000
   },
   {
     "text": "PELAGONIA",
@@ -104,10 +104,10 @@
   {
     "text": "ARCTIC SEA",
     "type": "ocean",
-    "x": 2099,
-    "y": 1841,
+    "x": 2404,
+    "y": 2068,
     "minZoom": 2.5,
-    "span": 500
+    "span": 563.06137409622
   },
   {
     "text": "HIMALAYAN SEA",
@@ -204,8 +204,8 @@
   {
     "text": "E.S.U.",
     "type": "nation",
-    "x": 2132,
-    "y": 3060,
+    "x": 2013,
+    "y": 2984,
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
@@ -222,20 +222,10 @@
     "span": 325
   },
   {
-    "text": "CALVERIA",
-    "type": "nation",
-    "x": 1777,
-    "y": 3022,
-    "minZoom": 3.5,
-    "maxZoom": 5,
-    "tier": 13,
-    "span": 300
-  },
-  {
     "text": "AURITANIA",
     "type": "nation",
-    "x": 1364,
-    "y": 3892,
+    "x": 1375,
+    "y": 3889,
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
@@ -344,22 +334,22 @@
   {
     "text": "SKJARNLAND",
     "type": "nation",
-    "x": 2633,
-    "y": 2359,
+    "x": 2830,
+    "y": 2366,
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 500
+    "span": 189.22654906859324
   },
   {
     "text": "KARJANIA",
     "type": "nation",
-    "x": 2645,
-    "y": 2096,
+    "x": 2866,
+    "y": 2134,
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 3,
-    "span": 475
+    "span": 243.1282461798631
   },
   {
     "text": "REINO",
@@ -623,12 +613,12 @@
   {
     "text": "THULE",
     "type": "colony",
-    "x": 2393,
-    "y": 2628,
+    "x": 2291,
+    "y": 2693,
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 400
+    "span": 262.2249630167559
   },
   {
     "text": "RYŪGU",
@@ -648,7 +638,7 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 100
+    "span": 114.64348465445238
   },
   {
     "text": "ANDAM ISLANDS",
@@ -666,7 +656,7 @@
     "y": 2978,
     "minZoom": 3.5,
     "maxZoom": 5,
-    "span": 113.65847946765257
+    "span": 116.62450451890975
   },
   {
     "text": "AZTEKISCHE ISLANDS",
@@ -698,11 +688,11 @@
   {
     "text": "DÄMMERUNG ISLANDS",
     "type": "colony",
-    "x": 597,
-    "y": 2531,
+    "x": 815,
+    "y": 2673,
     "minZoom": 3.5,
     "maxZoom": 5,
-    "span": 536.1499355728083
+    "span": 199.07933264225164
   },
   {
     "text": "FREDERIKKA ISLANDS",
@@ -797,8 +787,8 @@
   {
     "text": "ALBATROSSINSELN",
     "type": "colony",
-    "x": 3675,
-    "y": 2933,
+    "x": 3688,
+    "y": 2934,
     "minZoom": 3.5,
     "maxZoom": 5,
     "span": 200
@@ -851,8 +841,8 @@
   {
     "text": "NORDSTJÄRNEÖ",
     "type": "colony",
-    "x": 1476,
-    "y": 2258,
+    "x": 1497,
+    "y": 2241,
     "minZoom": 3.5,
     "maxZoom": 5,
     "span": 147.48003242731977
@@ -860,8 +850,8 @@
   {
     "text": "SPETSBERGEN",
     "type": "colony",
-    "x": 2469,
-    "y": 1925,
+    "x": 2481,
+    "y": 1926,
     "minZoom": 3.5,
     "maxZoom": 5,
     "span": 150
@@ -869,8 +859,8 @@
   {
     "text": "ADELSKÖLDLAND",
     "type": "colony",
-    "x": 1450,
-    "y": 2328,
+    "x": 1455,
+    "y": 2316,
     "minZoom": 3.5,
     "maxZoom": 5,
     "span": 158.6434826007437
@@ -878,10 +868,10 @@
   {
     "text": "ANSELM'S HAVEN",
     "type": "sea",
-    "x": 2048,
+    "x": 2039,
     "y": 2574,
     "minZoom": 3.5,
-    "span": 317.59890010446776
+    "span": 279.47240652982686
   },
   {
     "text": "ACADIAN SEA",
@@ -894,18 +884,10 @@
   {
     "text": "BAY OF SERICA",
     "type": "sea",
-    "x": 3134,
-    "y": 501,
+    "x": 3108,
+    "y": 519,
     "minZoom": 3.5,
     "span": 315.30451672950096
-  },
-  {
-    "text": "SARGASSO SEA",
-    "type": "sea",
-    "x": 2673,
-    "y": 2715,
-    "minZoom": 3.5,
-    "span": 136.8899848862611
   },
   {
     "text": "GULF OF EUSCARA",
@@ -918,10 +900,10 @@
   {
     "text": "MARE INTERNUM",
     "type": "sea",
-    "x": 2913,
-    "y": 3024,
+    "x": 2883,
+    "y": 3036,
     "minZoom": 3.5,
-    "span": 85.7327900971431
+    "span": 102.09417086520155
   },
   {
     "text": "Romassan Sea",
@@ -1120,7 +1102,7 @@
     "x": 3060,
     "y": 4594,
     "minZoom": 3.5,
-    "span": 190.12930889768643
+    "span": 27.08146417320824
   },
   {
     "text": "GREAT PELAGONIAN CHANNEL",
@@ -1248,13 +1230,13 @@
     "x": 2977,
     "y": 2416,
     "minZoom": 3.5,
-    "span": 59.228722093822014
+    "span": 50.110400255921185
   },
   {
     "text": "UPPER SUEBIAN SEA",
     "type": "sea",
-    "x": 2926,
-    "y": 2309,
+    "x": 2930,
+    "y": 2310,
     "minZoom": 3.5,
     "span": 70.55551858903817
   },
@@ -1296,7 +1278,7 @@
     "x": 2922,
     "y": 2164,
     "minZoom": 3.5,
-    "span": 39.2067253587193
+    "span": 32.398478531392605
   },
   {
     "text": "LAKE VALIVE",
@@ -1366,14 +1348,14 @@
     "text": "LAKE RYUSEI",
     "type": "sea",
     "x": 2565,
-    "y": 703,
+    "y": 704,
     "minZoom": 3.5,
     "span": 41.7518183148098
   },
   {
     "text": "LAKE BAISHIN",
     "type": "sea",
-    "x": 2508,
+    "x": 2505,
     "y": 772,
     "minZoom": 3.5,
     "span": 20.548906359871356
@@ -1413,8 +1395,8 @@
   {
     "text": "UNGAVA BAY",
     "type": "sea",
-    "x": 2333,
-    "y": 2634,
+    "x": 2328,
+    "y": 2635,
     "minZoom": 3.5,
     "span": 70.11691200201514
   },
