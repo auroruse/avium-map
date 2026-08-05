@@ -11588,8 +11588,8 @@
     "nativeScript": "絹ノ瀬",
     "irlParallel": "Jinju",
     "alpha3": "NCH",
-    "x": null,
-    "y": null
+    "x": 2864,
+    "y": 519
   },
   {
     "name": "Murmánska",
@@ -14074,18 +14074,6 @@
     "alpha3": "SEL",
     "x": 3592,
     "y": 3196
-  },
-  {
-    "name": "Ikadase",
-    "nation": "Nichirin",
-    "population": 193000,
-    "gdp": 980000000,
-    "gdpPerCapita": 5078,
-    "nativeScript": "筏瀬",
-    "irlParallel": "Hyesan",
-    "alpha3": "NCH",
-    "x": null,
-    "y": null
   },
   {
     "name": "González Perfecto",
