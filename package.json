@@ -4,8 +4,8 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "npm run thumbs && vite",
-    "build": "npm run thumbs && tsc && vite build",
+    "dev": "npm run tile && npm run thumbs && vite",
+    "build": "npm run tile && npm run thumbs && tsc && vite build",
     "preview": "vite preview",
     "thumbs": "node scripts/thumbs.mjs",
     "coords": "node scripts/coords.mjs",

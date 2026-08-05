@@ -2,6 +2,8 @@ node_modules/
 dist/
 layers/*.png
 layers/*.PNG
+# which drawing each tile set came from; the drawings themselves are not in the repo
+.tilestamp.json
 .DS_Store
 banners-original/
 # derived from src/assets/cities by scripts/thumbs.mjs, rebuilt on every build
