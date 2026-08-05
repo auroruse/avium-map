@@ -162,7 +162,7 @@
     "gdp": 1050000000000,
     "gdpPerCapita": 55491,
     "nativeScript": "鷹羅塚",
-    "irlParallel": "Keihanshin",
+    "irlParallel": "Keihanshin MA",
     "alpha3": "NCH",
     "x": 2620,
     "y": 653
@@ -414,7 +414,7 @@
     "gdp": 540000000000,
     "gdpPerCapita": 56770,
     "nativeScript": "中京",
-    "irlParallel": "Chūkyō",
+    "irlParallel": "Chūkyō MA",
     "alpha3": "NCH",
     "x": 2571,
     "y": 675
@@ -510,7 +510,7 @@
     "gdp": 385000000000,
     "gdpPerCapita": 50000,
     "nativeScript": "釜淵",
-    "irlParallel": "Busan-Gyeongnam",
+    "irlParallel": "Busan-Gyeongnam MA",
     "alpha3": "NCH",
     "x": 2850,
     "y": 518
@@ -744,18 +744,6 @@
     "y": 3198
   },
   {
-    "name": "Genkai",
-    "nation": "Nichirin",
-    "population": 5813000,
-    "gdp": 238000000000,
-    "gdpPerCapita": 40943,
-    "nativeScript": "玄界",
-    "irlParallel": "Fukuoka-Kitakyushu-Tanchon",
-    "alpha3": "NCH",
-    "x": 2742,
-    "y": 627
-  },
-  {
     "name": "Foundry",
     "nation": "E.S.U.",
     "population": 5811000,
@@ -966,7 +954,7 @@
     "gdp": 415000000000,
     "gdpPerCapita": 81118,
     "nativeScript": "",
-    "irlParallel": "Ruhr Metropolitan Area",
+    "irlParallel": "Ruhr MA",
     "alpha3": "ALE",
     "x": 2932,
     "y": 2656
@@ -1279,7 +1267,7 @@
     "gdpPerCapita": 77545,
     "nativeScript": "",
     "irlParallel": "Berlin",
-    "alpha3": "NOR",
+    "alpha3": "ALE",
     "x": 2982,
     "y": 2545
   },
@@ -1736,8 +1724,8 @@
     "nativeScript": "薩野",
     "irlParallel": "Sapporo",
     "alpha3": "NCH",
-    "x": 2221,
-    "y": 856
+    "x": 2224,
+    "y": 858
   },
   {
     "name": "Kovichi",
@@ -1746,7 +1734,7 @@
     "gdp": 18400000000,
     "gdpPerCapita": 6964,
     "nativeScript": "കൊവിച്ചി",
-    "irlParallel": "Kochi",
+    "irlParallel": "Kochi, KL",
     "alpha3": "ARU",
     "x": 3505,
     "y": 4797
@@ -1798,6 +1786,18 @@
     "alpha3": "NCH",
     "x": 3150,
     "y": 5598
+  },
+  {
+    "name": "Hakata",
+    "nation": "Nichirin",
+    "population": 2568000,
+    "gdp": 138670000000,
+    "gdpPerCapita": 53999,
+    "nativeScript": "博多",
+    "irlParallel": "Fukuoka",
+    "alpha3": "NCH",
+    "x": 2769,
+    "y": 626
   },
   {
     "name": "Gaelham",
@@ -1880,8 +1880,8 @@
     "nativeScript": "太田瀬",
     "irlParallel": "Hiroshima-Takamatsu",
     "alpha3": "NCH",
-    "x": 2691,
-    "y": 628
+    "x": 2685,
+    "y": 629
   },
   {
     "name": "Greywick",
@@ -2731,7 +2731,7 @@
     "gdpPerCapita": 101733,
     "nativeScript": "",
     "irlParallel": "Hamburg",
-    "alpha3": "NOR",
+    "alpha3": "ALE",
     "x": 2929,
     "y": 2577
   },
@@ -3516,6 +3516,18 @@
     "y": 526
   },
   {
+    "name": "Genkai",
+    "nation": "Nichirin",
+    "population": 1356000,
+    "gdp": 58980000000,
+    "gdpPerCapita": 43496,
+    "nativeScript": "玄界",
+    "irlParallel": "Kanmon MA",
+    "alpha3": "NCH",
+    "x": 2753,
+    "y": 625
+  },
+  {
     "name": "Prauvenberg",
     "nation": "Alemannia",
     "population": 1348000,
@@ -3858,7 +3870,7 @@
     "gdp": 4850000000,
     "gdpPerCapita": 3886,
     "nativeScript": "ಸಾಲೇಗಿರಿ",
-    "irlParallel": "Salem",
+    "irlParallel": "Salem, TN",
     "alpha3": "ARU",
     "x": 3566,
     "y": 4836
@@ -4002,7 +4014,7 @@
     "gdp": 11800000000,
     "gdpPerCapita": 9908,
     "nativeScript": "井春",
-    "irlParallel": "Yichun",
+    "irlParallel": "Yichun, HL",
     "alpha3": "NCH",
     "x": 2614,
     "y": 838
@@ -4700,7 +4712,7 @@
     "nativeScript": "岩渕",
     "irlParallel": "Kanazawa-Toyama",
     "alpha3": "NCH",
-    "x": 2537,
+    "x": 2529,
     "y": 691
   },
   {
@@ -5346,7 +5358,7 @@
     "gdp": 39400000000,
     "gdpPerCapita": 45339,
     "nativeScript": "",
-    "irlParallel": "Newcastle",
+    "irlParallel": "Newcastle, GB",
     "alpha3": "ELV",
     "x": 2840,
     "y": 2642
@@ -5458,6 +5470,18 @@
     "alpha3": "HOL",
     "x": 1257,
     "y": 3305
+  },
+  {
+    "name": "Ishigaki",
+    "nation": "Nichirin",
+    "population": 852000,
+    "gdp": 42150000000,
+    "gdpPerCapita": 49472,
+    "nativeScript": "石垣",
+    "irlParallel": "Kumamoto",
+    "alpha3": "NCH",
+    "x": 2772,
+    "y": 604
   },
   {
     "name": "Dorudgar",
@@ -5612,8 +5636,8 @@
     "nativeScript": "松海",
     "irlParallel": "Matsue-Chongjin",
     "alpha3": "NCH",
-    "x": 2681,
-    "y": 653
+    "x": 2691,
+    "y": 644
   },
   {
     "name": "Tirubeti",
@@ -5638,18 +5662,6 @@
     "alpha3": "ARU",
     "x": 3632,
     "y": 4660
-  },
-  {
-    "name": "Belura",
-    "nation": "Arunya",
-    "population": 817000,
-    "gdp": 2150000000,
-    "gdpPerCapita": 2632,
-    "nativeScript": "ಬೆಲೂರ",
-    "irlParallel": "Belagavi",
-    "alpha3": "ARU",
-    "x": 3660,
-    "y": 4743
   },
   {
     "name": "Ashton",
@@ -5792,8 +5804,8 @@
     "nativeScript": "信濃瀬",
     "irlParallel": "Niigata",
     "alpha3": "NCH",
-    "x": 2411,
-    "y": 732
+    "x": 2376,
+    "y": 742
   },
   {
     "name": "Saucoté",
@@ -5974,18 +5986,6 @@
     "alpha3": "NCH",
     "x": 2759,
     "y": 743
-  },
-  {
-    "name": "Ishigaki",
-    "nation": "Nichirin",
-    "population": 734000,
-    "gdp": 68000000000,
-    "gdpPerCapita": 92643,
-    "nativeScript": "石垣",
-    "irlParallel": "Kumamoto",
-    "alpha3": "NCH",
-    "x": 2772,
-    "y": 604
   },
   {
     "name": "Ambarino",
@@ -6840,12 +6840,12 @@
     "y": 2293
   },
   {
-    "name": "Kōzo",
+    "name": "Ōgiya",
     "nation": "Nichirin",
     "population": 622000,
     "gdp": 24260000000,
     "gdpPerCapita": 39003,
-    "nativeScript": "楮",
+    "nativeScript": "扇屋",
     "irlParallel": "Jeonju",
     "alpha3": "NCH",
     "x": 2874,
@@ -7063,7 +7063,7 @@
     "gdpPerCapita": 75614,
     "nativeScript": "",
     "irlParallel": "Leipzig",
-    "alpha3": "NOR",
+    "alpha3": "ALE",
     "x": 3007,
     "y": 2589
   },
@@ -7207,7 +7207,7 @@
     "gdpPerCapita": 81240,
     "nativeScript": "",
     "irlParallel": "Dresden",
-    "alpha3": "NOR",
+    "alpha3": "ALE",
     "x": 3023,
     "y": 2574
   },
@@ -7399,7 +7399,7 @@
     "gdpPerCapita": 74561,
     "nativeScript": "",
     "irlParallel": "Bremen",
-    "alpha3": "NOR",
+    "alpha3": "ALE",
     "x": 2926,
     "y": 2604
   },
@@ -7423,7 +7423,7 @@
     "gdpPerCapita": 26288,
     "nativeScript": "",
     "irlParallel": "Port Louis, MU",
-    "alpha3": "GEN",
+    "alpha3": "ALE",
     "x": 3695,
     "y": 2952
   },
@@ -8172,6 +8172,18 @@
     "y": 4828
   },
   {
+    "name": "Futahashi",
+    "nation": "Nichirin",
+    "population": 512000,
+    "gdp": 31230000000,
+    "gdpPerCapita": 60996,
+    "nativeScript": "二橋",
+    "irlParallel": "Maebashi-Isesaki",
+    "alpha3": "NCH",
+    "x": 2440,
+    "y": 693
+  },
+  {
     "name": "Aktyubinsk",
     "nation": "Rudania",
     "population": 510000,
@@ -8204,8 +8216,8 @@
     "nativeScript": "柚月",
     "irlParallel": "Matsuyama",
     "alpha3": "NCH",
-    "x": 2726,
-    "y": 618
+    "x": 2729,
+    "y": 613
   },
   {
     "name": "Krzyżakowo",
@@ -8526,7 +8538,7 @@
     "gdp": 34500000000,
     "gdpPerCapita": 72632,
     "nativeScript": "岩崎",
-    "irlParallel": "Newcastle",
+    "irlParallel": "Newcastle, NSW",
     "alpha3": "NCH",
     "x": 3027,
     "y": 5532
@@ -8563,7 +8575,7 @@
     "gdpPerCapita": 87949,
     "nativeScript": "",
     "irlParallel": "Gdańsk",
-    "alpha3": "NOR",
+    "alpha3": "ALE",
     "x": 2989,
     "y": 2431
   },
@@ -9691,7 +9703,7 @@
     "gdpPerCapita": 72449,
     "nativeScript": "",
     "irlParallel": "Szczecin",
-    "alpha3": "NOR",
+    "alpha3": "ALE",
     "x": 2971,
     "y": 2501
   },
@@ -9730,6 +9742,18 @@
     "alpha3": "REI",
     "x": 2716,
     "y": 3022
+  },
+  {
+    "name": "Funai",
+    "nation": "Nichirin",
+    "population": 390000,
+    "gdp": 20280000000,
+    "gdpPerCapita": 52000,
+    "nativeScript": "府内",
+    "irlParallel": "Oita",
+    "alpha3": "NCH",
+    "x": 2752,
+    "y": 604
   },
   {
     "name": "Kanamine",
@@ -10052,8 +10076,8 @@
     "nativeScript": "鏡平",
     "irlParallel": "Nagano",
     "alpha3": "NCH",
-    "x": 2456,
-    "y": 695
+    "x": 2470,
+    "y": 689
   },
   {
     "name": "Alash-Qala",
@@ -10736,8 +10760,8 @@
     "nativeScript": "千島",
     "irlParallel": "Asahikawa",
     "alpha3": "NCH",
-    "x": 2196,
-    "y": 870
+    "x": 2191,
+    "y": 880
   },
   {
     "name": "Serenidad",
@@ -10932,18 +10956,6 @@
     "y": null
   },
   {
-    "name": "Reizaki",
-    "nation": "Nichirin",
-    "population": 319000,
-    "gdp": 3400000000,
-    "gdpPerCapita": 10658,
-    "nativeScript": "霊崎",
-    "irlParallel": "Iwaki",
-    "alpha3": "NCH",
-    "x": 2367,
-    "y": 706
-  },
-  {
     "name": "Breast",
     "nation": "Arverne",
     "population": 318000,
@@ -10998,10 +11010,10 @@
     "gdp": 15500000000,
     "gdpPerCapita": 49051,
     "nativeScript": "朝鶴",
-    "irlParallel": "Kochi",
+    "irlParallel": "Kochi, KC",
     "alpha3": "NCH",
-    "x": 2710,
-    "y": 607
+    "x": 2706,
+    "y": 605
   },
   {
     "name": "Sokol",
@@ -11202,7 +11214,7 @@
     "gdp": 11200000000,
     "gdpPerCapita": 35897,
     "nativeScript": "永春",
-    "irlParallel": "Yichun",
+    "irlParallel": "Yichun, JX",
     "alpha3": "FUR",
     "x": 3605,
     "y": 623
@@ -11396,8 +11408,8 @@
     "nativeScript": "秋野",
     "irlParallel": "Akita",
     "alpha3": "NCH",
-    "x": 2322,
-    "y": 769
+    "x": 2302,
+    "y": 801
   },
   {
     "name": "Aldea Oro",
@@ -11568,6 +11580,18 @@
     "y": 785
   },
   {
+    "name": "Ōyodo",
+    "nation": "Nichirin",
+    "population": 290000,
+    "gdp": 12910000000,
+    "gdpPerCapita": 44517,
+    "nativeScript": "大淀",
+    "irlParallel": "Miyazaki",
+    "alpha3": "NCH",
+    "x": 2759,
+    "y": 584
+  },
+  {
     "name": "Litova",
     "nation": "Morozia",
     "population": 288000,
@@ -11580,16 +11604,28 @@
     "y": 1963
   },
   {
-    "name": "Kinunose",
+    "name": "Kinuya",
     "nation": "Nichirin",
     "population": 288000,
     "gdp": 11520000000,
     "gdpPerCapita": 40000,
-    "nativeScript": "絹ノ瀬",
+    "nativeScript": "絹屋",
     "irlParallel": "Jinju",
     "alpha3": "NCH",
     "x": 2864,
     "y": 519
+  },
+  {
+    "name": "Kazagashira",
+    "nation": "Nichirin",
+    "population": 287000,
+    "gdp": 13060000000,
+    "gdpPerCapita": 45505,
+    "nativeScript": "風頭",
+    "irlParallel": "Nagasaki",
+    "alpha3": "NCH",
+    "x": 2781,
+    "y": 617
   },
   {
     "name": "Murmánska",
@@ -11676,6 +11712,18 @@
     "y": 2463
   },
   {
+    "name": "Hidamari",
+    "nation": "Nichirin",
+    "population": 284000,
+    "gdp": 16610000000,
+    "gdpPerCapita": 58486,
+    "nativeScript": "日溜",
+    "irlParallel": "Kofu",
+    "alpha3": "NCH",
+    "x": 2483,
+    "y": 673
+  },
+  {
     "name": "Ostrau",
     "nation": "Alemannia",
     "population": 283000,
@@ -11708,8 +11756,8 @@
     "nativeScript": "鞍崎",
     "irlParallel": "Fukushima",
     "alpha3": "NCH",
-    "x": 2337,
-    "y": 745
+    "x": 2359,
+    "y": 723
   },
   {
     "name": "Kijinaki",
@@ -11722,6 +11770,18 @@
     "alpha3": "NCH",
     "x": 2836,
     "y": 555
+  },
+  {
+    "name": "Horinukida",
+    "nation": "Nichirin",
+    "population": 282000,
+    "gdp": 15650000000,
+    "gdpPerCapita": 55496,
+    "nativeScript": "掘貫田",
+    "irlParallel": "Koriyama",
+    "alpha3": "NCH",
+    "x": 2372,
+    "y": 714
   },
   {
     "name": "Neaveville",
@@ -11902,6 +11962,18 @@
     "alpha3": "HOL",
     "x": 1425,
     "y": 3316
+  },
+  {
+    "name": "Aizome",
+    "nation": "Nichirin",
+    "population": 271000,
+    "gdp": 16120000000,
+    "gdpPerCapita": 59483,
+    "nativeScript": "藍染",
+    "irlParallel": "Tokushima",
+    "alpha3": "NCH",
+    "x": 2678,
+    "y": 618
   },
   {
     "name": "Braneyětsi",
@@ -12271,9 +12343,21 @@
     "gdpPerCapita": 87045,
     "nativeScript": "",
     "irlParallel": "Kiel",
-    "alpha3": "NOR",
+    "alpha3": "ALE",
     "x": 2913,
     "y": 2547
+  },
+  {
+    "name": "Sekidome",
+    "nation": "Nichirin",
+    "population": 247000,
+    "gdp": 14330000000,
+    "gdpPerCapita": 58016,
+    "nativeScript": "関留",
+    "irlParallel": "Iwaki",
+    "alpha3": "NCH",
+    "x": 2382,
+    "y": 691
   },
   {
     "name": "Vangaprolu",
@@ -12346,6 +12430,18 @@
     "alpha3": "VIC",
     "x": 3081,
     "y": 2941
+  },
+  {
+    "name": "Ichijō",
+    "nation": "Nichirin",
+    "population": 245000,
+    "gdp": 15070000000,
+    "gdpPerCapita": 61510,
+    "nativeScript": "一乗",
+    "irlParallel": "Fukui",
+    "alpha3": "NCH",
+    "x": 2551,
+    "y": 691
   },
   {
     "name": "Eynde",
@@ -12642,7 +12738,7 @@
     "gdp": 4620000000,
     "gdpPerCapita": 19091,
     "nativeScript": "門原",
-    "irlParallel": "Kaiyuan",
+    "irlParallel": "Kaiyuan, LN",
     "alpha3": "NCH",
     "x": 2816,
     "y": 706
@@ -12708,16 +12804,16 @@
     "y": 756
   },
   {
-    "name": "Ukishima",
+    "name": "Sōtenkō",
     "nation": "Nichirin",
     "population": 241000,
     "gdp": 34500000000,
     "gdpPerCapita": 143154,
-    "nativeScript": "浮島",
+    "nativeScript": "蒼天港",
     "irlParallel": "Fuji",
     "alpha3": "NCH",
-    "x": 2478,
-    "y": 668
+    "x": 2479,
+    "y": 666
   },
   {
     "name": "Kasovice",
@@ -12763,7 +12859,7 @@
     "gdpPerCapita": 71186,
     "nativeScript": "",
     "irlParallel": "Magdeburg",
-    "alpha3": "NOR",
+    "alpha3": "ALE",
     "x": 2979,
     "y": 2580
   },
@@ -12886,6 +12982,18 @@
     "alpha3": "GEN",
     "x": 4231,
     "y": 5086
+  },
+  {
+    "name": "Irie",
+    "nation": "Nichirin",
+    "population": 230000,
+    "gdp": 10930000000,
+    "gdpPerCapita": 47522,
+    "nativeScript": "入江",
+    "irlParallel": "Sasebo",
+    "alpha3": "NCH",
+    "x": 2777,
+    "y": 625
   },
   {
     "name": "Bougie",
@@ -13016,8 +13124,8 @@
     "nativeScript": "八浦",
     "irlParallel": "Hachinohe",
     "alpha3": "NCH",
-    "x": 2250,
-    "y": 800
+    "x": 2248,
+    "y": 793
   },
   {
     "name": "Maintal",
@@ -13042,6 +13150,18 @@
     "alpha3": "ELV",
     "x": 2808,
     "y": 2569
+  },
+  {
+    "name": "Imonozato",
+    "nation": "Nichirin",
+    "population": 221000,
+    "gdp": 11380000000,
+    "gdpPerCapita": 51493,
+    "nativeScript": "鋳物里",
+    "irlParallel": "Yamagata",
+    "alpha3": "NCH",
+    "x": 2330,
+    "y": 752
   },
   {
     "name": "Świętogóra",
@@ -13102,6 +13222,18 @@
     "alpha3": "SID",
     "x": 3182,
     "y": 2389
+  },
+  {
+    "name": "Umagome",
+    "nation": "Nichirin",
+    "population": 218000,
+    "gdp": 12430000000,
+    "gdpPerCapita": 57018,
+    "nativeScript": "馬込",
+    "irlParallel": "Matsumoto",
+    "alpha3": "NCH",
+    "x": 2484,
+    "y": 681
   },
   {
     "name": "Árnica",
@@ -13368,12 +13500,12 @@
     "y": 2187
   },
   {
-    "name": "Ashikaze",
+    "name": "Terao",
     "nation": "Nichirin",
     "population": 213000,
     "gdp": 8950000000,
     "gdpPerCapita": 42019,
-    "nativeScript": "葦風",
+    "nativeScript": "寺尾",
     "irlParallel": "Suncheon",
     "alpha3": "NCH",
     "x": 2879,
@@ -13495,7 +13627,7 @@
     "gdpPerCapita": 68720,
     "nativeScript": "",
     "irlParallel": "Erfurt",
-    "alpha3": "NOR",
+    "alpha3": "ALE",
     "x": 3020,
     "y": 2620
   },
@@ -13675,7 +13807,7 @@
     "gdpPerCapita": 66667,
     "nativeScript": "",
     "irlParallel": "Rostock",
-    "alpha3": "NOR",
+    "alpha3": "ALE",
     "x": 2933,
     "y": 2518
   },
@@ -14502,7 +14634,7 @@
     "gdp": 13420000000,
     "gdpPerCapita": 72935,
     "nativeScript": "",
-    "irlParallel": "Salem",
+    "irlParallel": "Salem, OR",
     "alpha3": "SAL",
     "x": 1295,
     "y": 2641
@@ -14638,6 +14770,18 @@
     "alpha3": "PON",
     "x": 1274,
     "y": 2659
+  },
+  {
+    "name": "Hyakutawara",
+    "nation": "Nichirin",
+    "population": 181000,
+    "gdp": 10140000000,
+    "gdpPerCapita": 56022,
+    "nativeScript": "百俵",
+    "irlParallel": "Nagaoka",
+    "alpha3": "NCH",
+    "x": 2384,
+    "y": 728
   },
   {
     "name": "Fuerte Principe",
@@ -15120,12 +15264,12 @@
     "y": 806
   },
   {
-    "name": "Shimogare",
+    "name": "Iwatsu",
     "nation": "Nichirin",
     "population": 169000,
     "gdp": 1060000000,
     "gdpPerCapita": 6272,
-    "nativeScript": "炎浦",
+    "nativeScript": "岩津",
     "irlParallel": "Kimchaek",
     "alpha3": "NCH",
     "x": 2719,
@@ -15154,6 +15298,18 @@
     "alpha3": "PER",
     "x": 3522,
     "y": 1549
+  },
+  {
+    "name": "Nutappet",
+    "nation": "Nichirin",
+    "population": 168000,
+    "gdp": 8400000000,
+    "gdpPerCapita": 50000,
+    "nativeScript": "沼田別",
+    "irlParallel": "Obihiro",
+    "alpha3": "NCH",
+    "x": 2187,
+    "y": 850
   },
   {
     "name": "Dobrezliem",
@@ -15450,7 +15606,7 @@
     "gdp": 7400000000,
     "gdpPerCapita": 45679,
     "nativeScript": "",
-    "irlParallel": "Kaiyuan",
+    "irlParallel": "Kaiyuan, YN",
     "alpha3": "SGD",
     "x": 4029,
     "y": 869
@@ -15504,12 +15660,12 @@
     "y": 3004
   },
   {
-    "name": "Kanase",
+    "name": "Kotodai",
     "nation": "Nichirin",
     "population": 161000,
     "gdp": 6760000000,
     "gdpPerCapita": 41988,
-    "nativeScript": "鉄瀬",
+    "nativeScript": "琴台",
     "irlParallel": "Chungju",
     "alpha3": "NCH",
     "x": 2842,
@@ -15643,7 +15799,7 @@
     "gdpPerCapita": 34936,
     "nativeScript": "",
     "irlParallel": "Saint-Denis, RE",
-    "alpha3": "GEN",
+    "alpha3": "ALE",
     "x": 3652,
     "y": 2971
   },
@@ -15766,6 +15922,18 @@
     "alpha3": "ALE",
     "x": null,
     "y": null
+  },
+  {
+    "name": "Nemunagashi",
+    "nation": "Nichirin",
+    "population": 153000,
+    "gdp": 7110000000,
+    "gdpPerCapita": 46471,
+    "nativeScript": "眠流",
+    "irlParallel": "Hirosaki",
+    "alpha3": "NCH",
+    "x": 2271,
+    "y": 803
   },
   {
     "name": "Kakashask",
@@ -15994,6 +16162,18 @@
     "alpha3": "ESU",
     "x": 2245,
     "y": 2956
+  },
+  {
+    "name": "Yuda",
+    "nation": "Nichirin",
+    "population": 147000,
+    "gdp": 7790000000,
+    "gdpPerCapita": 52993,
+    "nativeScript": "湯田",
+    "irlParallel": "Yamaguchi",
+    "alpha3": "NCH",
+    "x": 2737,
+    "y": 626
   },
   {
     "name": "Novokamen",
@@ -16351,7 +16531,7 @@
     "gdpPerCapita": 76596,
     "nativeScript": "",
     "irlParallel": "Grünberg",
-    "alpha3": "NOR",
+    "alpha3": "ALE",
     "x": 3021,
     "y": 2539
   },
@@ -16390,6 +16570,18 @@
     "alpha3": "AST",
     "x": 3316,
     "y": 3183
+  },
+  {
+    "name": "Tokuyama",
+    "nation": "Nichirin",
+    "population": 139000,
+    "gdp": 10840000000,
+    "gdpPerCapita": 77986,
+    "nativeScript": "徳山",
+    "irlParallel": "Shunan",
+    "alpha3": "NCH",
+    "x": 2729,
+    "y": 619
   },
   {
     "name": "Conway",
@@ -16474,6 +16666,18 @@
     "alpha3": "VAR",
     "x": 4119,
     "y": 3533
+  },
+  {
+    "name": "Sakyū",
+    "nation": "Nichirin",
+    "population": 135000,
+    "gdp": 6080000000,
+    "gdpPerCapita": 45037,
+    "nativeScript": "砂丘",
+    "irlParallel": "Tottori",
+    "alpha3": "NCH",
+    "x": 2652,
+    "y": 672
   },
   {
     "name": "Salzquell",
@@ -16594,18 +16798,6 @@
     "alpha3": "HOL",
     "x": 1252,
     "y": 3262
-  },
-  {
-    "name": "Grünstetten",
-    "nation": "Alemannia",
-    "population": 130000,
-    "gdp": 9800000000,
-    "gdpPerCapita": 75385,
-    "nativeScript": "",
-    "irlParallel": "Grünberg",
-    "alpha3": "ALE",
-    "x": null,
-    "y": null
   },
   {
     "name": "Aguadulces",
@@ -16932,6 +17124,18 @@
     "y": 3380
   },
   {
+    "name": "Uzuiwa",
+    "nation": "Nichirin",
+    "population": 121000,
+    "gdp": 5930000000,
+    "gdpPerCapita": 49008,
+    "nativeScript": "渦岩",
+    "irlParallel": "Ishinomaki",
+    "alpha3": "NCH",
+    "x": 2299,
+    "y": 754
+  },
+  {
     "name": "Pélyes",
     "nation": "Genosa",
     "population": 120000,
@@ -17038,6 +17242,18 @@
     "alpha3": "VER",
     "x": 2238,
     "y": 4888
+  },
+  {
+    "name": "Ōyashiro",
+    "nation": "Nichirin",
+    "population": 118000,
+    "gdp": 6020000000,
+    "gdpPerCapita": 51017,
+    "nativeScript": "大社",
+    "irlParallel": "Izumo",
+    "alpha3": "NCH",
+    "x": 2706,
+    "y": 641
   },
   {
     "name": "Carnelune",
@@ -17256,6 +17472,18 @@
     "y": 3009
   },
   {
+    "name": "Gangi",
+    "nation": "Nichirin",
+    "population": 116000,
+    "gdp": 6150000000,
+    "gdpPerCapita": 53017,
+    "nativeScript": "雁木",
+    "irlParallel": "Joetsu",
+    "alpha3": "NCH",
+    "x": 2462,
+    "y": 704
+  },
+  {
     "name": "Viseramünde",
     "nation": "Alemannia",
     "population": 115000,
@@ -17263,7 +17491,7 @@
     "gdpPerCapita": 80000,
     "nativeScript": "",
     "irlParallel": "Bremerhaven",
-    "alpha3": "NOR",
+    "alpha3": "ALE",
     "x": 2892,
     "y": 2603
   },
@@ -17273,7 +17501,7 @@
     "population": 114000,
     "gdp": 1850000000,
     "gdpPerCapita": 16228,
-    "nativeScript": "ගිම්හාතිත්ත",
+    "nativeScript": "ගිම්හා���ිත්ත",
     "irlParallel": "Galle",
     "alpha3": "ARU",
     "x": 3372,
@@ -17580,6 +17808,18 @@
     "y": 825
   },
   {
+    "name": "Chikepnay",
+    "nation": "Nichirin",
+    "population": 114000,
+    "gdp": 6270000000,
+    "gdpPerCapita": 55000,
+    "nativeScript": "千景内",
+    "irlParallel": "Muroran",
+    "alpha3": "NCH",
+    "x": 2234,
+    "y": 834
+  },
+  {
     "name": "Kernbeldu",
     "nation": "Axerfreditenshin",
     "population": 113000,
@@ -17880,6 +18120,18 @@
     "y": 2336
   },
   {
+    "name": "Nishikibashi",
+    "nation": "Nichirin",
+    "population": 106000,
+    "gdp": 6680000000,
+    "gdpPerCapita": 63019,
+    "nativeScript": "錦橋",
+    "irlParallel": "Iwakuni",
+    "alpha3": "NCH",
+    "x": 2712,
+    "y": 619
+  },
+  {
     "name": "Köseln",
     "nation": "Alemannia",
     "population": 105000,
@@ -17887,7 +18139,7 @@
     "gdpPerCapita": 78095,
     "nativeScript": "",
     "irlParallel": "Koszalin",
-    "alpha3": "NOR",
+    "alpha3": "ALE",
     "x": 2971,
     "y": 2483
   },
@@ -18022,6 +18274,18 @@
     "alpha3": "ARV",
     "x": 2708,
     "y": 5326
+  },
+  {
+    "name": "Nupkes",
+    "nation": "Nichirin",
+    "population": 104000,
+    "gdp": 4890000000,
+    "gdpPerCapita": 47019,
+    "nativeScript": "奴計",
+    "irlParallel": "Kitami",
+    "alpha3": "NCH",
+    "x": 2154,
+    "y": 884
   },
   {
     "name": "Szatmár",
@@ -18223,7 +18487,7 @@
     "gdpPerCapita": 74227,
     "nativeScript": "",
     "irlParallel": "Schwerin",
-    "alpha3": "NOR",
+    "alpha3": "ALE",
     "x": 2938,
     "y": 2546
   },
@@ -18250,6 +18514,18 @@
     "alpha3": "VIC",
     "x": 3151,
     "y": 2952
+  },
+  {
+    "name": "Mitajiri",
+    "nation": "Nichirin",
+    "population": 97000,
+    "gdp": 6600000000,
+    "gdpPerCapita": 68041,
+    "nativeScript": "三田尻",
+    "irlParallel": "Hōfu",
+    "alpha3": "NCH",
+    "x": 2737,
+    "y": 622
   },
   {
     "name": "Claremont",
@@ -19080,6 +19356,18 @@
     "y": 4821
   },
   {
+    "name": "Chirimen",
+    "nation": "Nichirin",
+    "population": 82000,
+    "gdp": 5040000000,
+    "gdpPerCapita": 61463,
+    "nativeScript": "縮緬",
+    "irlParallel": "Nagahama",
+    "alpha3": "NCH",
+    "x": 2588,
+    "y": 669
+  },
+  {
     "name": "Sawbone",
     "nation": "Hollosend",
     "population": 81000,
@@ -19138,6 +19426,18 @@
     "alpha3": "VIC",
     "x": 3177,
     "y": 3181
+  },
+  {
+    "name": "Kinohe",
+    "nation": "Nichirin",
+    "population": 79000,
+    "gdp": 4190000000,
+    "gdpPerCapita": 53038,
+    "nativeScript": "柵戸",
+    "irlParallel": "Oshu",
+    "alpha3": "NCH",
+    "x": 2289,
+    "y": 772
   },
   {
     "name": "Bacchus",
@@ -19222,6 +19522,18 @@
     "alpha3": "ARV",
     "x": 2565,
     "y": 5267
+  },
+  {
+    "name": "Sokushin",
+    "nation": "Nichirin",
+    "population": 78000,
+    "gdp": 4060000000,
+    "gdpPerCapita": 52051,
+    "nativeScript": "即身",
+    "irlParallel": "Tsuruoka",
+    "alpha3": "NCH",
+    "x": 2322,
+    "y": 776
   },
   {
     "name": "Orillas",
@@ -19356,6 +19668,18 @@
     "y": 2818
   },
   {
+    "name": "Kijiya",
+    "nation": "Nichirin",
+    "population": 73000,
+    "gdp": 3720000000,
+    "gdpPerCapita": 50959,
+    "nativeScript": "木地屋",
+    "irlParallel": "Osaki",
+    "alpha3": "NCH",
+    "x": 2304,
+    "y": 765
+  },
+  {
     "name": "Los Ranchos",
     "nation": "Auritania",
     "population": 72000,
@@ -19450,6 +19774,18 @@
     "alpha3": "VIC",
     "x": 2965,
     "y": 3202
+  },
+  {
+    "name": "Mimasaka",
+    "nation": "Nichirin",
+    "population": 71000,
+    "gdp": 3660000000,
+    "gdpPerCapita": 51549,
+    "nativeScript": "美作",
+    "irlParallel": "Tsuyama",
+    "alpha3": "NCH",
+    "x": 2665,
+    "y": 655
   },
   {
     "name": "Goryūno",
@@ -21024,6 +21360,18 @@
     "y": 2396
   },
   {
+    "name": "Kumausu",
+    "nation": "Nichirin",
+    "population": 31000,
+    "gdp": 1390000000,
+    "gdpPerCapita": 44839,
+    "nativeScript": "熊臼",
+    "irlParallel": "Wakkanai",
+    "alpha3": "NCH",
+    "x": 2197,
+    "y": 930
+  },
+  {
     "name": "Dachinqaz",
     "nation": "Axerfreditenshin",
     "population": 29000,
@@ -21558,7 +21906,7 @@
     "gdp": 244260000,
     "gdpPerCapita": 24426,
     "nativeScript": "",
-    "irlParallel": "N/A",
+    "irlParallel": "",
     "alpha3": "NZH",
     "x": 3820,
     "y": 1273
@@ -21570,7 +21918,7 @@
     "gdp": 189160000,
     "gdpPerCapita": 18916,
     "nativeScript": "",
-    "irlParallel": "N/A",
+    "irlParallel": "",
     "alpha3": "PER",
     "x": 3840,
     "y": 1513
@@ -21586,6 +21934,18 @@
     "alpha3": "SKJ",
     "x": 1485,
     "y": 2277
+  },
+  {
+    "name": "Kamuyto",
+    "nation": "Nichirin",
+    "population": 8000,
+    "gdp": 328000000,
+    "gdpPerCapita": 41000,
+    "nativeScript": "神威塘",
+    "irlParallel": "Yuzhno-Kurilsk",
+    "alpha3": "NCH",
+    "x": 2071,
+    "y": 955
   },
   {
     "name": "Kichwabai",
