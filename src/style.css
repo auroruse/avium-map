@@ -534,42 +534,163 @@ html, body {
 }
 
 /* Dev placement panel — Apple frosted glass */
+/* The placer is laid out like the public map: a nav rail flush to the window,
+   and a column beside it holding whatever the rail has selected. It used to be
+   one 480px slab floating over the middle of the map, with the tabs, the search,
+   the results, the edit rows and seven buttons all stacked inside it — which put
+   Save and Reset next to each other in a toolbar, and put the thing you were
+   editing underneath the thing you were searching. Same widths as the public
+   rail and column so the two modes do not feel like different applications. */
+#place-rail,
 #place-panel {
   position: fixed;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 0;
+  bottom: 0;
   z-index: 1000;
-  background: rgba(24, 27, 29, 0.82);
+  box-sizing: border-box;
+  background: rgba(24, 27, 29, 0.9);
   backdrop-filter: blur(24px) saturate(1.4);
   -webkit-backdrop-filter: blur(24px) saturate(1.4);
-  border: 1px solid rgba(255,255,255,0.09);
-  border-radius: 14px;
-  box-shadow: 0 10px 36px rgba(0,0,0,0.5);
-  padding: 10px 12px 8px;
-  width: 300px;
   font-family: -apple-system, 'SF Pro Display', 'SF Pro Text', 'Inter', system-ui, sans-serif;
   color: #fff;
-  max-height: calc(100vh - 20px);
+  letter-spacing: -0.01em;
+}
+
+#place-rail {
+  left: 0;
+  width: var(--rail, 220px);
+  padding: 18px 14px;
+  border-right: 1px solid rgba(255,255,255,0.09);
+  /* Over the column, so the column reads as sliding out from under it */
+  z-index: 1001;
+}
+
+#place-panel {
+  left: var(--rail, 220px);
+  width: var(--panel, 380px);
+  padding: 16px 16px 14px;
+  border-right: 1px solid rgba(255,255,255,0.09);
+  box-shadow: 8px 0 30px rgba(0,0,0,0.4);
+  display: flex;
+  flex-direction: column;
   overflow-y: auto;
 }
 
-.pp-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 6px;
+/* The same wordmark the public rail wears, at the same width as the rows under
+   it. height:auto so the 5:1 mark shows whole rather than cropped to a band. */
+#place-banner {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
-.pp-title {
-  font-size: 14px;
-  font-weight: 700;
-}
-
+/* How much is placed, as two chips. Icon then number, so the numbers line up
+   with each other and read before the units do. */
+/* Wrapping is what guarantees they never overflow. The rail is
+   clamp(190px, 12.5vw, 320px), and at its 190px floor two "1722/1763" chips need
+   about 190px of content to sit side by side — there is no font size that both
+   fits and reads. So they scale down with the rail and drop onto a second line
+   when even that is not enough, rather than being cut off. */
+/* One line, always. Measured: at 11px the two chips want 174px and a 190px rail
+   has 162px of content, which is why they were stacking. The size follows the
+   rail — both are driven off 12.5vw — and the floor is set where the row still
+   fits the rail's own 190px floor, with room for another digit. */
 .pp-count {
-  font-size: 11px;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 4px;
+  margin-top: 12px;
+}
+.pp-chip {
+  display: flex;
+  align-items: center;
+  gap: 3.5px;
+  flex: none;
+  padding: 2.5px 6px;
+  border-radius: 7px;
+  background: rgba(255,255,255,0.07);
+  color: #9aa0a6;
+  font-size: clamp(9px, 0.62vw, 11px);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.pp-chip svg {
+  flex: none;
+  width: 1.15em;
+  height: 1.15em;
+  color: #7d8288;
+}
+/* Nothing left to place on that tab */
+.pp-chip.is-done {
+  color: #7fd6a2;
+}
+.pp-chip.is-done svg {
+  color: #5fbf87;
+}
+.pp-of {
   font-weight: 500;
-  color: #8b9096;
+  opacity: 0.55;
+}
+
+/* The rail's four rows. Cities and Labels select; Save and Reset act. Same
+   shape either way, the same way Export sits among the public tabs. */
+.pp-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin-top: 14px;
+}
+.pp-nav .pp-tab {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  width: 100%;
+  padding: 9px 10px;
+  border: none;
+  border-radius: 9px;
+  background: none;
+  color: #c6cacd;
+  font: 500 13.5px/1 inherit;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.pp-nav .pp-tab:hover {
+  background: rgba(255,255,255,0.09);
+  color: #fff;
+}
+.pp-nav .pp-nav .pp-tab.is-on::before {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 7px;
+  bottom: 7px;
+  width: 2.5px;
+  border-radius: 2px;
+  background: #fff;
+}
+.pp-ico {
+  flex: none;
+  display: flex;
+  width: 20px;
+  height: 20px;
+  color: #b9bfc4;
+}
+.pp-nav .pp-tab.is-on .pp-ico,
+.pp-nav .pp-tab:hover .pp-ico {
+  color: #fff;
+}
+/* Armed, this reloads and throws the session away. It says so before it does. */
+.pp-danger-nav.is-armed {
+  background: rgba(255,69,58,0.22);
+  color: #ff9f98;
+}
+.pp-danger-nav.is-armed .pp-ico {
+  color: #ff9f98;
 }
 
 .pp-search-row {
@@ -626,7 +747,6 @@ html, body {
   list-style: none;
   margin: 0;
   padding: 0;
-  max-height: 200px;
   overflow-y: auto;
 }
 
@@ -677,6 +797,10 @@ html, body {
   color: #ff9f0a;
 }
 
+.pp-toolbar[hidden] {
+  display: none;
+}
+
 .pp-toolbar {
   display: flex;
   gap: 4px;
@@ -684,6 +808,13 @@ html, body {
   padding-top: 6px;
   border-top: 1px solid rgba(255,255,255,0.08);
   flex-wrap: wrap;
+  flex: none;
+}
+.pp-search-row,
+.pp-edit-row,
+.pp-span-row,
+#place-status {
+  flex: none;
 }
 
 .pp-toolbar button,
@@ -726,64 +857,6 @@ html, body {
 
 #tsv-paste:focus {
   border-color: rgba(100,180,255,0.4);
-}
-
-#unassigned-panel {
-  position: fixed;
-  bottom: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
-  background: rgba(24, 27, 29, 0.82);
-  backdrop-filter: blur(24px) saturate(1.4);
-  -webkit-backdrop-filter: blur(24px) saturate(1.4);
-  border: 1px solid rgba(255,255,255,0.09);
-  border-radius: 14px;
-  box-shadow: 0 10px 36px rgba(0,0,0,0.5);
-  padding: 8px 12px;
-  width: 300px;
-  font-family: -apple-system, 'SF Pro Display', 'SF Pro Text', 'Inter', system-ui, sans-serif;
-  color: #fff;
-}
-
-.pp-section-label {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
-  color: #8b9096;
-  margin-bottom: 4px;
-}
-
-#unassigned-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  max-height: 144px;
-  overflow-y: auto;
-}
-
-#unassigned-list li {
-  padding: 3px 8px;
-  cursor: pointer;
-  border-radius: 6px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-#unassigned-list li:hover {
-  background: rgba(255,255,255,0.08);
-}
-
-#unassigned-list .result-name {
-  font-size: 12px;
-  font-weight: 500;
-}
-
-#unassigned-list .result-meta {
-  font-size: 10px;
-  color: #8b9096;
 }
 
 /* Layer control — Apple-style frosted card, same height as zoom buttons */
@@ -1029,13 +1102,90 @@ html, body {
   display: none !important;
 }
 
-/* Filter above the sorts rather than beside them. Side by side in a narrow rail
-   the field collapsed to a few characters and the sort labels truncated. */
 .bs-controls {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
   margin-bottom: 7px;
+}
+
+/* The field and the sort share a row. That only works because the sort is one
+   button now: as a row of chips it needed the full width to itself, and even
+   then five of them left "Population ↓" a pixel short. */
+.bs-filter-row {
+  display: flex;
+  gap: 7px;
+  align-items: stretch;
+}
+.bs-controls #bs-filter {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: auto;
+}
+.bs-sortwrap {
+  position: relative;
+  flex: none;
+}
+#bs-sort-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 100%;
+  padding: 0 10px;
+  border: none;
+  border-radius: 9px;
+  background: rgba(255,255,255,0.08);
+  color: #c6cacd;
+  font: 500 11.5px/1 inherit;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.18s, color 0.18s;
+}
+#bs-sort-btn:hover {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+}
+.bs-sort-dir {
+  color: #8b9096;
+  font-size: 10.5px;
+}
+#bs-sort-btn .bs-sort-dir {
+  color: inherit;
+  opacity: 0.75;
+}
+
+/* Anchored to the right edge of its button so it never runs off the column */
+#bs-sort-menu {
+  position: absolute;
+  top: calc(100% + 5px);
+  right: 0;
+  transform-origin: top right;
+  z-index: 6;
+  margin: 0;
+  padding: 4px;
+  list-style: none;
+  min-width: 148px;
+  border-radius: 11px;
+  background: #2f3438;
+  box-shadow: 0 8px 26px rgba(0,0,0,0.55);
+}
+#bs-sort-menu li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 7px 9px;
+  border-radius: 7px;
+  font-size: 13px;
+  color: #d7dbde;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+#bs-sort-menu li:hover {
+  background: rgba(255,255,255,0.09);
+}
+#bs-sort-menu li.is-on {
+  color: #fff;
+  font-weight: 600;
 }
 
 /* Settings rows: #bs-items li already gives them the hover and radius a city row
@@ -1112,43 +1262,8 @@ html, body {
   box-sizing: border-box;
 }
 
-/* The four sorts span the search field above them, one quarter each, so the row
-   reads as a segmented control rather than as chips floating at one end. */
-.bs-sorts {
-  display: flex;
-  width: 100%;
-  box-sizing: border-box;
-  background: rgba(255,255,255,0.08);
-  border-radius: 9px;
-  padding: 2px;
-  gap: 2px;
-}
 
-.bs-sorts button[hidden] {
-  display: none;
-}
-.bs-sorts button {
-  flex: 1 1 0;
-  min-width: 0;
-  border: none;
-  background: none;
-  color: #c6cacd;
-  font-size: 11px;
-  font-weight: 500;
-  font-family: inherit;
-  /* Tight horizontally: the widest label carries a sort arrow when active, and
-     the nations list has five of these in a 400px column, so each one gets 72px
-     and "Population ↓" wants 73 of them. */
-  padding: 5px 2px;
-  border-radius: 7px;
-  cursor: pointer;
-  white-space: nowrap;
-}
 
-.bs-sorts button.active {
-  background: rgba(255,255,255,0.18);
-  color: #fff;
-}
 
 #bs-items {
   list-style: none;
@@ -1321,6 +1436,17 @@ html, body {
   pointer-events: none !important;
 }
 
+/* Placing a city is a click on the map, and everything already drawn on the map
+   is in this same pane waiting to catch it: a city marker to open its panel, a
+   territory name to be dragged. On the cities tab they all step aside, so a
+   click lands on the map wherever it falls — including on top of a name, which
+   is exactly where a city that belongs next to that name has to go.
+   The labels tab does not get this: dragging those markers is the job there. */
+#map.placing-cities .leaflet-marker-pane,
+#map.placing-cities .leaflet-marker-pane * {
+  pointer-events: none !important;
+}
+
 /* Clickable nation name in the city panel */
 .cp-link {
   cursor: pointer;
@@ -1362,6 +1488,12 @@ html, body {
   from { opacity: 0; transform: scale(0.4); }
 }
 
+/* The sort menu drops out of its own button, so it grows from the corner it is
+   anchored to rather than fading in where it stands */
+@keyframes sort-menu-in {
+  from { opacity: 0; transform: scale(0.93) translateY(-5px); }
+}
+
 /* Sheet page transitions (push forward / pop back) */
 #bs-home.bs-pop  { animation: bs-pop-in 0.32s cubic-bezier(0.32, 0.72, 0, 1); }
 
@@ -1374,6 +1506,10 @@ html, body {
 
 /* Search result rows fade in */
 #bs-results li { animation: bs-fade-in 0.15s ease-out; }
+
+/* Sort menu opens from its button's corner */
+#bs-sort-menu { animation: sort-menu-in 0.17s cubic-bezier(0.32, 0.72, 0, 1); }
+#bs-sort-menu li { animation: bs-fade-in 0.22s ease-out both; }
 
 /* Banner appears once probed */
 .cp-banner.cp-banner-show { animation: bs-fade-in 0.35s ease-out; }
@@ -1391,12 +1527,6 @@ html, body {
 /* Press feedback + hover transitions */
 .bs-circle { transition: filter 0.15s, transform 0.18s; }
 .bs-btn:active .bs-circle { transform: scale(0.9); }
-
-.bs-sorts button[hidden] {
-  display: none;
-}
-.bs-sorts button { transition: background 0.18s, color 0.18s, transform 0.15s; }
-.bs-sorts button:active { transform: scale(0.94); }
 
 #bs-items li, #bs-results li, #place-results li { transition: background 0.15s; }
 
@@ -1576,17 +1706,8 @@ html, body {
 }
 
 /* Placer tabs */
-.pp-tabs {
-  display: flex;
-  gap: 4px;
-  margin-bottom: 8px;
-  padding: 3px;
-  background: rgba(255,255,255,0.06);
-  border-radius: 9px;
-}
-
 .pp-tab {
-  flex: 1;
+  flex: none;
   padding: 5px 8px;
   border: none;
   border-radius: 6px;
@@ -1648,42 +1769,10 @@ html, body {
   font-weight: 600;
 }
 
-/* ============ Placer, Apple-themed ============
-   Wider and shallower on purpose: it floats over the top of the map, so height
-   costs map, width mostly doesn't. The results list is the part that grows, so
-   it runs in two columns instead of one long scroll. */
-#place-panel {
-  width: 480px;
-  padding: 12px 14px 10px;
-  border-radius: 16px;
-  letter-spacing: -0.01em;
-}
 
-.pp-header {
-  align-items: baseline;
-}
-
-.pp-title {
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-
-.pp-count {
-  font-size: 11px;
-  color: #8e9297;
-  font-variant-numeric: tabular-nums;
-}
+/* ============ Placer, Apple-themed ============ */
 
 /* Segmented control: an inset track with the active segment raised out of it */
-.pp-tabs {
-  gap: 2px;
-  margin: 9px 0 8px;
-  padding: 2px;
-  background: rgba(0,0,0,0.28);
-  border-radius: 10px;
-}
-
 .pp-tab {
   padding: 5px 10px;
   border-radius: 8px;
@@ -1733,14 +1822,14 @@ html, body {
   box-sizing: border-box;
 }
 
-/* Two columns: the panel has width to spare and height it should not take.
-   Names truncate rather than wrap, so every row is exactly one line tall. */
+/* One column with the whole height of the panel to fall down. Two columns and a
+   156px cap were what a slab floating over the map could afford; a full-height
+   column can show forty results without the list becoming the panel. */
 #place-results {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1px 8px;
-  max-height: 156px;
-  margin-top: 6px;
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: none;
+  margin-top: 8px;
 }
 
 #place-results:empty {
@@ -1755,14 +1844,23 @@ html, body {
   min-width: 0;
 }
 
+/* The name is the half worth keeping. Both sides can shrink, but the meta gives
+   up room four times faster — left un-shrinkable it took whatever it wanted and
+   "Cap de Bonne-Espérance" was rendered as "Cap ...". */
 #place-results li .result-name {
+  flex: 1 1 auto;
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 #place-results li .result-meta {
-  flex: none;
+  flex: 0 4 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: 10.5px;
   color: #8e9297;
 }
@@ -1805,23 +1903,22 @@ html, body {
   transform: scale(0.97);
 }
 
-#place-save {
-  background: #0a84ff;
-  color: #fff;
-  font-weight: 600;
+/* Save is a rail row like the rest, not a filled button. Solid blue among four
+   rows read as the selected tab, which is exactly what it is not. */
+.pp-nav #place-save .pp-ico {
+  color: #4da3ff;
+}
+.pp-nav #place-save:hover .pp-ico {
+  color: #7cbcff;
 }
 
-#place-save:hover {
-  background: #339cff;
-}
-
+/* Unsaved work, on a rail row: the label goes amber rather than the whole row
+   going solid, which at this size read as a selected tab */
 #place-save.pp-dirty {
-  background: #ff9f0a;
-  color: #1a1205 !important;
+  color: #ffd166;
 }
-
-#place-save.pp-dirty:hover {
-  background: #ffb340;
+#place-save.pp-dirty .pp-ico {
+  color: #ffd166;
 }
 
 .pp-edit-row .pp-danger {
@@ -2129,6 +2226,47 @@ html, body {
   transform: none;
 }
 
+/* Four stats: two rows of two, because one row of four leaves each cell 81px
+   against the 98px an area takes. */
+.cp-strip-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* The gap is the air above the divider; the padding below is the air under it */
+  row-gap: 13px;
+}
+.cp-strip-grid .cp-cell:nth-child(n + 3) {
+  /* Lighter than the column dividers: it runs the full width, so at their weight
+     it cuts the strip in two rather than grouping it */
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-top: 13px;
+}
+/* The column divider starts under the row divider rather than crossing it */
+.cp-strip-grid .cp-cell:nth-child(n + 3)::before {
+  top: 13px;
+}
+.cp-strip-grid .cp-cell:nth-child(odd) {
+  padding-left: 0;
+}
+.cp-strip-grid .cp-cell:nth-child(even) {
+  padding-right: 0;
+}
+/* The divider belongs between the columns, not before every cell */
+.cp-strip-grid .cp-cell:nth-child(odd)::before {
+  display: none;
+}
+/* first-child and last-child stop meaning left edge and right edge once the
+   cells wrap, so the reveal anchors on the column instead */
+.cp-strip-grid .cp-cell:nth-child(odd) .cp-row-more {
+  left: 0;
+  right: auto;
+  transform: none;
+}
+.cp-strip-grid .cp-cell:nth-child(even) .cp-row-more {
+  left: auto;
+  right: 0;
+  transform: none;
+}
+
 /* Three cells do fit one row on a phone, but not at 16px: a 320px screen leaves
    about 81px per cell against the 87px the widest value takes. Shrinking the
    face is enough, and keeps the row intact rather than wrapping it. */
@@ -2204,9 +2342,9 @@ html, body {
     border-radius: 0;
   }
 
-  /* Everything that floats over the map centres on the map, not the window */
-  #place-panel,
-  #unassigned-panel,
+  /* Everything that floats over the map centres on the map, not the window.
+     The placer is not in this list: it is the left edge in dev rather than
+     something floating over the middle rather than the left edge itself. */
   #measure-bar {
     left: calc(50% + var(--rail) / 2);
     transition: left 0.24s cubic-bezier(0.32, 0.72, 0, 1);
@@ -2214,8 +2352,6 @@ html, body {
 
   /* With the place column open the map is narrower still, so anything centred
      over it has to shift again or it sits half underneath. */
-  body.panel-open #place-panel,
-  body.panel-open #unassigned-panel,
   body.panel-open #measure-bar {
     left: calc(50% + (var(--rail) + var(--panel)) / 2);
   }
@@ -2301,6 +2437,7 @@ html, body {
   }
 
   .bs-btn {
+    position: relative;
     flex-direction: row;
     justify-content: flex-start;
     gap: 13px;
@@ -2319,7 +2456,21 @@ html, body {
      Clicking it again closes it, so this doubles as the affordance for that. */
   .bs-btn.is-on {
     background: rgba(255,255,255,0.22);
-    box-shadow: inset 2px 0 0 #fff;
+  }
+
+  /* The marker is drawn rather than shadowed. An inset box-shadow clips to the
+     border radius, so a 2px left edge curved up and over both corners and read
+     as an outline hugging one side of the pill instead of a bar beside it.
+     Absolute, so it stays out of the row's flex flow. */
+  .bs-btn.is-on::before {
+    content: '';
+    position: absolute;
+    left: 3px;
+    top: 7px;
+    bottom: 7px;
+    width: 2.5px;
+    border-radius: 2px;
+    background: #fff;
   }
 
   .bs-btn.is-on .bs-btn-label {

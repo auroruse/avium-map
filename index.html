@@ -16,15 +16,29 @@
 </head>
 <body>
   <div id="map"></div>
+  <div id="place-rail">
+    <img id="place-banner" alt="Avium Maps">
+    <div id="place-count" class="pp-count"></div>
+    <div class="pp-nav">
+      <button class="pp-tab is-on" data-tab="cities">
+        <span class="pp-ico"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg></span>
+        <span>Cities</span>
+      </button>
+      <button class="pp-tab" data-tab="labels">
+        <span class="pp-ico"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h9"/><path d="M4 12h13"/><path d="M4 17h7"/><circle cx="19" cy="7" r="1.6"/></svg></span>
+        <span>Labels</span>
+      </button>
+      <button id="place-save" class="pp-tab pp-act" title="Write cities.json, labels.json and stations.json">
+        <span class="pp-ico"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11l3 3v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z"/><path d="M8 4v5h7V4"/><path d="M8 20v-6h8v6"/></svg></span>
+        <span>Save</span>
+      </button>
+      <button id="place-drop-local" class="pp-tab pp-act pp-danger-nav" title="Throw away the browser's copy of every placement and reload from the files on disk">
+        <span class="pp-ico"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11A8 8 0 1 0 18 17"/><path d="M20 5v6h-6"/></svg></span>
+        <span>Reset</span>
+      </button>
+    </div>
+  </div>
   <div id="place-panel">
-    <div class="pp-header">
-      <span class="pp-title">Placer</span>
-      <span id="place-count" class="pp-count"></span>
-    </div>
-    <div class="pp-tabs">
-      <button class="pp-tab is-on" data-tab="cities">Cities</button>
-      <button class="pp-tab" data-tab="labels">Labels &amp; Stations</button>
-    </div>
     <div class="pp-search-row">
       <input id="place-search" type="text" autocomplete="off">
     </div>
@@ -41,19 +55,9 @@
     </div>
     <div id="place-status"></div>
     <div class="pp-toolbar">
-      <button id="place-undo" data-for="cities" title="Undo last placement">Undo</button>
-      <label class="pp-tool-btn" data-for="cities" title="Import JSON">Import<input id="place-import" type="file" accept=".json" hidden></label>
-      <button id="tsv-toggle" data-for="cities" title="Paste TSV">TSV</button>
       <button id="place-add-label" data-for="labels" title="Add a territory label">+ Label</button>
       <button id="place-add-station" data-for="labels" title="Add a research station">+ Station</button>
-      <button id="place-drop-local" class="pp-danger" title="Throw away the browser's copy of every placement and reload from the files on disk">Drop local</button>
-      <button id="place-save" title="Download cities.json, labels.json and stations.json">Save</button>
     </div>
-    <textarea id="tsv-paste" placeholder="Paste TSV here (tab-separated, first row = headers)&#10;Cmd+Enter to import" hidden></textarea>
-  </div>
-  <div id="unassigned-panel">
-    <div class="pp-section-label" id="unassigned-header"></div>
-    <ul id="unassigned-list"></ul>
   </div>
   <div id="ui-left">
   <div id="bottom-sheet">
@@ -91,13 +95,12 @@
       <span id="bs-title"></span>
     </div>
     <div class="bs-controls">
-      <input id="bs-filter" type="search" placeholder="Search" autocomplete="off">
-      <div class="bs-sorts">
-        <button data-sort="name">Name</button>
-        <button data-sort="population">Population</button>
-        <button data-sort="gdp">GDP</button>
-        <button data-sort="gdpPerCapita">Per Capita</button>
-        <button data-sort="area" data-nations-only>Area</button>
+      <div class="bs-filter-row">
+        <input id="bs-filter" type="search" placeholder="Search" autocomplete="off">
+        <div class="bs-sortwrap">
+          <button id="bs-sort-btn" aria-haspopup="listbox" aria-expanded="false"></button>
+          <ul id="bs-sort-menu" hidden></ul>
+        </div>
       </div>
     </div>
     <ul id="bs-items"></ul>

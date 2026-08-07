@@ -419,7 +419,8 @@ const labelLayer = L.layerGroup().addTo(map)
 // a small nation when zoomed out and vanishes on a continent when zoomed in.
 const MIN_SPAN = 45   // map px, so a one-city nation still earns a name eventually
 const FIT = 0.75      // the name spans this fraction of the area on screen
-const FS_MIN = 8.5    // smallest font a derived span is allowed to produce
+const FS_MIN = 8.5    // legible: the floor a derived span produces, and the size a
+                      // land name grows to before it stops
 
 // Water is the one thing on this map with no border to trace, so its names are
 // set tight and italic and lean on colour to read as water; land names track
@@ -523,33 +524,36 @@ function areaSpan(def: LabelDef): number {
   return Math.max(derived, legible)
 }
 
-// Land names are sized once, at the zoom they first appear at, and hold that
-// screen size: zooming into a nation is asking for the cities under its name,
-// not for bigger letters.
-//
-// Water names do the opposite and stay fixed to the map, growing on screen as
-// you zoom, because a sea has nothing competing for the space and the name is
-// how you read its extent.
-//
-// A territory too small to carry a legible name at the zoom it appears is
-// sized the water way for the same reason. Holding it at that size means it
-// only ever loses ground against the land growing beneath it, so it starts
-// unreadable and stays unreadable however far you zoom. Growing with the map
-// makes zooming in the thing that resolves it.
-function screenFixed(def: LabelDef): boolean {
-  if (WATER.has(def.type)) return false
-  return (areaSpan(def) * scaleAt(def.minZoom) * FIT) / (def.text.length * advanceOf(def)) >= FS_MIN
+// The size a name arrives at: what its span renders at, at its own minZoom.
+function arrivalSize(def: LabelDef): number {
+  return (areaSpan(def) * scaleAt(def.minZoom) * FIT) / (def.text.length * advanceOf(def))
 }
 
-// Small territories grow at a fraction of the map's rate, not with it. Full
-// rate put an island's name level with a real nation's by the end of the band,
-// which reads as the island having been promoted.
-const GROW = 0.6
-
+// Land names grow with the map until they are legible, then hold that screen
+// size: zooming into a nation is asking for the cities under its name, not for
+// bigger letters. A name that already arrives legible has no growing to do and
+// holds from the moment it appears.
+//
+// Water names never stop, because a sea has nothing competing for the space and
+// the name is how you read its extent.
+//
+// This replaced a test — is the arrival size at least FS_MIN — that sorted every
+// land name into one of two behaviours. A name arriving at 8.42px grew for the
+// rest of the map while one arriving at 8.59px was frozen forever, and the line
+// fell through the middle of the set: fifty of the eighty land names on one side
+// of it, thirty on the other. Nothing about a sixth of a pixel earns that.
+//
+// Saturating is also what makes growing at the map's own rate safe. It was
+// throttled to 0.6 before because an island's name drew level with a nation's by
+// the end of the band; the real fault was that nothing stopped it. Now it stops
+// at legible, which is below where any comfortable name already sits, so an
+// island resolves without being promoted.
 function sizeZoom(def: LabelDef, z: number): number {
   if (WATER.has(def.type)) return z
-  if (screenFixed(def)) return def.minZoom
-  return def.minZoom + GROW * (z - def.minZoom)
+  // Zoom levels of growth needed to reach FS_MIN. Zero once it is already there,
+  // and it approaches zero smoothly rather than switching off at a threshold.
+  const shortfall = Math.max(0, Math.log2(FS_MIN / arrivalSize(def)))
+  return Math.min(z, def.minZoom + shortfall)
 }
 
 // No floor and no ceiling. A speck is the honest rendering of a territory too
@@ -794,6 +798,9 @@ interface Nation {
   // step with the map the way a typed-in figure would. Nations with nothing
   // drawn for them read 0.
   area: number
+  // People per km². Derived rather than given, but it is a headline figure with
+  // a rank, and ranking reads a field off the object like every other stat.
+  density: number
 }
 
 // Columns are found by header, not by position. They used to be read as v[10],
@@ -831,6 +838,7 @@ const nations: Nation[] = (() => {
     const areas = areasData as Record<string, number>
     return {
       area: areas[str(v[col.name])] ?? 0,
+      density: areas[str(v[col.name])] ? num(v[col.population]) / areas[str(v[col.name])] : 0,
       name: str(v[col.name]),
       official: str(v[col.official]),
       population: num(v[col.population]),
@@ -861,7 +869,27 @@ const isCapital = (c: City) => capitalKeys.has(`${norm(c.nation)}\t${norm(c.name
 const nationByName = new Map<string, Nation>()
 for (const n of nations) nationByName.set(norm(n.name), n)
 
-const worldGdpTotal = nations.reduce((s, n) => s + n.gdp, 0)
+// A share is only meaningful where the parts add up to the whole. Population and
+// GDP do. Land area nearly does — the world has ground no nation claims, so this
+// is a share of what is claimed. Per capita and density are ratios: a nation has
+// no share of the world's density, so those rows carry the city count alone.
+//
+// The subline says only "of world" because the sort already names the stat, and
+// the figure it is a share of is sitting at the end of the same row.
+const SHARE: Partial<Record<SortField, (n: Nation) => number>> = {
+  population: n => n.population,
+  gdp: n => n.gdp,
+  area: n => n.area,
+}
+const worldTotals = new Map<string, number>()
+function worldTotal(key: string, pick: (n: Nation) => number): number {
+  let t = worldTotals.get(key)
+  if (t === undefined) {
+    t = nations.reduce((sum, n) => sum + pick(n), 0)
+    worldTotals.set(key, t)
+  }
+  return t
+}
 
 // The ink is the only thing that marks a capital. Shape and scale are a city's,
 // so a capital still reads at its own tier and nothing else has to change.
@@ -1739,6 +1767,14 @@ const STAT_ICON = {
   gdp:
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
     '<path d="M3.5 20.5h17"/><path d="M6.5 20.5v-6"/><path d="M12 20.5V4.5"/><path d="M17.5 20.5v-9.5"/></svg>',
+  area:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M4 8.5V6a2 2 0 0 1 2-2h2.5"/><path d="M15.5 4H18a2 2 0 0 1 2 2v2.5"/>' +
+    '<path d="M20 15.5V18a2 2 0 0 1-2 2h-2.5"/><path d="M8.5 20H6a2 2 0 0 1-2-2v-2.5"/></svg>',
+  density:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+    '<circle cx="7" cy="7" r="1.6"/><circle cx="14.5" cy="6" r="1.6"/><circle cx="6" cy="14.5" r="1.6"/>' +
+    '<circle cx="13" cy="13" r="1.6"/><circle cx="19" cy="17.5" r="1.6"/><circle cx="17.5" cy="10.5" r="1.6"/></svg>',
   hdi:
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
     '<path d="M3.5 20.5h17"/><path d="M5 16.2c3.4 0 5.1-3.4 7-6.3 1.6-2.4 3.4-4.4 6.5-4.4"/>' +
@@ -1777,9 +1813,12 @@ interface Stat {
 // compact: a 400px panel split three ways leaves about 109px per cell, and a
 // figure like $2,320,000,000,000 needs closer to 180px. The exact number and its
 // rank live in the hover, so shortening the face loses nothing.
+// Three stats fit one row of a 380px panel; a fourth leaves each 81px against
+// the 98px an area needs, so four wrap to two rows of two. That also buys the
+// room to write the numbers out in full rather than as 371.76M.
 function statStrip(stats: Stat[]): string {
   return (
-    `<div class="cp-strip">` +
+    `<div class="cp-strip${stats.length >= 4 ? ' cp-strip-grid' : ''}">` +
     stats
       .map(
         s =>
@@ -1865,6 +1904,7 @@ function openCityPanel(c: City) {
 
 type NationStatField =
   | 'population' | 'gdp' | 'gdpPerCapita' | 'hdi' | 'lifeExpectancy' | 'literacy' | 'area'
+  | 'density'
 const nationRankCache = new Map<NationStatField, Map<Nation, number>>()
 
 function nationRanks(field: NationStatField): Map<Nation, number> {
@@ -1887,6 +1927,14 @@ function nationRank(n: Nation, field: NationStatField): number {
 // the list column, where the room is a readout's worth and a stat column's.
 function fmtArea(km2: number): string {
   return Math.round(km2).toLocaleString('en-US') + ' km²'
+}
+
+// People per square kilometre. Two decimals under 1 because the empty north has
+// nations that round to nothing, one under 100, whole numbers above.
+function fmtDensity(d: number): string {
+  if (!d) return '—'
+  return (d < 1 ? d.toFixed(2) : d < 100 ? d.toFixed(1) : Math.round(d).toLocaleString('en-US')) +
+    ' / km²'
 }
 
 function openNationPanel(n: Nation) {
@@ -1923,7 +1971,7 @@ function openNationPanel(n: Nation) {
       {
         label: 'Population',
         icon: STAT_ICON.population,
-        value: fmtCompact(n.population),
+        value: n.population.toLocaleString('en-US'),
         more: [
           [
             'Population',
@@ -1943,6 +1991,9 @@ function openNationPanel(n: Nation) {
       {
         label: 'GDP PPP',
         icon: STAT_ICON.gdp,
+        // The one figure that stays short. Written out it is nineteen characters
+        // against the 162px a cell has, and thirteen digits is not a number
+        // anybody reads — the full amount is a hover away with its rank.
         value: '$' + fmtCompact(n.gdp),
         more: [
           ['GDP PPP', fmtUSD(n.gdp) + fmtRank(nationRank(n, 'gdp')), STAT_ICON.gdp],
@@ -1952,6 +2003,24 @@ function openNationPanel(n: Nation) {
             STAT_ICON.perCapita,
           ],
         ],
+      },
+      // Measured off the borders drawing rather than typed into nations.tsv, so
+      // it cannot drift from the map. Density hangs off it because it is this
+      // divided by the population, the same way per capita hangs off GDP.
+      {
+        label: 'Area',
+        icon: STAT_ICON.area,
+        value: n.area ? fmtArea(n.area) : '—',
+        more: n.area
+          ? ([
+              ['Area', fmtArea(n.area) + fmtRank(nationRank(n, 'area')), STAT_ICON.area],
+              [
+                'Density',
+                fmtDensity(n.density) + fmtRank(nationRank(n, 'density')),
+                STAT_ICON.density,
+              ],
+            ] as Reveal[])
+          : [],
       },
       // Life expectancy and literacy are two of the three components HDI is built
       // from, so they travel with it as its reveal rather than becoming rows.
@@ -1963,7 +2032,6 @@ function openNationPanel(n: Nation) {
       },
     ]) +
     detailsCard([
-      n.area ? detailRow('Area', fmtArea(n.area) + fmtRank(nationRank(n, 'area'))) : '',
       n.continent ? detailRow('Continent', n.continent) : '',
       n.capital ? detailRow('Capital', n.capital, !!cap) : '',
       n.status ? detailRow('Status', n.status) : '',
@@ -2031,6 +2099,7 @@ document.addEventListener('keydown', e => {
   // Innermost first: the full view sits over the panel that opened it, so it has
   // to take the key before the panel does
   if (!lightbox.hidden) lightbox.hidden = true
+  else if (!sortMenu.hidden) closeSortMenu()
   else if (measuring) endMeasure()
   else if (!cityPanel.hidden) closeCityPanel()
   else closeSheetList()
@@ -2145,135 +2214,6 @@ function loadLabelProgress() {
 // Preserves existing coordinates — only data fields get overridden.
 // Cities in the TSV that don't exist yet get added; cities not in the
 // TSV get removed.
-function importTSV(tsv: string) {
-  const lines = tsv.trim().split('\n')
-  if (lines.length < 2) return
-
-  const headers = lines[0].split('\t').map(h => h.trim())
-  const colMap: Record<string, string> = {
-    'name': 'name', 'city': 'name',
-    'nation': 'nation', 'country': 'nation',
-    'population': 'population', 'pop': 'population',
-    'gdp': 'gdp', 'grdp ppp ($)': 'gdp',
-    'gdp per capita': 'gdpPerCapita', 'gdppercapita': 'gdpPerCapita', 'gdp/capita': 'gdpPerCapita',
-    'real grdp p/c ($)': 'gdpPerCapita',
-    'native script': 'nativeScript', 'nativescript': 'nativeScript', 'script': 'nativeScript',
-    'irl parallel': 'irlParallel', 'irlparallel': 'irlParallel', 'parallel': 'irlParallel',
-    'alpha3': 'alpha3', 'code': 'alpha3', 'alpha-3 code': 'alpha3',
-  }
-  const cols = headers.map(h => colMap[h.toLowerCase()] ?? null)
-  const nameCol = cols.indexOf('name')
-  if (nameCol < 0) {
-    statusEl.textContent = 'TSV needs a "Name" column'
-    statusEl.className = 'status-active'
-    return
-  }
-
-  // Build coord lookup from current state, on the same name+nation key
-  const coordMap = new Map<string, [number | null, number | null]>()
-  for (const c of cities) coordMap.set(coordKey(c), [c.x, c.y])
-
-  // Also pull from localStorage in case some coords aren't in the current array
-  const saved = localStorage.getItem(SAVE_KEY)
-  if (saved) {
-    const coords = JSON.parse(saved) as Record<string, [number, number]>
-    for (const c of cities) {
-      const xy = legacyCoord(coords, c)
-      const key = coordKey(c)
-      if (xy && (!coordMap.has(key) || coordMap.get(key)![0] == null)) coordMap.set(key, xy)
-    }
-  }
-
-  const newCities: City[] = []
-  for (let i = 1; i < lines.length; i++) {
-    const vals = lines[i].split('\t').map(v => v.trim())
-    if (!vals[nameCol]) continue
-
-    const city: City = {
-      name: '', nation: '', population: 0, gdp: 0, gdpPerCapita: 0,
-      nativeScript: '', irlParallel: '', alpha3: '', x: null, y: null,
-    }
-    for (let j = 0; j < cols.length; j++) {
-      const field = cols[j]
-      if (!field || !vals[j]) continue
-      if (field === 'population' || field === 'gdp' || field === 'gdpPerCapita') {
-        (city as any)[field] = parseFloat(vals[j].replace(/,/g, '')) || 0
-      } else {
-        (city as any)[field] = vals[j] === '-' ? '' : vals[j]
-      }
-    }
-
-    // Preserve coordinates
-    const existing = coordMap.get(coordKey(city))
-    if (existing) { city.x = existing[0]; city.y = existing[1] }
-    newCities.push(city)
-  }
-
-  cities.length = 0
-  cities.push(...newCities)
-
-  // Rebuild priority sort
-  citiesByPriority.length = 0
-  citiesByPriority.push(
-    ...[...cities].sort(
-      (a, b) => tierRank(a.population) - tierRank(b.population) || b.gdp - a.gdp
-    )
-  )
-
-  saveProgress()
-  invalidatePlacements()
-  updateCities()
-  updateCount()
-  statusEl.textContent = `TSV: ${newCities.length} cities loaded, ${newCities.filter(c => c.x != null).length} placed`
-  statusEl.className = 'status-done'
-}
-
-function importJSON(file: File) {
-  const reader = new FileReader()
-  reader.onload = () => {
-    const data = JSON.parse(reader.result as string)
-
-    // Labels file: entries have type + text instead of name + population
-    if (Array.isArray(data) && data[0]?.type && data[0]?.text) {
-      let count = 0
-      for (const imported of data as LabelDef[]) {
-        if (imported.x == null || imported.y == null) continue
-        const match = labelDefs.find(d => d.type === imported.type && d.text === imported.text)
-        if (match) {
-          match.x = imported.x
-          match.y = imported.y
-          if (imported.tier != null) match.tier = imported.tier
-          refreshLabel(match)
-          count++
-        }
-      }
-      saveLabelProgress()
-      updateCount()
-      statusEl.textContent = `Imported ${count} labels`
-      statusEl.className = 'status-done'
-      return
-    }
-
-    let count = 0
-    for (const imported of data as City[]) {
-      if (imported.x == null || imported.y == null) continue
-      const match = cities.find(c => c.name === imported.name)
-      if (match) {
-        match.x = imported.x
-        match.y = imported.y
-        count++
-      }
-    }
-    saveProgress()
-    updateCount()
-    invalidatePlacements()
-    updateCities()
-    statusEl.textContent = `Imported ${count} cities`
-    statusEl.className = 'status-done'
-  }
-  reader.readAsText(file)
-}
-
 // Dev only, all three of these. The placer's localStorage is a scratch copy of
 // an editing session, and laying it over the shipped data on the public site
 // means anyone who has ever opened ?dev on that origin keeps seeing their old
@@ -2295,23 +2235,31 @@ invalidatePlacements()
 updateCities()
 
 const panel = document.getElementById('place-panel')!
+const placeRail = document.getElementById('place-rail')!
+
+// The rail buttons are an icon and a label, so writing textContent on one wipes
+// the icon. Every state change goes through here instead.
+function navLabel(btn: HTMLElement, text: string) {
+  const span = btn.querySelector('span:last-child')
+  if (span) span.textContent = text
+}
 const searchInput = document.getElementById('place-search') as HTMLInputElement
 const resultsList = document.getElementById('place-results')!
 const statusEl = document.getElementById('place-status')!
 const coordEl = document.querySelector('.coord-display') as HTMLElement
 const countEl = document.getElementById('place-count')!
-const importInput = document.getElementById('place-import') as HTMLInputElement
-const unassignedPanel = document.getElementById('unassigned-panel')!
-const unassignedHeader = document.getElementById('unassigned-header')!
-const unassignedList = document.getElementById('unassigned-list')!
 const spanRow = document.getElementById('span-row')!
 const spanInput = document.getElementById('place-span') as HTMLInputElement
 const spanReadout = document.getElementById('span-readout')!
 
-if (!DEV) {
+if (DEV) {
+  // Lets the stylesheet tell the two modes apart. In dev the placer owns the left
+  // edge and the public rail is not on screen at all.
+  document.body.classList.add('dev')
+} else {
   panel.style.display = 'none'
+  placeRail.style.display = 'none'
   coordEl.style.display = 'none'
-  unassignedPanel.style.display = 'none'
 }
 
 let selectedCity: City | null = null
@@ -2373,60 +2321,34 @@ spanInput.addEventListener('change', () => {
 })
 let placedMarker: L.CircleMarker | null = null
 
+// Two chips rather than a sentence. "1722/1763 cities · 161/161 labels" was
+// thirty-odd characters in a 190px rail, so it wrapped under the title and the
+// numbers — the only part worth reading — came second.
+const COUNT_ICON = {
+  city:
+    '<svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor">' +
+    '<rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/>' +
+    '<rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg>',
+  label:
+    '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" ' +
+    'stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M4 7h9"/><path d="M4 12h13"/><path d="M4 17h7"/><circle cx="19" cy="7" r="1.6"/></svg>',
+}
+
 function updateCount() {
   const placed = cities.filter(c => c.x != null && c.y != null).length
   // A derived anchor counts as placed: that label is already on the map and
   // draggable, so the placer has nothing left to do for it
   const lPlaced = labelDefs.filter(d => labelPos(d) != null).length
-  countEl.textContent = `${placed}/${cities.length} cities · ${lPlaced}/${labelDefs.length} labels`
-  updateUnassigned()
-}
-
-function updateUnassigned() {
-  if (!DEV) return
-  // Scoped to the open tab, so the panel is a worklist for the job in hand
-  // rather than a pile of both
-  const unplacedLabels = tab === 'labels' ? labelDefs.filter(d => labelPos(d) == null) : []
-  const unplacedStations = tab === 'labels' ? stations.filter(p => p.x == null) : []
-  const unplaced = tab === 'cities' ? citiesByPriority.filter(c => c.x == null || c.y == null) : []
-  const total = unplacedLabels.length + unplacedStations.length + unplaced.length
-  unassignedHeader.textContent = `Unassigned (${total})`
-  if (!total) {
-    unassignedPanel.style.display = 'none'
-    return
-  }
-  unassignedPanel.style.display = ''
-  unassignedList.innerHTML = ''
-  // Labels first: there are a handful, and each covers more map than any city
-  for (const d of unplacedLabels) {
-    const li = document.createElement('li')
-    li.innerHTML = `<span class="result-name">${d.text}</span>` +
-      `<span class="result-meta">${d.type.toUpperCase()}</span>`
-    li.addEventListener('click', () => selectLabel(d))
-    unassignedList.appendChild(li)
-  }
-  for (const p of unplacedStations) {
-    const li = document.createElement('li')
-    li.innerHTML = `<span class="result-name">${p.name}</span>` +
-      `<span class="result-meta">STATION</span>`
-    li.addEventListener('click', () => selectStation(p))
-    unassignedList.appendChild(li)
-  }
-  for (const c of unplaced) {
-    const li = document.createElement('li')
-    li.innerHTML = `<span class="result-name">${c.name}</span>` +
-      `<span class="result-meta">${c.nation} · ${(c.population / 1e6).toFixed(2)}M</span>`
-    li.addEventListener('click', () => selectCity(c))
-    unassignedList.appendChild(li)
-  }
+  const chip = (icon: string, done: number, all: number, what: string) =>
+    `<span class="pp-chip${done === all ? ' is-done' : ''}" title="${done} of ${all} ${what} placed">` +
+    `${icon}<span>${done}<span class="pp-of">/${all}</span></span></span>`
+  countEl.innerHTML =
+    chip(COUNT_ICON.city, placed, cities.length, 'cities') +
+    chip(COUNT_ICON.label, lPlaced, labelDefs.length, 'labels')
 }
 
 updateCount()
-
-importInput.addEventListener('change', () => {
-  if (importInput.files?.[0]) importJSON(importInput.files[0])
-  importInput.value = ''
-})
 
 // How well a city answers the query, lowest first. The nation is searchable
 // because "guandong" is a reasonable way to ask for its cities — but a nation is
@@ -2434,48 +2356,80 @@ importInput.addEventListener('change', () => {
 // win on equal terms. Typing Andō returned ten Guandong cities and not Andō:
 // "ando" sits inside "gu-ando-ng", 54 of its cities matched, and the list was
 // full before the two name matches were reached.
-const MISS = 5
+//
+// The IRL parallel ranks between the two. It is how a city is found when its
+// Avium name is the thing you cannot remember — "what did I call the Fukuoka
+// one" — and being a city name itself it is about as specific as the name, where
+// a nation covers dozens of rows at once.
+// The results list runs the height of the column now rather than a 156px box in
+// a floating slab, so it can afford to show what it finds
+const PLACE_MAX = 40
+
+// What is left to do comes first. This is the worklist the unassigned tray used
+// to be — it sat in its own floating panel repeating half of this list, and with
+// an empty search box now browsing, there was nothing left for it to say.
+function sortUnplacedFirst<T>(rows: T[], placed: (r: T) => boolean): T[] {
+  return [...rows].sort((a, b) => Number(placed(a)) - Number(placed(b)))
+}
+
+const MISS = 7
 function matchRank(c: City, q: string): number {
   const name = norm(c.name)
   if (name === q) return 0
   if (name.startsWith(q)) return 1
   if (name.includes(q)) return 2
+  const par = norm(c.irlParallel)
+  if (par.startsWith(q)) return 3
+  if (par.includes(q)) return 4
   const nation = norm(c.nation)
-  if (nation.startsWith(q)) return 3
-  if (nation.includes(q)) return 4
+  if (nation.startsWith(q)) return 5
+  if (nation.includes(q)) return 6
   return MISS
 }
 
 function renderResults() {
   const q = norm(searchInput.value.trim())
   resultsList.innerHTML = ''
-  // Cities need a query: there are 1747 and nobody browses that. Labels and
-  // stations number about a hundred, so an empty box lists all of them — on that
-  // tab this is a browser, not a search field, and without it the tab looked
-  // broken whenever everything happened to be placed already.
-  const browsing = tab === 'labels' && !q
+  // An empty box browses rather than sitting blank. On labels that is all of
+  // them, a hundred or so. On cities it is the ones still to place, biggest
+  // first — the work queue, which is what the tab is opened to do. All 1763 is
+  // not a list anybody reads.
+  const browsing = !q
   if (!browsing && q.length < 2) return
 
   const matches =
-    tab === 'cities'
-      ? cities
-          .filter(c => matchRank(c, q) < MISS)
-          .sort((a, b) => matchRank(a, q) - matchRank(b, q) || b.population - a.population)
-          .slice(0, 10)
-      : []
+    tab !== 'cities'
+      ? []
+      : browsing
+        ? cities
+            .filter(c => c.x == null)
+            .sort((a, b) => b.population - a.population)
+            .slice(0, PLACE_MAX)
+        : cities
+            .filter(c => matchRank(c, q) < MISS)
+            .sort((a, b) => matchRank(a, q) - matchRank(b, q) || b.population - a.population)
+            .slice(0, PLACE_MAX)
 
   for (const c of matches) {
     const li = document.createElement('li')
     const placed = c.x != null
+    // The parallel is always on the row, placed or not. It is how a city is
+    // recognised when the Avium name is the thing that will not come — and it is
+    // what a search for "fukuoka" matched on, so a row that showed it only
+    // sometimes read as a row that had matched nothing.
+    const par = c.irlParallel ? ` &middot; ${c.irlParallel}` : ''
     li.innerHTML = `<span class="result-name">${c.name}</span>` +
-      `<span class="result-meta">${c.nation} &middot; ${(c.population / 1e6).toFixed(2)}M${placed ? ' ✓' : ''}</span>`
+      `<span class="result-meta">${c.nation}${par} &middot; ${(c.population / 1e6).toFixed(2)}M${placed ? ' ✓' : ''}</span>`
     if (placed) li.classList.add('placed')
     li.addEventListener('click', () => selectCity(c))
     resultsList.appendChild(li)
   }
 
   const labelMatches = tab === 'labels'
-    ? labelDefs.filter(d => !q || norm(d.text).includes(q)).slice(0, browsing ? 400 : 6)
+    ? sortUnplacedFirst(
+        labelDefs.filter(d => !q || norm(d.text).includes(q)),
+        d => labelPos(d) != null
+      ).slice(0, browsing ? 400 : PLACE_MAX)
     : []
 
   for (const d of labelMatches) {
@@ -2489,7 +2443,10 @@ function renderResults() {
   }
 
   const stationMatches = tab === 'labels'
-    ? stations.filter(p => !q || norm(p.name).includes(q)).slice(0, browsing ? 400 : 6)
+    ? sortUnplacedFirst(
+        stations.filter(p => !q || norm(p.name).includes(q)),
+        p => p.x != null
+      ).slice(0, browsing ? 400 : PLACE_MAX)
     : []
 
   for (const p of stationMatches) {
@@ -2614,36 +2571,6 @@ if (DEV) {
 // can't end with cities.json current and labels.json a version behind.
 
 // TSV paste toggle
-const tsvArea = document.getElementById('tsv-paste') as HTMLTextAreaElement
-document.getElementById('tsv-toggle')!.addEventListener('click', () => {
-  const show = tsvArea.hidden
-  tsvArea.hidden = !show
-  if (show) tsvArea.focus()
-})
-
-tsvArea.addEventListener('keydown', (e: KeyboardEvent) => {
-  if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
-    importTSV(tsvArea.value)
-    tsvArea.value = ''
-    tsvArea.hidden = true
-  }
-})
-
-// Undo last placement
-document.getElementById('place-undo')!.addEventListener('click', () => {
-  const last = [...cities].reverse().find(c => c.x != null && c.y != null)
-  if (last) {
-    statusEl.textContent = `Removed ${last.name} [${last.x}, ${last.y}]`
-    statusEl.className = 'status-active'
-    last.x = null
-    last.y = null
-    updateCount()
-    invalidatePlacements()
-    updateCities()
-    saveProgress()
-  }
-})
-
 // --- Bottom sheet (public mode) ---
 
 const sheet = document.getElementById('bottom-sheet')!
@@ -2668,8 +2595,10 @@ function replayAnim(el: HTMLElement, cls: string) {
   el.classList.add(cls)
 }
 
-const bsBanner = document.getElementById('bs-banner') as HTMLImageElement | null
-if (bsBanner) bsBanner.src = bannerUrl
+for (const id of ['bs-banner', 'place-banner']) {
+  const img = document.getElementById(id) as HTMLImageElement | null
+  if (img) img.src = bannerUrl
+}
 
 // The column is permanent on a desktop — the place panel opens beside it rather
 // than over it — so there is nothing to hide. On a phone the sheet still has to
@@ -2835,7 +2764,7 @@ bsSearch.addEventListener('keydown', e => {
 })
 
 // List views
-type SortField = 'name' | 'population' | 'gdp' | 'gdpPerCapita' | 'area'
+type SortField = 'name' | 'population' | 'gdp' | 'gdpPerCapita' | 'area' | 'density'
 let listMode: 'cities' | 'nations' = 'cities'
 
 let sortField: SortField = 'name'
@@ -2887,19 +2816,66 @@ bsItems.addEventListener('scroll', () => {
   if (bsItems.scrollTop + bsItems.clientHeight > bsItems.scrollHeight - 300) renderMoreRows()
 })
 
-const sortChips = Array.from(document.querySelectorAll<HTMLButtonElement>('.bs-sorts button'))
+// A row of chips ran out of room at five and there are six sorts now, two of
+// them nations-only. So it is a button carrying the current sort with a menu
+// behind it, next to the field it belongs to, rather than a segmented control
+// squeezing "Population ↓" into 60px.
+const SORTS: [SortField, string, boolean][] = [
+  // field, label, nations only
+  ['name', 'Alphabetical', false],
+  ['population', 'Population', false],
+  ['gdp', 'GDP PPP', false],
+  ['gdpPerCapita', 'GDP Per Capita', false],
+  ['area', 'Land Area', true],
+  ['density', 'Density', true],
+]
+const sortBtn = document.getElementById('bs-sort-btn') as HTMLButtonElement
+const sortMenu = document.getElementById('bs-sort-menu')!
+const sortLabel = (f: SortField) => SORTS.find(s => s[0] === f)?.[1] ?? 'Alphabetical'
+
+function closeSortMenu() {
+  sortMenu.hidden = true
+  sortBtn.setAttribute('aria-expanded', 'false')
+}
 
 function updateSortChips() {
-  for (const chip of sortChips) {
-    const active = chip.dataset.sort === sortField
-    chip.classList.toggle('active', active)
-    const label = chip.dataset.sort === 'name' ? 'Name'
-      : chip.dataset.sort === 'population' ? 'Population'
-      : chip.dataset.sort === 'gdp' ? 'GDP'
-      : chip.dataset.sort === 'area' ? 'Area' : 'Per Capita'
-    chip.textContent = active ? `${label} ${sortAsc ? '↑' : '↓'}` : label
-  }
+  sortBtn.innerHTML =
+    `<span>${sortLabel(sortField)}</span><span class="bs-sort-dir">${sortAsc ? '↑' : '↓'}</span>`
+  sortMenu.innerHTML = SORTS.filter(([, , nat]) => !nat || listMode === 'nations')
+    .map(
+      ([f, label]) =>
+        `<li data-sort="${f}"${f === sortField ? ' class="is-on"' : ''} role="option">${label}` +
+        (f === sortField ? `<span class="bs-sort-dir">${sortAsc ? '↑' : '↓'}</span>` : '') +
+        `</li>`
+    )
+    .join('')
 }
+
+sortBtn.addEventListener('click', e => {
+  e.stopPropagation()
+  const open = sortMenu.hidden
+  sortMenu.hidden = !open
+  sortBtn.setAttribute('aria-expanded', String(open))
+})
+
+// Picking the sort already in force flips its direction, which is what the chips
+// did when you clicked the lit one
+sortMenu.addEventListener('click', e => {
+  const li = (e.target as HTMLElement).closest('[data-sort]') as HTMLElement | null
+  if (!li) return
+  const field = li.dataset.sort as SortField
+  if (field === sortField) sortAsc = !sortAsc
+  else {
+    sortField = field
+    sortAsc = field === 'name'
+  }
+  closeSortMenu()
+  rebuildList()
+})
+
+document.addEventListener('click', e => {
+  if (!sortMenu.hidden && !(e.target as HTMLElement).closest('.bs-sortwrap')) closeSortMenu()
+})
 
 // Map presence per nation (city count, urban pop, marker bounds), derived once
 let nationMapAggs: Map<string, { count: number; pop: number; pts: L.LatLngExpression[] }> | null = null
@@ -2934,6 +2910,7 @@ function flyToNation(n: Nation) {
 }
 
 function nationStatText(n: Nation): string {
+  if (sortField === 'density') return fmtDensity(n.density)
   if (sortField === 'area') return fmtKm2(n.area)
   if (sortField === 'gdp') return '$' + fmtCompact(n.gdp)
   if (sortField === 'gdpPerCapita') return '$' + n.gdpPerCapita.toLocaleString('en-US')
@@ -2954,14 +2931,22 @@ function renderNations(q: string) {
   if (!sortAsc) rows.reverse()
   const rm = sortField !== 'name' ? nationRanks(sortField as NationStatField) : null
   const frag = document.createDocumentFragment()
+  // Sorted by name there is no stat in play, so the share falls back to the one
+  // a list of countries is most often read for
+  const shareKey: SortField = sortField === 'name' ? 'population' : sortField
+  const share = SHARE[shareKey]
   for (const n of rows) {
     const agg = mapAggFor(n)
-    const pct = worldGdpTotal ? (n.gdp / worldGdpTotal) * 100 : 0
-    const pctText = pct >= 0.1 ? pct.toFixed(1) + '%' : '<0.1%'
+    const sub = [`${agg.count} ${agg.count === 1 ? 'city' : 'cities'}`]
+    if (share) {
+      const total = worldTotal(shareKey, share)
+      const pct = total ? (share(n) / total) * 100 : 0
+      sub.push(`${pct >= 0.1 ? pct.toFixed(1) + '%' : '<0.1%'} of world`)
+    }
     const li = document.createElement('li')
     li.innerHTML =
       `<span class="bs-rank">${rm ? rm.get(n) : ''}</span>` +
-      `<span class="bs-cinfo"><span class="bs-cname">${n.name}</span><span class="bs-cnation">${agg.count} ${agg.count === 1 ? 'city' : 'cities'} · ${pctText} of world GDP</span></span>` +
+      `<span class="bs-cinfo"><span class="bs-cname">${n.name}</span><span class="bs-cnation">${sub.join(' · ')}</span></span>` +
       `<span class="bs-cstat">${nationStatText(n)}</span>`
     li.addEventListener('click', () => flyToNation(n))
     frag.appendChild(li)
@@ -2995,19 +2980,6 @@ function rebuildList(animate = true) {
 }
 
 bsFilter.addEventListener('input', () => rebuildList(false))
-
-for (const chip of sortChips) {
-  chip.addEventListener('click', () => {
-    const field = chip.dataset.sort as SortField
-    if (field === sortField) {
-      sortAsc = !sortAsc
-    } else {
-      sortField = field
-      sortAsc = field === 'name'
-    }
-    rebuildList()
-  })
-}
 
 // The rail stays on screen beside an open list, so it has to say which one is
 // open. Cities is the button labelled 'all' in the markup.
@@ -3044,12 +3016,6 @@ function openListView(mode: 'cities' | 'nations', filter = '') {
   listMode = mode
   bsFilter.value = filter
   bsFilter.placeholder = 'Search'
-  // Area is measured off the borders drawing, so only a nation has one. The chip
-  // row is shared with the city list, where it would sort by a column that does
-  // not exist.
-  for (const chip of sortChips) {
-    if (chip.dataset.nationsOnly !== undefined) chip.hidden = mode !== 'nations'
-  }
   if (mode === 'nations') {
     sortField = 'population'
     sortAsc = false
@@ -3917,7 +3883,7 @@ function setLabelType(def: LabelDef, type: string) {
 
 function markDirty() {
   dirty = true
-  saveBtn.textContent = 'Save •'
+  navLabel(saveBtn, 'Save •')
   saveBtn.classList.add('pp-dirty')
 }
 
@@ -4000,7 +3966,7 @@ let dropTimer = 0
 function disarmDrop() {
   dropArmed = false
   clearTimeout(dropTimer)
-  dropLocalBtn.textContent = 'Drop local'
+  navLabel(dropLocalBtn, 'Reset')
   dropLocalBtn.classList.remove('is-armed')
 }
 
@@ -4012,7 +3978,7 @@ dropLocalBtn.addEventListener('click', () => {
     // thing that is not safe, because it clears exactly that store and then
     // reloads. Said plainly here, because "Sure?" is not: an edit session was
     // lost to this, and the button gave no sign it was about to happen.
-    dropLocalBtn.textContent = dirty ? 'Lose edits?' : 'Sure?'
+    navLabel(dropLocalBtn, dirty ? 'Lose edits?' : 'Reset — sure?')
     dropLocalBtn.classList.add('is-armed')
     if (dirty) {
       statusEl.textContent = 'Unsaved placements will be lost — Save first to keep them'
@@ -4143,7 +4109,7 @@ saveBtn.addEventListener('click', async () => {
 
   saveBtn.disabled = false
   dirty = false
-  saveBtn.textContent = 'Save'
+  navLabel(saveBtn, 'Save')
   saveBtn.classList.remove('pp-dirty')
   statusEl.className = 'status-done'
   statusEl.textContent = failed.length
@@ -4169,15 +4135,20 @@ window.addEventListener('beforeunload', (e) => {
 // drift apart.
 
 
-const tabButtons = [...document.querySelectorAll<HTMLButtonElement>('.pp-tab')]
+const tabButtons = [...document.querySelectorAll<HTMLButtonElement>('.pp-tab[data-tab]')]
 
 function setTab(next: PlacerTab, focus = true) {
   tab = next
   for (const b of tabButtons) b.classList.toggle('is-on', b.dataset.tab === next)
-  for (const el of document.querySelectorAll<HTMLElement>('.pp-toolbar [data-for]')) {
-    el.hidden = el.dataset.for !== next
-  }
-  searchInput.placeholder = next === 'cities' ? 'Search cities…' : 'Search labels and stations…'
+  const tools = [...document.querySelectorAll<HTMLElement>('.pp-toolbar [data-for]')]
+  for (const el of tools) el.hidden = el.dataset.for !== next
+  // With nothing left for the cities tab, the toolbar is a border-top and a gap
+  // — a divider under the results marking off an empty strip
+  const toolbar = document.querySelector('.pp-toolbar') as HTMLElement
+  toolbar.hidden = !tools.some(el => !el.hidden)
+  searchInput.placeholder = 'Search'
+  // Only in dev: on the public map these markers are the whole point of clicking
+  mapEl.classList.toggle('placing-cities', DEV && next === 'cities')
   // Clearing is the honest move: a selection made on the other tab is no longer
   // reachable, and leaving it live means the next map click places something the
   // panel is no longer showing
@@ -4190,7 +4161,6 @@ function setTab(next: PlacerTab, focus = true) {
   renderResults()
   statusEl.textContent = ''
   statusEl.className = ''
-  updateUnassigned()
   if (focus) searchInput.focus()
 }
 
