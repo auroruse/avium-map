@@ -1124,6 +1124,9 @@ html, body {
   gap: 2px;
 }
 
+.bs-sorts button[hidden] {
+  display: none;
+}
 .bs-sorts button {
   flex: 1 1 0;
   min-width: 0;
@@ -1134,8 +1137,9 @@ html, body {
   font-weight: 500;
   font-family: inherit;
   /* Tight horizontally: the widest label carries a sort arrow when active, and
-     the quarter it gets is only about 82px in the desktop column. */
-  padding: 5px 4px;
+     the nations list has five of these in a 400px column, so each one gets 72px
+     and "Population ↓" wants 73 of them. */
+  padding: 5px 2px;
   border-radius: 7px;
   cursor: pointer;
   white-space: nowrap;
@@ -1163,7 +1167,21 @@ html, body {
   cursor: pointer;
 }
 
-#bs-items li:hover {
+/* Search with nothing to show. Not a row: it has nothing to open. */
+#bs-items li.bs-empty {
+  cursor: default;
+  padding: 14px 8px;
+  color: #8b9096;
+  font-size: 13px;
+}
+#bs-items li.bs-empty:hover {
+  background: none;
+}
+
+/* .sel is the arrow-key highlight, which the search results now use here rather
+   than in the rail's own list */
+#bs-items li:hover,
+#bs-items li.sel {
   background: rgba(255,255,255,0.08);
 }
 
@@ -1240,6 +1258,39 @@ html, body {
   text-align: center;
   padding: 0 4px;
   font-variant-numeric: tabular-nums;
+}
+
+/* An area answers with three numbers, so it gets a second line and the room for
+   it. Distance keeps the single centred figure it always had. */
+#measure-total.mt-wide {
+  min-width: 258px;
+}
+.mt-main,
+.mt-sub {
+  display: block;
+}
+.mt-sub {
+  font-size: 11px;
+  font-weight: 500;
+  opacity: 0.62;
+  margin-top: 1px;
+}
+
+/* A row that picks something rather than showing a value: two stacked lines, no
+   stat column, no rank. Used by the Measure tab. */
+#bs-items li.pick-row {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+  padding: 9px 8px;
+}
+.pick-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+.pick-sub {
+  font-size: 11.5px;
+  opacity: 0.55;
 }
 
 #measure-bar button {
@@ -1341,6 +1392,9 @@ html, body {
 .bs-circle { transition: filter 0.15s, transform 0.18s; }
 .bs-btn:active .bs-circle { transform: scale(0.9); }
 
+.bs-sorts button[hidden] {
+  display: none;
+}
 .bs-sorts button { transition: background 0.18s, color 0.18s, transform 0.15s; }
 .bs-sorts button:active { transform: scale(0.94); }
 

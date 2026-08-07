@@ -7,6 +7,7 @@ import labelsData from './data/labels.json'
 import bannerUrl from './assets/banner.png'
 import stationsData from './data/stations.json'
 import nationsTsv from './data/nations.tsv?raw'
+import areasData from './data/areas.json'
 import { talopedia, type TalopediaEntry } from './data/talopedia'
 
 // --- Dev mode ---
@@ -96,6 +97,46 @@ function fromGeo(lat: number, lon: number): { x: number; y: number } {
     x: GEO_ORIGIN + (u - v) * SQRT1_2,
     y: GEO_ORIGIN - (u + v) * SQRT1_2,
   }
+}
+
+// Avium is a sphere and this is a projection of it, so a map pixel is not a fixed
+// amount of ground and cannot be measured as though it were. The graticule runs
+// on the diagonals: the meridian diagonal carries 180° of latitude and the
+// equator diagonal carries 360° of longitude, which makes the equator twice the
+// scale of the meridian, and the squeeze toward the poles is linear where the
+// sphere's own is a cosine. Measuring in flat pixels loses 61% of the planet.
+//
+// PX2KM is the meridian scale, so the half-diagonal is a quarter of the
+// circumference and the radius falls out of it: 6367km, an Earth.
+const PLANET_R = (GEO_R * PX2KM) / (Math.PI / 2)
+const D2R = Math.PI / 180
+
+// Ground area of a square of `side` map pixels centred on (x, y).
+//
+// dA = Rp²·cosφ·dφ·dλ, and the projection gives dφ = 90·dv/GEO_R and
+// dλ = 180·du/halfWidth, with du·dv = dx·dy because the diagonal axes are just a
+// rotation. Writing t for halfWidth/GEO_R, the latitude is 90(1-t) degrees and so
+// cosφ is exactly sin(tπ/2) — which keeps the poles finite, where cosφ and
+// halfWidth both reach zero and the naive ratio would not survive.
+//
+// Summed over the whole map this comes to 4πRp². That is the check that it is
+// the right expression, and it is worth re-running if any of this ever moves.
+const AREA_K = (PLANET_R * PLANET_R * Math.PI * Math.PI) / (2 * GEO_R * GEO_R)
+function pxArea(x: number, y: number, side: number): number {
+  const t = 1 - Math.abs(axes(x, y).v) / GEO_R
+  if (t <= 0) return 0
+  return (AREA_K * Math.sin((t * Math.PI) / 2) * side * side) / t
+}
+
+// A straight line on this projection is not a great circle, so a path is measured
+// leg by leg between the points actually clicked.
+function geoKm(a: Geo, b: Geo): number {
+  const p1 = a.lat * D2R
+  const p2 = b.lat * D2R
+  const h =
+    Math.sin((p2 - p1) / 2) ** 2 +
+    Math.cos(p1) * Math.cos(p2) * Math.sin(((b.lon - a.lon) * D2R) / 2) ** 2
+  return 2 * PLANET_R * Math.asin(Math.min(1, Math.sqrt(h)))
 }
 
 // Single cardinal letters, as any atlas uses. The axes run on the diagonals, so
@@ -748,6 +789,11 @@ interface Nation {
   capital: string
   expansionPoints: number
   continent: string
+  // Territory in km², from scripts/areas.mjs. Not in nations.tsv: it is measured
+  // off the borders drawing rather than written down, so it cannot fall out of
+  // step with the map the way a typed-in figure would. Nations with nothing
+  // drawn for them read 0.
+  area: number
 }
 
 // Columns are found by header, not by position. They used to be read as v[10],
@@ -782,7 +828,9 @@ const nations: Nation[] = (() => {
   const str = (s: string | undefined) => (s === '-' ? '' : (s ?? '').trim())
   return lines.slice(1).map(line => {
     const v = line.split('\t')
+    const areas = areasData as Record<string, number>
     return {
+      area: areas[str(v[col.name])] ?? 0,
       name: str(v[col.name]),
       official: str(v[col.official]),
       population: num(v[col.population]),
@@ -1815,7 +1863,8 @@ function openCityPanel(c: City) {
 
 // --- Nation info panel ---
 
-type NationStatField = 'population' | 'gdp' | 'gdpPerCapita' | 'hdi' | 'lifeExpectancy' | 'literacy'
+type NationStatField =
+  | 'population' | 'gdp' | 'gdpPerCapita' | 'hdi' | 'lifeExpectancy' | 'literacy' | 'area'
 const nationRankCache = new Map<NationStatField, Map<Nation, number>>()
 
 function nationRanks(field: NationStatField): Map<Nation, number> {
@@ -1831,6 +1880,13 @@ function nationRanks(field: NationStatField): Map<Nation, number> {
 
 function nationRank(n: Nation, field: NationStatField): number {
   return n[field] ? nationRanks(field).get(n) ?? 0 : 0
+}
+
+// The panel has the width for the whole number, and a country's area is the kind
+// of figure people compare digit by digit. fmtKm2 stays for the measure bar and
+// the list column, where the room is a readout's worth and a stat column's.
+function fmtArea(km2: number): string {
+  return Math.round(km2).toLocaleString('en-US') + ' km²'
 }
 
 function openNationPanel(n: Nation) {
@@ -1907,6 +1963,7 @@ function openNationPanel(n: Nation) {
       },
     ]) +
     detailsCard([
+      n.area ? detailRow('Area', fmtArea(n.area) + fmtRank(nationRank(n, 'area'))) : '',
       n.continent ? detailRow('Continent', n.continent) : '',
       n.capital ? detailRow('Capital', n.capital, !!cap) : '',
       n.status ? detailRow('Status', n.status) : '',
@@ -2598,6 +2655,9 @@ const bsItems = document.getElementById('bs-items')!
 const bsFilter = document.getElementById('bs-filter') as HTMLInputElement
 const bsTitle = document.getElementById('bs-title')!
 const bsControls = document.querySelector('.bs-controls') as HTMLElement
+// Whether the second column is currently holding search results rather than a
+// browse list, a settings page or the measure menu
+let searchOpen = false
 
 if (DEV) sheet.style.display = 'none'
 
@@ -2629,6 +2689,7 @@ function showSheet() {
 
 function closeSheetList() {
   if (DEV || bsList.hidden) return
+  searchOpen = false
   bsList.hidden = true
   bsHome.hidden = false
   markNavOpen(null)
@@ -2659,32 +2720,99 @@ function fmtCompact(n: number): string {
 function goCity(c: City) {
   bsResults.innerHTML = ''
   bsSearch.value = ''
+  searchSel = -1
+  closeSearchColumn()
   if (c.x != null && c.y != null) focusOn(c.x, c.y, Math.max(map.getZoom(), 4))
   openCityPanel(c)
 }
 
 // Home search
+//
+// On a desktop the results go in the second column rather than under the field.
+// The rail is clamp(190px, 12.5vw, 320px) and only reaches its full width on a
+// 2560px screen, so on an ordinary laptop it is 190px and a result had about
+// 150px to say "Montlionne · Barbary · 1.19M" in. The column has 380px and the
+// height for more than ten of them.
+//
+// The field stays in the rail. Apple Maps moves it into the column, but the rail
+// here is where a search starts and taking its field away would leave the tab
+// that owns the column with nothing to open it from.
+//
+// Narrow screens keep the old inline list: the column rises from the bottom edge
+// there and would cover the field being typed into.
 let searchSel = -1
+const SEARCH_MAX_RAIL = 10
+const SEARCH_MAX_COLUMN = 50
+
+// Whichever list is live, so the arrow keys walk the one on screen
+function searchItems(): HTMLCollection {
+  return searchOpen ? bsItems.children : bsResults.children
+}
+
+function closeSearchColumn() {
+  if (searchOpen) closeSheetList()
+}
+
+function renderSearch(q: string) {
+  const wide = onDesktop()
+  const matches = idx()
+    .filter(e => e.n.includes(q) || e.nat.includes(q))
+    .slice(0, wide ? SEARCH_MAX_COLUMN : SEARCH_MAX_RAIL)
+
+  if (!wide) {
+    closeSearchColumn()
+    for (const { c } of matches) {
+      const li = document.createElement('li')
+      li.innerHTML = `<span class="bs-cname">${c.name}</span>` +
+        `<span class="bs-cnation">${c.nation} · ${fmtCompact(c.population)}</span>`
+      li.addEventListener('click', () => goCity(c))
+      bsResults.appendChild(li)
+    }
+    return
+  }
+
+  // Reopening on every keystroke would replay the column's slide each time, so
+  // it is opened once and then only refilled
+  if (!searchOpen) {
+    openColumn('Search', false, null)
+    searchOpen = true
+  }
+  bsItems.innerHTML = ''
+  bsItems.scrollTop = 0
+  if (!matches.length) {
+    bsItems.innerHTML = `<li class="bs-empty">No place matches “${bsSearch.value.trim()}”</li>`
+    return
+  }
+  // The same row the Cities list uses: the name and its nation stacked in a
+  // column that can shrink, which is the shape that never truncated
+  const frag = document.createDocumentFragment()
+  for (const { c } of matches) {
+    const li = document.createElement('li')
+    li.innerHTML =
+      `<span class="bs-cinfo"><span class="bs-cname">${c.name}</span>` +
+      `<span class="bs-cnation">${c.nation}</span></span>` +
+      `<span class="bs-cstat">${fmtCompact(c.population)}</span>`
+    li.addEventListener('click', () => goCity(c))
+    frag.appendChild(li)
+  }
+  bsItems.appendChild(frag)
+}
 
 bsSearch.addEventListener('input', () => {
   const q = norm(bsSearch.value.trim())
   bsResults.innerHTML = ''
   searchSel = -1
-  if (q.length < 2) return
-  const matches = idx().filter(e => e.n.includes(q) || e.nat.includes(q)).slice(0, 10)
-  for (const { c } of matches) {
-    const li = document.createElement('li')
-    li.innerHTML = `<span class="bs-cname">${c.name}</span>` +
-      `<span class="bs-cnation">${c.nation} · ${fmtCompact(c.population)}</span>`
-    li.addEventListener('click', () => goCity(c))
-    bsResults.appendChild(li)
+  if (q.length < 2) {
+    closeSearchColumn()
+    return
   }
+  renderSearch(q)
 })
 
 // Arrow keys walk the results; Enter opens the highlighted one (or the first,
 // so a fast typist can hit Enter without arrowing down first)
 function moveSearchSel(d: number) {
-  const items = bsResults.children
+  const items = searchItems()
   if (!items.length) return
   items[searchSel]?.classList.remove('sel')
   searchSel = (searchSel + d + items.length) % items.length
@@ -2700,14 +2828,14 @@ bsSearch.addEventListener('keydown', e => {
   } else if (e.key === 'ArrowUp') {
     e.preventDefault()
     moveSearchSel(-1)
-  } else if (e.key === 'Enter' && bsResults.children.length) {
+  } else if (e.key === 'Enter' && searchItems().length) {
     e.preventDefault()
-    ;(bsResults.children[Math.max(searchSel, 0)] as HTMLElement).click()
+    ;(searchItems()[Math.max(searchSel, 0)] as HTMLElement).click()
   }
 })
 
 // List views
-type SortField = 'name' | 'population' | 'gdp' | 'gdpPerCapita'
+type SortField = 'name' | 'population' | 'gdp' | 'gdpPerCapita' | 'area'
 let listMode: 'cities' | 'nations' = 'cities'
 
 let sortField: SortField = 'name'
@@ -2767,7 +2895,8 @@ function updateSortChips() {
     chip.classList.toggle('active', active)
     const label = chip.dataset.sort === 'name' ? 'Name'
       : chip.dataset.sort === 'population' ? 'Population'
-      : chip.dataset.sort === 'gdp' ? 'GDP' : 'Per Capita'
+      : chip.dataset.sort === 'gdp' ? 'GDP'
+      : chip.dataset.sort === 'area' ? 'Area' : 'Per Capita'
     chip.textContent = active ? `${label} ${sortAsc ? '↑' : '↓'}` : label
   }
 }
@@ -2805,6 +2934,7 @@ function flyToNation(n: Nation) {
 }
 
 function nationStatText(n: Nation): string {
+  if (sortField === 'area') return fmtKm2(n.area)
   if (sortField === 'gdp') return '$' + fmtCompact(n.gdp)
   if (sortField === 'gdpPerCapita') return '$' + n.gdpPerCapita.toLocaleString('en-US')
   return fmtCompact(n.population)
@@ -2881,22 +3011,45 @@ for (const chip of sortChips) {
 
 // The rail stays on screen beside an open list, so it has to say which one is
 // open. Cities is the button labelled 'all' in the markup.
-function markNavOpen(view: 'all' | 'nations' | 'settings' | null) {
+function markNavOpen(view: 'all' | 'nations' | 'settings' | 'measure' | null) {
   for (const b of document.querySelectorAll<HTMLElement>('.bs-btn')) {
     b.classList.toggle('is-on', !!view && b.dataset.view === view)
   }
 }
 
-function openListView(mode: 'cities' | 'nations', filter = '') {
+// Every view in the second column opens the same way: the info panel gives up
+// the slot, the column takes it, and the rail lights the tab that owns it. Only
+// the title, whether there is a filter-and-sort row, and the rows themselves
+// differ between them.
+function openColumn(
+  title: string,
+  controls: boolean,
+  nav: 'all' | 'nations' | 'settings' | 'measure' | null
+) {
   // A list and an info panel are the same slot, so one replaces the other. The
   // panel goes without its close animation — before hideSheet below, since the
   // reset ends in a showSheet.
   dismissPanel()
+  searchOpen = false
+  bsTitle.textContent = title
+  bsControls.hidden = !controls
+  bsHome.hidden = !onDesktop()
+  bsList.hidden = false
+  markNavOpen(nav)
+  hideSheet()
+}
+
+function openListView(mode: 'cities' | 'nations', filter = '') {
+  openColumn(mode === 'nations' ? 'Nations' : 'Cities', true, mode === 'nations' ? 'nations' : 'all')
   listMode = mode
-  bsTitle.textContent = mode === 'nations' ? 'Nations' : 'Cities'
-  bsControls.hidden = false
   bsFilter.value = filter
   bsFilter.placeholder = 'Search'
+  // Area is measured off the borders drawing, so only a nation has one. The chip
+  // row is shared with the city list, where it would sort by a column that does
+  // not exist.
+  for (const chip of sortChips) {
+    if (chip.dataset.nationsOnly !== undefined) chip.hidden = mode !== 'nations'
+  }
   if (mode === 'nations') {
     sortField = 'population'
     sortAsc = false
@@ -2904,13 +3057,6 @@ function openListView(mode: 'cities' | 'nations', filter = '') {
     sortField = 'name'
     sortAsc = true
   }
-  // The list is its own surface now. On a desktop it opens beside the rail, so
-  // the rail keeps its search and nav; on a phone it takes the footer's place,
-  // so the rail has to get out of the way.
-  bsHome.hidden = !onDesktop()
-  bsList.hidden = false
-  markNavOpen(mode === 'nations' ? 'nations' : 'all')
-  hideSheet()
   rebuildList(false)
 }
 
@@ -2919,8 +3065,8 @@ function openListView(mode: 'cities' | 'nations', filter = '') {
 const navOpen = () =>
   (document.querySelector('.bs-btn.is-on') as HTMLElement | null)?.dataset.view ?? null
 
-// Clicking the open tab closes it. Export and Measure are actions, not tabs —
-// they leave nothing open to click a second time.
+// Clicking the open tab closes it. Export is the one action left that is not a
+// tab — it leaves nothing open to click a second time.
 function navTab(view: string, open: () => void) {
   document.querySelector(`.bs-btn[data-view="${view}"]`)!.addEventListener('click', () => {
     if (navOpen() === view) closeSheetList()
@@ -2931,8 +3077,36 @@ function navTab(view: string, open: () => void) {
 navTab('all', () => openListView('cities'))
 navTab('nations', () => openListView('nations'))
 navTab('settings', () => openSettings())
+navTab('measure', () => openMeasureMenu())
 document.querySelector('.bs-btn[data-view="export"]')!.addEventListener('click', () => exportView())
-document.querySelector('.bs-btn[data-view="measure"]')!.addEventListener('click', () => startMeasure())
+
+// --- Measure tab ---
+//
+// Two things called measuring, so the button asks which before it takes over the
+// map. Same column as the settings page for the same reason: the surface already
+// exists and a third one would be the slide-out and the bottom sheet written
+// twice more to say something this short.
+
+const MEASURE_MODES: [MeasureMode, string, string][] = [
+  ['distance', 'Distance', 'Great-circle length along a path'],
+  ['area', 'Area', 'Close a shape for its land and sea area'],
+]
+
+function openMeasureMenu() {
+  openColumn('Measure', false, 'measure')
+  bsItems.innerHTML = MEASURE_MODES.map(
+    ([mode, title, sub]) =>
+      `<li class="pick-row" data-measure="${mode}">` +
+      `<span class="pick-title">${title}</span><span class="pick-sub">${sub}</span></li>`
+  ).join('')
+}
+
+// Delegated, because the rows are rewritten every time the tab opens. The list's
+// own rows attach their handlers individually, so this only ever sees these two.
+bsItems.addEventListener('click', e => {
+  const row = (e.target as HTMLElement).closest('[data-measure]') as HTMLElement | null
+  if (row) startMeasure(row.dataset.measure as MeasureMode)
+})
 
 // --- Settings tab ---
 //
@@ -2969,13 +3143,7 @@ function renderSettingRows() {
 }
 
 function openSettings() {
-  dismissPanel()
-  bsTitle.textContent = 'Settings'
-  bsControls.hidden = true
-  bsHome.hidden = !onDesktop()
-  bsList.hidden = false
-  markNavOpen('settings')
-  hideSheet()
+  openColumn('Settings', false, 'settings')
   renderSettingRows()
 }
 
@@ -3144,10 +3312,13 @@ function flashExport(text: string, restoreAfter = 1400) {
 
 // --- Measure ---
 
+type MeasureMode = 'distance' | 'area'
+
 let measuring = false
+let measureMode: MeasureMode = 'distance'
 let measurePts: L.LatLng[] = []
 let vertexMarkers: L.CircleMarker[] = []
-let measureLine: L.Polyline | null = null
+let measureShape: L.Polyline<any> | null = null
 const measureLayer = L.layerGroup()
 const measureBar = document.getElementById('measure-bar')!
 const measureTotal = document.getElementById('measure-total')!
@@ -3157,22 +3328,187 @@ function fmtKm(km: number): string {
   return km >= 100 ? Math.round(km).toLocaleString('en-US') + ' km' : km.toFixed(1) + ' km'
 }
 
-// Vertices are added incrementally (never rebuilt), so each dot's pop-in
-// animation plays exactly once
-function syncMeasureLine() {
-  if (!measureLine) {
-    measureLine = L.polyline([], {
-      color: '#fff', weight: 2, dashArray: '6 6', opacity: 0.9, interactive: false,
-    }).addTo(measureLayer)
+// Areas run from a city's footprint to a hemisphere, so the unit moves with them
+function fmtKm2(km2: number): string {
+  const n =
+    km2 >= 1e6
+      ? (km2 / 1e6).toFixed(km2 >= 1e7 ? 1 : 2) + 'M'
+      : km2 >= 1000
+        ? Math.round(km2).toLocaleString('en-US')
+        : km2.toFixed(km2 >= 10 ? 1 : 2)
+  return `${n} km²`
+}
+
+// --- Land mask ---
+//
+// public/landmask.png, written by scripts/tile.mjs from the same drawing the
+// tiles come from: one byte per 4px square holding how much of it is land. The
+// tiles cannot answer this themselves — by the time they reach the browser they
+// are pictures, and below native zoom they are not even the right pixels.
+//
+// Fetched the first time an area is measured rather than on load, because most
+// visits never measure anything and it is 58KB.
+const MASK_CELL = 4 // world px per texel — must match scripts/tile.mjs
+let maskCov: Uint8Array | null = null
+let maskW = 0
+let maskPromise: Promise<void> | null = null
+let maskFailed = false
+
+function loadMask(): Promise<void> {
+  if (!maskPromise) {
+    maskPromise = new Promise<void>((resolve, reject) => {
+      const img = new Image()
+      img.onload = () => {
+        const c = document.createElement('canvas')
+        c.width = img.width
+        c.height = img.height
+        const ctx = c.getContext('2d')
+        if (!ctx) return reject(new Error('no 2d context'))
+        ctx.drawImage(img, 0, 0)
+        const rgba = ctx.getImageData(0, 0, img.width, img.height).data
+        maskW = img.width
+        maskCov = new Uint8Array(img.width * img.height)
+        // Grey, so every channel carries the same number; one is enough
+        for (let i = 0; i < maskCov.length; i++) maskCov[i] = rgba[i * 4]
+        resolve()
+      }
+      img.onerror = () => reject(new Error('landmask.png failed to load'))
+      img.src = 'landmask.png'
+    })
+    // Cleared on failure so a later measurement tries again rather than
+    // inheriting one bad network moment for the rest of the session
+    maskPromise.catch(() => {
+      maskPromise = null
+      maskFailed = true
+    })
   }
-  measureLine.setLatLngs(measurePts)
+  return maskPromise
+}
+
+function landAt(x: number, y: number): number {
+  if (!maskCov) return 0
+  const mx = Math.min(maskW - 1, Math.max(0, Math.floor(x / MASK_CELL)))
+  const my = Math.min(maskW - 1, Math.max(0, Math.floor(y / MASK_CELL)))
+  return maskCov[my * maskW + mx] / 255
+}
+
+interface AreaParts {
+  total: number
+  land: number
+  sea: number
+}
+
+// Scanline fill in map pixels, weighing each cell by the ground it actually
+// covers at that latitude. The grid sizes itself to the shape so a bay is not
+// answered in 9km steps and a continent does not cost a million cells; it is
+// never coarser than the mask, which would throw away detail already paid for.
+function polygonArea(pts: [number, number][]): AreaParts {
+  const out: AreaParts = { total: 0, land: 0, sea: 0 }
+  if (pts.length < 3) return out
+
+  let minX = Infinity
+  let maxX = -Infinity
+  let minY = Infinity
+  let maxY = -Infinity
+  for (const [x, y] of pts) {
+    minX = Math.min(minX, x)
+    maxX = Math.max(maxX, x)
+    minY = Math.min(minY, y)
+    maxY = Math.max(maxY, y)
+  }
+  const cell = Math.min(MASK_CELL, Math.max(Math.max(maxX - minX, maxY - minY) / 400, 0.02))
+
+  const rows = Math.ceil((maxY - minY) / cell)
+  const xs: number[] = []
+  for (let r = 0; r < rows; r++) {
+    const y = minY + (r + 0.5) * cell
+    xs.length = 0
+    // Even-odd crossings, so a shape drawn back over itself still has a
+    // defensible answer rather than whatever the winding happened to be
+    for (let i = 0, j = pts.length - 1; i < pts.length; j = i++) {
+      const [x1, y1] = pts[j]
+      const [x2, y2] = pts[i]
+      if ((y1 <= y) === (y2 <= y)) continue
+      xs.push(x1 + ((y - y1) / (y2 - y1)) * (x2 - x1))
+    }
+    xs.sort((a, b) => a - b)
+    for (let k = 0; k + 1 < xs.length; k += 2) {
+      const from = xs[k]
+      const to = xs[k + 1]
+      for (let c = Math.floor((from - minX) / cell); ; c++) {
+        const x = minX + (c + 0.5) * cell
+        if (x < from) continue
+        if (x > to) break
+        const a = pxArea(x, y, cell)
+        const f = landAt(x, y)
+        out.total += a
+        out.land += a * f
+        out.sea += a * (1 - f)
+      }
+    }
+  }
+  return out
+}
+
+// Unrounded, unlike toPx: a measurement should not quantise its own inputs
+function measurePx(ll: L.LatLng): [number, number] {
+  return [(ll.lng * TILE_GRID) / U, (-ll.lat * TILE_GRID) / U]
+}
+
+function setReadout(main: string, sub = '') {
+  measureTotal.innerHTML = sub
+    ? `<span class="mt-main">${main}</span><span class="mt-sub">${sub}</span>`
+    : main
+  measureTotal.classList.toggle('mt-wide', !!sub)
+  replayAnim(measureTotal, 'bs-label-pop')
+}
+
+function syncDistance() {
   let km = 0
   for (let i = 1; i < measurePts.length; i++) {
-    const a = measurePts[i - 1], b = measurePts[i]
-    km += Math.hypot((b.lng - a.lng) * TILE_GRID / U, (b.lat - a.lat) * TILE_GRID / U) * PX2KM
+    const [ax, ay] = measurePx(measurePts[i - 1])
+    const [bx, by] = measurePx(measurePts[i])
+    km += geoKm(toGeo(ax, ay), toGeo(bx, by))
   }
-  measureTotal.textContent = measurePts.length < 2 ? 'Click the map' : fmtKm(km)
-  replayAnim(measureTotal, 'bs-label-pop')
+  setReadout(measurePts.length < 2 ? 'Click the map' : fmtKm(km))
+}
+
+function syncArea() {
+  if (measurePts.length < 3) {
+    setReadout(measurePts.length ? 'Three points to close a shape' : 'Click the map')
+    return
+  }
+  const a = polygonArea(measurePts.map(measurePx))
+  // The total stands on its own — it is the projection, not the mask. Only the
+  // land and sea split has to wait for the file.
+  if (!maskCov) {
+    setReadout(fmtKm2(a.total), maskFailed ? 'land data unavailable' : 'measuring land…')
+    return
+  }
+  const pct = a.total > 0 ? Math.round((a.land / a.total) * 100) : 0
+  setReadout(fmtKm2(a.total), `land ${fmtKm2(a.land)} (${pct}%) · sea ${fmtKm2(a.sea)}`)
+}
+
+// Vertices are added incrementally (never rebuilt), so each dot's pop-in
+// animation plays exactly once
+function syncMeasure() {
+  // L.Polygon extends L.Polyline, so one handle holds either — the mode picks
+  // which is built and nothing after that has to care
+  let shape = measureShape
+  if (!shape) {
+    const style = {
+      color: '#fff', weight: 2, dashArray: '6 6', opacity: 0.9, interactive: false,
+    }
+    shape =
+      measureMode === 'area'
+        ? L.polygon([], { ...style, fillColor: '#0a84ff', fillOpacity: 0.16 })
+        : L.polyline([], style)
+    shape.addTo(measureLayer)
+    measureShape = shape
+  }
+  shape.setLatLngs(measurePts)
+  if (measureMode === 'area') syncArea()
+  else syncDistance()
 }
 
 function addMeasurePoint(ll: L.LatLng) {
@@ -3181,11 +3517,12 @@ function addMeasurePoint(ll: L.LatLng) {
     radius: 4, color: '#fff', weight: 2, fillColor: '#0a84ff', fillOpacity: 1,
     interactive: false, className: 'measure-vertex',
   }).addTo(measureLayer))
-  syncMeasureLine()
+  syncMeasure()
 }
 
-function startMeasure() {
+function startMeasure(mode: MeasureMode) {
   measuring = true
+  measureMode = mode
   // Clear every surface first. A place panel or a browse list left open would
   // sit over the map the tool is about to be used on, and the rail would still
   // highlight a tab for a list that is no longer there.
@@ -3195,20 +3532,30 @@ function startMeasure() {
   hideSheet()
   measurePts = []
   vertexMarkers = []
-  measureLine = null
+  measureShape = null
   measureLayer.clearLayers()
   measureLayer.addTo(map)
   measureBar.classList.remove('mb-closing')
   measureBar.hidden = false
-  measureTotal.textContent = 'Click the map'
+  setReadout('Click the map')
   mapEl.classList.add('measure-mode')
+  // Kicked off now rather than on the third click, so the shape usually closes
+  // onto an answer that is already there
+  // Guarded: the file can land after the tool has been closed again, and a
+  // resolved fetch is no reason to redraw into a layer that is off the map
+  if (mode === 'area') {
+    const done = () => {
+      if (measuring && measureMode === 'area') syncMeasure()
+    }
+    loadMask().then(done, done)
+  }
 }
 
 function endMeasure() {
   measuring = false
   measurePts = []
   vertexMarkers = []
-  measureLine = null
+  measureShape = null
   measureLayer.clearLayers()
   map.removeLayer(measureLayer)
   measureBar.classList.add('mb-closing')
@@ -3230,14 +3577,14 @@ document.getElementById('measure-undo')!.addEventListener('click', () => {
   measurePts.pop()
   const m = vertexMarkers.pop()
   if (m) measureLayer.removeLayer(m)
-  syncMeasureLine()
+  syncMeasure()
 })
 
 document.getElementById('measure-clear')!.addEventListener('click', () => {
   measurePts = []
   for (const m of vertexMarkers) measureLayer.removeLayer(m)
   vertexMarkers = []
-  syncMeasureLine()
+  syncMeasure()
 })
 
 document.getElementById('measure-done')!.addEventListener('click', endMeasure)
