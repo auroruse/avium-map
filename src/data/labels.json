@@ -294,8 +294,8 @@
   {
     "text": "ARUNYA",
     "type": "nation",
-    "x": null,
-    "y": null,
+    "x": 3670,
+    "y": 4768,
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
@@ -786,8 +786,8 @@
   {
     "text": "UJ-PANNONIA",
     "type": "colony",
-    "x": null,
-    "y": null,
+    "x": 4233,
+    "y": 5086,
     "minZoom": 3.5,
     "maxZoom": 5,
     "span": 144.1601366468917
