@@ -810,12 +810,12 @@ city	Kyzyl-Perovsk	Rudania		3581	1787	9.4800	60.1565	9.48°N 60.16°E
 city	La Capilla	Costaserá		2546	3072	5.7300	-16.8530	5.73°N 16.85°W
 city	La Torre	Hollosend		1988	3509	7.5450	-49.8053	7.54°N 49.81°W
 city	Lacan-Pier	Seignid		3802	715	22.2450	123.0153	22.25°N 123.02°E
-city	Lachaven	Reino		2725	2862	6.1950	-4.4138	6.20°N 4.41°W
 city	Lachaven	Auritania		1371	4016	9.1950	-88.3794	9.20°N 88.38°W
+city	Lachaven	Reino		2725	2862	6.1950	-4.4138	6.20°N 4.41°W
 city	Lada	Cahaya		4683	1318	-0.0150	100.9668	0.01°S 100.97°E
 city	Lagras	Côte de Saumon		2410	3758	-2.5200	-41.6049	2.52°S 41.60°W
 city	Lampam	Cahaya		4627	1295	1.1700	101.2766	1.17°N 101.28°E
-city	Långdalshamn	Spetsbergen		2538	1902	23.4000	25.7838	23.40°N 25.78°E
+city	Långdalshamn	Spetsbergen		2533	1905	23.4300	25.4709	23.43°N 25.47°E
 city	Lánkon	East Kaukasos		3620	2274	1.5900	41.1062	1.59°N 41.11°E
 city	Lannahechee	E.S.U.		1749	3000	18.7650	-47.4163	18.77°N 47.42°W
 city	Laodicea	Selmira		3660	3296	-14.3400	12.9897	14.34°S 12.99°E
@@ -1008,7 +1008,7 @@ city	Nagatani	Nichirin		2525	745	40.9500	97.9817	40.95°N 97.98°E
 city	Naginomiya	Nichirin		2852	565	38.7450	120.4741	38.74°N 120.47°E
 city	Nagoniara	Gonenite Islands		4401	726	13.0950	129.0228	13.09°N 129.02°E
 city	Nakhljān	Varahmehr		4119	3533	-24.7800	24.2594	24.78°S 24.26°E
-city	Namiura	Nichirin		2844	611	38.1750	116.3357	38.17°N 116.34°E
+city	Namiura	Nichirin		2840	611	38.2350	116.2620	38.23°N 116.26°E
 city	Namnetac	Arverne		2837	2821	5.1300	0.5090	5.13°N 0.51°E
 city	Namosain	Cahaya		4738	1097	2.4750	112.3188	2.47°N 112.32°E
 city	Nanan	Axerfreditenshin		3391	863	26.1900	106.9676	26.19°N 106.97°E
@@ -1044,8 +1044,8 @@ city	Neu-Prauvenberg	Kogelland		2357	5214	-23.5650	-116.1120	23.56°S 116.11°W
 city	Neu-Rendorf	Ponurvia		1207	2752	30.6150	-70.2450	30.61°N 70.25°W
 city	New Barcino	Hollosend		1700	3554	11.1900	-63.5173	11.19°N 63.52°W
 city	New Blackwater	Hollosend		1468	3119	21.1950	-64.7874	21.20°N 64.79°W
-city	New Colter	Salishia		1450	2564	29.7900	-49.9552	29.79°N 49.96°W
 city	New Colter	Hollosend		1441	3138	21.3150	-66.7089	21.31°N 66.71°W
+city	New Colter	Salishia		1450	2564	29.7900	-49.9552	29.79°N 49.96°W
 city	New Providence	Hollosend		2019	3754	3.4050	-54.0967	3.40°N 54.10°W
 city	New Shefford	E.S.U.		2104	3231	9.9750	-38.0244	9.97°N 38.02°W
 city	New Talhuanca	E.S.U.		1899	3119	14.7300	-43.7625	14.73°N 43.76°W
@@ -1690,7 +1690,7 @@ city	Yuling	Furan		3732	618	24.7500	128.8552	24.75°N 128.86°E
 city	Yunokgrad	Giathka		3688	1716	8.9400	65.6847	8.94°N 65.68°E
 city	Yunping	Furan		3686	660	24.8100	125.3290	24.81°N 125.33°E
 city	Yunyin	Guandong		3219	565	33.2400	126.2474	33.24°N 126.25°E
-city	Yuzuki	Nichirin		2729	613	39.8700	113.9677	39.87°N 113.97°E
+city	Yuzuki	Nichirin		2726	612	39.9300	113.9964	39.93°N 114.00°E
 city	Zacrébba	Vicily		3107	2981	-1.3200	3.8363	1.32°S 3.84°E
 city	Zalaya	Auritania		1188	3823	14.8350	-94.6518	14.83°N 94.65°W
 city	Zamorsk	Rudania		3210	1350	21.6000	73.4211	21.60°N 73.42°E
