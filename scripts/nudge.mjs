@@ -17,6 +17,7 @@
 //   node scripts/nudge.mjs --write       move it
 //   node scripts/nudge.mjs --max 12      raise the hands-off threshold from 8px
 //   node scripts/nudge.mjs --clear 1.5   want more land around each marker
+//   node scripts/nudge.mjs --only A,B     only these cities, leaving the rest alone
 import sharp from 'sharp'
 import { readFileSync, writeFileSync } from 'fs'
 import { join, resolve } from 'path'
@@ -35,6 +36,12 @@ const MAX = Number(args[args.indexOf('--max') + 1]) || 8
 // half in the water while dragging the small ones further inland than they needed
 // to go. Read off the tier table so the two cannot drift apart.
 const CLEAR_MULT = Number(args[args.indexOf('--clear') + 1]) || 1
+// A redrawn coast usually strands one or two cities that matter and a few dozen
+// that are merely a pixel short of the room their marker wants. This is how to
+// take the first without the second.
+const ONLY = args.includes('--only')
+  ? new Set(args[args.indexOf('--only') + 1].split(',').map(s => s.trim()))
+  : null
 const K = 0.8 // the marker scale from user zoom 3 up
 const HALO = Number(
   readFileSync(join(root, 'src', 'main.ts'), 'utf8').match(/const HALO = ([\d.]+)/)[1]
@@ -136,6 +143,7 @@ const stayed = []
 
 for (const c of cities) {
   if (c.x == null || c.y == null) continue
+  if (ONLY && !ONLY.has(c.name)) continue
   const CLEAR = clearFor(c.population)
   const p = at(c.x, c.y)
   const standing = clearanceAt(c.x, c.y, CLEAR)

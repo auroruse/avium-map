@@ -7,6 +7,7 @@ import { readFileSync, writeFileSync } from 'fs'
 import { resolve, dirname } from 'path'
 import { fileURLToPath } from 'url'
 import { writeCoords } from './coords.mjs'
+import { writeAreas } from './areas.mjs'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const tsvPath = resolve(process.argv[2] || `${root}/src/data/cities.tsv`)
@@ -118,6 +119,12 @@ writeFileSync(jsonPath, JSON.stringify(cities, null, 2) + '\n')
 // Positions just changed, so the derived table has to follow them
 writeCoords()
 
+// A nation's territory is worked out from the cities standing in it, so adding,
+// moving or dropping any of them can change who owns what. Silent when the
+// drawing is not on this machine, which is every checkout that is not the one it
+// was drawn on.
+const areas = await writeAreas()
+
 const placed = cities.filter(c => c.x != null).length
 const added = cities.filter(c => !coordMap.has(key(c))).length
 const dropped = existing.filter(c => !cities.find(n => key(n) === key(c))).length
@@ -125,3 +132,4 @@ console.log(
   `${cities.length} cities (${placed} placed, ${added} new, ${dropped} dropped, ` +
     `${renamed} matched by name after a nation rename, ${reparented} by IRL parallel after a city rename)`
 )
+if (areas) console.log(`areas.json — ${areas.nations} nations, ${(areas.measured / 1e6).toFixed(2)}M km²`)

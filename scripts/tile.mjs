@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 import sharp from 'sharp'
-import { existsSync, readFileSync, rmSync, writeFileSync } from 'fs'
+import { existsSync, readFileSync, rmSync, statSync, writeFileSync } from 'fs'
 import { createHash } from 'crypto'
 import { join, resolve } from 'path'
+import { writeAreas } from './areas.mjs'
 
 const root = resolve(import.meta.dirname, '..')
 const layersDir = join(root, 'layers')
@@ -44,35 +45,27 @@ const CLEAR = { r: 0, g: 0, b: 0, alpha: 0 }
 const COAST = [43, 51, 72]
 // How much of the white band survives, measured inward from the land it hugs
 const COAST_PX = 2
+// Bumped when the mask format changes, so an old landmask.png is not left in place
+const MASK_VERSION = 1
 const LAND = [180, 179, 191]
 const TOLERANCE = 14
 
 const LAYERS = {
   base: { skipBlanks: -1, background: OCEAN, coastline: true },
   // transparent overlays: skip fully-empty tiles (most of the grid)
-  borders: { skipBlanks: 0, background: CLEAR },
+  borders: { skipBlanks: 0, background: CLEAR, areas: true },
   rivers: { skipBlanks: 0, background: CLEAR },
 }
 
-// Recolours the white coastline and trims it to an even width.
-//
-// The trimming happens from the sea side only. The land edge never moves, so the
-// hundreds of cities nudged against this geometry keep standing exactly where
-// they were put, and a city that was on land is still on land.
-//
-// A white region with no land anywhere in it is left at full width rather than
-// trimmed away. An islet can be too small to hold anything but its own coastline
-// — Bidau stands on one — and thinning that to nothing would sink the island.
-async function inkCoastline(input, keep) {
-  const { data, info } = await sharp(input).raw().toBuffer({ resolveWithObject: true })
-  const { width: W, height: H, channels: C } = info
-  const N = W * H
-
-  const WHITE = 1
-  const GROUND = 2
-  const kind = new Uint8Array(N)
+// What every pixel of the drawing is: land, the white coastline, or sea. Both the
+// coastline ink and the land mask are read off this, so the two can never come to
+// different conclusions about where the ground is.
+const WHITE = 1
+const GROUND = 2
+function classify(data, { width: W, height: H, channels: C }) {
+  const kind = new Uint8Array(W * H)
   let whiteN = 0
-  for (let p = 0; p < N; p++) {
+  for (let p = 0; p < W * H; p++) {
     const i = p * C
     if (data[i] > 230 && data[i + 1] > 230 && data[i + 2] > 230) {
       kind[p] = WHITE
@@ -85,6 +78,92 @@ async function inkCoastline(input, keep) {
       kind[p] = GROUND
     }
   }
+  return { kind, whiteN }
+}
+
+// One byte per MASK_CELL square of the drawing, holding how much of that square
+// is land. The measure tool reads it to say how much of a shape the user drew is
+// ground and how much is water, which the tiles cannot answer — they are pictures
+// by the time they reach the browser, and at low zoom they are not even the right
+// pixels any more.
+//
+// A fraction rather than a flag. A coastal cell is mostly one thing and a little
+// of the other, and rounding that to all-or-nothing is where a land area starts
+// disagreeing with itself depending on how the polygon was drawn.
+const MASK_CELL = 4
+const maskPath = join(root, 'public', 'landmask.png')
+
+// The white coastline sits between the two things being counted, so it has to be
+// split between them: a stroke pixel counts as whichever of land or sea is
+// nearer, ties to land. Left whole on one side of the ledger it would be worth
+// about three percent of the world's land area, decided by a drawing convention.
+function sideOf(kind, W, H, x, y, limit = 12) {
+  for (let r = 1; r <= limit; r++) {
+    let sea = false
+    for (let dy = -r; dy <= r; dy++) {
+      for (let dx = -r; dx <= r; dx++) {
+        if (Math.max(Math.abs(dx), Math.abs(dy)) !== r) continue
+        const nx = x + dx
+        const ny = y + dy
+        if (nx < 0 || ny < 0 || nx >= W || ny >= H) continue
+        const k = kind[ny * W + nx]
+        if (k === GROUND) return GROUND
+        if (k === 0) sea = true
+      }
+    }
+    if (sea) return 0
+  }
+  return GROUND
+}
+
+async function writeLandMask(kind, { width: W, height: H }) {
+  const MW = Math.ceil(W / MASK_CELL)
+  const MH = Math.ceil(H / MASK_CELL)
+  const cells = MASK_CELL * MASK_CELL
+  const out = Buffer.alloc(MW * MH)
+  let landPx = 0
+  for (let my = 0; my < MH; my++) {
+    for (let mx = 0; mx < MW; mx++) {
+      let land = 0
+      for (let dy = 0; dy < MASK_CELL; dy++) {
+        const y = my * MASK_CELL + dy
+        if (y >= H) continue
+        for (let dx = 0; dx < MASK_CELL; dx++) {
+          const x = mx * MASK_CELL + dx
+          if (x >= W) continue
+          const k = kind[y * W + x]
+          if (k === GROUND || (k === WHITE && sideOf(kind, W, H, x, y) === GROUND)) land++
+        }
+      }
+      landPx += land
+      out[my * MW + mx] = Math.round((land * 255) / cells)
+    }
+  }
+  // Greyscale on disk as well as in intent — left to sharp's default the single
+  // channel is encoded as sRGB and the file carries three copies of itself
+  await sharp(out, { raw: { width: MW, height: MH, channels: 1 } })
+    .toColourspace('b-w')
+    .png({ compressionLevel: 9 })
+    .toFile(maskPath)
+  const { size } = statSync(maskPath)
+  console.log(
+    `  land mask: ${MW}x${MH} at ${MASK_CELL}px/cell, ${(100 * landPx / (W * H)).toFixed(2)}% land, ` +
+      `${(size / 1024).toFixed(0)}KB`
+  )
+}
+
+// Recolours the white coastline and trims it to an even width.
+//
+// The trimming happens from the sea side only. The land edge never moves, so the
+// hundreds of cities nudged against this geometry keep standing exactly where
+// they were put, and a city that was on land is still on land.
+//
+// A white region with no land anywhere in it is left at full width rather than
+// trimmed away. An islet can be too small to hold anything but its own coastline
+// — Bidau stands on one — and thinning that to nothing would sink the island.
+function inkCoastline(data, kind, info, whiteN, keep) {
+  const { width: W, height: H, channels: C } = info
+  const N = W * H
   if (!whiteN) return sharp(data, { raw: { width: W, height: H, channels: C } })
 
   const disc = []
@@ -193,7 +272,7 @@ for (const [name, opts] of Object.entries(todo)) {
   // no business being rebuilt because the sea colour moved.
   const sig = createHash('sha256')
     .update(readFileSync(input))
-    .update(JSON.stringify([opts, opts.coastline ? [COAST, COAST_PX] : null]))
+    .update(JSON.stringify([opts, opts.coastline ? [COAST, COAST_PX, MASK_CELL, MASK_VERSION] : null]))
     .digest('hex')
     .slice(0, 16)
   if (!requested && stamp[name] === sig && existsSync(output)) {
@@ -206,7 +285,17 @@ for (const [name, opts] of Object.entries(todo)) {
   console.log(`tiling ${name}...`)
   const t = Date.now()
 
-  let img = opts.coastline ? await inkCoastline(input, COAST_PX) : sharp(input)
+  // One read of the drawing feeds both the coastline ink and the land mask, and
+  // one classification decides where the ground is for both of them
+  let img
+  if (opts.coastline) {
+    const { data, info } = await sharp(input).raw().toBuffer({ resolveWithObject: true })
+    const { kind, whiteN } = classify(data, info)
+    await writeLandMask(kind, info)
+    img = inkCoastline(data, kind, info, whiteN, COAST_PX)
+  } else {
+    img = sharp(input)
+  }
 
   if (opts.background) {
     const meta = await img.metadata()
@@ -228,6 +317,13 @@ for (const [name, opts] of Object.entries(todo)) {
   // clean up the blank tile dzsave creates
   const blank = join(output, 'blank.png')
   if (existsSync(blank)) rmSync(blank)
+
+  // The nation areas are read off this drawing, so they are only ever as current
+  // as the tiles are
+  if (opts.areas) {
+    const r = await writeAreas(root)
+    if (r) console.log(`  areas: ${r.nations} nations, ${(r.measured / 1e6).toFixed(2)}M km²`)
+  }
 
   stamp[name] = sig
   writeFileSync(stampPath, JSON.stringify(stamp, null, 2) + '\n')

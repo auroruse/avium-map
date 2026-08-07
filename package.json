@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "thumbs": "node scripts/thumbs.mjs",
     "coords": "node scripts/coords.mjs",
+    "areas": "node --max-old-space-size=4096 scripts/areas.mjs",
     "tile": "node scripts/tile.mjs",
     "merge": "node scripts/merge-tsv.mjs",
     "parse-cities": "node scripts/parse-cities.mjs"
