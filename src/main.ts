@@ -1114,6 +1114,11 @@ function cityTier(pop: number): CityTier {
   return CITY_TIERS[tierRank(pop)]
 }
 
+// How much bigger than the biggest city label a water name may be and still
+// reserve space against one. Past this it is scenery, and city names print over
+// it the way they do on paper.
+const WATER_BLOCK = 2.5
+
 // Down to and including the 1M band. The bands above this get two extra corners
 // to try before they are dropped from the map; the ones below do not.
 const FALLBACK_RANK = 3
@@ -1193,12 +1198,19 @@ function computePlacement(z: number, pinned: Placement[]): Placement[] {
   // sides, and each flip moves boxes that everything after it collides against.
   // Holding a survivor's corner stops that cascade at the source.
   const held = new Map(pinned.map(p => [p.c, p.corner]))
+  //
+  // Sorted by band afterwards, and the sort is stable, so within a band the
+  // survivors still come first and keep their order. Pinned-first on its own
+  // inverted rank the moment a large city failed a level: Cap de Bonne-Espérance,
+  // 4.2M, was boxed in at user zoom 2 by the SOUTH PELAGONIA and KOGELLAND
+  // labels either side of it, and from then on Vourcestre — 102k, one of its
+  // suburbs — held the ground it needed at every zoom after.
   const order = [
     ...pinned.map(p => p.c),
     ...citiesByPriority.filter(
       c => !held.has(c) && c.x != null && c.y != null && c.population >= threshold
     ),
-  ]
+  ].sort((a, b) => tierRank(a.population) - tierRank(b.population))
 
   // Global marker/text scale (tier ratios intact): 0.8× from user zoom 3, where
   // the map is down to 1M+ and has room for full-size markers, even smaller
@@ -1297,10 +1309,24 @@ function computePlacement(z: number, pinned: Placement[]): Placement[] {
   // 3222px strip on one line, a band of dead ground reaching a thousand pixels
   // inland from where the words are. Cortesia, Turulia and Slytlia lost every
   // city they had to it.
+  // Display-scale water lettering is not a collision object. An ocean name keeps
+  // growing with the zoom — WESTERN PANTHALASSAN OCEAN is 2269px across at user
+  // zoom 3 and 9078px at 5 — and at that size it is a wash of light italic the
+  // eye reads as background, which is why an atlas prints coastal names straight
+  // over it. Treated as a box it blanked every city under its footprint: Cap de
+  // Bonne-Espérance, 4.2M, had a name at user zoom 1 and nowhere after that.
+  //
+  // A lake name set at city size is a different thing and still turns names
+  // away, so the cut is where the water name stops being comparable to the
+  // largest city label at this zoom rather than at a fixed size.
+  const cityFsMax = CITY_TIERS[0].fontSize * k
   for (const def of labelDefs) {
     if (!labelShown(def, z)) continue
     const b = labelBox(def, z)
-    if (b) addBox({ ...b, water: WATER.has(def.type) })
+    if (!b) continue
+    const water = WATER.has(def.type)
+    if (water && areaFontSize(def, z) > cityFsMax * WATER_BLOCK) continue
+    addBox({ ...b, water })
   }
 
   const placed: Placement[] = []
@@ -1393,40 +1419,54 @@ function computePlacement(z: number, pinned: Placement[]): Placement[] {
       { dir: 'left',  off: [-gapX, -gapY], box: { x: pt.x - gapX - w, y: pt.y - gapY - h / 2, w, h } },
     ]
 
-    // A survivor keeps the corner it already had if it is still free, without
-    // consulting futureCost. Its name staying put across a zoom is worth more
-    // than the marginally better corner the new arithmetic would pick — and the
-    // flip is what used to knock it off the map entirely.
+    // A survivor keeps the corner it already had, so its name does not walk
+    // around the dot from one zoom to the next — but only while that corner is
+    // free and costs nothing. A held corner that has come to sit on a smaller
+    // city takes that city off the map, and a name moving is cheaper than a
+    // neighbour disappearing.
     const keep = held.get(c)
-    if (keep !== undefined && !collides(corners[keep].box)) {
+    if (keep !== undefined && !collides(corners[keep].box) && !futureCost(corners[keep].box, i + 1)) {
       addBox(dotBox)
       addBox(corners[keep].box)
       placed.push({ c, tier, dir: corners[keep].dir, off: corners[keep].off, corner: keep })
       continue
     }
 
-    let valid = corners.slice(0, 2).filter(cd => !collides(cd.box))
-    if (!valid.length && rank <= FALLBACK_RANK) {
-      valid = corners.slice(2).filter(cd => !collides(cd.box))
-    }
+    // Every free corner is a candidate, and the one that buries the fewest
+    // upcoming markers wins; the order above breaks ties, so a name still
+    // prefers top-right and still falls back to bottom-left. The fallback pair
+    // used to be reachable only when both defaults were blocked outright, which
+    // meant a long name with one free corner took it however many cities it
+    // covered: Cap de Bonne-Espérance runs 22 characters and its top-right lands
+    // on Vourcestre, with empty water off its bottom-left the whole time.
+    const free = corners
+      .map((cd, idx) => ({ ...cd, idx }))
+      .filter(cd => (cd.idx < 2 || rank <= FALLBACK_RANK) && !collides(cd.box))
 
-    let hit: (typeof corners)[number] | null
-    if (valid.length === 2) {
-      // Both fit: bury as few upcoming markers as possible, then keep
-      // top-right unless bottom-left has clearly more room
-      const cost0 = futureCost(valid[0].box, i + 1)
-      const cost1 = futureCost(valid[1].box, i + 1)
-      if (cost1 < cost0) hit = valid[1]
-      else if (cost0 < cost1) hit = valid[0]
-      else hit = clearance(valid[1].box) > clearance(valid[0].box) + 6 ? valid[1] : valid[0]
-    } else {
-      hit = valid[0] ?? null
+    let hit: (typeof free)[number] | null = null
+    let bestCost = Infinity
+    for (const cd of free) {
+      const cost = futureCost(cd.box, i + 1)
+      if (cost < bestCost) {
+        hit = cd
+        bestCost = cost
+      } else if (
+        cost === bestCost &&
+        hit &&
+        hit.idx === 0 &&
+        cd.idx === 1 &&
+        clearance(cd.box) > clearance(hit.box) + 6
+      ) {
+        // Two equally clean defaults: keep top-right unless bottom-left has
+        // clearly more room around it
+        hit = cd
+      }
     }
 
     if (hit) {
       addBox(dotBox)
       addBox(hit.box)
-      placed.push({ c, tier, dir: hit.dir, off: hit.off, corner: corners.indexOf(hit) })
+      placed.push({ c, tier, dir: hit.dir, off: hit.off, corner: hit.idx })
     } else {
       addBox(dotBox)
     }

@@ -2,26 +2,26 @@
   {
     "text": "HYPERBOREAN OCEAN",
     "type": "ocean",
-    "x": 979,
-    "y": 1578,
+    "x": 984,
+    "y": 1573,
     "minZoom": 2.5,
     "span": 1504.5890809276584
   },
   {
     "text": "EASTERN PANTHALASSAN OCEAN",
     "type": "ocean",
-    "x": 4859,
-    "y": 2489,
+    "x": 4900,
+    "y": 2524,
     "minZoom": 2.5,
-    "span": 2803.7929484792317
+    "span": 2384.943771371449
   },
   {
     "text": "WESTERN PANTHALASSAN OCEAN",
     "type": "ocean",
-    "x": 1372,
-    "y": 5656,
+    "x": 1052,
+    "y": 5428,
     "minZoom": 2.5,
-    "span": 3025.918318721555
+    "span": 2276.774922313581
   },
   {
     "text": "SAHARA SEA",
@@ -37,7 +37,7 @@
     "x": 1884,
     "y": 4327,
     "minZoom": 2.5,
-    "span": 728.6887948524741
+    "span": 585.1281710334472
   },
   {
     "text": "TETHYS SEA",
@@ -130,8 +130,8 @@
   {
     "text": "ELVESTER",
     "type": "nation",
-    "x": 2786,
-    "y": 2670,
+    "x": 2784,
+    "y": 2658,
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
@@ -670,8 +670,8 @@
   {
     "text": "KULLANMAAN",
     "type": "colony",
-    "x": 2144,
-    "y": 3926,
+    "x": 2145,
+    "y": 3919,
     "minZoom": 3.5,
     "maxZoom": 5,
     "size": 9
@@ -751,11 +751,11 @@
   {
     "text": "RECOLOTTA",
     "type": "nation",
-    "x": 3216,
-    "y": 4874,
+    "x": 3205,
+    "y": 4856,
     "minZoom": 3.5,
     "maxZoom": 5,
-    "size": 11
+    "size": 13
   },
   {
     "text": "SOUTHEAST APHIRICA",
@@ -831,23 +831,23 @@
     "x": 2883,
     "y": 3036,
     "minZoom": 3.5,
-    "span": 102.09417086520155
+    "span": 92.97883482234754
   },
   {
     "text": "Romassan Sea",
     "type": "sea",
-    "x": 3056,
-    "y": 3200,
+    "x": 3059,
+    "y": 3197,
     "minZoom": 3.5,
     "span": 126.65197778998015
   },
   {
     "text": "Hellenican Sea",
     "type": "sea",
-    "x": 3308,
-    "y": 3250,
+    "x": 3299,
+    "y": 3255,
     "minZoom": 3.5,
-    "span": 128.26783741535854
+    "span": 96.46273413180772
   },
   {
     "text": "LEVANTINE SEA",
@@ -855,7 +855,7 @@
     "x": 3540,
     "y": 3360,
     "minZoom": 3.5,
-    "span": 157.71624484782876
+    "span": 109.48080765903389
   },
   {
     "text": "SEA OF KEMET",
@@ -883,8 +883,8 @@
   {
     "text": "LUCAYAN SEA",
     "type": "sea",
-    "x": 1751,
-    "y": 3576,
+    "x": 1748,
+    "y": 3574,
     "minZoom": 3.5,
     "span": 68.62115115894731
   },
@@ -899,18 +899,18 @@
   {
     "text": "LAKE MARAKAYA",
     "type": "sea",
-    "x": 1523,
-    "y": 3736,
+    "x": 1524,
+    "y": 3733,
     "minZoom": 3.5,
     "span": 38.46124759709038
   },
   {
     "text": "LAKE NAVARELO",
     "type": "sea",
-    "x": 1615,
-    "y": 3638,
+    "x": 1626,
+    "y": 3632,
     "minZoom": 3.5,
-    "span": 85.15609539804672
+    "span": 35.35452274495879
   },
   {
     "text": "LAKE NAHÁ",
@@ -1003,8 +1003,8 @@
   {
     "text": "LAKE ADEN",
     "type": "sea",
-    "x": 3742,
-    "y": 4507,
+    "x": 3739,
+    "y": 4506,
     "minZoom": 3.5,
     "span": 75.93293559632399
   },
@@ -1059,18 +1059,18 @@
   {
     "text": "MIDDLE ERYTHREAN SEA",
     "type": "sea",
-    "x": 3695,
-    "y": 3934,
+    "x": 3697,
+    "y": 3935,
     "minZoom": 3.5,
     "span": 49.79901423408044
   },
   {
     "text": "UPPER ERYTHREAN SEA",
     "type": "sea",
-    "x": 3625,
-    "y": 3556,
+    "x": 3614,
+    "y": 3508,
     "minZoom": 3.5,
-    "span": 20.365268245767506
+    "span": 52.9491618341463
   },
   {
     "text": "LAKE LAMENT",
@@ -1078,13 +1078,13 @@
     "x": 3634,
     "y": 3680,
     "minZoom": 3.5,
-    "span": 13.538317339451845
+    "span": 49.36083827069718
   },
   {
     "text": "LOWER ERYTHREAN SEA",
     "type": "sea",
-    "x": 3953,
-    "y": 4105,
+    "x": 3951,
+    "y": 4106,
     "minZoom": 3.5,
     "span": 39.82863054461627
   },
@@ -1107,8 +1107,8 @@
   {
     "text": "UPPER TYRSENIAN SEA",
     "type": "sea",
-    "x": 2992,
-    "y": 3065,
+    "x": 2994,
+    "y": 3063,
     "minZoom": 3.5,
     "span": 26.567272437766462
   },
@@ -1134,7 +1134,7 @@
     "x": 3057,
     "y": 2975,
     "minZoom": 3.5,
-    "span": 50
+    "span": 41.610842397913096
   },
   {
     "text": "LAKE IONIOS",
@@ -1283,24 +1283,24 @@
   {
     "text": "LAKE BAISHIN",
     "type": "sea",
-    "x": 2505,
+    "x": 2504,
     "y": 772,
     "minZoom": 3.5,
-    "span": 20.548906359871356
+    "span": 22.99859513494377
   },
   {
     "text": "LAKE SATSUNO",
     "type": "sea",
-    "x": 2232,
-    "y": 867,
+    "x": 2233,
+    "y": 868,
     "minZoom": 3.5,
     "span": 26.25379315319419
   },
   {
     "text": "LAKE KAIHOKUDO",
     "type": "sea",
-    "x": 2237,
-    "y": 942,
+    "x": 2236,
+    "y": 943,
     "minZoom": 3.5,
     "span": 27.99434601981056
   },
