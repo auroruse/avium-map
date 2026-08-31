@@ -1,59 +1,5 @@
 [
   {
-    "text": "ELYSIA",
-    "type": "continent",
-    "x": 1527,
-    "y": 3162,
-    "minZoom": 2.5,
-    "maxZoom": 3,
-    "span": 700
-  },
-  {
-    "text": "EVRIA",
-    "type": "continent",
-    "x": 3043,
-    "y": 2455,
-    "minZoom": 2.5,
-    "maxZoom": 3,
-    "span": 600
-  },
-  {
-    "text": "VALTHERIA",
-    "type": "continent",
-    "x": 3111,
-    "y": 1284,
-    "minZoom": 2.5,
-    "maxZoom": 3,
-    "span": 1000
-  },
-  {
-    "text": "PELAGONIA",
-    "type": "continent",
-    "x": 3236,
-    "y": 4367,
-    "minZoom": 2.5,
-    "maxZoom": 3,
-    "span": 1000
-  },
-  {
-    "text": "HYPERBOREA",
-    "type": "continent",
-    "x": 526,
-    "y": 436,
-    "minZoom": 2.5,
-    "maxZoom": 3,
-    "span": 1137.005017619762
-  },
-  {
-    "text": "TARTARUS",
-    "type": "continent",
-    "x": 5657,
-    "y": 5148,
-    "minZoom": 2.5,
-    "maxZoom": 3,
-    "span": 826.2021469386125
-  },
-  {
     "text": "HYPERBOREAN OCEAN",
     "type": "ocean",
     "x": 979,
@@ -80,10 +26,10 @@
   {
     "text": "SAHARA SEA",
     "type": "ocean",
-    "x": 2799,
-    "y": 3500,
+    "x": 2758,
+    "y": 3496,
     "minZoom": 2.5,
-    "span": 750
+    "span": 833.7704223828772
   },
   {
     "text": "SEA OF AURITANIA",
@@ -104,8 +50,8 @@
   {
     "text": "ARCTIC SEA",
     "type": "ocean",
-    "x": 2404,
-    "y": 2068,
+    "x": 2421,
+    "y": 2034,
     "minZoom": 2.5,
     "span": 563.06137409622
   },
@@ -128,10 +74,10 @@
   {
     "text": "BAY OF TONKIN",
     "type": "sea",
-    "x": 4234,
-    "y": 714,
+    "x": 4230,
+    "y": 712,
     "minZoom": 3.5,
-    "span": 277.83383063494034
+    "span": 226.55737193230618
   },
   {
     "text": "NORTH SEA",
@@ -144,22 +90,22 @@
   {
     "text": "NICHIRIN",
     "type": "nation",
-    "x": 2571,
-    "y": 738,
+    "x": 2577,
+    "y": 800,
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 16,
-    "span": 400
+    "size": 13
   },
   {
     "text": "RUDANIA",
     "type": "nation",
-    "x": 2591,
+    "x": 2673,
     "y": 1414,
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 1,
-    "span": 1000
+    "size": 13
   },
   {
     "text": "ALEMANNIA",
@@ -169,7 +115,7 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 225
+    "size": 13
   },
   {
     "text": "ARVERNE",
@@ -179,7 +125,7 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 200
+    "size": 13
   },
   {
     "text": "ELVESTER",
@@ -189,7 +135,7 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 139.4127422488326
+    "size": 11
   },
   {
     "text": "HOLLOSEND",
@@ -199,7 +145,7 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 500
+    "size": 13
   },
   {
     "text": "E.S.U.",
@@ -209,7 +155,7 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 375
+    "size": 13
   },
   {
     "text": "PONURVIA",
@@ -219,7 +165,7 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 325
+    "size": 13
   },
   {
     "text": "AURITANIA",
@@ -229,27 +175,27 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 375
+    "size": 13
   },
   {
     "text": "VICILY",
     "type": "nation",
-    "x": 3069,
-    "y": 3083,
+    "x": 3066,
+    "y": 3077,
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 300
+    "size": 13
   },
   {
     "text": "SELMIRA",
     "type": "nation",
-    "x": 3531,
-    "y": 3217,
+    "x": 3527,
+    "y": 3222,
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 300
+    "size": 13
   },
   {
     "text": "GUANDONG",
@@ -259,7 +205,7 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 5,
-    "span": 300
+    "size": 13
   },
   {
     "text": "FURAN",
@@ -269,7 +215,7 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 3,
-    "span": 300
+    "size": 13
   },
   {
     "text": "SEIGNID",
@@ -279,7 +225,7 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 4,
-    "span": 350
+    "size": 13
   },
   {
     "text": "CAHAYA",
@@ -289,17 +235,17 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 4,
-    "span": 275
+    "size": 13
   },
   {
     "text": "ARUNYA",
     "type": "nation",
-    "x": 3670,
-    "y": 4768,
+    "x": 3657,
+    "y": 4760,
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 250
+    "size": 13
   },
   {
     "text": "AXERFREDITENSHIN",
@@ -309,7 +255,7 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 5,
-    "span": 500
+    "size": 13
   },
   {
     "text": "VARAHMEHR",
@@ -319,7 +265,7 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 348.2843337716635
+    "size": 13
   },
   {
     "text": "SKJARNLAND",
@@ -329,7 +275,7 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 189.22654906859324
+    "size": 11
   },
   {
     "text": "KARJANIA",
@@ -339,37 +285,37 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 3,
-    "span": 243.1282461798631
+    "size": 13
   },
   {
-    "text": "REINO",
+    "text": "ASKURIAS",
     "type": "nation",
     "x": 2687,
     "y": 2936,
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 200
+    "size": 13
   },
   {
-    "text": "EIVORIE",
+    "text": "CORTESIA",
     "type": "nation",
-    "x": 3080,
-    "y": 2438,
+    "x": 3091,
+    "y": 2458,
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 175
+    "size": 11
   },
   {
-    "text": "GENOSA",
+    "text": "TURULIA",
     "type": "nation",
     "x": 3209,
     "y": 2566,
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 104.98993621186719
+    "size": 7.94430159930849
   },
   {
     "text": "SHIVON",
@@ -379,17 +325,17 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 150
+    "size": 11
   },
   {
     "text": "SIDANYA",
     "type": "nation",
-    "x": 3261,
-    "y": 2326,
+    "x": 3256,
+    "y": 2331,
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 175
+    "size": 13
   },
   {
     "text": "SLYTLIA",
@@ -399,17 +345,17 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 150
+    "size": 11
   },
   {
     "text": "POLABINY",
     "type": "nation",
-    "x": 3482,
-    "y": 2184,
+    "x": 3473,
+    "y": 2189,
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 175
+    "size": 11
   },
   {
     "text": "EAST ASTRIYA",
@@ -419,7 +365,7 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 150
+    "size": 8.39147496869909
   },
   {
     "text": "LIVONIA",
@@ -429,7 +375,7 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 125
+    "size": 11
   },
   {
     "text": "MOROZIA",
@@ -439,17 +385,17 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 5,
-    "span": 250
+    "size": 13
   },
   {
     "text": "GIATHKA",
     "type": "nation",
-    "x": 3748,
-    "y": 1868,
+    "x": 3759,
+    "y": 1898,
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 4,
-    "span": 350
+    "size": 13
   },
   {
     "text": "PEROVSKA",
@@ -459,7 +405,7 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 5,
-    "span": 300
+    "size": 13
   },
   {
     "text": "DIVIA",
@@ -469,17 +415,17 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 223.5692440756369
+    "size": 13
   },
   {
     "text": "KEMET",
     "type": "nation",
-    "x": 3434,
-    "y": 3414,
+    "x": 3431,
+    "y": 3405,
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 138.60942798926538
+    "size": 11
   },
   {
     "text": "NORADIA",
@@ -489,7 +435,7 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 200
+    "size": 13
   },
   {
     "text": "KINSHŪ",
@@ -499,7 +445,7 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 175
+    "size": 13
   },
   {
     "text": "HŌRAI",
@@ -509,7 +455,7 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 83.4898729862814
+    "size": 9
   },
   {
     "text": "BARBARY",
@@ -519,7 +465,7 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 250
+    "size": 13
   },
   {
     "text": "WEST BANGALA",
@@ -529,7 +475,7 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 160.12198835693604
+    "size": 11
   },
   {
     "text": "VICILIAN NORTH APHIRICA",
@@ -539,17 +485,17 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 400
+    "size": 11
   },
   {
     "text": "SOUTH PELAGONIA",
     "type": "colony",
-    "x": 2667,
-    "y": 5244,
+    "x": 2704,
+    "y": 5250,
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 275
+    "size": 11
   },
   {
     "text": "TONKIN",
@@ -558,7 +504,8 @@
     "y": 869,
     "minZoom": 3.5,
     "maxZoom": 5,
-    "tier": 5
+    "tier": 5,
+    "size": 11
   },
   {
     "text": "KOGELLAND",
@@ -568,7 +515,7 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 250
+    "size": 11
   },
   {
     "text": "NEUHOLLMAR",
@@ -578,27 +525,27 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 168.68253256447704
+    "size": 11
   },
   {
-    "text": "COSTASERÁ",
+    "text": "EL MAGREB",
     "type": "colony",
     "x": 2462,
     "y": 3106,
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 225
+    "size": 11
   },
   {
     "text": "EAST KAUKASOS",
     "type": "colony",
-    "x": 3559,
-    "y": 2319,
+    "x": 3558,
+    "y": 2304,
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 200
+    "size": 11
   },
   {
     "text": "THULE",
@@ -608,7 +555,7 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 262.2249630167559
+    "size": 13
   },
   {
     "text": "RYŪGU",
@@ -618,7 +565,7 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 100
+    "size": 9
   },
   {
     "text": "MIZUHO",
@@ -628,7 +575,7 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "span": 114.64348465445238
+    "size": 11
   },
   {
     "text": "ANDAM ISLANDS",
@@ -637,16 +584,16 @@
     "y": 1847,
     "minZoom": 3.5,
     "maxZoom": 5,
-    "span": 280.02208903796384
+    "size": 9
   },
   {
-    "text": "ANTICOSTIA",
+    "text": "TIERRA ARCADIA",
     "type": "colony",
     "x": 2345,
     "y": 2978,
     "minZoom": 3.5,
     "maxZoom": 5,
-    "span": 116.62450451890975
+    "size": 8.20836888282643
   },
   {
     "text": "AZTEKISCHE ISLANDS",
@@ -655,7 +602,7 @@
     "y": 4025,
     "minZoom": 3.5,
     "maxZoom": 5,
-    "span": 195.2279527729638
+    "size": 9
   },
   {
     "text": "CÔTE DE SAUMON",
@@ -664,16 +611,16 @@
     "y": 3765,
     "minZoom": 3.5,
     "maxZoom": 5,
-    "span": 400
+    "size": 13
   },
   {
     "text": "CUOHPNJALLA",
     "type": "colony",
-    "x": 2612,
-    "y": 1885,
+    "x": 2590,
+    "y": 1881,
     "minZoom": 3.5,
     "maxZoom": 5,
-    "span": 150
+    "size": 9
   },
   {
     "text": "DÄMMERUNG ISLANDS",
@@ -682,7 +629,7 @@
     "y": 2673,
     "minZoom": 3.5,
     "maxZoom": 5,
-    "span": 199.07933264225164
+    "size": 9
   },
   {
     "text": "FREDERIKKA ISLANDS",
@@ -691,7 +638,7 @@
     "y": 1604,
     "minZoom": 3.5,
     "maxZoom": 5,
-    "span": 312.14405259941054
+    "size": 9
   },
   {
     "text": "GONENITE ISLANDS",
@@ -700,16 +647,16 @@
     "y": 758,
     "minZoom": 3.5,
     "maxZoom": 5,
-    "span": 228.26238747336075
+    "size": 9
   },
   {
     "text": "HOCHBRUNN-AM-SAHARAMEER",
     "type": "colony",
-    "x": 3199,
-    "y": 3910,
+    "x": 3198,
+    "y": 3895,
     "minZoom": 3.5,
     "maxZoom": 5,
-    "span": 288.0966143165608
+    "size": 9
   },
   {
     "text": "KIENAM",
@@ -718,7 +665,7 @@
     "y": 860,
     "minZoom": 3.5,
     "maxZoom": 5,
-    "span": 70.72500600978952
+    "size": 9
   },
   {
     "text": "KULLANMAAN",
@@ -727,7 +674,7 @@
     "y": 3926,
     "minZoom": 3.5,
     "maxZoom": 5,
-    "span": 144.89624953275705
+    "size": 9
   },
   {
     "text": "NAPOLYON BONPARTERRE ISLANDS",
@@ -736,7 +683,7 @@
     "y": 546,
     "minZoom": 3.5,
     "maxZoom": 5,
-    "span": 422.0399488562894
+    "size": 9
   },
   {
     "text": "NEW CELYDDON",
@@ -745,16 +692,7 @@
     "y": 410,
     "minZoom": 3.5,
     "maxZoom": 5,
-    "span": 178.41868173195442
-  },
-  {
-    "text": "NITRAVIA",
-    "type": "nation",
-    "x": 3159,
-    "y": 2537,
-    "minZoom": 3.5,
-    "maxZoom": 5,
-    "span": 103.31848583683876
+    "size": 9
   },
   {
     "text": "SALISHIA",
@@ -763,16 +701,16 @@
     "y": 2619,
     "minZoom": 3.5,
     "maxZoom": 5,
-    "span": 200
+    "size": 11
   },
   {
     "text": "SANKT GEROLD ISLAND",
     "type": "colony",
-    "x": 3876,
-    "y": 5291,
+    "x": 3883,
+    "y": 5284,
     "minZoom": 3.5,
     "maxZoom": 5,
-    "span": 228.5422842337607
+    "size": 11
   },
   {
     "text": "ALBATROSSINSELN",
@@ -781,7 +719,7 @@
     "y": 2934,
     "minZoom": 3.5,
     "maxZoom": 5,
-    "span": 200
+    "size": 9
   },
   {
     "text": "UJ-PANNONIA",
@@ -790,16 +728,16 @@
     "y": 5086,
     "minZoom": 3.5,
     "maxZoom": 5,
-    "span": 144.1601366468917
+    "size": 8.494962610211829
   },
   {
     "text": "VERWUSTUNG ISLANDS",
     "type": "colony",
-    "x": 4605,
-    "y": 4938,
+    "x": 4600,
+    "y": 4974,
     "minZoom": 3.5,
     "maxZoom": 5,
-    "span": 205.54143750135387
+    "size": 9
   },
   {
     "text": "VIKOMTE ISLANDS",
@@ -808,7 +746,7 @@
     "y": 5778,
     "minZoom": 3.5,
     "maxZoom": 5,
-    "span": 206.91439931015006
+    "size": 9
   },
   {
     "text": "RECOLOTTA",
@@ -817,7 +755,7 @@
     "y": 4874,
     "minZoom": 3.5,
     "maxZoom": 5,
-    "span": 250
+    "size": 11
   },
   {
     "text": "SOUTHEAST APHIRICA",
@@ -826,7 +764,7 @@
     "y": 4127,
     "minZoom": 3.5,
     "maxZoom": 5,
-    "span": 270.9677932920698
+    "size": 11
   },
   {
     "text": "NORDSTJÄRNEÖ",
@@ -835,16 +773,16 @@
     "y": 2241,
     "minZoom": 3.5,
     "maxZoom": 5,
-    "span": 147.48003242731977
+    "size": 9
   },
   {
     "text": "SPETSBERGEN",
     "type": "colony",
-    "x": 2481,
-    "y": 1926,
+    "x": 2511,
+    "y": 1913,
     "minZoom": 3.5,
     "maxZoom": 5,
-    "span": 150
+    "size": 9
   },
   {
     "text": "ADELSKÖLDLAND",
@@ -853,7 +791,7 @@
     "y": 2316,
     "minZoom": 3.5,
     "maxZoom": 5,
-    "span": 158.6434826007437
+    "size": 9
   },
   {
     "text": "ANSELM'S HAVEN",
@@ -877,7 +815,7 @@
     "x": 3108,
     "y": 519,
     "minZoom": 3.5,
-    "span": 315.30451672950096
+    "span": 181.99607637936046
   },
   {
     "text": "GULF OF EUSCARA",
@@ -930,8 +868,8 @@
   {
     "text": "East Aphirican Bay",
     "type": "sea",
-    "x": 3182,
-    "y": 3849,
+    "x": 3146,
+    "y": 3829,
     "minZoom": 3.5
   },
   {
@@ -996,7 +934,7 @@
     "x": 1222,
     "y": 4058,
     "minZoom": 3.5,
-    "span": 125
+    "span": 88.68438809712053
   },
   {
     "text": "TERRANOVA GULF",
@@ -1329,10 +1267,10 @@
   {
     "text": "BAY OF KOSANGSIN",
     "type": "sea",
-    "x": 4500,
-    "y": 900,
+    "x": 4512,
+    "y": 910,
     "minZoom": 3.5,
-    "span": 155.63583410041988
+    "span": 130.46682506576215
   },
   {
     "text": "LAKE RYUSEI",
@@ -1413,6 +1351,25 @@
     "y": 1161,
     "minZoom": 3.5,
     "maxZoom": 5,
-    "span": 290.96728880948706
+    "size": 11
+  },
+  {
+    "text": "EIVORIE",
+    "type": "nation",
+    "x": 2275,
+    "y": 3818,
+    "minZoom": 3.5,
+    "maxZoom": 5,
+    "tier": 13,
+    "size": 13
+  },
+  {
+    "text": "MALSCHELLSKOBBARNA",
+    "type": "colony",
+    "x": 3714,
+    "y": 2794,
+    "minZoom": 3.5,
+    "maxZoom": 5,
+    "size": 9
   }
 ]

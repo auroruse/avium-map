@@ -6,7 +6,7 @@
   <title>Avium Maps</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,300&family=Roboto+Condensed:wght@700&display=swap">
   <!-- Linked here rather than imported from main.ts. An import only reaches the
        page once the module graph has loaded, and the dev server serves that graph
        a file at a time, so the browser painted the whole unstyled document first:
@@ -49,8 +49,11 @@
       <button id="place-delete" class="pp-danger" title="Delete this label or station">Delete</button>
     </div>
     <div class="pp-span-row" id="span-row" hidden>
-      <label for="place-span">Span</label>
+      <label for="place-span" id="span-label">Span</label>
       <input id="place-span" type="number" min="1" step="10">
+      <button class="pp-preset" id="size-major" hidden>Major</button>
+      <button class="pp-preset" id="size-minor" hidden>Minor</button>
+      <button class="pp-preset" id="size-islet" hidden>Islet</button>
       <span id="span-readout"></span>
     </div>
     <div id="place-status"></div>

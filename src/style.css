@@ -66,7 +66,7 @@ html, body {
   /* Tracking is em, never px: the sizing math in main.ts solves a font size
      from a character advance in em, and an absolute value would drift out of
      agreement with it at every zoom. Keep --track and TRACK/TRACK_WATER equal. */
-  --track: 0.22em;
+  --track: 0.02em;
   letter-spacing: var(--track);
   text-transform: uppercase;
 }
@@ -77,6 +77,11 @@ html, body {
   display: inline-block;
   transform: translate(-50%, -50%);
   margin-right: calc(-1 * var(--track));
+  /* A wrapped name is centred on its anchor as a block, and set tight: these are
+     two or three words stacked, not a paragraph. 1.4 is what labelBox reserves
+     per line, so the two agree. */
+  text-align: center;
+  line-height: 1.15;
 }
 
 /* Zoom bands cross-fade instead of popping. visibility keeps a faded-out
@@ -99,32 +104,59 @@ html, body {
    Colours are opaque on purpose. Any alpha lets the four stacked black
    shadows above read straight through the strokes, and at label weights that
    renders as near-black text, not soft colour. */
-.label-continent,
-.label-nation {
+/* Set the way an atlas sets a country: heavy, tight, upright. The old 500 weight
+   at 0.22em tracking spread each name into a thin line of separated capitals —
+   the width was right, the letters were not. Tracking carries the weight of this
+   change: the sizing math solves a font size from the character advance, so at
+   0.02em the same span produces letters a third taller at exactly the same total
+   width. Nothing about the territory moved; the name just stopped being spaced
+   out to reach across it. */
+/* Continents are untouched: 500 at the old 0.22em, spread across a landmass the
+   way a continent's name should be. */
+.label-continent {
   color: #fff;
   font-weight: 500;
+  --track: 0.22em;
 }
 
+/* Roboto Condensed is what an atlas country is set in, and it is what the
+   reference uses. Condensed matters twice over: it is the look, and it is narrow,
+   so a name fits a small territory at a larger size.
+   Colonies are set exactly as nations now — the size tier and where the name sits
+   say which is which, and the italic was doing neither of those jobs. */
+.label-nation,
 .label-colony {
+  font-family: 'Roboto Condensed', 'Arial Narrow', 'SF Pro Display', system-ui, sans-serif;
   color: #fff;
-  font-weight: 400;
-  font-style: italic;
+  font-weight: 700;
 }
 
-/* Water names run tight. They are set in italic at sizes that grow with zoom,
-   and land tracking spreads them into the coastline they are meant to follow. */
-.label-ocean {
-  color: #7ca8c4;
-  font-weight: 600;
+
+/* Water is the opposite hand: light, italic, and airy. Tracking is what says
+   "this is water" once the land names stopped using it, and it is the one place
+   on the map where letting a name breathe costs nothing — a sea has no border to
+   crowd and nothing competing for the space.
+   Lifted off the old steel blue, which sat only a little above the #3e4e6f sea
+   it was printed on and read as a smudge rather than as writing. */
+.label-ocean,
+.label-sea {
+  font-family: 'Inter', -apple-system, 'SF Pro Text', system-ui, sans-serif;
+  font-weight: 300;
   font-style: italic;
-  --track: 0.08em;
+  --track: 0.15em;
+  /* The three-layer ring on .map-label is for white capitals crossing the white
+     coastline. Water never crosses it — it sits on open sea and nothing else is
+     printed there — and at 300 weight that near-solid 1px ring closed over the
+     thin strokes and turned the name grey. One soft shadow for depth instead. */
+  text-shadow: 0 1px 2px rgba(0,0,0,0.45);
+}
+
+.label-ocean {
+  color: #c2d6ec;
 }
 
 .label-sea {
-  color: #6898b4;
-  font-weight: 500;
-  font-style: italic;
-  --track: 0.08em;
+  color: #aec6e0;
 }
 
 /* A territory name that opens its nation panel. .map-label kills pointer events
@@ -717,6 +749,30 @@ html, body {
   border-color: rgba(100,180,255,0.4);
 }
 
+.pp-preset {
+  flex: none;
+  padding: 3px 9px;
+  border: none;
+  border-radius: 7px;
+  background: rgba(255,255,255,0.08);
+  color: #c6cacd;
+  font: 500 11px/1 inherit;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.pp-preset:hover {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+}
+.pp-preset.is-on {
+  background: #0a84ff;
+  color: #fff;
+}
+.pp-preset[hidden] {
+  display: none;
+}
+
 .pp-span-row {
   display: flex;
   align-items: center;
@@ -726,11 +782,12 @@ html, body {
   color: #9aa0a6;
 }
 
-/* The number field shares the search field's chrome, so it takes the row's
-   spare width rather than the full-width rule it inherits */
+/* The number field shares the search field's chrome, but not its width: three
+   tier buttons and a readout share this row now, and a field on flex:1 took the
+   lot and pushed the readout off the edge of the column. */
 #place-span {
-  width: auto;
-  flex: 1;
+  width: 58px;
+  flex: none;
   padding: 4px 8px;
 }
 
@@ -1868,6 +1925,19 @@ html, body {
 .pp-edit-row,
 .pp-span-row {
   margin-top: 7px;
+}
+
+/* The row is a number, three tiers and a readout in a 380px column */
+#span-label {
+  flex: none;
+}
+#span-readout {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: right;
 }
 
 /* Buttons: one row, no wrapping. Save carries the accent because it is the only

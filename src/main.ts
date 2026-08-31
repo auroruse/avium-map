@@ -407,6 +407,12 @@ interface LabelDef {
   maxZoom?: number // absent = no ceiling, so raising MAX_ZOOM never strands it
   tier?: number // nations/colonies: font size in px
   span?: number // territory width in map px, overriding the derived one
+  // Country labels are sized directly in screen px and hold it at every zoom.
+  // A span says how much ground a name covers, which is the right question for a
+  // sea and the wrong one for a country: it made Rudania 70px and thirty-three
+  // others 9px, when what an atlas does is set every country at one of two close
+  // sizes and let the map say how big it is.
+  size?: number
 }
 
 
@@ -417,6 +423,24 @@ const labelLayer = L.layerGroup().addTo(map)
 // Every label is sized to the area it names rather than to a fixed px value,
 // which is the whole trick to reading well at every zoom: a fixed size swamps
 // a small nation when zoomed out and vanishes on a continent when zoomed in.
+// The two sizes a country name comes in, in screen px. Close together on
+// purpose: the reference sets a large country and a small one at nearly the same
+// size, and lets position and territory carry the difference.
+const LABEL_SIZE = { major: 13, minor: 11, islet: 9 }
+
+// Longest a line of a wrapped name wants to be, in characters, and the most
+// lines it may take. A country name too long for its land is what an atlas
+// breaks over two lines rather than shrinking or letting it run into the sea.
+const WRAP_CHARS = 12
+const WRAP_MAX = 3
+
+// The zoom a country name is drawn at its full tier size, and the floor of the
+// range over which it holds it. Above this it never grows — zooming into a
+// nation is asking for the cities under its name. Below it the name shrinks with
+// the map, because the tier size against a land mass half as wide reads as
+// oversized: the same 13px that sits right at user zoom 4 was shouting at 3.
+const SIZE_HOLD_Z = 4
+
 const MIN_SPAN = 45   // map px, so a one-city nation still earns a name eventually
 const FIT = 0.75      // the name spans this fraction of the area on screen
 const FS_MIN = 8.5    // legible: the floor a derived span produces, and the size a
@@ -426,10 +450,25 @@ const FS_MIN = 8.5    // legible: the floor a derived span produces, and the siz
 // set tight and italic and lean on colour to read as water; land names track
 // wide to claim the ground they cover.
 const WATER = new Set(['ocean', 'sea'])
-const TRACK = 0.22       // letter-spacing, em — must match --track in the CSS
-const TRACK_WATER = 0.08 // ditto, .label-ocean / .label-sea
-const GLYPH = 0.68       // char advance before tracking: caps are wider than the 0.62 cities use
-const advanceOf = (def: LabelDef) => GLYPH + (WATER.has(def.type) ? TRACK_WATER : TRACK)
+// Character advance in em for each kind of label: the face's own advance plus the
+// tracking its rule sets. Measured in the browser against the real names on this
+// map, not guessed — the sizing math solves a font size from this number, so an
+// advance that disagrees with what is drawn produces a name that overshoots or
+// undershoots the span it was given.
+//
+// Change a font-family or a --track in style.css and the matching entry moves
+// with it. Continents keep the old pair on purpose: nothing about them changed.
+const ADVANCE = {
+  continent: 0.68 + 0.22, // system stack, 500
+  land: 0.52 + 0.02, // Roboto Condensed 700 — .label-nation, .label-colony
+  water: 0.655 + 0.15, // Inter 300 italic — .label-ocean, .label-sea
+}
+const advanceOf = (def: LabelDef) =>
+  WATER.has(def.type)
+    ? ADVANCE.water
+    : def.type === 'continent'
+      ? ADVANCE.continent
+      : ADVANCE.land
 
 interface Anchor { x: number; y: number; span: number }
 let anchorCache: Map<string, Anchor> | null = null
@@ -520,13 +559,13 @@ function fallbackSpan(def: LabelDef): number {
 function areaSpan(def: LabelDef): number {
   if (def.span != null) return def.span
   const derived = anchors().get(norm(def.text))?.span ?? fallbackSpan(def)
-  const legible = (FS_MIN * def.text.length * advanceOf(def)) / (scaleAt(def.minZoom) * FIT)
+  const legible = (FS_MIN * labelWidest(def) * advanceOf(def)) / (scaleAt(def.minZoom) * FIT)
   return Math.max(derived, legible)
 }
 
 // The size a name arrives at: what its span renders at, at its own minZoom.
 function arrivalSize(def: LabelDef): number {
-  return (areaSpan(def) * scaleAt(def.minZoom) * FIT) / (def.text.length * advanceOf(def))
+  return (areaSpan(def) * scaleAt(def.minZoom) * FIT) / (labelWidest(def) * advanceOf(def))
 }
 
 // Land names grow with the map until they are legible, then hold that screen
@@ -556,10 +595,50 @@ function sizeZoom(def: LabelDef, z: number): number {
   return Math.min(z, def.minZoom + shortfall)
 }
 
-// No floor and no ceiling. A speck is the honest rendering of a territory too
-// small to carry its name yet, and zooming in is what resolves it.
+// A country carries its size on its back: one number, the same at every zoom.
+// Everything else — continents, oceans, seas — is still solved from the ground it
+// covers, which is the question that suits them.
+//
+// No floor and no ceiling on the solved path. A speck is the honest rendering of
+// a territory too small to carry its name yet, and zooming in is what resolves it.
+// A name broken into the lines it is drawn on. Zoom does not enter into it, so
+// a name never reflows while you scroll — the break is a property of the name.
+//
+// Hyphens are break points as well as spaces, which is the whole reason
+// HOCHBRUNN-AM-SAHARAMEER can be dealt with at all: as one token it is 23
+// characters of unbreakable name laid across a bay.
+const wrapCache = new Map<string, string[]>()
+function labelLines(def: LabelDef): string[] {
+  let lines = wrapCache.get(def.text)
+  if (lines) return lines
+  const tokens = def.text.split(/(?<=-)|\s+/).filter(Boolean)
+  const n = Math.min(WRAP_MAX, Math.ceil(def.text.length / WRAP_CHARS))
+  if (tokens.length < 2 || n < 2) {
+    lines = [def.text]
+  } else {
+    // Aim for equal lines rather than filling each to the brim, or the last one
+    // ends up a single short word hanging under the rest
+    const target = def.text.length / n
+    lines = ['']
+    for (const t of tokens) {
+      const cur = lines[lines.length - 1]
+      const joined = cur + (cur && !cur.endsWith('-') ? ' ' : '') + t
+      if (cur && lines.length < n && joined.length > target && cur.length >= target * 0.5) lines.push(t)
+      else lines[lines.length - 1] = joined
+    }
+    lines = lines.map(l => l.trim()).filter(Boolean)
+  }
+  wrapCache.set(def.text, lines)
+  return lines
+}
+
+// The longest line, which is what the name is as wide as
+const labelWidest = (def: LabelDef) =>
+  labelLines(def).reduce((m, l) => Math.max(m, l.length), 0)
+
 function areaFontSize(def: LabelDef, z: number): number {
-  return (areaSpan(def) * scaleAt(sizeZoom(def, z)) * FIT) / (def.text.length * advanceOf(def))
+  if (def.size != null) return def.size * Math.min(1, scaleAt(z) / scaleAt(SIZE_HOLD_Z))
+  return (areaSpan(def) * scaleAt(sizeZoom(def, z)) * FIT) / (labelWidest(def) * advanceOf(def))
 }
 
 function inBand(def: LabelDef, z: number): boolean {
@@ -574,8 +653,8 @@ function labelBox(def: LabelDef, z: number): Box | null {
   const fs = areaFontSize(def, z)
   if (!fs) return null
   const s = scaleAt(z)
-  const w = def.text.length * fs * advanceOf(def)
-  const h = fs * 1.4
+  const w = labelWidest(def) * fs * advanceOf(def)
+  const h = fs * 1.4 * labelLines(def).length
   return { x: pos[0] * s - w / 2, y: pos[1] * s - h / 2, w, h }
 }
 
@@ -638,7 +717,7 @@ function makeLabelMarker(def: LabelDef, pos: [number, number]): L.Marker {
   const m = L.marker(px(pos[0], pos[1]), {
     icon: L.divIcon({
       className: `map-label label-${def.type}` + (DEV ? ' dev-label' : nation ? ' label-link' : ''),
-      html: `<span>${def.text}${handles}</span>`,
+      html: `<span>${labelLines(def).join('<br>')}${handles}</span>`,
       iconSize: [0, 0],
       iconAnchor: [0, 0],
     }),
@@ -694,7 +773,7 @@ function wireLabelEdit(def: LabelDef, m: L.Marker) {
       const reach = (ev: MouseEvent) =>
         Math.hypot(ev.clientX - rect.left - c.x, ev.clientY - rect.top - c.y)
       // Half the box diagonal, per px of font size
-      const perFs = Math.hypot(def.text.length * advanceOf(def), 1.4) / 2
+      const perFs = Math.hypot(labelWidest(def) * advanceOf(def), 1.4 * labelLines(def).length) / 2
       // Handles sit just outside the corner, so the grab starts a little past
       // it; keeping that offset stops the label jumping on mousedown
       const slack = reach(e as MouseEvent) - areaFontSize(def, map.getZoom()) * perFs
@@ -707,14 +786,23 @@ function wireLabelEdit(def: LabelDef, m: L.Marker) {
       // 1700 cities depend on waits for mouseup.
       const move = (ev: MouseEvent) => {
         const fs = Math.max(0, reach(ev) - slack) / perFs
-        def.span = (fs * def.text.length * advanceOf(def)) / (scaleAt(sizeZoom(def, map.getZoom())) * FIT)
+        // A country is sized in px directly; everything else still resolves back
+        // to the span that produces that size at this zoom
+        if (sizedLabel(def)) def.size = fs
+        else {
+            def.span = (fs * labelWidest(def) * advanceOf(def)) / (scaleAt(sizeZoom(def, map.getZoom())) * FIT)
+        }
         updateLabels()
         if (spanTarget === def) syncSpanRow()
       }
       const up = () => {
         document.removeEventListener('mousemove', move)
         document.removeEventListener('mouseup', up)
-        commit(`${def.text} → span ${Math.round(def.span!)}`)
+        commit(
+          sizedLabel(def)
+            ? `${def.text} → ${def.size!.toFixed(1)}px`
+            : `${def.text} → span ${Math.round(def.span!)}`
+        )
       }
       document.addEventListener('mousemove', move)
       document.addEventListener('mouseup', up)
@@ -1202,21 +1290,17 @@ function computePlacement(z: number, pinned: Placement[]): Placement[] {
   // inside the label LAKE SATSUNO, so it vanished from the map for three zoom
   // levels while its 325k neighbour — whose dot happened to fall in a gap
   // between glyphs — kept a name the whole way.
+  // labelBox is the one place a name's rectangle is worked out. This used to
+  // measure its own, off the unwrapped text and a single line, and once long
+  // names started wrapping the two stopped agreeing: EASTERN PANTHALASSAN OCEAN
+  // renders as three stacked lines 1487px wide at user zoom 5 and reserved a
+  // 3222px strip on one line, a band of dead ground reaching a thousand pixels
+  // inland from where the words are. Cortesia, Turulia and Slytlia lost every
+  // city they had to it.
   for (const def of labelDefs) {
     if (!labelShown(def, z)) continue
-    const fs = areaFontSize(def, z)
-    const pos = labelPos(def)
-    if (!fs || !pos) continue
-    const s = scaleAt(z)
-    const w = def.text.length * fs * advanceOf(def)
-    const h = fs * 1.4
-    addBox({
-      x: pos[0] * s - w / 2,
-      y: pos[1] * s - h / 2,
-      w,
-      h,
-      water: WATER.has(def.type),
-    })
+    const b = labelBox(def, z)
+    if (b) addBox({ ...b, water: WATER.has(def.type) })
   }
 
   const placed: Placement[] = []
@@ -2188,7 +2272,7 @@ function saveLabelProgress() {
   for (const d of labelDefs) {
     // A resized label may never have been dragged, so span alone is enough
     if (d.x == null && d.span == null) continue
-    saved[`${d.type}:${d.text}`] = { x: d.x, y: d.y, tier: d.tier, span: d.span }
+    saved[`${d.type}:${d.text}`] = { x: d.x, y: d.y, tier: d.tier, span: d.span, size: d.size }
   }
   localStorage.setItem(LABEL_KEY, JSON.stringify(saved))
 }
@@ -2206,6 +2290,7 @@ function loadLabelProgress() {
       d.y = v.y
     }
     if (v.tier != null) d.tier = v.tier
+    if (v.size != null) d.size = v.size
     if (v.span != null) d.span = v.span
   }
 }
@@ -2251,6 +2336,14 @@ const countEl = document.getElementById('place-count')!
 const spanRow = document.getElementById('span-row')!
 const spanInput = document.getElementById('place-span') as HTMLInputElement
 const spanReadout = document.getElementById('span-readout')!
+const spanLabel = document.getElementById('span-label')!
+const sizeMajorBtn = document.getElementById('size-major') as HTMLButtonElement
+const sizeMinorBtn = document.getElementById('size-minor') as HTMLButtonElement
+const sizeIsletBtn = document.getElementById('size-islet') as HTMLButtonElement
+
+// A country label is edited in screen px, everything else in map px of territory.
+// Two different quantities, so the row says which one it is showing.
+const sizedLabel = (d: LabelDef) => d.type === 'nation' || d.type === 'colony'
 
 if (DEV) {
   // Lets the stylesheet tell the two modes apart. In dev the placer owns the left
@@ -2291,9 +2384,36 @@ function syncSpanRow() {
   const d = spanTarget
   spanRow.hidden = !d
   if (!d) return
-  const span = Math.round(areaSpan(d))
-  if (document.activeElement !== spanInput) spanInput.value = String(span)
+  const sized = sizedLabel(d)
+  spanLabel.textContent = sized ? 'Size' : 'Span'
+  spanInput.step = sized ? '0.5' : '10'
+  sizeMajorBtn.hidden = !sized
+  sizeMinorBtn.hidden = !sized
+  sizeIsletBtn.hidden = !sized
+  const v = sized ? (d.size ?? areaFontSize(d, map.getZoom())) : areaSpan(d)
+  if (document.activeElement !== spanInput) spanInput.value = String(Math.round(v * 10) / 10)
+  sizeMajorBtn.classList.toggle('is-on', sized && d.size === LABEL_SIZE.major)
+  sizeMinorBtn.classList.toggle('is-on', sized && d.size === LABEL_SIZE.minor)
+  sizeIsletBtn.classList.toggle('is-on', sized && d.size === LABEL_SIZE.islet)
   spanReadout.textContent = `${d.text} · ${areaFontSize(d, map.getZoom()).toFixed(1)}px`
+}
+
+for (const [btn, px] of [
+  [sizeMajorBtn, LABEL_SIZE.major],
+  [sizeMinorBtn, LABEL_SIZE.minor],
+  [sizeIsletBtn, LABEL_SIZE.islet],
+] as const) {
+  btn.addEventListener('click', () => {
+    if (!spanTarget || !sizedLabel(spanTarget)) return
+    spanTarget.size = px
+    updateLabels()
+    syncSpanRow()
+    // Same four steps wireLabelEdit's commit does; that one is scoped to a marker
+    saveLabelProgress()
+    invalidatePlacements()
+    updateCities()
+    statusEl.textContent = `${spanTarget.text} → ${px}px`
+  })
 }
 
 function setSpanTarget(d: LabelDef | null) {
@@ -2304,7 +2424,8 @@ function setSpanTarget(d: LabelDef | null) {
 spanInput.addEventListener('input', () => {
   const n = Number(spanInput.value)
   if (!spanTarget || !isFinite(n) || n <= 0) return
-  spanTarget.span = n
+  if (sizedLabel(spanTarget)) spanTarget.size = n
+  else spanTarget.span = n
   // Per keystroke, only the ~70 label markers redraw; the placement rebuild
   // that 1700 cities depend on waits for blur or Enter
   updateLabels()
