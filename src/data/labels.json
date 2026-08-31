@@ -1060,25 +1060,25 @@
     "text": "MIDDLE ERYTHREAN SEA",
     "type": "sea",
     "x": 3697,
-    "y": 3935,
+    "y": 3934,
     "minZoom": 3.5,
     "span": 49.79901423408044
   },
   {
     "text": "UPPER ERYTHREAN SEA",
     "type": "sea",
-    "x": 3614,
-    "y": 3508,
+    "x": 3613,
+    "y": 3501,
     "minZoom": 3.5,
-    "span": 52.9491618341463
+    "span": 15.019231077113853
   },
   {
     "text": "LAKE LAMENT",
     "type": "sea",
     "x": 3634,
-    "y": 3680,
+    "y": 3669,
     "minZoom": 3.5,
-    "span": 49.36083827069718
+    "span": 12.792164952822121
   },
   {
     "text": "LOWER ERYTHREAN SEA",
