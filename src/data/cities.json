@@ -2472,7 +2472,7 @@
     "y": 2944
   },
   {
-    "name": "Ciudad Cuerdas",
+    "name": "Olisibona",
     "nation": "Askurias",
     "population": 3041000,
     "gdp": 165000000000,
@@ -2496,7 +2496,7 @@
     "y": 3373
   },
   {
-    "name": "Puerto Arvory",
+    "name": "Calé",
     "nation": "Askurias",
     "population": 1375000,
     "gdp": 68000000000,
@@ -2520,7 +2520,7 @@
     "y": 3366
   },
   {
-    "name": "Muere",
+    "name": "Santa Virenia",
     "nation": "Askurias",
     "population": 1118000,
     "gdp": 54000000000,
@@ -2532,7 +2532,7 @@
     "y": 2989
   },
   {
-    "name": "Súkíta",
+    "name": "Velazquita",
     "nation": "Askurias",
     "population": 859000,
     "gdp": 51000000000,
@@ -2540,11 +2540,11 @@
     "nativeScript": "",
     "irlParallel": "València",
     "alpha3": "ASK",
-    "x": 2762,
-    "y": 3027
+    "x": 2760,
+    "y": 3024
   },
   {
-    "name": "Salvada",
+    "name": "Sarakusta",
     "nation": "Askurias",
     "population": 759000,
     "gdp": 42000000000,
@@ -2556,7 +2556,7 @@
     "y": 2969
   },
   {
-    "name": "Malakka",
+    "name": "Malaca",
     "nation": "Askurias",
     "population": 607000,
     "gdp": 32500000000,
@@ -2568,7 +2568,7 @@
     "y": 3023
   },
   {
-    "name": "Esturdia",
+    "name": "Becedo",
     "nation": "Askurias",
     "population": 353000,
     "gdp": 25500000000,
@@ -2580,7 +2580,7 @@
     "y": 2875
   },
   {
-    "name": "Maestra",
+    "name": "Cieza",
     "nation": "Askurias",
     "population": 530000,
     "gdp": 23500000000,
@@ -2592,7 +2592,7 @@
     "y": 3008
   },
   {
-    "name": "Cielos Despejados",
+    "name": "Corunna",
     "nation": "Askurias",
     "population": 390000,
     "gdp": 22500000000,
@@ -2604,7 +2604,7 @@
     "y": 2785
   },
   {
-    "name": "Geislandia",
+    "name": "Alacanta",
     "nation": "Askurias",
     "population": 390000,
     "gdp": 19500000000,
@@ -2616,7 +2616,7 @@
     "y": 3022
   },
   {
-    "name": "Los Niños",
+    "name": "Vica",
     "nation": "Askurias",
     "population": 314000,
     "gdp": 16800000000,
@@ -2628,7 +2628,7 @@
     "y": 2815
   },
   {
-    "name": "Narbel",
+    "name": "Monteciar",
     "nation": "Askurias",
     "population": 306000,
     "gdp": 15200000000,
@@ -2664,7 +2664,7 @@
     "y": 3277
   },
   {
-    "name": "Espira",
+    "name": "Corvalén",
     "nation": "Askurias",
     "population": 353000,
     "gdp": 14500000000,
@@ -2676,7 +2676,7 @@
     "y": 2985
   },
   {
-    "name": "Árnica",
+    "name": "Iruña",
     "nation": "Askurias",
     "population": 217000,
     "gdp": 14200000000,
@@ -2688,7 +2688,7 @@
     "y": 2936
   },
   {
-    "name": "Conriat",
+    "name": "Vasco",
     "nation": "Askurias",
     "population": 174000,
     "gdp": 13200000000,
@@ -2700,7 +2700,7 @@
     "y": 2914
   },
   {
-    "name": "Stóll",
+    "name": "Gadeira",
     "nation": "Askurias",
     "population": 245000,
     "gdp": 10500000000,
@@ -2712,7 +2712,7 @@
     "y": 3011
   },
   {
-    "name": "Karpagó",
+    "name": "Nuevo Cartago",
     "nation": "Askurias",
     "population": 224000,
     "gdp": 10200000000,
@@ -2736,7 +2736,7 @@
     "y": 3197
   },
   {
-    "name": "Kastala",
+    "name": "Castelló",
     "nation": "Askurias",
     "population": 186000,
     "gdp": 9200000000,
@@ -2745,10 +2745,10 @@
     "irlParallel": "Castellón",
     "alpha3": "ASK",
     "x": 2799,
-    "y": 3017
+    "y": 3011
   },
   {
-    "name": "Galleta",
+    "name": "Bracara",
     "nation": "Askurias",
     "population": 208000,
     "gdp": 8400000000,
@@ -2760,7 +2760,7 @@
     "y": 2841
   },
   {
-    "name": "Nuevo Refugio",
+    "name": "Talhuanca",
     "nation": "Askurias",
     "population": 173000,
     "gdp": 7400000000,
@@ -2772,7 +2772,7 @@
     "y": 2903
   },
   {
-    "name": "Brado",
+    "name": "Albasita",
     "nation": "Askurias",
     "population": 176000,
     "gdp": 7200000000,
@@ -2784,7 +2784,7 @@
     "y": 2980
   },
   {
-    "name": "Titanes",
+    "name": "Combriga",
     "nation": "Askurias",
     "population": 172000,
     "gdp": 7200000000,
@@ -2796,7 +2796,7 @@
     "y": 2881
   },
   {
-    "name": "Lachaven",
+    "name": "Legona",
     "nation": "Askurias",
     "population": 142000,
     "gdp": 6500000000,
@@ -2808,7 +2808,7 @@
     "y": 2862
   },
   {
-    "name": "Serenidad",
+    "name": "Pacensis",
     "nation": "Askurias",
     "population": 156000,
     "gdp": 6100000000,
@@ -2820,7 +2820,7 @@
     "y": 2958
   },
   {
-    "name": "Lenkurt",
+    "name": "Orense",
     "nation": "Askurias",
     "population": 111000,
     "gdp": 4800000000,
@@ -2832,7 +2832,7 @@
     "y": 2831
   },
   {
-    "name": "Ojén",
+    "name": "Toletaña",
     "nation": "Askurias",
     "population": 96000,
     "gdp": 4200000000,
@@ -2844,7 +2844,7 @@
     "y": 2934
   },
   {
-    "name": "Madre Bosque",
+    "name": "Castavera",
     "nation": "Askurias",
     "population": 78000,
     "gdp": 3200000000,
@@ -2868,7 +2868,7 @@
     "y": 2967
   },
   {
-    "name": "Erlyors",
+    "name": "Evana",
     "nation": "Askurias",
     "population": 54000,
     "gdp": 1850000000,
@@ -2964,7 +2964,7 @@
     "y": 3823
   },
   {
-    "name": "Nuevo Refugio",
+    "name": "Talhuanca",
     "nation": "Auritania",
     "population": 1894000,
     "gdp": 48200000000,
@@ -3096,7 +3096,7 @@
     "y": 3969
   },
   {
-    "name": "Lenkurt",
+    "name": "Orense",
     "nation": "Auritania",
     "population": 814000,
     "gdp": 15200000000,
@@ -3324,7 +3324,7 @@
     "y": 4129
   },
   {
-    "name": "Karpagó",
+    "name": "Nuevo Cartago",
     "nation": "Auritania",
     "population": 414000,
     "gdp": 8150000000,
@@ -3336,7 +3336,7 @@
     "y": 4109
   },
   {
-    "name": "Erlyors",
+    "name": "Evana",
     "nation": "Auritania",
     "population": 342000,
     "gdp": 7250000000,
@@ -3396,7 +3396,7 @@
     "y": 3844
   },
   {
-    "name": "Serenidad",
+    "name": "Pacensis",
     "nation": "Auritania",
     "population": 324000,
     "gdp": 4250000000,
@@ -3564,7 +3564,7 @@
     "y": 3789
   },
   {
-    "name": "Lachaven",
+    "name": "Legona",
     "nation": "Auritania",
     "population": 68000,
     "gdp": 1450000000,
@@ -3896,8 +3896,8 @@
     "nativeScript": "",
     "irlParallel": "Mostaganem",
     "alpha3": "ARV",
-    "x": 2666,
-    "y": 3038
+    "x": 2664,
+    "y": 3043
   },
   {
     "name": "Bougie",
