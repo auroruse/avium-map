@@ -1475,6 +1475,29 @@ function computePlacement(z: number, pinned: Placement[]): Placement[] {
   return placed
 }
 
+// Where to stand to look at one city. Jumping to a fixed zoom 4 landed a link to
+// a small town on empty ground: the eligibility ladder only lets a name onto the
+// map when the band reaches its population, and a crowded neighbour can hold it
+// off past that. The placer is the only thing that knows which, so it is asked
+// rather than second-guessed from the population.
+function zoomForCity(c: City, from: number): number {
+  for (let z = Math.max(from, 4); z <= MAX_ZOOM; z += 0.5) {
+    if (placementsAt(z).some(p => p.c === c)) return z
+  }
+  return MAX_ZOOM
+}
+
+function focusCity(c: City) {
+  if (c.x == null || c.y == null) return
+  focusOn(c.x, c.y, zoomForCity(c, map.getZoom()))
+}
+
+function clearFocus() {
+  if (!focusedCity) return
+  focusedCity = null
+  updateCities()
+}
+
 // Placement is view-independent, so each zoom level's result is computed once
 // and cached. The cascade recurses through cached lower levels, so a zoomend
 // costs at most one computePlacement. Cleared whenever city coords change.
@@ -1604,8 +1627,9 @@ function cityIcon(p: Placement, fade: boolean): L.DivIcon {
   const pos = `${side}:${S / 2 + Math.abs(off[0])}px;top:${S / 2 + off[1]}px`
   const type =
     `font-size:${tier.fontSize.toFixed(2)}px` + (tier.weight ? `;font-weight:${tier.weight}` : '')
+  const focus = c === focusedCity ? ' city-icon-focus' : ''
   return L.divIcon({
-    className: fade ? 'city-icon' : 'city-icon city-icon-still',
+    className: (fade ? 'city-icon' : 'city-icon city-icon-still') + focus,
     html: svg + `<span class="city-label" style="${pos};${type}">${c.name}</span>`,
     iconSize: [S, S],
     iconAnchor: [S / 2, S / 2],
@@ -1620,6 +1644,10 @@ const BATCH_MIN = 60
 // Currently rendered markers, keyed by city; zoom changes only touch the diff
 const shownCities = new Map<City, { marker: L.Marker; key: string }>()
 
+// The city whose panel is open, ringed on the map for as long as it is. Declared
+// up here because cityIcon reads it on the first render, before any panel exists.
+let focusedCity: City | null = null
+
 // Fade tracking: a marker fades in only when its city is newly placed at this
 // zoom (the pre-culling appearance). Markers re-entering the padded viewport
 // during pans, or revealed by zooming out, appear instantly — culling invisible.
@@ -1627,7 +1655,10 @@ let lastAll: Placement[] | null = null
 let prevPlaced = new Set<City>()
 
 function placementKey(p: Placement): string {
-  return `${p.c.x},${p.c.y}|${p.tier.radius}|${p.tier.fontSize}|${p.dir}|${p.off[0]},${p.off[1]}`
+  return (
+    `${p.c.x},${p.c.y}|${p.tier.radius}|${p.tier.fontSize}|${p.dir}|${p.off[0]},${p.off[1]}` +
+    (p.c === focusedCity ? '|f' : '')
+  )
 }
 
 function updateCities() {
@@ -2019,6 +2050,8 @@ function openCityPanel(c: City) {
   wireAboutToggle()
   hideSheet()
   openCityName = c.name
+  focusedCity = c
+  updateCities()
   openNationName = null
   syncHash()
   loadBanner(c.name)
@@ -2177,6 +2210,7 @@ function openNationPanel(n: Nation) {
   })
   hideSheet()
   openCityName = null
+  clearFocus()
   openNationName = n.name
   syncHash()
   loadBanner(n.name)
@@ -2193,6 +2227,7 @@ function dismissPanel() {
   cityPanel.hidden = true
   document.body.classList.remove('panel-open')
   openCityName = null
+  clearFocus()
   openNationName = null
   syncHash()
   showSheet()
@@ -2812,8 +2847,8 @@ function goCity(c: City) {
   bsSearch.value = ''
   searchSel = -1
   closeSearchColumn()
-  if (c.x != null && c.y != null) focusOn(c.x, c.y, Math.max(map.getZoom(), 4))
   openCityPanel(c)
+  focusCity(c)
 }
 
 // Home search
@@ -3724,8 +3759,8 @@ document.getElementById('measure-done')!.addEventListener('click', endMeasure)
     const name = h.slice(5)
     const c = cities.find(x => x.name === name) ?? cities.find(x => norm(x.name) === norm(name))
     if (c) {
-      if (c.x != null && c.y != null) focusOn(c.x, c.y, Math.max(map.getZoom(), 4))
       openCityPanel(c)
+      focusCity(c)
     }
   } else if (h.startsWith('nation=')) {
     const n = nationByName.get(norm(h.slice(7)))
