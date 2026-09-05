@@ -1,6 +1,7 @@
 import L from 'leaflet'
 // Both stylesheets are linked from index.html — see the note there
 import citiesData from './data/cities.json'
+import tileVersions from './data/tiles.json'
 import labelsData from './data/labels.json'
 // Vite fingerprints and emits it; the element lives in index.html so the column
 // has its header before any script runs.
@@ -205,7 +206,12 @@ const imgBounds = L.latLngBounds(px(0, CONTENT), px(CONTENT, 0)) as L.LatLngBoun
 // The base is tiled too: an imageOverlay base rounds its position through a
 // different code path than tile layers, drifting 1-2px at half-step zooms.
 function tiledLayer(name: string, pane = 'overlayPane'): L.TileLayer {
-  return L.tileLayer(`tiles/${name}/{z}/{y}/{x}.png`, {
+  // Versioned per layer, from the signature scripts/tile.mjs stamps its output
+  // with. Tile paths never change, so without this a browser keeps serving the
+  // copy it cached the first time and a retiled border only reaches the reader
+  // on the zoom levels their cache happened to drop.
+  const v = (tileVersions as Record<string, string>)[name]
+  return L.tileLayer(`tiles/${name}/{z}/{y}/{x}.png` + (v ? `?v=${v}` : ''), {
     maxNativeZoom: 5,
     maxZoom: MAX_ZOOM,
     bounds: contentBounds,

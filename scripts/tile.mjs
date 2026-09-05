@@ -22,7 +22,15 @@ const tilesDir = join(root, 'public', 'tiles')
 // finds no layers at all and quietly skips every one of them. The committed
 // tiles are what deploys.
 const stampPath = join(root, '.tilestamp.json')
-const stamp = existsSync(stampPath) ? JSON.parse(readFileSync(stampPath, 'utf8')) : {}
+const versionPath = join(root, 'src/data/tiles.json')
+// The stamp is gitignored, so a fresh checkout starts empty and would tile
+// everything from scratch. The committed copy is what it starts from instead —
+// the two hold the same signatures, and only the tracked one ships.
+const stamp = existsSync(stampPath)
+  ? JSON.parse(readFileSync(stampPath, 'utf8'))
+  : existsSync(versionPath)
+    ? JSON.parse(readFileSync(versionPath, 'utf8'))
+    : {}
 
 // The sea itself, sampled from base.PNG. Edge tiles are padded with it and
 // #map's CSS background is the same value, so the strip of padding past the
@@ -327,6 +335,13 @@ for (const [name, opts] of Object.entries(todo)) {
 
   stamp[name] = sig
   writeFileSync(stampPath, JSON.stringify(stamp, null, 2) + '\n')
+  // The same signatures again, this time into the repo. A tile keeps its path
+  // for the life of the map, so a browser that fetched tiles/borders/5/7/15.png
+  // once will go on serving that copy from its cache after every retile there
+  // ever is — which is how a border that had moved months ago came back on one
+  // zoom level and not the next. The app hangs this on the tile URL, so a
+  // retiled layer is a new URL and a layer that did not change is not.
+  writeFileSync(versionPath, JSON.stringify(stamp, null, 2) + '\n')
 
   console.log(`  done (${((Date.now() - t) / 1000).toFixed(1)}s)`)
 }
