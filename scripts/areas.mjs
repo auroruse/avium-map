@@ -109,19 +109,40 @@ export async function writeAreas(root = resolve(import.meta.dirname, '..')) {
     comps[l].owner = [...m].sort((a, b) => b[1] - a[1])[0][0]
   }
 
-  // Adopt the orphans. Nearest owned component of the same colour, by centroid —
-  // an islet is small enough that its centroid is the whole of it.
+  // Adopt the orphans — the 428 territories with no city on them, which between
+  // them are 2.7% of the world's land. A metropole and its colonies are painted
+  // the same colour, so colour alone cannot say which of them an empty island
+  // belongs to and the distance to the nearest one has to decide it.
+  //
+  // Nearest by centroid alone got that badly wrong. Skjarnland's Elysian half is
+  // 30,000px of unpopulated land that happens to sit 483px from Spetsbergen's
+  // arctic islands and 578px from Skjarnland's own mainland, so a 738px colony
+  // was handed a landmass forty times its size and came out with 453,000 km²
+  // against its metropole's 664,000. Karjania lost its Elysian territory to
+  // Cuohpnjalla the same way.
+  //
+  // So size gates the candidates before distance picks between them: a territory
+  // is adopted by the nearest neighbour that is at least as big as it is, and
+  // when none of them is, by whichever of them holds the most populated land. A
+  // colony can inherit an islet off its own coast; it cannot swallow a continent.
   const owned = comps.filter(c => c.owner)
+  const ownedPx = new Map()
+  for (const o of owned) ownedPx.set(o.owner, (ownedPx.get(o.owner) ?? 0) + o.px)
   let adopted = 0
   let orphanArea = 0
   for (const c of comps) {
     if (c.owner) continue
+    const peers = owned.filter(o => o.colour === c.colour)
+    const big = peers.filter(o => o.px >= c.px)
     let best = null
-    let bestD = Infinity
-    for (const o of owned) {
-      if (o.colour !== c.colour) continue
-      const d = (o.cx - c.cx) ** 2 + (o.cy - c.cy) ** 2
-      if (d < bestD) { bestD = d; best = o }
+    if (big.length) {
+      let bestD = Infinity
+      for (const o of big) {
+        const d = (o.cx - c.cx) ** 2 + (o.cy - c.cy) ** 2
+        if (d < bestD) { bestD = d; best = o }
+      }
+    } else {
+      for (const o of peers) if (!best || ownedPx.get(o.owner) > ownedPx.get(best.owner)) best = o
     }
     if (best) { c.owner = best.owner; adopted++ } else orphanArea += c.area
   }
