@@ -348,16 +348,6 @@
     "size": 11
   },
   {
-    "text": "POLABINY",
-    "type": "nation",
-    "x": 3473,
-    "y": 2189,
-    "minZoom": 3.5,
-    "maxZoom": 5,
-    "tier": 13,
-    "size": 11
-  },
-  {
     "text": "EAST ASTRIYA",
     "type": "nation",
     "x": 3289,
@@ -376,16 +366,6 @@
     "maxZoom": 5,
     "tier": 13,
     "size": 11
-  },
-  {
-    "text": "MOROZIA",
-    "type": "nation",
-    "x": 1660,
-    "y": 1923,
-    "minZoom": 3.5,
-    "maxZoom": 5,
-    "tier": 5,
-    "size": 13
   },
   {
     "text": "GIATHKA",
@@ -532,16 +512,6 @@
     "type": "colony",
     "x": 2462,
     "y": 3106,
-    "minZoom": 3.5,
-    "maxZoom": 5,
-    "tier": 13,
-    "size": 11
-  },
-  {
-    "text": "EAST KAUKASOS",
-    "type": "colony",
-    "x": 3558,
-    "y": 2304,
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
@@ -1345,15 +1315,6 @@
     "span": 72.62051396390476
   },
   {
-    "text": "NOZHNORSTAN",
-    "type": "nation",
-    "x": 3605,
-    "y": 1161,
-    "minZoom": 3.5,
-    "maxZoom": 5,
-    "size": 11
-  },
-  {
     "text": "EIVORIE",
     "type": "nation",
     "x": 2275,
@@ -1371,5 +1332,14 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "size": 9
+  },
+  {
+    "text": "FLANDONIA",
+    "type": "nation",
+    "x": 2925,
+    "y": 2713,
+    "minZoom": 3.5,
+    "maxZoom": 5,
+    "size": 5.399097131695245
   }
 ]

@@ -881,7 +881,6 @@ interface Nation {
   lifeExpectancy: number
   literacy: number
   hdi: number
-  popGrowth: number
   alpha3: string
   status: string
   capital: string
@@ -918,7 +917,6 @@ const nations: Nation[] = (() => {
     lifeExpectancy: at('LIFE EXPECTANCY'),
     literacy: at('LITERACY RATE'),
     hdi: at('HDI'),
-    popGrowth: at('POP. GROWTH %'),
     capital: at('CAPITAL'),
     alpha3: at('ALPHA-3 CODE'),
     status: at('STATUS'),
@@ -941,7 +939,6 @@ const nations: Nation[] = (() => {
       lifeExpectancy: num(v[col.lifeExpectancy]),
       literacy: num(v[col.literacy]),
       hdi: num(v[col.hdi]),
-      popGrowth: num(v[col.popGrowth]),
       capital: str(v[col.capital]),
       alpha3: str(v[col.alpha3]),
       status: str(v[col.status]),
