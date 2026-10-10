@@ -58,7 +58,6 @@ city	Angsby	Elvester		2831	2711	6.8700	3.8975	6.87°N 3.90°E
 city	Annesburg	Hollosend		1717	3191	16.3800	-54.0587	16.38°N 54.06°W
 city	Annesburg East	E.S.U.		1724	3190	16.2900	-53.6996	16.29°N 53.70°W
 city	Ansenes	Skjarnland		2651	2167	17.7300	18.0822	17.73°N 18.08°E
-city	Ansenes	Skjarnland		2651	2167	17.7300	18.0822	17.73°N 18.08°E
 city	Anxiang	Guandong		3331	685	29.7600	118.5956	29.76°N 118.60°E
 city	Anxing	Furan		3499	420	31.2150	141.4187	31.21°N 141.42°E
 city	Anyi	Furan		3391	579	30.4500	127.4962	30.45°N 127.50°E
@@ -240,7 +239,7 @@ city	Brogesne	Arverne		3022	2831	2.2050	5.8739	2.21°N 5.87°E
 city	Brompadil	Recolotta		3190	4844	-30.5100	-75.0681	30.51°S 75.07°W
 city	Bruna	Alemannia		3024	2698	4.1700	10.2552	4.17°N 10.26°E
 city	Bruncaester	Eivorie		2332	3893	-3.3750	-48.6545	3.37°S 48.65°W
-city	Brunlea	Elvester		2819	2681	7.5000	4.5164	7.50°N 4.52°E
+city	Brunlea	Elvester		2823	2681	7.4400	4.6439	7.44°N 4.64°E
 city	Brunn	Alemannia		3106	2576	4.7700	16.7899	4.77°N 16.79°E
 city	Brunswich	Alemannia		2967	2593	6.6000	12.1079	6.60°N 12.11°E
 city	Bugang	Axerfreditenshin		3318	812	28.0500	109.2203	28.05°N 109.22°E
@@ -354,6 +353,7 @@ city	Dayan	Seignid		3961	713	19.8900	125.0834	19.89°N 125.08°E
 city	Daycott	E.S.U.		1744	3077	17.6850	-49.7698	17.68°N 49.77°W
 city	Dedeagach	East Astriya		3294	3205	-7.4850	2.9122	7.48°S 2.91°E
 city	Delano	Hollosend		1786	3451	11.4450	-57.2274	11.44°N 57.23°W
+city	Délivár	Turulia		3237	2554	3.1350	21.2295	3.13°N 21.23°E
 city	Delvin	Hollosend		1553	3556	13.3650	-70.5696	13.37°N 70.57°W
 city	Demirtas	East Astriya		3277	3119	-5.9400	5.0749	5.94°S 5.07°E
 city	Dengjiakou	Seignid		3811	749	21.6000	120.8684	21.60°N 120.87°E
@@ -1236,6 +1236,7 @@ city	Prabhavati	Arunya		3769	4684	-36.7950	-46.4336	36.79°S 46.43°W
 city	Pradera	Hollosend		1649	3602	11.2350	-66.9472	11.23°N 66.95°W
 city	Prauvenberg	Alemannia		3063	2581	5.3400	15.3721	5.34°N 15.37°E
 city	Pravdinsk	Giathka		3723	2030	3.7050	52.9706	3.71°N 52.97°E
+city	Prestune	Elvester		2810	2680	7.6500	4.2623	7.65°N 4.26°E
 city	Pribalhashstroy	Perovska		3455	1601	14.1600	66.0047	14.16°N 66.00°E
 city	Pris	Hollosend		1786	3359	12.8250	-55.0321	12.82°N 55.03°W
 city	Pristinia	East Astriya		3323	3115	-6.5700	6.7314	6.57°S 6.73°E
@@ -1382,7 +1383,7 @@ city	Schevock	Sidanya		3161	2336	7.5450	27.0147	7.54°N 27.01°E
 city	Scipbeorg	Eivorie		2279	3715	0.0900	-43.1231	0.09°N 43.12°W
 city	Scīræcer	Eivorie		2179	3781	0.6000	-48.3826	0.60°N 48.38°W
 city	Scopana	Vicily		3188	3151	-5.0850	1.1765	5.08°S 1.18°E
-city	Scramrock	Elvester		2813	2682	7.5750	4.2912	7.57°N 4.29°E
+city	Scramrock	Elvester		2817	2683	7.5000	4.3855	7.50°N 4.39°E
 city	Segelhām	Eivorie		2224	3741	0.5250	-45.7770	0.52°N 45.78°W
 city	Sehnda	E.S.U.		2215	3044	11.1150	-28.3742	11.11°N 28.37°W
 city	Seinal	Hollosend		1712	3656	9.4800	-65.1863	9.48°N 65.19°W
