@@ -42,33 +42,33 @@ RANK	COMMON NAME	OFFICIAL NAME	POPULATION	GDP PPP ($)	REAL GDP P/C ($)	LIFE EXPE
 41	Frederikka Islands	Frederikka Islands Territory	45,000	969,344,000	21,541	35.7	13.6%	0.299	Shompolahti	KAR	Colony	N/A	Valtheria
 42	Cuohpnjalla	Cuohpnjalla Territory	4,000	156,562,000	39,141	33.2	5.8%	0.220	Jiekŋaluokta	KAR	Colony	N/A	Evria
 43	Kemet	Kingdom of Kemet	133,795,000	3,306,970,410,000	24,717	39.4	18.9%	0.361	Memphipolis	KMT	Pending	6	Evria
-44	Livonia	Livonian Order	3,857,000	247,000,000,000	64,039	53.4	79.8%	0.737	Riege	LIV	NPC (Seal)	N/A	Evria
+44	Livonia	Livonian Order	3,857,000	247,000,000,000	64,039	53.4	79.8%	0.737	Riege	LVO	NPC (Seal)	N/A	Evria
 45	Nichirin	Miyamoto Shogunate	371,758,000	13,529,608,221,000	36,394	45.3	57.0%	0.582	Shinkeisei	NCH	Active	CAPPED	Valtheria
 46	Kinshū	Kinshū-ryō	24,538,000	1,708,306,985,000	69,619	49.4	72.1%	0.686	Hikusa	NCH	Colony	N/A	Pelagonia
 47	Hōrai	Hōrai-ryō	125,928,000	1,055,526,743,000	8,382	34.3	12.7%	0.265	Tsubayo	NCH	Colony	N/A	Pelagonia
 48	Mizuho	Mizuho-ryō	5,250,000	185,000,000,000	35,238	40.8	68.5%	0.579	Tokisaka	NCH	Colony	N/A	Elysia
 49	Ryūgu	Ryūgu-ryō	11,850,000	105,150,000,000	8,873	24.5	4.2%	0.125	Shin-Chukyo	NCH	Colony	N/A	Pelagonia
 50	Perovska	People's Republic of Perovska	34,274,000	648,340,000,000	18,916	31.4	18.2%	0.293	Kyakhta	PER	Pending	12	Valtheria
-52	Ponurvia	Empire of Ponurvia	75,834,000	6,474,799,200,000	85,381	54.9	80.2%	0.760	Borbagne	PON	Admin Control	CAPPED	Elysia
-53	Aztekische Islands	Militärgouvernement Aztekische-Inseln	37,000	620,445,000	16,769	34.4	7.2%	0.231	Kichwabai	PON	Colony	N/A	Elysia
-54	Verwustung Islands	Militärgouvernement Verwustung-Inseln	12,000	208,508,000	17,376	31.9	2.9%	0.161	Robbenboden	PON	Colony	N/A	Pelagonia
-55	Recolotta	Republic of Recolotta	49,680,000	74,820,000,000	1,506	30.2	4.8%	0.146	Recolotta City	REC	Pending	12	Pelagonia
-56	Rudania	People's Republic of Rudania	111,480,000	6,102,233,977,000	54,738	35.7	29.5%	0.408	Radagorsk	RUD	Active	CAPPED	Evria
-57	Salishia	Republic of Salishia	16,100,000	1,294,200,000,000	80,385	59.4	96.7%	0.840	Port Mercer	SAL	Active	9	Elysia
-58	Selmira	Sublime Selmiran State	83,464,000	4,054,384,113,000	48,576	39.6	25.6%	0.416	Azmashir	SEL	NPC (Volkstonia)	N/A	Evria
-59	Seignid	Kingdom of Seignid	261,954,000	4,073,570,611,000	15,551	35.2	20.1%	0.330	Atanao	SGD	Active	6	Valtheria
-60	Shivon	First Republic of Shivon	35,860,000	886,100,000,000	24,710	40.2	24.8%	0.400	Eretz	SHI	Active	6	Evria
-61	Southeast Aphirica	Southeast Aphirican Republic	15,780,000	18,880,000,000	1,196	25.0	0.7%	0.059	Bungaloo	SHI	Colony	N/A	Pelagonia
-62	Sidanya	United Socialist States of Sidanya	40,178,000	820,000,000,000	20,409	42.5	66.7%	0.570	Groscown	SID	Pending	9	Evria
-63	Skjarnland	Kingdom of Skjarnland	23,792,000	1,873,516,385,000	78,746	59.0	95.0%	0.831	Kjellberg	SKJ	Active	6	Evria
-64	Malschellskobbarna	Territoriet Malschellskobbarna	236,000	19,810,000,000	83,941	33.1	29.1%	0.391	Solhamn	SKJ	Colony	N/A	Evria
-65	Nordstjärneö	Territoriet Nordstjärneö	8,000	1,240,000,000	155,000	58.6	94.1%	0.853	Örnström	SKJ	Colony	N/A	Elysia
-66	Spetsbergen	Territoriet Spetsbergen	3,000	245,000,000	81,667	61.2	98.9%	0.859	Långdalshamn	SKJ	Colony	N/A	Evria
-67	Vikomte Islands	Territoriet Vikomte-Öarna	5,000	113,091,000	22,618	36.3	22.8%	0.360	Torvbukta	SKJ	Colony	N/A	Pelagonia
-68	Adelsköldland	Territoriet Adelsköldland	1,000	72,000,000	72,000	58.1	92.4%	0.813	Maasvik	SKJ	Colony	N/A	Elysia
-69	Slytlia	Kingdom of Slytlia	28,550,000	655,745,581,000	22,968	41.7	40.2%	0.479	Rětny	SLY	Pending	9	Evria
-70	Turulia	Republic of Turulia	21,910,000	545,786,322,000	24,910	43.2	60.2%	0.564	Szerencsehely	TUR	Active	6	Evria
-71	Uj-Pannonia	Uj-Pannonia Terület	39,277,000	81,562,914,000	2,077	27.0	7.0%	0.151	Arecaváros	TUR	Colony	N/A	Pelagonia
-72	Varahmehr	Federal Republic of Varahmehr	60,599,000	3,380,600,000,000	55,786	32.1	6.4%	0.225	Nourabad	VAR	Active	9	Evria
-73	Vicily	Kingdom of Vicily	120,152,000	4,913,679,388,000	40,896	48.0	60.3%	0.618	Trinacria	VIC	Active	6	Evria
-74	Vicilian North Aphirica	Territorio Aphirica del Nord	15,509,000	3,589,804,000	231	32.3	3.7%	0.096	Obangia	VIC	Colony	N/A	Pelagonia
+51	Ponurvia	Empire of Ponurvia	75,834,000	6,474,799,200,000	85,381	54.9	80.2%	0.760	Borbagne	PON	Admin Control	CAPPED	Elysia
+52	Aztekische Islands	Militärgouvernement Aztekische-Inseln	37,000	620,445,000	16,769	34.4	7.2%	0.231	Kichwabai	PON	Colony	N/A	Elysia
+53	Verwustung Islands	Militärgouvernement Verwustung-Inseln	12,000	208,508,000	17,376	31.9	2.9%	0.161	Robbenboden	PON	Colony	N/A	Pelagonia
+54	Recolotta	Republic of Recolotta	49,680,000	74,820,000,000	1,506	30.2	4.8%	0.146	Recolotta City	REC	Pending	12	Pelagonia
+55	Rudania	People's Republic of Rudania	111,480,000	6,102,233,977,000	54,738	35.7	29.5%	0.408	Radagorsk	RUD	Active	CAPPED	Evria
+56	Salishia	Republic of Salishia	16,100,000	1,294,200,000,000	80,385	59.4	96.7%	0.840	Port Mercer	SAL	Active	9	Elysia
+57	Selmira	Sublime Selmiran State	83,464,000	4,054,384,113,000	48,576	39.6	25.6%	0.416	Azmashir	SEL	NPC (Volkstonia)	N/A	Evria
+58	Seignid	Kingdom of Seignid	261,954,000	4,073,570,611,000	15,551	35.2	20.1%	0.330	Atanao	SGD	Active	6	Valtheria
+59	Shivon	First Republic of Shivon	35,860,000	886,100,000,000	24,710	40.2	24.8%	0.400	Eretz	SHI	Active	6	Evria
+60	Southeast Aphirica	Southeast Aphirican Republic	15,780,000	18,880,000,000	1,196	25.0	0.7%	0.059	Bungaloo	SHI	Colony	N/A	Pelagonia
+61	Sidanya	United Socialist States of Sidanya	40,178,000	820,000,000,000	20,409	42.5	66.7%	0.570	Groscown	SID	Pending	9	Evria
+62	Skjarnland	Kingdom of Skjarnland	23,792,000	1,873,516,385,000	78,746	59.0	95.0%	0.831	Kjellberg	SKJ	Active	6	Evria
+63	Malschellskobbarna	Territoriet Malschellskobbarna	236,000	19,810,000,000	83,941	33.1	29.1%	0.391	Solhamn	SKJ	Colony	N/A	Evria
+64	Nordstjärneö	Territoriet Nordstjärneö	8,000	1,240,000,000	155,000	58.6	94.1%	0.853	Örnström	SKJ	Colony	N/A	Elysia
+65	Spetsbergen	Territoriet Spetsbergen	3,000	245,000,000	81,667	61.2	98.9%	0.859	Långdalshamn	SKJ	Colony	N/A	Evria
+66	Vikomte Islands	Territoriet Vikomte-Öarna	5,000	113,091,000	22,618	36.3	22.8%	0.360	Torvbukta	SKJ	Colony	N/A	Pelagonia
+67	Adelsköldland	Territoriet Adelsköldland	1,000	72,000,000	72,000	58.1	92.4%	0.813	Maasvik	SKJ	Colony	N/A	Elysia
+68	Slytlia	Kingdom of Slytlia	28,550,000	655,745,581,000	22,968	41.7	40.2%	0.479	Rětny	SLY	Pending	9	Evria
+69	Turulia	Republic of Turulia	21,910,000	545,786,322,000	24,910	43.2	60.2%	0.564	Szerencsehely	TUR	Active	6	Evria
+70	Uj-Pannonia	Uj-Pannonia Terület	39,277,000	81,562,914,000	2,077	27.0	7.0%	0.151	Arecaváros	TUR	Colony	N/A	Pelagonia
+71	Varahmehr	Federal Republic of Varahmehr	60,599,000	3,380,600,000,000	55,786	32.1	6.4%	0.225	Nourabad	VAR	Active	9	Evria
+72	Vicily	Kingdom of Vicily	120,152,000	4,913,679,388,000	40,896	48.0	60.3%	0.618	Trinacria	VIC	Active	6	Evria
+73	Vicilian North Aphirica	Territorio Aphirica del Nord	15,509,000	3,589,804,000	231	32.3	3.7%	0.096	Obangia	VIC	Colony	N/A	Pelagonia

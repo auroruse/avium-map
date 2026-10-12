@@ -12535,7 +12535,7 @@
     "gdpPerCapita": 68082,
     "nativeScript": "",
     "irlParallel": "Vilnius",
-    "alpha3": "LIV",
+    "alpha3": "LVO",
     "x": 3046,
     "y": 2345
   },
@@ -12547,7 +12547,7 @@
     "gdpPerCapita": 56281,
     "nativeScript": "",
     "irlParallel": "Riga",
-    "alpha3": "LIV",
+    "alpha3": "LVO",
     "x": 2957,
     "y": 2324
   },
@@ -12559,7 +12559,7 @@
     "gdpPerCapita": 58436,
     "nativeScript": "",
     "irlParallel": "Kaunas",
-    "alpha3": "LIV",
+    "alpha3": "LVO",
     "x": 3028,
     "y": 2355
   },
@@ -12571,7 +12571,7 @@
     "gdpPerCapita": 54305,
     "nativeScript": "",
     "irlParallel": "Klaipėda",
-    "alpha3": "LIV",
+    "alpha3": "LVO",
     "x": 2981,
     "y": 2373
   },
@@ -12583,7 +12583,7 @@
     "gdpPerCapita": 47414,
     "nativeScript": "",
     "irlParallel": "Šiauliai",
-    "alpha3": "LIV",
+    "alpha3": "LVO",
     "x": 2999,
     "y": 2345
   },
@@ -12595,9 +12595,21 @@
     "gdpPerCapita": 41026,
     "nativeScript": "",
     "irlParallel": "Daugavpils",
-    "alpha3": "LIV",
+    "alpha3": "LVO",
     "x": 3026,
     "y": 2296
+  },
+  {
+    "name": "Ponewesch",
+    "nation": "Livonia",
+    "population": 69000,
+    "gdp": 4173948000,
+    "gdpPerCapita": 60492,
+    "nativeScript": "",
+    "irlParallel": "Panevėžys",
+    "alpha3": "LVO",
+    "x": 3014,
+    "y": 2334
   },
   {
     "name": "Libaca",
@@ -12607,9 +12619,21 @@
     "gdpPerCapita": 44928,
     "nativeScript": "",
     "irlParallel": "Liepaja",
-    "alpha3": "LIV",
+    "alpha3": "LVO",
     "x": 2959,
     "y": 2359
+  },
+  {
+    "name": "Windau",
+    "nation": "Livonia",
+    "population": 33000,
+    "gdp": 1514733000,
+    "gdpPerCapita": 45901,
+    "nativeScript": "",
+    "irlParallel": "Ventspils",
+    "alpha3": "LVO",
+    "x": 2943,
+    "y": 2340
   },
   {
     "name": "Wolmar",
@@ -12619,7 +12643,7 @@
     "gdpPerCapita": 46000,
     "nativeScript": "",
     "irlParallel": "Valmiera",
-    "alpha3": "LIV",
+    "alpha3": "LVO",
     "x": 2971,
     "y": 2292
   },
