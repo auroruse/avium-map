@@ -39,8 +39,8 @@ function toGeo(x, y) {
 // covers — precise enough that nothing is lost, short enough to read
 const dec = n => n.toFixed(4)
 const human = g =>
-  `${Math.abs(g.lat).toFixed(2)}°${g.lat >= 0 ? 'N' : 'S'} ` +
-  `${Math.abs(g.lon).toFixed(2)}°${g.lon >= 0 ? 'E' : 'W'}`
+  `${Math.abs(g.lat).toFixed(2)}°${g.lat >= 0 ? 'NW' : 'SE'} ` +
+  `${Math.abs(g.lon).toFixed(2)}°${g.lon >= 0 ? 'NE' : 'SW'}`
 
 const HEAD = ['KIND', 'NAME', 'NATION', 'TYPE', 'X', 'Y', 'LATITUDE', 'LONGITUDE', 'POSITION']
 

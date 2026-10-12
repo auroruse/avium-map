@@ -140,12 +140,13 @@ function geoKm(a: Geo, b: Geo): number {
   return 2 * PLANET_R * Math.asin(Math.min(1, Math.sqrt(h)))
 }
 
-// Single cardinal letters, as any atlas uses. The axes run on the diagonals, so
-// the letters name hemispheres rather than screen directions: N is toward the
-// top-left corner, E toward the top-right.
+// The poles sit in the top-left and bottom-right corners and the equator runs
+// corner to corner the other way, so both axes are named for the diagonal they
+// actually run along: NW toward the top-left pole and SE toward the bottom-right,
+// NE toward the top-right and SW toward the bottom-left.
 function fmtGeo(g: Geo, places = 2): string {
-  const lat = g.lat >= 0 ? 'N' : 'S'
-  const lon = g.lon >= 0 ? 'E' : 'W'
+  const lat = g.lat >= 0 ? 'NW' : 'SE'
+  const lon = g.lon >= 0 ? 'NE' : 'SW'
   return `${Math.abs(g.lat).toFixed(places)}°${lat} ${Math.abs(g.lon).toFixed(places)}°${lon}`
 }
 
