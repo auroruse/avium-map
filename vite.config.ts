@@ -1,5 +1,5 @@
 import { defineConfig, type Plugin } from 'vite'
-import { writeFileSync } from 'fs'
+import { readFileSync, writeFileSync } from 'fs'
 import { join, resolve } from 'path'
 // @ts-expect-error plain Node script, no types
 import { writeCoords } from './scripts/coords.mjs'
@@ -47,8 +47,26 @@ function placerSave(): Plugin {
   }
 }
 
+// The places table and the tile versions go out with the site, beside the page, for
+// anything that draws on the map without running it: the football engine reads its
+// Atlas and its editors' city list from here, so a city placed on the map reaches it
+// with this deploy. The table is written again first, so what goes out is what
+// cities.json and labels.json say now.
+function publishPlaces(): Plugin {
+  const dir = resolve(import.meta.dirname, 'src/data')
+  return {
+    name: 'avium-publish-places',
+    apply: 'build',
+    generateBundle() {
+      writeCoords(dir)
+      for (const fileName of ['coordinates.tsv', 'tiles.json'])
+        this.emitFile({ type: 'asset', fileName, source: readFileSync(join(dir, fileName), 'utf8') })
+    },
+  }
+}
+
 export default defineConfig({
   base: './',
   build: { outDir: 'dist' },
-  plugins: [placerSave()],
+  plugins: [placerSave(), publishPlaces()],
 })
