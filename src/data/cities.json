@@ -20268,6 +20268,18 @@
     "y": 2596
   },
   {
+    "name": "Miklós",
+    "nation": "Turulia",
+    "population": 116000,
+    "gdp": 3969077000,
+    "gdpPerCapita": 34216,
+    "nativeScript": "",
+    "irlParallel": "Miskolc",
+    "alpha3": "TUR",
+    "x": 3191,
+    "y": 2537
+  },
+  {
     "name": "Szatmár",
     "nation": "Turulia",
     "population": 80000,
@@ -20278,6 +20290,30 @@
     "alpha3": "TUR",
     "x": 3225,
     "y": 2500
+  },
+  {
+    "name": "Hídkővár",
+    "nation": "Turulia",
+    "population": 56000,
+    "gdp": 2932622000,
+    "gdpPerCapita": 52368,
+    "nativeScript": "",
+    "irlParallel": "Sopron",
+    "alpha3": "TUR",
+    "x": 3162,
+    "y": 2606
+  },
+  {
+    "name": "Szalaváros",
+    "nation": "Turulia",
+    "population": 54000,
+    "gdp": 1982422000,
+    "gdpPerCapita": 36712,
+    "nativeScript": "",
+    "irlParallel": "Zalaegerszeg",
+    "alpha3": "TUR",
+    "x": 3185,
+    "y": 2615
   },
   {
     "name": "Délivár",
