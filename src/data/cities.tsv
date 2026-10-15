@@ -236,18 +236,18 @@ Orillas	Askurias	Faro	81,000	4,635,361,000	57,227	-	ASK
 Puerto Delgado	Askurias	Ponta Delgada	72,000	3,309,953,000	45,972	-	ASK
 Evana	Askurias	Évora	59,000	2,961,732,000	50,199	-	ASK
 Castavera	Askurias	Ciudad Real	55,000	2,557,717,000	46,504	-	ASK
-Auritania City	Auritania	Mexico City	17,724,000	557,536,794,000	31,457	-	AUR
-Botai	Auritania	Bogotá	10,452,000	412,463,497,000	39,463	-	AUR
+Auritania City	Auritania	Mexico City	17,724,000	629,864,676,000	35,537	-	AUR
+Botai	Auritania	Bogotá	10,452,000	364,649,623,000	34,888	-	AUR
 Cualācoyotl	Auritania	Guadalajara, MX	4,153,000	109,929,030,000	26,470	-	AUR
 Yoloxochitl	Auritania	Medellín	3,201,000	85,533,959,000	26,721	-	AUR
 Santiago	Auritania	Cali	2,702,000	70,429,597,000	26,066	-	AUR
 Los Ángeles	Auritania	Puebla	1,956,000	32,765,125,000	16,751	-	AUR
-Talhuanca	Auritania	León, MX	1,394,000	31,153,514,000	22,348	-	AUR
-San Luis	Auritania	San Luis Potosí	1,008,000	25,507,198,000	25,305	-	AUR
+Talhuanca	Auritania	León, MX	1,394,000	35,195,910,000	25,248	-	AUR
+San Luis	Auritania	San Luis Potosí	1,008,000	28,816,943,000	28,588	-	AUR
 Ciudad Araya	Auritania	Cartagena, CO	927,000	18,223,439,000	19,659	-	AUR
 Zalaya	Auritania	Querétaro	916,000	30,946,477,000	33,784	-	AUR
 Kaukásos	Auritania	Bucaramanga	894,000	30,007,187,000	33,565	-	AUR
-Aguastermales	Auritania	Aguascalientes	887,000	24,312,895,000	27,410	-	AUR
+Aguastermales	Auritania	Aguascalientes	887,000	27,467,670,000	30,967	-	AUR
 Santa Alejandra	Auritania	Merida, MX	857,000	20,611,030,000	24,050	-	AUR
 Villa Rica	Auritania	Veracruz	685,000	13,192,904,000	19,260	-	AUR
 Yaoyachimallan	Auritania	Acapulco	680,000	7,725,863,000	11,362	-	AUR
@@ -298,11 +298,11 @@ Legona	Auritania	Valladolid, MX	57,000	1,346,492,000	23,623	-	AUR
 Tlalticpac	Auritania	Cintalapa de Figueroa	55,000	547,226,000	9,950	-	AUR
 Iztatlac	Auritania	Las Choapas	47,000	791,744,000	16,846	-	AUR
 San Mateo	Auritania	San Fernando, MX	29,000	744,709,000	25,680	-	AUR
-Qusu	Axerfreditenshin	Hohhot	2,003,000	87,468,887,000	43,669	-	AXE
+Qusu	Axerfreditenshin	Hohhot	2,003,000	93,140,715,000	46,501	-	AXE
 Nanan	Axerfreditenshin	Yinchuan	1,940,000	47,960,422,000	24,722	-	AXE
 Kulun	Axerfreditenshin	Ulaanbaatar	1,661,000	49,599,470,000	29,861	-	AXE
-Bugang	Axerfreditenshin	Baotou	1,655,000	81,628,672,000	49,322	-	AXE
-Qulunam	Axerfreditenshin	Shizuishan	602,000	13,480,225,000	22,392	-	AXE
+Bugang	Axerfreditenshin	Baotou	1,655,000	90,304,078,000	54,564	-	AXE
+Qulunam	Axerfreditenshin	Shizuishan	602,000	15,076,848,000	25,045	-	AXE
 Ku	Axerfreditenshin	Dongsheng	550,000	20,197,103,000	36,722	-	AXE
 Ulanongol	Axerfreditenshin	Ulan-Ude	241,000	6,039,554,000	25,060	-	AXE
 Chinger	Axerfreditenshin	Chita	214,000	6,432,391,000	30,058	-	AXE
@@ -328,12 +328,12 @@ Nouvelle-Havre	Barbary	Adrar	110,000	1,921,509,000	17,468	-	ARV
 Ganjau	Cahaya	Jakarta	41,022,000	819,472,998,000	19,976	-	CAH
 Balambangan	Cahaya	Manila	26,240,000	365,854,349,000	13,943	-	CAH
 Baigau	Cahaya	Ho Chi Minh City	14,902,000	497,766,350,000	33,403	-	CAH
-Lada	Cahaya	Bandung	8,749,000	298,030,223,000	34,064	-	CAH
-Jelutong	Cahaya	Kuala Lumpur	8,513,000	978,772,886,000	114,974	-	CAH
+Lada	Cahaya	Bandung	8,749,000	148,185,150,000	16,937	-	CAH
+Jelutong	Cahaya	Kuala Lumpur	8,513,000	603,709,907,000	70,916	-	CAH
 Tali Sawah	Cahaya	Surabaya	6,886,000	119,666,718,000	17,378	-	CAH
 Rajawali	Cahaya	Singapore	5,136,000	892,163,313,000	173,708	-	CAH
-Kenanga	Cahaya	Medan	4,393,000	133,510,047,000	30,392	-	CAH
-Kaligarang	Cahaya	Semarang	3,297,000	124,991,350,000	37,911	-	CAH
+Kenanga	Cahaya	Medan	4,393,000	105,936,812,000	24,115	-	CAH
+Kaligarang	Cahaya	Semarang	3,297,000	83,326,643,000	25,273	-	CAH
 Maktan	Cahaya	Cebu	3,257,000	39,959,093,000	12,269	-	CAH
 Kedawung	Cahaya	Tasikmalaya	2,955,000	51,754,863,000	17,514	-	CAH
 Giwangan	Cahaya	Yogyakarta	2,741,000	34,198,169,000	12,477	-	CAH
@@ -421,9 +421,9 @@ Niamé-sur-Saharienne	Côte de Saumon	Niamey	1,684,000	3,758,924,000	2,232	-	ARV
 Aubourg	Côte de Saumon	Abuja	1,354,000	13,850,117,000	10,229	-	ARV
 Médouris	Côte de Saumon	Maiduguri	1,337,000	5,103,980,000	3,817	-	ARV
 Jousse	Côte de Saumon	Jos	1,002,000	4,225,172,000	4,217	-	ARV
-Saucoté	Côte de Saumon	Sokoto	987,000	7,703,822,000	7,805	-	ARV
+Saucoté	Côte de Saumon	Sokoto	987,000	6,558,667,000	6,645	-	ARV
 Zarienne	Côte de Saumon	Zaria	747,000	5,147,918,000	6,891	-	ARV
-Beauchis	Côte de Saumon	Bauchi	649,000	3,502,167,000	5,396	-	ARV
+Beauchis	Côte de Saumon	Bauchi	649,000	2,981,578,000	4,594	-	ARV
 Cassiné	Côte de Saumon	Katsina	625,000	6,150,491,000	9,841	-	ARV
 Ashafa	Côte de Saumon	Gusau	476,000	4,621,064,000	9,708	-	ARV
 Gombeau	Côte de Saumon	Gombe	447,000	3,905,347,000	8,737	-	ARV
@@ -515,45 +515,45 @@ Balsam Rise	E.S.U.	Roanoke	100,000	6,416,384,000	64,164	-	ESU
 Fort Pinevale	E.S.U.	Bowling Green	98,000	6,036,977,000	61,602	-	ESU
 Somerdale	E.S.U.	Green Bay	96,000	8,612,703,000	89,716	-	ESU
 Sehnda	E.S.U.	Sherbrooke	91,000	5,753,993,000	63,231	-	ESU
-Daycott	E.S.U.	Davenport	89,000	5,738,631,000	64,479	-	ESU
-Waperaine	E.S.U.	Duluth	89,000	4,868,122,000	54,698	-	ESU
+Daycott	E.S.U.	Davenport	89,000	7,713,844,000	86,672	-	ESU
+Waperaine	E.S.U.	Duluth	89,000	6,543,709,000	73,525	-	ESU
 Maplestone	E.S.U.	State College	88,000	7,321,394,000	83,198	-	ESU
 Trailsrise	E.S.U.	Champaign, IL	86,000	6,861,950,000	79,790	-	ESU
 Lebaron	E.S.U.	Harrisburg, PA	81,000	6,581,726,000	81,256	-	ESU
 DuClare	E.S.U.	Niagara Falls	77,000	5,153,205,000	66,925	-	ESU
 Ortygia	E.S.U.	Scranton	76,000	6,155,437,000	80,993	-	ESU
 Trodes	E.S.U.	Bloomington	76,000	6,279,590,000	82,626	-	ESU
-Claremont	E.S.U.	Eau Claire	73,000	4,341,675,000	59,475	-	ESU
+Claremont	E.S.U.	Eau Claire	73,000	5,836,061,000	79,946	-	ESU
 Starfell	E.S.U.	Portland, ME	70,000	6,604,531,000	94,350	-	ESU
 Fort Union	E.S.U.	Manchester, NH	69,000	7,158,129,000	103,741	-	ESU
 Maython	E.S.U.	Peterborough, ON	69,000	4,746,505,000	68,790	-	ESU
 Conway	E.S.U.	Evansville	68,000	6,186,312,000	90,975	-	ESU
 Moose Pen	E.S.U.	Bangor	63,000	3,438,369,000	54,577	-	ESU
-Riveren City	E.S.U.	Utica	63,000	3,186,351,000	50,577	-	ESU
+Riveren City	E.S.U.	Utica	63,000	4,283,080,000	67,985	-	ESU
 Haliville	E.S.U.	Kalamazoo	61,000	4,111,933,000	67,409	-	ESU
 Millesani	E.S.U.	Sault Ste. Marie	53,000	3,595,232,000	67,835	-	ESU
 Foster	E.S.U.	North Bay, ON	53,000	3,598,090,000	67,888	-	ESU
 Lannahechee	E.S.U.	La Crosse	51,000	4,077,272,000	79,947	-	ESU
 Corvus	E.S.U.	Charleston, WV	47,000	3,357,553,000	71,437	-	ESU
 Naqissuserpaa	E.S.U.	Timmins	46,000	3,100,831,000	67,409	-	ESU
-Northgate	E.S.U.	Charlottesville	45,000	3,185,145,000	70,781	-	ESU
-Berun	E.S.U.	Burlington, VT	45,000	3,111,525,000	69,145	-	ESU
-Dunborg	E.S.U.	Wausau	41,000	2,775,454,000	67,694	-	ESU
+Northgate	E.S.U.	Charlottesville	45,000	4,281,459,000	95,144	-	ESU
+Berun	E.S.U.	Burlington, VT	45,000	4,182,499,000	92,944	-	ESU
+Dunborg	E.S.U.	Wausau	41,000	3,730,754,000	90,994	-	ESU
 Sahara City	E.S.U.	Atlantic City	39,000	2,365,460,000	60,653	-	ESU
 Fort Jones	E.S.U.	Val d'Or	34,000	2,164,189,000	63,653	-	ESU
 Ilimamik	E.S.U.	Marquette	22,000	1,533,512,000	69,705	-	ESU
 Hidacun	E.S.U.	Traverse City	16,000	1,097,664,000	68,604	-	ESU
-Aspadana	East Astriya	Istanbul (European)	10,057,000	603,493,517,000	60,007	-	AST
+Aspadana	East Astriya	Istanbul (European)	10,057,000	748,929,767,000	74,469	-	AST
 Melcarta	East Astriya	Sofia	1,066,000	105,667,272,000	99,125	Μελκάρτα	AST
 Odryssa	East Astriya	Plovdiv	332,000	12,178,379,000	36,682	Οδρύσσα	AST
 Odessos	East Astriya	Varna	286,000	12,172,775,000	42,562	Όδησσός	AST
-Adrianopolis	East Astriya	Edirne	145,000	4,523,115,000	31,194	Αδριανούπολις	AST
+Adrianopolis	East Astriya	Edirne	145,000	5,613,142,000	38,711	Αδριανούπολις	AST
 Pyrgos	East Astriya	Burgas	102,000	3,398,813,000	33,322	Πύργος	AST
 Demirtas	East Astriya	Pleven	89,000	4,105,899,000	46,134	Δεμιρτάς	AST
 Pristinia	East Astriya	Rousse	82,000	2,663,495,000	32,482	Πριστίνια	AST
 Dedeagach	East Astriya	Alexandroupoli	60,000	2,757,204,000	45,953	Δεδέαγατς	AST
 Mundcaester	Eivorie	Abidjan	6,659,000	60,774,494,000	9,127	-	EIV
-Galenden	Eivorie	Accra	6,041,000	90,775,570,000	15,027	-	EIV
+Galenden	Eivorie	Accra	6,041,000	134,894,153,000	22,330	-	EIV
 Scipbeorg	Eivorie	Kumasi	5,073,000	48,111,356,000	9,484	-	EIV
 Yþcaester	Eivorie	Ouagadougou	3,770,000	12,546,602,000	3,328	-	EIV
 Nīewebricg	Eivorie	Cotonou	2,746,000	14,340,520,000	5,222	-	EIV
@@ -663,44 +663,44 @@ Kingsmouth	Elvester	Akureyri	21,000	1,564,769,000	74,513	-	ELV
 	Flandonia	Roeselare	51,000	3,950,219,000	77,455	-	FLA
 Shompolahti	Frederikka Islands	Campbell Bay	6,000	54,948,000	9,158	-	KAR
 Nongcheng	Furan	Taipei	9,760,000	984,444,009,000	100,865	农城	FUR
-Hanyang	Furan	Wuhan	8,177,000	373,276,038,000	45,650	汉扬	FUR
-Yuecheng	Furan	Nanjing	8,077,000	466,152,115,000	57,714	月城	FUR
-Xianzhou	Furan	Hangzhou-Shaoxing	6,226,000	322,886,714,000	51,861	仙州	FUR
-Rongzhou	Furan	Chengdu	5,463,000	179,009,583,000	32,768	荣州	FUR
-Chang'an	Furan	Xi'an	5,212,000	157,775,360,000	30,272	长安	FUR
-Dongye	Furan	Wenzhou	3,782,000	111,803,617,000	29,562	东野	FUR
-Hongzhou	Furan	Nanchang	3,617,000	127,141,604,000	35,151	鸿洲	FUR
-Jinkou	Furan	Quanzhou	3,349,000	147,003,753,000	43,895	金口	FUR
-Qingyang	Furan	Changsha	3,195,000	137,739,476,000	43,111	倾阳	FUR
-Haiting	Furan	Ningbo-Zhoushan	2,935,000	163,173,013,000	55,596	海亭	FUR
-Yinlin	Furan	Fuzhou	2,857,000	142,989,924,000	50,049	银临	FUR
-Hesheng	Furan	Lanzhou	2,689,000	60,952,976,000	22,668	河升	FUR
-Xinghua	Furan	Putian	2,502,000	80,655,849,000	32,237	兴华	FUR
+Hanyang	Furan	Wuhan	8,177,000	412,947,424,000	50,501	汉扬	FUR
+Yuecheng	Furan	Nanjing	8,077,000	515,694,274,000	63,847	月城	FUR
+Xianzhou	Furan	Hangzhou-Shaoxing	6,226,000	357,202,776,000	57,373	仙州	FUR
+Rongzhou	Furan	Chengdu	5,463,000	198,034,534,000	36,250	荣州	FUR
+Chang'an	Furan	Xi'an	5,212,000	174,543,560,000	33,489	长安	FUR
+Dongye	Furan	Wenzhou	3,782,000	123,685,988,000	32,704	东野	FUR
+Hongzhou	Furan	Nanchang	3,617,000	140,654,080,000	38,887	鸿洲	FUR
+Jinkou	Furan	Quanzhou	3,349,000	162,629,718,000	48,561	金口	FUR
+Qingyang	Furan	Changsha	3,195,000	152,378,284,000	47,693	倾阳	FUR
+Haiting	Furan	Ningbo-Zhoushan	2,935,000	180,514,869,000	61,504	海亭	FUR
+Yinlin	Furan	Fuzhou	2,857,000	158,186,743,000	55,368	银临	FUR
+Hesheng	Furan	Lanzhou	2,689,000	67,430,994,000	25,077	河升	FUR
+Xinghua	Furan	Putian	2,502,000	89,230,522,000	35,664	兴华	FUR
 Puyuan	Furan	Taoyuan	2,356,000	60,079,713,000	25,501	浦原	FUR
 Dadun	Furan	Taichung	2,316,000	217,390,342,000	93,865	大敦	FUR
 Gaoxiang	Furan	Kaohsiung	2,299,000	215,714,007,000	93,829	高翔	FUR
-Mengshan	Furan	Wuhu	2,175,000	87,967,723,000	40,445	梦山	FUR
-Mianling	Furan	Nanchong	1,937,000	28,836,565,000	14,887	冕凌	FUR
-Yijia	Furan	Yichang	1,599,000	75,228,649,000	47,047	宜家	FUR
-Changzhou	Furan	Zhangzhou	1,524,000	54,373,196,000	35,678	昶州	FUR
+Mengshan	Furan	Wuhu	2,175,000	97,316,079,000	44,743	梦山	FUR
+Mianling	Furan	Nanchong	1,937,000	34,524,521,000	17,824	冕凌	FUR
+Yijia	Furan	Yichang	1,599,000	83,224,249,000	52,048	宜家	FUR
+Changzhou	Furan	Zhangzhou	1,524,000	60,153,459,000	39,471	昶州	FUR
 Ganyun	Furan	Ganzhou	1,504,000	27,920,875,000	18,564	甘昀	FUR
-Bingang	Furan	Taizhou, ZJ	1,364,000	40,299,435,000	29,545	滨港	FUR
-Lujiang	Furan	Jinhua	1,214,000	29,190,849,000	24,045	鹿江	FUR
-Shisheng	Furan	Shiyan	1,147,000	25,708,514,000	22,414	石绳	FUR
+Bingang	Furan	Taizhou, ZJ	1,364,000	44,581,246,000	32,684	滨港	FUR
+Lujiang	Furan	Jinhua	1,214,000	34,950,735,000	28,790	鹿江	FUR
+Shisheng	Furan	Shiyan	1,147,000	30,782,195,000	26,837	石绳	FUR
 Yongchun	Furan	Yichun, JX	1,063,000	27,385,820,000	25,763	永春	FUR
 Anxing	Furan	Tainan	1,007,000	90,666,898,000	90,037	安兴	FUR
-Zhugezhen	Furan	Zhuzhou	1,003,000	30,366,638,000	30,276	诸葛镇	FUR
+Zhugezhen	Furan	Zhuzhou	1,003,000	33,593,482,000	33,493	诸葛镇	FUR
 Shengyang	Furan	Xiangfan	924,000	31,859,374,000	34,480	胜阳	FUR
 Chouzhou	Furan	Leiyang	900,000	24,733,447,000	27,482	綢州	FUR
-Changsu	Furan	Deyang	823,000	20,631,870,000	25,069	长苏	FUR
-Yunping	Furan	Hengyang	787,000	13,856,206,000	17,606	云平	FUR
-Beizhou	Furan	Baoji	753,000	19,432,099,000	25,806	碑州	FUR
-Liwu	Furan	Yiwu	697,000	27,243,981,000	39,087	佾屋	FUR
+Changsu	Furan	Deyang	823,000	24,703,171,000	30,016	长苏	FUR
+Yunping	Furan	Hengyang	787,000	16,172,709,000	20,550	云平	FUR
+Beizhou	Furan	Baoji	753,000	23,265,299,000	30,897	碑州	FUR
+Liwu	Furan	Yiwu	697,000	30,139,605,000	43,242	佾屋	FUR
 Yuling	Furan	Chenzhou	628,000	14,883,094,000	23,699	玉岭	FUR
-Jingxi	Furan	Jingzhou	610,000	11,005,529,000	18,042	靖夕	FUR
+Jingxi	Furan	Jingzhou	610,000	13,176,813,000	21,601	靖夕	FUR
 Wuling	Furan	Changde	588,000	17,476,217,000	29,721	五陵	FUR
-Shengshui	Furan	Jiujiang	562,000	15,283,894,000	27,196	盛水	FUR
-Ximen	Furan	Mianyang	516,000	11,785,797,000	22,841	西门	FUR
+Shengshui	Furan	Jiujiang	562,000	18,299,954,000	32,562	盛水	FUR
+Ximen	Furan	Mianyang	516,000	14,110,691,000	27,346	西门	FUR
 Pingbang	Furan	Pingliang	468,000	6,070,589,000	12,971	坪邦	FUR
 Cicheng	Furan	Jingde	466,000	12,634,448,000	27,113	茨城	FUR
 Kema	Furan	Shaoguan	455,000	9,170,335,000	20,155	骒马	FUR
@@ -708,10 +708,10 @@ Shengyuan	Furan	Guangyuan	450,000	8,304,875,000	18,455	圣源	FUR
 Yalin	Furan	Yanan	408,000	14,800,473,000	36,276	雅林	FUR
 Longyuan	Furan	Longyan	386,000	16,744,547,000	43,380	龙源	FUR
 Yinde	Furan	Ningde	356,000	15,476,597,000	43,474	隐㝵	FUR
-Anyi	Furan	Tongling	356,000	10,815,245,000	30,380	安易	FUR
+Anyi	Furan	Tongling	356,000	11,964,274,000	33,608	安易	FUR
 Qingzhou	Furan	Linhai	336,000	15,065,648,000	44,838	清州	FUR
 Jiangling	Furan	Wenling	334,000	14,972,418,000	44,828	江陵	FUR
-Tangong	Furan	Xiangtan	297,000	9,714,954,000	32,710	檀宫	FUR
+Tangong	Furan	Xiangtan	297,000	10,747,748,000	36,188	檀宫	FUR
 Sanzhen	Furan	Xiantao	275,000	9,310,777,000	33,857	散振	FUR
 Guiyuan	Furan	Xianning	271,000	7,161,658,000	26,427	桂源	FUR
 Yongguan	Furan	Sanming	241,000	11,199,630,000	46,471	咏馆	FUR
@@ -720,7 +720,7 @@ Lijiakou	Furan	Ruijin	212,000	5,457,665,000	25,744	李家口	FUR
 Gongguang	Furan	Puqi	170,000	5,619,893,000	33,058	龚广	FUR
 Yongkang	Furan	Zhangjiajie	160,000	2,323,531,000	14,522	庸抗	FUR
 Dongguan	Furan	Nanping	157,000	6,551,723,000	41,731	东关	FUR
-Danfeng	Furan	Jingmen	157,000	4,176,650,000	26,603	丹峰	FUR
+Danfeng	Furan	Jingmen	157,000	5,000,663,000	31,851	丹峰	FUR
 Bolao	Furan	Shaowu	116,000	4,766,656,000	41,092	波涝	FUR
 Huangdun	Furan	Fenyi	103,000	2,557,111,000	24,826	黄墩	FUR
 Bandaoguan	Furan	Fuding	94,000	3,821,581,000	40,655	半岛关	FUR
@@ -784,7 +784,7 @@ Gromovsk	Giathka	Krasnovodsk	56,000	1,223,051,000	21,840	-	GIA
 Svobodinsk	Giathka	Azadshahr	44,000	418,736,000	9,517	-	GIA
 Petrovskaya	Giathka	Gardez	32,000	59,431,000	1,857	-	GIA
 Nagoniara	Gonenite Islands	Honiara	143,000	385,275,000	2,694	-	ALE
-Shanggang	Guandong	Shanghai	31,083,000	2,250,697,821,000	72,409	上港	GUA
+Shanggang	Guandong	Shanghai	31,083,000	2,129,920,407,000	68,524	上港	GUA
 Beining	Guandong	Beijing	18,202,000	1,377,441,249,000	75,675	北宁	GUA
 Fengzhou	Guandong	Suzhou	11,617,000	637,883,399,000	54,909	凤州	GUA
 Tianji	Guandong	Tianjin	7,328,000	315,883,837,000	43,106	天际	GUA
@@ -902,15 +902,15 @@ Kabimas	Hollosend	Cabimas	305,000	2,686,634,000	8,809	-	HOL
 Solano	Hollosend	Ziguinchor	296,000	1,515,939,000	5,121	-	HOL
 Saladique	Hollosend	Acarigua	293,000	2,575,582,000	8,790	-	HOL
 Union Creek	Hollosend	Asheville	286,000	19,819,037,000	69,297	-	HOL
-Beaver Hollow	Hollosend	Springfield, MO	283,000	14,065,383,000	49,701	-	HOL
+Beaver Hollow	Hollosend	Springfield, MO	283,000	18,906,628,000	66,808	-	HOL
 Nascara	Hollosend	Nashville	281,000	28,517,827,000	101,487	-	HOL
-McFarlane	Hollosend	Odessa-Midland	271,000	41,262,377,000	152,260	-	HOL
+McFarlane	Hollosend	Odessa-Midland	271,000	55,464,823,000	204,667	-	HOL
 La Torre	Hollosend	Saint-Louis, SN	270,000	1,376,624,000	5,099	-	HOL
 Morrisville	Hollosend	Columbus, GA	268,000	18,099,756,000	67,536	-	HOL
 Eastmere	Hollosend	Kenema	266,000	954,748,000	3,589	-	HOL
 Parish Rapids	Hollosend	Beaumont-Port Arthur	264,000	22,340,094,000	84,622	-	HOL
-Hammerford	Hollosend	Laredo	262,000	13,279,732,000	50,686	-	HOL
-Pergamis	Hollosend	Winston-Salem	258,000	14,578,032,000	56,504	-	HOL
+Hammerford	Hollosend	Laredo	262,000	17,850,560,000	68,132	-	HOL
+Pergamis	Hollosend	Winston-Salem	258,000	19,595,729,000	75,952	-	HOL
 Ayocuan	Hollosend	Paramaribo	256,000	5,884,176,000	22,985	-	HOL
 Creston	Hollosend	Labé	256,000	1,205,067,000	4,707	-	HOL
 Ricomonte	Hollosend	Tambacounda	247,000	1,253,700,000	5,076	-	HOL
@@ -926,12 +926,12 @@ Cochinay	Hollosend	Clarksville, TN	201,000	11,970,978,000	59,557	-	HOL
 Camberford	Hollosend	Kindia	201,000	934,736,000	4,650	-	HOL
 Lugan	Hollosend	Louga	191,000	956,999,000	5,010	-	HOL
 Fuerte Principe	Hollosend	Las Tunas	188,000	2,400,000,000	12,766	-	HOL
-Manzanita	Hollosend	Lubbock	180,000	9,077,400,000	50,430	-	HOL
-Neaveville	Hollosend	Shreveport	176,000	10,923,440,000	62,065	-	HOL
-Brimstone	Hollosend	Lafayette	161,000	7,609,665,000	47,265	-	HOL
+Manzanita	Hollosend	Lubbock	180,000	12,201,803,000	67,788	-	HOL
+Neaveville	Hollosend	Shreveport	176,000	14,683,242,000	83,428	-	HOL
+Brimstone	Hollosend	Lafayette	161,000	10,228,880,000	63,533	-	HOL
 Fort Hawkins	Hollosend	Macon	158,000	13,054,153,000	82,621	-	HOL
 Fayetteville	Hollosend	Raleigh	152,000	13,610,484,000	89,543	-	HOL
-Salvina	Hollosend	Greensboro	150,000	7,215,600,000	48,104	-	HOL
+Salvina	Hollosend	Greensboro	150,000	9,699,179,000	64,661	-	HOL
 Carruther	Hollosend	Topeka	149,000	9,369,323,000	62,881	-	HOL
 Ayata	Hollosend	Cárdenas, CU	147,000	2,400,000,000	16,327	-	HOL
 Tacugoza	Hollosend	Valera	147,000	1,248,241,000	8,491	-	HOL
@@ -948,20 +948,20 @@ Leetown	Hollosend	Montgomery, AL	122,000	8,607,939,000	70,557	-	HOL
 Aguisori	Hollosend	San Fernando De Apure	122,000	1,026,597,000	8,415	-	HOL
 Fort George	Hollosend	Killeen	120,000	7,289,447,000	60,745	-	HOL
 Dunbryn	Hollosend	College Station	118,000	9,268,379,000	78,546	-	HOL
-Bella Utis	Hollosend	Savannah	116,000	7,265,660,000	62,635	-	HOL
+Bella Utis	Hollosend	Savannah	116,000	9,766,470,000	84,194	-	HOL
 Shevestria	Hollosend	Tuscaloosa	115,000	7,909,280,000	68,776	-	HOL
 Blevins	Hollosend	Tyler, TX	114,000	8,400,383,000	73,688	-	HOL
 Chicazos	Hollosend	Valle De La Pascua	111,000	929,258,000	8,372	-	HOL
-Roanoke	Hollosend	Fayetteville, AR	107,000	6,316,852,000	59,036	-	HOL
+Roanoke	Hollosend	Fayetteville, AR	107,000	8,491,086,000	79,356	-	HOL
 Pradera	Hollosend	Sancti Spíritus	105,000	1,550,000,000	14,762	-	HOL
 Pris	Hollosend	Huntsville, AL	102,000	6,973,237,000	68,365	-	HOL
 Wallace	Hollosend	Wichita Falls	102,000	8,230,592,000	80,692	-	HOL
 Friburg	Hollosend	Huntsville, TX	50,000	3,893,314,000	77,866	-	HOL
-Ashford	Hollosend	Fort Myers	102,000	5,153,652,000	50,526	-	HOL
+Ashford	Hollosend	Fort Myers	102,000	6,927,518,000	67,917	-	HOL
 Mercer	Hollosend	San Angelo	101,000	8,145,886,000	80,652	-	HOL
 Doverhill	Hollosend	Lawrence, KS	98,000	8,454,905,000	86,275	-	HOL
 Vicestra	Hollosend	Greenville, NC	97,000	8,205,776,000	84,596	-	HOL
-Fort St. Louis	Hollosend	Mobile	95,000	5,296,820,000	55,756	-	HOL
+Fort St. Louis	Hollosend	Mobile	95,000	7,119,963,000	74,947	-	HOL
 Cumberland Falls	Hollosend	Lawton	91,000	6,185,755,000	67,975	-	HOL
 Yootó	Hollosend	Santa Fe, NM	90,000	6,276,963,000	69,744	-	HOL
 Willard	Hollosend	Columbia, MO	89,000	7,190,892,000	80,797	-	HOL
@@ -1088,10 +1088,10 @@ Flutheim	Neuhollmar	Tauranga	123,000	6,556,000,000	53,301	-	ALE
 Hügelfels	Neuhollmar	Whangārei	57,000	2,923,574,000	51,291	-	ALE
 Cakobau	New Celyddon	Suva	248,000	4,267,778,000	17,209	-	ELV
 Nugolefa	New Celyddon	Nuku'alofa	53,000	449,859,000	8,488	-	ELV
-Shinkeisei	Nichirin	Tokyo	33,061,000	3,546,891,636,000	107,283	新恵星	NCH
+Shinkeisei	Nichirin	Tokyo	33,061,000	2,228,860,912,000	67,417	新恵星	NCH
 Naginomiya	Nichirin	Seoul	22,254,000	1,596,528,421,000	71,741	凪宮	NCH
-Takarazuka	Nichirin	Keihanshin MA	19,177,000	1,173,060,822,000	61,170	鷹羅塚	NCH
-Chūkyō	Nichirin	Chūkyō MA	9,193,000	658,280,882,000	71,607	中京	NCH
+Takarazuka	Nichirin	Keihanshin MA	19,177,000	1,083,926,453,000	56,522	鷹羅塚	NCH
+Chūkyō	Nichirin	Chūkyō MA	9,193,000	610,322,806,000	66,390	中京	NCH
 Kamabuchi	Nichirin	Busan-Gyeongnam MA	6,488,000	437,637,882,000	67,453	釜淵	NCH
 Mizuhara	Nichirin	Shenyang	6,179,000	163,612,370,000	26,479	水原	NCH
 Kōrihama	Nichirin	Harbin	4,592,000	86,180,132,000	18,767	氷浜	NCH
@@ -1104,23 +1104,23 @@ Hakata	Nichirin	Fukuoka	2,206,000	109,867,775,000	49,804	博多	NCH
 Hakkōran	Nichirin	Daegu-Gyeongbuk	4,932,000	338,455,097,000	68,624	八公嵐	NCH
 Satsuno	Nichirin	Sapporo	1,917,000	99,467,684,000	51,887	薩野	NCH
 Izuminone	Nichirin	Daejeon-Sejong	1,862,000	117,998,690,000	63,372	泉嶺	NCH
-Tetsuhachi	Nichirin	Anshan	1,502,000	33,148,478,000	22,070	鉄盆	NCH
+Tetsuhachi	Nichirin	Anshan	1,502,000	37,840,735,000	25,194	鉄盆	NCH
 Shikisen	Nichirin	Jilin City	1,469,000	30,719,260,000	20,912	四季泉	NCH
 Kōshū	Nichirin	Gwangju	1,426,000	89,170,644,000	62,532	光州	NCH
 Itakeyaki	Nichirin	Sendai	1,264,000	67,135,039,000	53,113	伊達欅	NCH
 Genkai	Nichirin	Kanmon MA	1,205,000	58,227,689,000	48,322	玄界	NCH
 Makinohara	Nichirin	Hamamatsu-Toyohashi	1,126,000	72,536,737,000	64,420	牧野原	NCH
 Ayanami	Nichirin	Naha-Okinawa City	1,067,000	41,184,692,000	38,599	綾波	NCH
-Moriguchi	Nichirin	Yingkou	960,000	20,275,189,000	21,120	森口	NCH
+Moriguchi	Nichirin	Yingkou	960,000	23,145,197,000	24,110	森口	NCH
 Nobata	Nichirin	Qiqihar	896,000	15,495,883,000	17,295	野畑	NCH
 Nishikino	Nichirin	Jinzhou	845,000	12,909,592,000	15,278	錦野	NCH
 Ashihara	Nichirin	Okayama-Kurashiki	838,000	41,206,109,000	49,172	芦原	NCH
-Motohora	Nichirin	Benxi	778,000	17,951,854,000	23,074	本洞	NCH
+Motohora	Nichirin	Benxi	778,000	20,492,988,000	26,341	本洞	NCH
 Yoshino	Nichirin	Mudanjiang	756,000	11,564,297,000	15,297	吉野	NCH
 Futahashi	Nichirin	Maebashi-Isesaki	720,000	45,438,818,000	63,109	二橋	NCH
 Andō	Nichirin	Dandong-Sinujiu	714,000	10,298,270,000	14,423	安東	NCH
 Mikawahara	Nichirin	Jiamusi	711,000	10,795,731,000	15,184	三江浜	NCH
-Sumerajima	Nichirin	Qinhuangdao	707,000	13,341,326,000	18,870	皇島	NCH
+Sumerajima	Nichirin	Qinhuangdao	707,000	15,576,324,000	22,032	皇島	NCH
 Hanmoto	Nichirin	Cheongju	691,000	41,672,589,000	60,308	版元	NCH
 Matsuumi	Nichirin	Matsue-Chongjin	688,000	24,000,000,000	34,884	松海	NCH
 Sōtō	Nichirin	Liaoyang	638,000	15,080,482,000	23,637	層塔	NCH
@@ -1128,7 +1128,7 @@ Sōtō	Nichirin	Liaoyang	638,000	15,080,482,000	23,637	層塔	NCH
 Ishigaki	Nichirin	Kumamoto	619,000	29,306,326,000	47,345	石垣	NCH
 Shiroyama	Nichirin	Baishan	607,000	12,144,303,000	20,007	白山	NCH
 Tōgen	Nichirin	Khabarovsk	533,000	23,057,357,000	43,260	桃源	NCH
-Akamine	Nichirin	Chifeng	533,000	8,793,151,000	16,497	赤峰	NCH
+Akamine	Nichirin	Chifeng	533,000	10,266,218,000	19,261	赤峰	NCH
 Iwabuchi	Nichirin	Kanazawa-Toyama	524,000	27,360,896,000	52,215	岩渕	NCH
 Tanretsu	Nichirin	Fuxin	518,000	12,116,817,000	23,392	炭裂	NCH
 Sagimino	Nichirin	Himeji	512,000	27,555,867,000	53,820	鷺蓑	NCH
@@ -1143,7 +1143,7 @@ Itemori	Nichirin	Aomori-Hakodate	440,000	20,225,032,000	45,966	出森	NCH
 Shioshino	Nichirin	Vladivostok	434,000	21,381,196,000	49,265	潮篠	NCH
 Utamichi	Nichirin	Cheonan	431,000	25,386,315,000	58,901	唄道	NCH
 Shinanose	Nichirin	Niigata	431,000	22,682,727,000	52,628	信濃瀬	NCH
-Daikei	Nichirin	Daqing	419,000	14,089,235,000	33,626	大庆	NCH
+Daikei	Nichirin	Daqing	419,000	16,449,526,000	39,259	大庆	NCH
 Yuzuki	Nichirin	Matsuyama	418,000	20,170,115,000	48,254	柚月	NCH
 Enkichi	Nichirin	Yanji	412,000	6,684,724,000	16,225	円吉	NCH
 Reisawa	Nichirin	Jixi	408,000	6,862,461,000	16,820	礼沢	NCH
@@ -1304,7 +1304,7 @@ Kaseki	Perovska	Talas	42,000	365,664,000	8,706	-	PER
 Aktau	Perovska	N/A	10,000	189,160,000	18,916		PER
 Aschengel	Ponurvia	Los Angeles, CA	13,563,000	1,632,329,267,000	120,352	-	PON
 Sankt Franz-Josenthal	Ponurvia	San Francisco Bay Area	4,751,000	542,573,402,000	114,202	-	PON
-Dämglühen-Altenwald	Ponurvia	San Diego-Tijuana	3,536,000	415,000,000,000	117,364	-	PON
+Dämglühen-Altenwald	Ponurvia	San Diego-Tijuana	3,536,000	286,533,313,000	81,033	-	PON
 Fönigsfeld	Ponurvia	Phoenix	2,638,000	218,939,342,000	82,994	-	PON
 Dunwalde	Ponurvia	Denver	2,443,000	254,632,218,000	104,229	-	PON
 Borbagne	Ponurvia	Las Vegas	2,395,000	216,382,679,000	90,348	-	PON
@@ -1368,7 +1368,7 @@ Myer-Lee	Recolotta	Montequez	115,000	173,868,000	1,512	-	REC
 Losquet	Recolotta	Angoche	104,000	156,449,000	1,504	-	REC
 Brompadil	Recolotta	Zomba	80,000	127,969,000	1,600	-	REC
 Doranama	Recolotta	Inhamhane	72,000	106,338,000	1,477	-	REC
-Radagorsk	Rudania	Moscow	14,403,000	1,834,763,287,000	127,388	Радагорск	RUD
+Radagorsk	Rudania	Moscow	14,403,000	1,728,736,877,000	120,026	Радагорск	RUD
 Menisku	Rudania	Minsk	2,097,000	78,093,660,000	37,241	Мениску	RUD
 Novospatrya	Rudania	Novosibirsk	1,338,000	42,320,861,000	31,630	Новоспатря	RUD
 Nizhegorod	Rudania	Nizhny Novgorod	1,189,000	49,584,827,000	41,703	Нижегород	RUD
@@ -1499,41 +1499,41 @@ Balong	Seignid	Hong Kong	4,806,000	404,722,200,000	84,212	-	SGD
 Pinkan	Seignid	Nanning	3,749,000	72,885,741,000	19,441	-	SGD
 Lapsikan	Seignid	Kunming	3,191,000	72,505,776,000	22,722	-	SGD
 Gawaka	Seignid	Guiyang	2,742,000	53,598,451,000	19,547	-	SGD
-Araytan	Seignid	Zhuhai-Macao	2,276,000	73,586,717,000	32,332	-	SGD
+Araytan	Seignid	Zhuhai-Macao	2,276,000	156,458,315,000	68,743	-	SGD
 Yao	Seignid	Xiamen	1,645,000	77,203,153,000	46,932	-	SGD
 Batasa	Seignid	Haikou	1,356,000	33,151,431,000	24,448	-	SGD
 Balabilaran	Seignid	Liuzhou	1,285,000	23,679,251,000	18,427	-	SGD
 Jilandan	Seignid	Fuling	1,116,000	34,205,238,000	30,650	-	SGD
 Bais-Mai	Seignid	Guilin	959,000	17,415,008,000	18,160	-	SGD
-Bogalang	Seignid	Yuxi	777,000	26,416,143,000	33,998	-	SGD
+Bogalang	Seignid	Yuxi	777,000	29,223,452,000	37,611	-	SGD
 Kasil	Seignid	Qingyuan	721,000	22,009,014,000	30,526	-	SGD
 Lacan-Pier	Seignid	Huaihua	713,000	19,368,573,000	27,165	-	SGD
-Rohu	Seignid	Qujing	713,000	14,828,326,000	20,797	-	SGD
+Rohu	Seignid	Qujing	713,000	17,447,991,000	24,471	-	SGD
 Askalawa	Seignid	Wancheng	634,000	17,827,268,000	28,119	-	SGD
-Sabalay	Seignid	Beihai	599,000	15,918,569,000	26,575	-	SGD
-Atanina	Seignid	Zhaoqing	588,000	12,164,985,000	20,689	-	SGD
+Sabalay	Seignid	Beihai	599,000	18,863,965,000	31,492	-	SGD
+Atanina	Seignid	Zhaoqing	588,000	14,202,646,000	24,154	-	SGD
 Maia-Kalais	Seignid	Maoming	575,000	17,353,781,000	30,180	-	SGD
 Yaelan	Seignid	Huanggang	457,000	15,873,352,000	34,734	-	SGD
 Lintala	Seignid	Meizhou	531,000	15,961,871,000	30,060	-	SGD
 Bayusin	Seignid	Gaozhou	526,000	15,804,714,000	30,047	-	SGD
-Alei	Seignid	Yangjiang	488,000	9,023,160,000	18,490	-	SGD
-Luala	Seignid	Shanwei	485,000	7,541,760,000	15,550	-	SGD
+Alei	Seignid	Yangjiang	488,000	10,535,513,000	21,589	-	SGD
+Luala	Seignid	Shanwei	485,000	8,805,254,000	18,155	-	SGD
 Aoili	Seignid	Heyuan	473,000	7,945,805,000	16,799	-	SGD
 Gilang	Seignid	Shaoyang	472,000	12,560,089,000	26,610	-	SGD
 Akala	Seignid	Zhanjiang	465,000	13,885,901,000	29,862	-	SGD
-Balikas	Seignid	Sanya	423,000	11,017,581,000	26,046	-	SGD
+Balikas	Seignid	Sanya	423,000	13,055,565,000	30,864	-	SGD
 Longaw	Seignid	Yongzhou	423,000	7,307,053,000	17,274	-	SGD
 Dayan	Seignid	Guiping	414,000	7,208,941,000	17,413	-	SGD
 Nangke	Seignid	Hezhou	386,000	6,697,213,000	17,350	-	SGD
-Taya-Naoi	Seignid	Wuzhou	359,000	5,728,883,000	15,958	-	SGD
+Taya-Naoi	Seignid	Wuzhou	359,000	6,788,653,000	18,910	-	SGD
 Dengjiakou	Seignid	Tongren	259,000	4,499,115,000	17,371	-	SGD
-Luzou	Seignid	Xingyi	212,000	3,289,850,000	15,518	-	SGD
-Agila-Talois	Seignid	Yunfu	209,000	3,203,337,000	15,327	-	SGD
+Luzou	Seignid	Xingyi	212,000	3,939,017,000	18,580	-	SGD
+Agila-Talois	Seignid	Yunfu	209,000	3,740,181,000	17,896	-	SGD
 Malobu	Seignid	Gejiu	198,000	4,018,140,000	20,294	-	SGD
-Irineta	Seignid	Qinzhou	189,000	3,099,553,000	16,400	-	SGD
+Irineta	Seignid	Qinzhou	189,000	3,672,864,000	19,433	-	SGD
 Nashun	Seignid	Jishou	181,000	4,590,944,000	25,364	-	SGD
 Manyabas	Seignid	Kaiyuan, YN	238,000	4,749,599,000	19,956	-	SGD
-Catloban	Seignid	Bose	119,000	1,719,759,000	14,452	-	SGD
+Catloban	Seignid	Bose	119,000	2,038,033,000	17,126	-	SGD
 Parabilaran	Seignid	Miluo	158,000	3,980,555,000	25,193	-	SGD
 Eirosen	Seignid	Sanbu	46,000	1,964,943,000	42,716	-	SGD
 Salamat	Seignid	Hagåtña	1,000	64,078,000	64,078	-	SGD
@@ -1558,32 +1558,32 @@ Yeneshir	Selmira	Adana	506,000	21,449,097,000	42,390	-	SEL
 Donuzlu	Selmira	Denizli	495,000	20,958,653,000	42,341	-	SEL
 Xarpêt	Selmira	Elazığ	442,000	18,610,383,000	42,105	-	SEL
 Sëwas	Selmira	Sivas	405,000	16,977,622,000	41,920	-	SEL
-Kanderun	Selmira	Iskenderun	397,000	10,298,057,000	25,940	-	SEL
-Tarabozan	Selmira	Trabzon	329,000	8,509,129,000	25,864	-	SEL
+Kanderun	Selmira	Iskenderun	397,000	12,779,791,000	32,191	-	SEL
+Tarabozan	Selmira	Trabzon	329,000	10,559,749,000	32,097	-	SEL
 Balukiser	Selmira	Balikesir	322,000	13,344,755,000	41,443	-	SEL
 Mayza	Selmira	Tripoli, LB	304,000	3,728,437,000	12,265	-	SEL
-Güzelhisar	Selmira	Aydın	268,000	7,759,487,000	28,953	-	SEL
-Nikonya	Selmira	Çorum	248,000	6,092,220,000	24,565	-	SEL
-Zongalik	Selmira	Zonguldak	202,000	5,509,492,000	27,275	-	SEL
-Lydahisar	Selmira	Uşak	200,000	5,945,760,000	29,729	-	SEL
-Mokissos	Selmira	Kırıkkale	194,000	6,324,416,000	32,600	-	SEL
+Güzelhisar	Selmira	Aydın	268,000	9,629,450,000	35,931	-	SEL
+Nikonya	Selmira	Çorum	248,000	7,560,387,000	30,485	-	SEL
+Zongalik	Selmira	Zonguldak	202,000	6,837,228,000	33,848	-	SEL
+Lydahisar	Selmira	Uşak	200,000	7,378,632,000	36,893	-	SEL
+Mokissos	Selmira	Kırıkkale	194,000	7,848,540,000	40,456	-	SEL
 Lemesos	Selmira	Limassol	193,000	13,219,881,000	68,497	-	SEL
 Theopolis	Selmira	Erzurum	163,000	6,528,697,000	40,053	-	SEL
-Merkez	Selmira	Aksaray	145,000	4,383,624,000	30,232	-	SEL
-Siyahkaya	Selmira	Afyonkarahisar	142,000	3,569,483,000	25,137	-	SEL
-Korake	Selmira	Alanya	134,000	5,624,280,000	41,972	-	SEL
-Çanakalesi	Selmira	Canakkale	130,000	4,691,035,000	36,085	-	SEL
-Kereman	Selmira	Karaman	126,000	4,444,655,000	35,275	-	SEL
+Merkez	Selmira	Aksaray	145,000	5,440,036,000	37,517	-	SEL
+Siyahkaya	Selmira	Afyonkarahisar	142,000	4,429,695,000	31,195	-	SEL
+Korake	Selmira	Alanya	134,000	6,979,678,000	52,087	-	SEL
+Çanakalesi	Selmira	Canakkale	130,000	5,821,530,000	44,781	-	SEL
+Kereman	Selmira	Karaman	126,000	5,515,774,000	43,776	-	SEL
 Sineşehir	Selmira	Sinop	122,000	2,987,897,000	24,491	-	SEL
-Enete	Selmira	Bafra	111,000	3,065,358,000	27,616	-	SEL
+Enete	Selmira	Bafra	111,000	3,804,080,000	34,271	-	SEL
 Lefkoşa	Selmira	Nicosia	109,000	7,254,534,000	66,555	-	SEL
-Kastama	Selmira	Kastamonu	88,000	2,599,074,000	29,535	-	SEL
+Kastama	Selmira	Kastamonu	88,000	3,225,426,000	36,653	-	SEL
 Qers	Selmira	Kars	76,000	2,130,107,000	28,028	-	SEL
 Kevberos	Selmira	Ereğli	75,000	2,888,922,000	38,519	-	SEL
-Menteşe	Selmira	Mugla	75,000	2,952,266,000	39,364	-	SEL
-Kelesina	Selmira	Erzincan	74,000	2,181,408,000	29,478	-	SEL
+Menteşe	Selmira	Mugla	75,000	3,663,734,000	48,850	-	SEL
+Kelesina	Selmira	Erzincan	74,000	2,707,107,000	36,583	-	SEL
 Seleucia	Selmira	Silifke	67,000	2,227,778,000	33,250	-	SEL
-Maraş	Selmira	Afsin	61,000	1,561,364,000	25,596	-	SEL
+Maraş	Selmira	Afsin	61,000	1,937,637,000	31,765	-	SEL
 Rodos	Selmira	Chios	28,000	1,238,586,000	44,235	-	SEL
 Rabba	Shivon	Amman	6,460,000	86,786,798,000	13,434	רַבָּה	SHI
 Kadmona	Shivon	Damascus	3,967,000	28,500,000,000	7,184	קַדְמוֹנָה	SHI
@@ -1602,7 +1602,7 @@ Harmon	Shivon	Nazareth	227,000	12,224,717,000	53,853	הַרְמוֹן	SHI
 Shib'a	Shivon	Be'er Sheva	209,000	11,210,474,000	53,639	שִׁבְעָה	SHI
 Helbron	Shivon	Al Suwayda	132,000	820,000,000	6,212	חֶבְרוֹן	SHI
 Yehora	Shivon	Yambu	126,000	8,351,639,000	66,283	יהורה	SHI
-Eilat	Shivon	Aqaba-Elat	121,000	1,332,400,000	11,012	אֵילַת	SHI
+Eilat	Shivon	Aqaba-Elat	174,000	4,712,487,000	27,083	אֵילַת	SHI
 Mohonon	Shivon	Arish	117,000	2,162,848,000	18,486	מָחֳנוֹן	SHI
 Hadrei-Sheol	Shivon	Duba	55,000	3,497,546,000	63,592	חדרי-שאול	SHI
 Groscown	Sidanya	Kyiv	2,580,000	61,625,474,000	23,886	-	SID
