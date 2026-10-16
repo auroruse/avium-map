@@ -22,6 +22,7 @@ const colMap = {
   'real grdp p/c ($)': 'gdpPerCapita',
   'native script': 'nativeScript', 'nativescript': 'nativeScript', 'script': 'nativeScript',
   'irl parallel': 'irlParallel', 'irlparallel': 'irlParallel', 'parallel': 'irlParallel',
+  'stat donor': 'irlParallel',
   'alpha3': 'alpha3', 'code': 'alpha3', 'alpha-3 code': 'alpha3',
 }
 
