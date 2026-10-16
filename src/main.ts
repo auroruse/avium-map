@@ -2892,7 +2892,7 @@ function renderSearch(q: string) {
     closeSearchColumn()
     for (const { c } of matches) {
       const li = document.createElement('li')
-      li.innerHTML = `<span class="bs-cname">${c.name}</span>` +
+      li.innerHTML = `<span class="bs-cname"><span class="bs-ctext">${c.name}</span></span>` +
         `<span class="bs-cnation">${c.nation} · ${fmtCompact(c.population)}</span>`
       li.addEventListener('click', () => goCity(c))
       bsResults.appendChild(li)
@@ -2918,7 +2918,7 @@ function renderSearch(q: string) {
   for (const { c } of matches) {
     const li = document.createElement('li')
     li.innerHTML =
-      `<span class="bs-cinfo"><span class="bs-cname">${c.name}</span>` +
+      `<span class="bs-cinfo"><span class="bs-cname"><span class="bs-ctext">${c.name}</span></span>` +
       `<span class="bs-cnation">${c.nation}</span></span>` +
       `<span class="bs-cstat">${fmtCompact(c.population)}</span>`
     li.addEventListener('click', () => goCity(c))
@@ -2969,6 +2969,17 @@ let listMode: 'cities' | 'nations' = 'cities'
 
 let sortField: SortField = 'name'
 let sortAsc = true
+
+// About 30 of 1,800 cities have a photograph, so a marker on the row alone leaves
+// them scattered a page apart. The filter narrows Cities to just those, keeping
+// whatever sort is in force; it lives in the sort menu because that is where the
+// list's other ways of being cut already are.
+let photoOnly = false
+const hasPhoto = (c: City) => !!byCityName(banners, c.name)
+const PHOTO_ICON =
+  '<svg class="bs-photo" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" ' +
+  'stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Has photo">' +
+  '<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="M21 16l-5-5-11 8"/></svg>'
 let listRows: City[] = []
 let renderedCount = 0
 const LIST_CHUNK = 150
@@ -3003,7 +3014,8 @@ function renderMoreRows() {
     const li = document.createElement('li')
     li.innerHTML =
       `<span class="bs-rank">${rm ? rm.get(c) : ''}</span>` +
-      `<span class="bs-cinfo"><span class="bs-cname">${c.name}</span><span class="bs-cnation">${c.nation}</span></span>` +
+      `<span class="bs-cinfo"><span class="bs-cname"><span class="bs-ctext">${c.name}</span>${hasPhoto(c) ? PHOTO_ICON : ''}</span>` +
+      `<span class="bs-cnation">${c.nation}</span></span>` +
       `<span class="bs-cstat">${statText(c)}</span>`
     li.addEventListener('click', () => goCity(c))
     frag.appendChild(li)
@@ -3039,16 +3051,24 @@ function closeSortMenu() {
 }
 
 function updateSortChips() {
+  const photo = listMode === 'cities' && photoOnly
   sortBtn.innerHTML =
+    (photo ? PHOTO_ICON : '') +
     `<span>${sortLabel(sortField)}</span><span class="bs-sort-dir">${sortAsc ? '↑' : '↓'}</span>`
-  sortMenu.innerHTML = SORTS.filter(([, , nat]) => !nat || listMode === 'nations')
-    .map(
-      ([f, label]) =>
-        `<li data-sort="${f}"${f === sortField ? ' class="is-on"' : ''} role="option">${label}` +
-        (f === sortField ? `<span class="bs-sort-dir">${sortAsc ? '↑' : '↓'}</span>` : '') +
-        `</li>`
-    )
-    .join('')
+  sortMenu.innerHTML =
+    SORTS.filter(([, , nat]) => !nat || listMode === 'nations')
+      .map(
+        ([f, label]) =>
+          `<li data-sort="${f}"${f === sortField ? ' class="is-on"' : ''} role="option">${label}` +
+          (f === sortField ? `<span class="bs-sort-dir">${sortAsc ? '↑' : '↓'}</span>` : '') +
+          `</li>`
+      )
+      .join('') +
+    (listMode === 'cities'
+      ? `<li class="bs-sort-photo${photo ? ' is-on' : ''}" data-photo role="option" aria-checked="${photo}">` +
+        `<span class="bs-sort-photo-l">${PHOTO_ICON}With Photo</span>` +
+        `<span class="bs-check">${photo ? '✓' : ''}</span></li>`
+      : '')
 }
 
 sortBtn.addEventListener('click', e => {
@@ -3061,6 +3081,12 @@ sortBtn.addEventListener('click', e => {
 // Picking the sort already in force flips its direction, which is what the chips
 // did when you clicked the lit one
 sortMenu.addEventListener('click', e => {
+  if ((e.target as HTMLElement).closest('[data-photo]')) {
+    photoOnly = !photoOnly
+    closeSortMenu()
+    rebuildList()
+    return
+  }
   const li = (e.target as HTMLElement).closest('[data-sort]') as HTMLElement | null
   if (!li) return
   const field = li.dataset.sort as SortField
@@ -3146,7 +3172,7 @@ function renderNations(q: string) {
     const li = document.createElement('li')
     li.innerHTML =
       `<span class="bs-rank">${rm ? rm.get(n) : ''}</span>` +
-      `<span class="bs-cinfo"><span class="bs-cname">${n.name}</span><span class="bs-cnation">${sub.join(' · ')}</span></span>` +
+      `<span class="bs-cinfo"><span class="bs-cname"><span class="bs-ctext">${n.name}</span></span><span class="bs-cnation">${sub.join(' · ')}</span></span>` +
       `<span class="bs-cstat">${nationStatText(n)}</span>`
     li.addEventListener('click', () => flyToNation(n))
     frag.appendChild(li)
@@ -3161,6 +3187,7 @@ function rebuildList(animate = true) {
   } else {
     let rows = idx()
     if (q) rows = rows.filter(e => e.n.includes(q) || e.nat.includes(q))
+    if (photoOnly) rows = rows.filter(e => hasPhoto(e.c))
     const sorted = [...rows]
     if (sortField === 'name') {
       sorted.sort((a, b) => a.c.name.localeCompare(b.c.name))
