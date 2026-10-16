@@ -177,11 +177,26 @@ function sidebarWidth(): number {
   if (!window.matchMedia('(min-width: 900px)').matches) return 0
   const css = getComputedStyle(document.documentElement)
   const rail = parseFloat(css.getPropertyValue('--rail')) || 0
-  // The place column only covers the map while it is open, so it only counts
+  // The second column only covers the map while it is open, so it only counts
   // toward the offset then — otherwise every jump would land 190px off centre.
-  const panelOpen = !(document.getElementById('city-panel') as HTMLElement).hidden
-  const panel = panelOpen ? parseFloat(css.getPropertyValue('--panel')) || 0 : 0
+  // A place panel and a list (Cities, Nations, Explore...) share that column.
+  const open =
+    !(document.getElementById('city-panel') as HTMLElement).hidden ||
+    !(document.getElementById('bs-list') as HTMLElement).hidden
+  const panel = open ? parseFloat(css.getPropertyValue('--panel')) || 0 : 0
   return rail + panel
+}
+
+// How much of the map the sidebar covered when the view was last lined up with
+// it. When the column opens or closes the visible map narrows or widens, and
+// the view slides by half the difference so what was in the middle stays there
+// instead of ending up under the column.
+let lastCover = 0
+function syncCover() {
+  const w = sidebarWidth()
+  if (w === lastCover) return
+  map.panBy([-(w - lastCover) / 2, 0], { duration: 0.25 })
+  lastCover = w
 }
 
 // Centre a point in the visible part of the map. Without this a city opened from
@@ -194,6 +209,8 @@ function focusOn(x: number, y: number, zoom: number) {
   }
   const target = map.project(px(x, y), zoom).subtract([off, 0])
   map.setView(map.unproject(target, zoom), zoom)
+  // Already placed for the column as it is now, so there is nothing to slide
+  lastCover = sidebarWidth()
 }
 
 // --- Image layers ---
@@ -1652,6 +1669,25 @@ const shownCities = new Map<City, { marker: L.Marker; key: string }>()
 // up here because cityIcon reads it on the first render, before any panel exists.
 let focusedCity: City | null = null
 
+// Cities with a photograph, filled in once the image set is known further down.
+let photoSet: Set<City> | null = null
+
+// Explore state, up here because updateCities reads it on the first render. The
+// cities whose card won a place: their ordinary marker steps aside for the card.
+// A photographed city with no room for a card keeps its ordinary marker, which
+// the map's own label placement already keeps from piling up.
+let exploring = false
+let carded = new Set<City>()
+
+function syncExploreMarkers() {
+  for (const [c, s] of shownCities) {
+    const el = s.marker.getElement()
+    if (!el) continue
+    el.classList.toggle('city-icon-carded', exploring && carded.has(c))
+    el.classList.toggle('city-icon-pic', exploring && !!photoSet?.has(c))
+  }
+}
+
 // Fade tracking: a marker fades in only when its city is newly placed at this
 // zoom (the pre-culling appearance). Markers re-entering the padded viewport
 // during pans, or revealed by zooming out, appear instantly — culling invisible.
@@ -1745,6 +1781,7 @@ function updateCities() {
     prevPlaced = new Set(all.map(p => p.c))
     lastAll = all
   }
+  if (exploring) syncExploreMarkers()
 }
 
 // --- City info panel (Apple Maps style) ---
@@ -1812,6 +1849,8 @@ for (const [path, url] of Object.entries(
 )) {
   thumbs.set(cityImageKey(path), url)
 }
+
+photoSet = new Set(cities.filter(c => byCityName(banners, c.name)))
 
 const talopediaByCity = new Map<string, TalopediaEntry>()
 for (const [name, entry] of Object.entries(talopedia)) talopediaByCity.set(norm(name), entry)
@@ -2265,6 +2304,7 @@ document.addEventListener('keydown', e => {
   else if (!sortMenu.hidden) closeSortMenu()
   else if (measuring) endMeasure()
   else if (!cityPanel.hidden) closeCityPanel()
+  else if (exploring) endExplore()
   else closeSheetList()
 })
 
@@ -3124,6 +3164,8 @@ function mapAggFor(n: Nation): { count: number; pop: number; pts: L.LatLngExpres
 
 function flyToNation(n: Nation) {
   const agg = mapAggFor(n)
+  // Panel first, so the padding below is measured with the column it opens
+  openNationPanel(n)
   if (agg.pts.length) {
     // Pad by the sidebar so the nation is framed in the visible half
     map.flyToBounds(L.latLngBounds(agg.pts).pad(0.2), {
@@ -3131,8 +3173,8 @@ function flyToNation(n: Nation) {
       duration: 0.8,
       paddingTopLeft: [sidebarWidth(), 0],
     })
+    lastCover = sidebarWidth()
   }
-  openNationPanel(n)
 }
 
 function nationStatText(n: Nation): string {
@@ -3210,9 +3252,10 @@ bsFilter.addEventListener('input', () => rebuildList(false))
 
 // The rail stays on screen beside an open list, so it has to say which one is
 // open. Cities is the button labelled 'all' in the markup.
-function markNavOpen(view: 'all' | 'nations' | 'settings' | 'measure' | null) {
+function markNavOpen(view: 'all' | 'nations' | 'settings' | 'measure' | 'explore' | null) {
   for (const b of document.querySelectorAll<HTMLElement>('.bs-btn')) {
-    b.classList.toggle('is-on', !!view && b.dataset.view === view)
+    // Explore is a mode rather than a column, so it stays lit while it is on
+    b.classList.toggle('is-on', (!!view && b.dataset.view === view) || (exploring && b.dataset.view === 'explore'))
   }
 }
 
@@ -3223,8 +3266,10 @@ function markNavOpen(view: 'all' | 'nations' | 'settings' | 'measure' | null) {
 function openColumn(
   title: string,
   controls: boolean,
-  nav: 'all' | 'nations' | 'settings' | 'measure' | null
+  nav: 'all' | 'nations' | 'settings' | 'measure' | 'explore' | null
 ) {
+  // Another tab taking the column is leaving Explore
+  if (nav !== 'explore') endExplore()
   // A list and an info panel are the same slot, so one replaces the other. The
   // panel goes without its close animation — before hideSheet below, since the
   // reset ends in a showSheet.
@@ -3800,13 +3845,14 @@ document.getElementById('measure-done')!.addEventListener('click', endMeasure)
     const n = nationByName.get(norm(h.slice(7)))
     if (n) {
       const pts = mapAggFor(n).pts
+      openNationPanel(n)
       if (pts.length) {
         map.fitBounds(L.latLngBounds(pts).pad(0.2), {
           maxZoom: 5,
           paddingTopLeft: [sidebarWidth(), 0],
         })
+        lastCover = sidebarWidth()
       }
-      openNationPanel(n)
     }
   } else {
     const m = h.match(/^(\d+(?:\.\d+)?)\/(-?\d+)\/(-?\d+)$/)
@@ -4406,4 +4452,322 @@ setTab('cities', false)
 // layers and all three are built further up. Only matters when night was left
 // on: everything else was already read straight out of `settings` as each layer
 // first rendered.
+// --- Explore ---
+//
+// The photographed cities as photographs: each one stands on the map as a small
+// rounded-square pin of its own picture, the rest of the map dimmed around them.
+// Pins that would overlap merge into one showing the biggest city's photo and a
+// count, and the groups are worked out once per zoom from the closest zoom
+// outward, so zooming in only ever splits a group and a city that has its own
+// pin keeps it. A route through all of them drives a tour bar and the gallery.
+
+const PIN = 40 // the photo square
+const TIP = 7 // the pointer under it, whose tip is the city
+
+let touring = false
+let tourIdx = 0
+
+const cards = new Map<string, string>()
+for (const [path, url] of Object.entries(
+  import.meta.glob('./assets/city-cards/*.jpg', {
+    eager: true,
+    query: '?url',
+    import: 'default',
+  }) as Record<string, string>
+)) {
+  cards.set(cityImageKey(path), url)
+}
+// The 480px crop where the build has made one, else the panel's, else the photo
+const cardUrl = (c: City) =>
+  byCityName(cards, c.name) ?? byCityName(thumbs, c.name) ?? byCityName(banners, c.name) ?? ''
+
+map.createPane('explore-cards')
+map.getPane('explore-cards')!.style.zIndex = '620' // over the dimmed markers at 600
+const cardLayer = L.layerGroup()
+const cardMarkers = new Map<City, L.Marker>()
+
+// A closed loop through every photographed city: nearest neighbour from the
+// westernmost, then 2-opt until no two legs cross. Forty-odd points, so this is
+// instant, and it is worked out once.
+let route: City[] | null = null
+function tourRoute(): City[] {
+  if (route) return route
+  const pts = [...(photoSet ?? [])].filter(c => c.x != null && c.y != null)
+  const d = (a: City, b: City) => Math.hypot(a.x! - b.x!, a.y! - b.y!)
+  const left = pts.sort((a, b) => a.x! - b.x!)
+  const tour: City[] = left.length ? [left.shift()!] : []
+  while (left.length) {
+    const last = tour[tour.length - 1]
+    let bi = 0
+    for (let i = 1; i < left.length; i++) if (d(last, left[i]) < d(last, left[bi])) bi = i
+    tour.push(left.splice(bi, 1)[0])
+  }
+  const n = tour.length
+  for (let improved = n > 3; improved; ) {
+    improved = false
+    for (let i = 0; i < n - 1; i++) {
+      for (let j = i + 2; j < n; j++) {
+        if (i === 0 && j === n - 1) continue
+        const a = tour[i], b = tour[i + 1], c = tour[j], e = tour[(j + 1) % n]
+        if (d(a, c) + d(b, e) < d(a, b) + d(c, e) - 1e-9) {
+          tour.splice(i + 1, j - i, ...tour.slice(i + 1, j + 1).reverse())
+          improved = true
+        }
+      }
+    }
+  }
+  return (route = tour)
+}
+
+// Which side of its city a pin stands on: above, right, left or below, tried in
+// that order. A pin that has no room above can lean off to a side before it has
+// to fold into a neighbour's group.
+type Side = 't' | 'r' | 'l' | 'b'
+const SIDES: Side[] = ['t', 'r', 'l', 'b']
+type Cluster = { rep: City; members: City[]; side: Side }
+const clusterCache = new Map<number, Cluster[]>()
+const zKey = (z: number) => Math.min(MAX_ZOOM, Math.max(2, Math.round(z * 2) / 2))
+
+// The ground a pin and its name take up at a zoom, in the placer's screen space.
+// Above, the name sits under the pointer's tip; on any other side it sits under
+// the photo.
+function pinBox(c: City, z: number, side: Side): Box {
+  const box = sideBox(c, z, side)
+  // Room for a group's count badge, which hangs off the photo's top right corner
+  return { x: box.x, y: box.y - 9, w: box.w + 12, h: box.h + 9 }
+}
+
+function sideBox(c: City, z: number, side: Side): Box {
+  const pt = ptAt(c, z)
+  const half = Math.max(PIN + 6, c.name.length * 6.4 + 6) / 2
+  const reach = PIN + TIP
+  if (side === 't') return { x: pt.x - half, y: pt.y - reach - 4, w: half * 2, h: reach + 22 }
+  if (side === 'b') return { x: pt.x - half, y: pt.y - 4, w: half * 2, h: reach + 22 }
+  const mid = side === 'r' ? pt.x + TIP + PIN / 2 : pt.x - TIP - PIN / 2
+  const x0 = Math.min(mid - half, side === 'r' ? pt.x + TIP - 3 : pt.x - reach - 3)
+  const x1 = Math.max(mid + half, side === 'r' ? pt.x + reach + 3 : pt.x - TIP + 3)
+  return { x: x0, y: pt.y - PIN / 2 - 3, w: x1 - x0, h: PIN + 22 }
+}
+
+// The groups at a zoom: the groups one half-step closer in, with any whose pins
+// would overlap here folded into the bigger one. The biggest city in a group is
+// always its face, at every zoom it is a group, so it never swaps for another.
+function clustersAt(z: number): Cluster[] {
+  const k = zKey(z)
+  const hit = clusterCache.get(k)
+  if (hit) return hit
+  const from: Cluster[] =
+    k >= MAX_ZOOM
+      ? tourRoute().map(c => ({ rep: c, members: [c], side: 't' as Side }))
+      : clustersAt(k + 0.5).map(g => ({ rep: g.rep, members: [...g.members], side: 't' as Side }))
+  from.sort((a, b) => b.rep.gdp - a.rep.gdp)
+  // No pin may stand over another group's city, whichever side it leans
+  const spots = from.map(g => ptAt(g.rep, k))
+  const kept: { g: Cluster; box: Box }[] = []
+  for (const [i, g] of from.entries()) {
+    let box: Box | null = null
+    for (const side of SIDES) {
+      const b = pinBox(g.rep, k, side)
+      if (kept.some(o => boxesOverlap(o.box, b))) continue
+      if (spots.some((q, j) => j !== i && q.x > b.x && q.x < b.x + b.w && q.y > b.y && q.y < b.y + b.h)) continue
+      box = b
+      g.side = side
+      break
+    }
+    if (box) {
+      kept.push({ g, box })
+      continue
+    }
+    // Nowhere to stand: fold into the nearest group already placed
+    const pt = spots[i]
+    let into = kept[0]
+    let best = Infinity
+    for (const o of kept) {
+      const q = ptAt(o.g.rep, k)
+      const d = (q.x - pt.x) ** 2 + (q.y - pt.y) ** 2
+      if (d < best) { best = d; into = o }
+    }
+    if (into) into.g.members.push(...g.members)
+    else kept.push({ g, box: pinBox(g.rep, k, 't') })
+  }
+  const res = kept.map(o => o.g)
+  clusterCache.set(k, res)
+  return res
+}
+
+// The first zoom at which a city stands on its own pin
+function soloZoom(c: City): number {
+  for (let k = 2; k <= MAX_ZOOM; k += 0.5) {
+    if (clustersAt(k).some(g => g.rep === c && g.members.length === 1)) return k
+  }
+  return MAX_ZOOM
+}
+
+function pinIcon(g: Cluster): L.DivIcon {
+  const c = g.rep
+  const more = g.members.length - 1
+  return L.divIcon({
+    className: `xp xp-${g.side}`,
+    html:
+      `<div class="xp-pin"><img src="${cardUrl(c)}" alt="">` +
+      `<span class="xp-cap"><b>${c.name}</b><span>${c.nation}${more ? ` · ${more} more` : ''}</span></span></div>` +
+      (more ? `<span class="xp-count">+${more}</span>` : '') +
+      `<i class="xp-tip"></i><span class="xp-name">${c.name}</span>`,
+    iconSize: [0, 0],
+    iconAnchor: [0, 0],
+  })
+}
+
+// Every photographed city, mapped to the pin that stands for it right now
+let pinOf = new Map<City, L.Marker>()
+
+function renderCards() {
+  cardLayer.clearLayers()
+  cardMarkers.clear()
+  pinOf = new Map()
+  carded = new Set()
+  if (!exploring) return
+  for (const g of clustersAt(map.getZoom())) {
+    const m = L.marker(px(g.rep.x!, g.rep.y!), {
+      icon: pinIcon(g),
+      pane: 'explore-cards',
+      keyboard: false,
+      riseOnHover: true,
+    })
+    m.on('click', () => {
+      if (g.members.length === 1) return goTour(tourRoute().indexOf(g.rep))
+      // A group opens by zooming to where it first comes apart, centred on it
+      let k = zKey(map.getZoom()) + 0.5
+      while (k < MAX_ZOOM && clustersAt(k).find(h => h.rep === g.rep)!.members.length === g.members.length) k += 0.5
+      const cx = g.members.reduce((s, c) => s + c.x!, 0) / g.members.length
+      const cy = g.members.reduce((s, c) => s + c.y!, 0) / g.members.length
+      focusOn(cx, cy, Math.min(MAX_ZOOM, k))
+    })
+    cardLayer.addLayer(m)
+    cardMarkers.set(g.rep, m)
+    for (const c of g.members) {
+      pinOf.set(c, m)
+      carded.add(c)
+    }
+  }
+  syncExploreMarkers()
+  markCards()
+}
+
+function markCards() {
+  const cur = touring ? pinOf.get(tourRoute()[tourIdx]) : undefined
+  for (const m of cardMarkers.values()) {
+    const el = m.getElement()
+    if (!el) continue
+    el.classList.toggle('xp-on', m === cur)
+    m.setZIndexOffset(m === cur ? 1000 : 0)
+  }
+}
+
+const xBar = document.getElementById('explore-bar')!
+const xLabel = document.getElementById('xb-label')!
+
+// The photographed city nearest the middle of the map you can actually see
+function nearestToView(): number {
+  const r = tourRoute()
+  const size = map.getSize()
+  const mid = map.containerPointToLatLng([(size.x + sidebarWidth()) / 2, size.y / 2])
+  let best = 0
+  let bd = Infinity
+  r.forEach((c, i) => {
+    const p = L.latLng(px(c.x!, c.y!))
+    const dd = (p.lat - mid.lat) ** 2 + (p.lng - mid.lng) ** 2
+    if (dd < bd) { bd = dd; best = i }
+  })
+  return best
+}
+
+function syncBar() {
+  const r = tourRoute()
+  if (!r.length) return
+  if (!touring) tourIdx = nearestToView()
+  xLabel.innerHTML = `<b>${r[tourIdx].name}</b><span>${tourIdx + 1} / ${r.length}</span>`
+}
+
+function goTour(i: number) {
+  const r = tourRoute()
+  if (!r.length) return
+  touring = true
+  tourIdx = (i + r.length) % r.length
+  const c = r[tourIdx]
+  openCityPanel(c)
+  focusOn(c.x!, c.y!, Math.max(zKey(map.getZoom()), soloZoom(c)))
+  renderCards()
+  syncBar()
+}
+
+// The first press goes to where the tour starts, the city nearest the view;
+// every press after that moves along the route
+function stepTour(dir: 1 | -1) {
+  goTour(touring ? tourIdx + dir : tourIdx)
+}
+
+// Explore is a mode of the map, not a page in the column: the tab switches it on
+// and off and stays lit while it is on, and the column is left clear for the map
+function startExplore() {
+  closeSheetList()
+  exploring = true
+  touring = false
+  markNavOpen(null)
+  document.body.classList.add('exploring')
+  cardLayer.addTo(map)
+  renderCards()
+  xBar.classList.remove('mb-closing')
+  xBar.hidden = false
+  syncBar()
+}
+
+function endExplore() {
+  if (!exploring) return
+  exploring = false
+  touring = false
+  markNavOpen(null)
+  document.body.classList.remove('exploring')
+  cardLayer.clearLayers()
+  cardMarkers.clear()
+  carded = new Set()
+  syncExploreMarkers()
+  map.removeLayer(cardLayer)
+  xBar.hidden = true
+}
+
+document.querySelector('.bs-btn[data-view="explore"]')!.addEventListener('click', () => {
+  if (exploring) endExplore()
+  else startExplore()
+})
+
+document.getElementById('xb-prev')!.addEventListener('click', () => stepTour(-1))
+document.getElementById('xb-next')!.addEventListener('click', () => stepTour(1))
+document.getElementById('xb-close')!.addEventListener('click', endExplore)
+
+document.addEventListener('keydown', e => {
+  if (!exploring || (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight')) return
+  if (e.target instanceof Element && e.target.closest('input, textarea, select')) return
+  e.preventDefault()
+  stepTour(e.key === 'ArrowLeft' ? -1 : 1)
+})
+
+map.on('zoomend', () => {
+  if (exploring) renderCards()
+})
+map.on('moveend', () => {
+  if (exploring && !touring) syncBar()
+})
+
+// Every way the column opens or closes ends in its hidden attribute flipping, so
+// that is the one place to watch. The callback runs after the code that flipped
+// it, which lets a focusOn in the same breath record its own placement first.
+lastCover = sidebarWidth()
+{
+  const watch = new MutationObserver(syncCover)
+  for (const id of ['city-panel', 'bs-list']) {
+    watch.observe(document.getElementById(id)!, { attributes: true, attributeFilter: ['hidden'] })
+  }
+}
+
 applySettings()

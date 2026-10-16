@@ -8,3 +8,4 @@ layers/*.PNG
 banners-original/
 # derived from src/assets/cities by scripts/thumbs.mjs, rebuilt on every build
 src/assets/city-thumbs/
+src/assets/city-cards/

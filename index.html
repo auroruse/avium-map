@@ -77,6 +77,10 @@
           <span class="bs-circle bs-orange"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 3v18" stroke="#fff" stroke-width="2" stroke-linecap="round"/><path d="M8 4h9l-2.5 3.5L17 11H8z" fill="#fff"/></svg></span>
           <span class="bs-btn-label">Nations</span>
         </button>
+        <button class="bs-btn" data-view="explore">
+          <span class="bs-circle bs-pink"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="M21 16l-5-5-11 8"/></svg></span>
+          <span class="bs-btn-label">Explore</span>
+        </button>
         <button class="bs-btn" data-view="export">
           <span class="bs-circle bs-green"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="M8.5 11.5 12 15l3.5-3.5"/><path d="M7 11H6a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-7a1 1 0 0 0-1-1h-1"/></svg></span>
           <span class="bs-btn-label">Export</span>
@@ -114,6 +118,12 @@
     <button id="measure-undo">Undo</button>
     <button id="measure-clear">Clear</button>
     <button id="measure-done">Done</button>
+  </div>
+  <div id="explore-bar" hidden>
+    <button id="xb-prev" aria-label="Previous city">&#8249;</button>
+    <span id="xb-label"></span>
+    <button id="xb-next" aria-label="Next city">&#8250;</button>
+    <button id="xb-close">Done</button>
   </div>
   <div id="lightbox" hidden><img alt=""></div>
   <div class="coord-display">Move mouse over map</div>

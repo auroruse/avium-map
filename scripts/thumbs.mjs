@@ -15,6 +15,9 @@ import { basename, extname, join, resolve } from 'path'
 const root = resolve(import.meta.dirname, '..')
 const srcDir = join(root, 'src', 'assets', 'cities')
 const outDir = join(root, 'src', 'assets', 'city-thumbs')
+// A second, smaller set for Explore: the cards on the map are 120px wide and the
+// gallery's tiles about 170, so 480px covers both at 2x for a fifth of the bytes.
+const cardDir = join(root, 'src', 'assets', 'city-cards')
 
 // Cropped to the frame's own ratio, so object-fit: cover has nothing left to
 // throw away and no pixel in the file goes unused. 1000px covers the widest the
@@ -25,15 +28,21 @@ const QUALITY = 78
 
 const IMAGE = /\.(png|jpe?g)$/i
 
-mkdirSync(outDir, { recursive: true })
+const SETS = [
+  { dir: outDir, w: W, h: H, q: QUALITY },
+  { dir: cardDir, w: 480, h: 270, q: 72 },
+]
 
 const sources = readdirSync(srcDir).filter(f => IMAGE.test(f))
 const wanted = new Set(sources.map(f => basename(f, extname(f)) + '.jpg'))
 
 // A city whose photograph was removed or renamed would otherwise keep its old
 // crop forever, and the panel would go on showing it
-for (const f of readdirSync(outDir)) {
-  if (!wanted.has(f)) rmSync(join(outDir, f))
+for (const { dir } of SETS) {
+  mkdirSync(dir, { recursive: true })
+  for (const f of readdirSync(dir)) {
+    if (!wanted.has(f)) rmSync(join(dir, f), { recursive: true })
+  }
 }
 
 // Two files for one city collapse to one crop, and the panel and the full view
@@ -54,17 +63,19 @@ let bytes = 0
 
 for (const f of sources) {
   const from = join(srcDir, f)
-  const to = join(outDir, basename(f, extname(f)) + '.jpg')
-  // Rebuild only what changed: a full pass over 24 photographs is slow enough to
-  // notice on every dev server start
-  if (!existsSync(to) || statSync(to).mtimeMs < statSync(from).mtimeMs) {
-    await sharp(from)
-      .resize(W, H, { fit: 'cover', position: 'centre' })
-      .jpeg({ quality: QUALITY, mozjpeg: true })
-      .toFile(to)
-    built++
+  for (const { dir, w, h, q } of SETS) {
+    const to = join(dir, basename(f, extname(f)) + '.jpg')
+    // Rebuild only what changed: a full pass over 24 photographs is slow enough
+    // to notice on every dev server start
+    if (!existsSync(to) || statSync(to).mtimeMs < statSync(from).mtimeMs) {
+      await sharp(from)
+        .resize(w, h, { fit: 'cover', position: 'centre' })
+        .jpeg({ quality: q, mozjpeg: true })
+        .toFile(to)
+      built++
+    }
+    if (dir === outDir) bytes += statSync(to).size
   }
-  bytes += statSync(to).size
 }
 
 const avg = sources.length ? bytes / sources.length / 1024 : 0
