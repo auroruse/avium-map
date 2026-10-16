@@ -2040,7 +2040,7 @@ function openCityPanel(c: City) {
       : '') +
     detailsCard([
       detailRow('Nation', `${c.nation}${c.alpha3 ? ` <span class="cp-sub">(${c.alpha3})</span>` : ''}`, !!nat),
-      c.irlParallel ? detailRow('IRL Parallel', c.irlParallel) : '',
+      c.irlParallel ? detailRow('Stat Donor', c.irlParallel) : '',
     ])
   cityPanel.classList.remove('cp-closing')
   cityPanel.hidden = false
