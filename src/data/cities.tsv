@@ -79,15 +79,15 @@ Villenshafen	Alemannia	67,000	4,951,544,000	73,904	-	Villach	ALE
 Kladn	Alemannia	64,000	3,754,323,000	58,661	-	Kladno	ALE
 Sankt Bernhardt	Alemannia	61,000	4,036,881,000	66,178	-	Sankt Pölten	ALE
 Assen	Alemannia	60,000	2,631,378,000	43,856	-	Ústí nad Labem	ALE
-Sombáthar	Alemannia	56,000	2,454,886,000	43,837	-	Szombathely	ALE
 Troppen	Alemannia	56,000	2,799,563,000	49,992	-	Opava	ALE
+Sombáthar	Alemannia	56,000	2,454,886,000	43,837	-	Szombathely	ALE
 Wülst	Alemannia	54,000	4,339,410,000	80,359	-	Wels	ALE
 Inglauen	Alemannia	54,000	2,922,273,000	54,116	-	Jihlava	ALE
 Fredericksstadt	Alemannia	54,000	2,694,675,000	49,901	-	Frýdek-Místek	ALE
 Dörnen	Alemannia	53,000	4,473,793,000	84,411	-	Dornbirn	ALE
 Züharin	Alemannia	51,000	3,305,648,000	64,817	-	Schwerin	ALE
 Johannshafen	Andam Islands	187,000	2,033,880,000	10,876	-	Sri Vijaya Puram	ALE
-Manbavi	Arunya	20,848,000	431,175,817,000	20,682	मानभवी	Mumbai	ARU
+Manbavi	Arunya	20,848,000	415,459,394,000	19,928	मानभवी	Mumbai	ARU
 Bhanagiri	Arunya	15,510,000	373,492,894,000	24,081	ಭಾನಗಿರಿ	Bangalore	ARU
 Sennanur	Arunya	11,591,000	266,152,449,000	22,962	சென்னனூர்	Chennai	ARU
 Hayidara	Arunya	9,538,000	225,897,718,000	23,684	హయిదర	Hyderabad, TG	ARU
@@ -166,7 +166,7 @@ Mahapattana	Arunya	124,000	1,667,749,000	13,450	මහාපට්ටන	Matara	
 Vaasugada	Arunya	120,000	3,900,525,000	32,504	वासुगडा	Vasco da Gama	ARU
 Gortari	Arunya	33,000	3,806,923,000	115,361	கொர்தாரி	Geraldton	ARU
 Ambewada	Arunya	32,000	3,685,886,000	115,184	அம்பேவாடா	Albany, AU	ARU
-Lutèce	Arverne	9,364,000	1,047,993,508,000	111,917	-	Paris	ARV
+Lutèce	Arverne	9,364,000	1,004,648,324,000	107,288	-	Paris	ARV
 Barcino	Arverne	3,917,000	344,448,986,000	87,937	-	Barcelona, ES	ARV
 Lyonara	Arverne	1,199,000	78,965,362,000	65,859	-	Lyon	ARV
 Massilia	Arverne	916,000	67,522,170,000	73,714	-	Marseille	ARV
@@ -327,9 +327,9 @@ Al-Sabkha	Barbary	184,000	3,297,761,000	17,923	-	Touggourt	ARV
 Nouvelle-Havre	Barbary	110,000	1,921,509,000	17,468	-	Adrar	ARV
 Ganjau	Cahaya	41,022,000	819,472,998,000	19,976	-	Jakarta	CAH
 Balambangan	Cahaya	26,240,000	365,854,349,000	13,943	-	Manila	CAH
-Baigau	Cahaya	14,902,000	497,766,350,000	33,403	-	Ho Chi Minh City	CAH
+Baigau	Cahaya	14,902,000	467,572,492,000	31,376	-	Ho Chi Minh City	CAH
 Lada	Cahaya	8,749,000	148,185,150,000	16,937	-	Bandung	CAH
-Jelutong	Cahaya	8,513,000	603,709,907,000	70,916	-	Kuala Lumpur	CAH
+Jelutong	Cahaya	8,513,000	601,845,136,000	70,697	-	Kuala Lumpur	CAH
 Tali Sawah	Cahaya	6,886,000	119,666,718,000	17,378	-	Surabaya	CAH
 Rajawali	Cahaya	5,136,000	892,163,313,000	173,708	-	Singapore	CAH
 Kenanga	Cahaya	4,393,000	105,936,812,000	24,115	-	Medan	CAH
@@ -521,18 +521,18 @@ Maplestone	E.S.U.	88,000	7,321,394,000	83,198	-	State College	ESU
 Trailsrise	E.S.U.	86,000	6,861,950,000	79,790	-	Champaign, IL	ESU
 Lebaron	E.S.U.	81,000	6,581,726,000	81,256	-	Harrisburg, PA	ESU
 DuClare	E.S.U.	77,000	5,153,205,000	66,925	-	Niagara Falls	ESU
-Ortygia	E.S.U.	76,000	6,155,437,000	80,993	-	Scranton	ESU
 Trodes	E.S.U.	76,000	6,279,590,000	82,626	-	Bloomington	ESU
+Ortygia	E.S.U.	76,000	6,155,437,000	80,993	-	Scranton	ESU
 Claremont	E.S.U.	73,000	5,836,061,000	79,946	-	Eau Claire	ESU
 Starfell	E.S.U.	70,000	6,604,531,000	94,350	-	Portland, ME	ESU
 Fort Union	E.S.U.	69,000	7,158,129,000	103,741	-	Manchester, NH	ESU
 Maython	E.S.U.	69,000	4,746,505,000	68,790	-	Peterborough, ON	ESU
 Conway	E.S.U.	68,000	6,186,312,000	90,975	-	Evansville	ESU
-Moose Pen	E.S.U.	63,000	3,438,369,000	54,577	-	Bangor	ESU
 Riveren City	E.S.U.	63,000	4,283,080,000	67,985	-	Utica	ESU
+Moose Pen	E.S.U.	63,000	3,438,369,000	54,577	-	Bangor	ESU
 Haliville	E.S.U.	61,000	4,111,933,000	67,409	-	Kalamazoo	ESU
-Millesani	E.S.U.	53,000	3,595,232,000	67,835	-	Sault Ste. Marie	ESU
 Foster	E.S.U.	53,000	3,598,090,000	67,888	-	North Bay, ON	ESU
+Millesani	E.S.U.	53,000	3,595,232,000	67,835	-	Sault Ste. Marie	ESU
 Lannahechee	E.S.U.	51,000	4,077,272,000	79,947	-	La Crosse	ESU
 Corvus	E.S.U.	47,000	3,357,553,000	71,437	-	Charleston, WV	ESU
 Naqissuserpaa	E.S.U.	46,000	3,100,831,000	67,409	-	Timmins	ESU
@@ -543,7 +543,7 @@ Sahara City	E.S.U.	39,000	2,365,460,000	60,653	-	Atlantic City	ESU
 Fort Jones	E.S.U.	34,000	2,164,189,000	63,653	-	Val d'Or	ESU
 Ilimamik	E.S.U.	22,000	1,533,512,000	69,705	-	Marquette	ESU
 Hidacun	E.S.U.	16,000	1,097,664,000	68,604	-	Traverse City	ESU
-Aspadana	East Astriya	10,057,000	748,929,767,000	74,469	-	Istanbul (European)	AST
+Aspadana	East Astriya	10,057,000	726,158,140,000	72,204	-	Istanbul (European)	AST
 Melcarta	East Astriya	1,066,000	105,667,272,000	99,125	Μελκάρτα	Sofia	AST
 Odryssa	East Astriya	332,000	12,178,379,000	36,682	Οδρύσσα	Plovdiv	AST
 Odessos	East Astriya	286,000	12,172,775,000	42,562	Όδησσός	Varna	AST
@@ -606,7 +606,7 @@ Santa Marisol	El Magreb	359,000	2,766,065,000	7,705	-	Safi	ASK
 Aguadulces	El Magreb	265,000	3,170,593,000	11,965	-	Nador	ASK
 La Capilla	El Magreb	176,000	2,062,884,000	11,721	-	Taza	ASK
 Arza	El Magreb	96,000	1,091,527,000	11,370	-	Ouarzazate	ASK
-Dunmaris	Elvester	10,470,000	1,227,346,274,000	117,225	-	London, GB	ELV
+Dunmaris	Elvester	10,470,000	1,141,375,608,000	109,014	-	London, GB	ELV
 Gaelham	Elvester	2,631,000	137,082,283,000	52,103	-	Birmingham, GB	ELV
 Manceshire	Elvester	2,556,000	157,937,055,000	61,791	-	Manchester, GB	ELV
 Winscor	Elvester	1,251,000	67,418,805,000	53,892	-	Liverpool	ELV
@@ -664,7 +664,7 @@ Kingsmouth	Elvester	21,000	1,564,769,000	74,513	-	Akureyri	ELV
 Shompolahti	Frederikka Islands	6,000	54,948,000	9,158	-	Campbell Bay	KAR
 Nongcheng	Furan	9,760,000	984,444,009,000	100,865	农城	Taipei	FUR
 Hanyang	Furan	8,177,000	412,947,424,000	50,501	汉扬	Wuhan	FUR
-Yuecheng	Furan	8,077,000	515,694,274,000	63,847	月城	Nanjing	FUR
+Yuecheng	Furan	8,077,000	444,307,378,000	55,009	月城	Nanjing	FUR
 Xianzhou	Furan	6,226,000	357,202,776,000	57,373	仙州	Hangzhou-Shaoxing	FUR
 Rongzhou	Furan	5,463,000	198,034,534,000	36,250	荣州	Chengdu	FUR
 Chang'an	Furan	5,212,000	174,543,560,000	33,489	长安	Xi'an	FUR
@@ -784,9 +784,9 @@ Gromovsk	Giathka	56,000	1,223,051,000	21,840	-	Krasnovodsk	GIA
 Svobodinsk	Giathka	44,000	418,736,000	9,517	-	Azadshahr	GIA
 Petrovskaya	Giathka	32,000	59,431,000	1,857	-	Gardez	GIA
 Nagoniara	Gonenite Islands	143,000	385,275,000	2,694	-	Honiara	ALE
-Shanggang	Guandong	31,083,000	2,129,920,407,000	68,524	上港	Shanghai	GUA
-Beining	Guandong	18,202,000	1,377,441,249,000	75,675	北宁	Beijing	GUA
-Fengzhou	Guandong	11,617,000	637,883,399,000	54,909	凤州	Suzhou	GUA
+Shanggang	Guandong	31,083,000	1,771,362,620,000	56,988	上港	Shanghai	GUA
+Beining	Guandong	18,202,000	1,090,080,370,000	59,888	北宁	Beijing	GUA
+Fengzhou	Guandong	11,617,000	592,623,612,000	51,013	凤州	Suzhou	GUA
 Tianji	Guandong	7,328,000	315,883,837,000	43,106	天际	Tianjin	GUA
 Hengliu	Guandong	5,710,000	163,044,766,000	28,554	恒流	Hefei	GUA
 Zhangzhou	Guandong	5,105,000	115,516,628,000	22,628	张州	Zhengzhou	GUA
@@ -916,8 +916,8 @@ Ricomonte	Hollosend	247,000	1,253,700,000	5,076	-	Tambacounda	HOL
 Bayou Nwa	Hollosend	244,000	19,484,889,000	79,856	-	Baton Rouge	HOL
 Kariston	Hollosend	242,000	20,388,649,000	84,251	-	Corpus Christi	HOL
 Wapiti	Hollosend	241,000	21,747,473,000	90,238	-	Wichita	HOL
-Villa Libertador	Hollosend	223,000	2,109,746,000	9,461	-	Merida, VE	HOL
 Carmeloma	Hollosend	223,000	3,200,000,000	14,350	-	Santa Clara, CU	HOL
+Villa Libertador	Hollosend	223,000	2,109,746,000	9,461	-	Merida, VE	HOL
 Carthena	Hollosend	222,000	20,932,737,000	94,292	-	Charlotte	HOL
 Narbask	Hollosend	214,000	15,448,106,000	72,187	-	Gainesville	HOL
 Silvastria	Hollosend	210,000	13,059,350,000	62,187	-	Fayetteville, NC	HOL
@@ -954,8 +954,8 @@ Blevins	Hollosend	114,000	8,400,383,000	73,688	-	Tyler, TX	HOL
 Chicazos	Hollosend	111,000	929,258,000	8,372	-	Valle De La Pascua	HOL
 Roanoke	Hollosend	107,000	8,491,086,000	79,356	-	Fayetteville, AR	HOL
 Pradera	Hollosend	105,000	1,550,000,000	14,762	-	Sancti Spíritus	HOL
-Pris	Hollosend	102,000	6,973,237,000	68,365	-	Huntsville, AL	HOL
 Wallace	Hollosend	102,000	8,230,592,000	80,692	-	Wichita Falls	HOL
+Pris	Hollosend	102,000	6,973,237,000	68,365	-	Huntsville, AL	HOL
 Ashford	Hollosend	102,000	6,927,518,000	67,917	-	Fort Myers	HOL
 Mercer	Hollosend	101,000	8,145,886,000	80,652	-	San Angelo	HOL
 Doverhill	Hollosend	98,000	8,454,905,000	86,275	-	Lawrence, KS	HOL
@@ -972,8 +972,8 @@ New Winscor	Hollosend	67,000	5,303,192,000	79,152	-	Albany, GA	HOL
 Curden	Hollosend	67,000	5,293,945,000	79,014	-	Victoria, TX	HOL
 Oakridge	Hollosend	67,000	2,508,746,000	37,444	-	Edinburg, TX	HOL
 Ciudad Primada	Hollosend	67,000	410,000,000	6,119	-	Baracoa	HOL
-Twin Rocks	Hollosend	63,000	4,315,331,000	68,497	-	Las Cruces	HOL
 Blackwater	Hollosend	63,000	4,960,153,000	78,733	-	Abilene	HOL
+Twin Rocks	Hollosend	63,000	4,315,331,000	68,497	-	Las Cruces	HOL
 Juana	Hollosend	59,000	450,000,000	7,627	-	Florida, CU	HOL
 Fort Liberty	Hollosend	55,000	4,610,014,000	83,818	-	Manhattan, KS	HOL
 Camberlyn	Hollosend	53,000	3,842,533,000	72,501	-	Waco	HOL
@@ -984,28 +984,28 @@ Pleasance	Hollosend	47,000	3,457,131,000	73,556	-	Monroe, LA	HOL
 Armadillo	Hollosend	47,000	3,173,202,000	67,515	-	Roswell	HOL
 Manito	Hollosend	43,000	3,350,157,000	77,911	-	Jefferson City	HOL
 Sawbone	Hollosend	41,000	3,186,738,000	77,725	-	Cape Girardeau	HOL
-Tuscan	Hollosend	39,000	2,275,856,000	58,355	-	Tupelo, MS	HOL
-Canebreak	Hollosend	39,000	2,523,052,000	64,694	-	Pine Bluff	HOL
 Calumet	Hollosend	39,000	2,541,073,000	65,156	-	Bartlesville	HOL
+Canebreak	Hollosend	39,000	2,523,052,000	64,694	-	Pine Bluff	HOL
+Tuscan	Hollosend	39,000	2,275,856,000	58,355	-	Tupelo, MS	HOL
 Owanjila	Hollosend	38,000	2,538,445,000	66,801	-	Clovis	HOL
-Bacchus	Hollosend	37,000	2,404,424,000	64,984	-	Muskogee	HOL
 Limpany	Hollosend	37,000	2,838,002,000	76,703	-	Texarkana	HOL
+Bacchus	Hollosend	37,000	2,404,424,000	64,984	-	Muskogee	HOL
 Olisipo	Hollosend	34,000	2,200,175,000	64,711	-	Gadsden, AL	HOL
 New Blackwater	Hollosend	28,000	2,269,015,000	81,036	-	Dodge City	HOL
 Nozan	Hollosend	27,000	1,546,888,000	57,292	-	Greenville, MS	HOL
 Lindenford	Hollosend	21,000	161,828,000	7,706	-	El Callao, VE	HOL
-Redville	Hollosend	20,000	1,563,475,000	78,174	-	Elizabeth City, NC	HOL
 New Colter	Hollosend	20,000	1,593,687,000	79,684	-	Liberal, KS	HOL
+Redville	Hollosend	20,000	1,563,475,000	78,174	-	Elizabeth City, NC	HOL
 Teiburg	Hollosend	2,000	4,566,000	2,283	-	Tiébo	HOL
 Tsubayo	Hōrai	38,198,000	428,863,864,000	11,227	津映	Dhaka, BD	NCH
 Shiwane	Hōrai	5,275,000	53,642,670,000	10,169	潮嵐	Chittagong	NCH
 Kureha	Hōrai	1,221,000	11,540,133,000	9,451	暮葉	Sylhet	NCH
 Hinatachi	Hōrai	683,000	6,270,685,000	9,181	日立	Mymensingh	NCH
 Kusune	Hōrai	406,000	3,631,678,000	8,945	糸根	Tangail	NCH
-Pietari	Karjania	4,889,000	466,226,065,000	95,362	-	Saint Petersburg, RU	KAR
+Pietari	Karjania	4,889,000	423,589,319,000	86,641	-	Saint Petersburg, RU	KAR
 Roudanjärvi	Karjania	1,000,000	72,124,738,000	72,125	-	Helsinki-Tallinn	KAR
-Kuittijärvi	Karjania	273,000	12,269,770,000	44,944	-	Cherepovets	KAR
 Murmánska	Karjania	273,000	19,207,677,000	70,358	-	Murmansk	KAR
+Kuittijärvi	Karjania	273,000	12,269,770,000	44,944	-	Cherepovets	KAR
 Väärnitsa	Karjania	243,000	10,858,289,000	44,684	-	Vologda	KAR
 Kämyrvi	Karjania	219,000	6,806,697,000	31,081	-	Kostroma	KAR
 Arkankeli	Karjania	212,000	12,527,135,000	59,090	-	Arkhangelsk	KAR
@@ -1184,8 +1184,8 @@ Akaishi	Nichirin	219,000	7,679,009,000	35,064	赤石	Ulanhot	NCH
 Shizuhata	Nichirin	218,000	12,935,370,000	59,337	静畑	Shizuoka	NCH
 Matsumoto	Nichirin	217,000	4,123,717,000	19,003	松本	Songyuan	NCH
 Kijinaki	Nichirin	216,000	12,288,837,000	56,893	雉鳴	Wonju	NCH
-Senshima	Nichirin	215,000	9,383,016,000	43,642	朝鶴	Kochi, KC	NCH
 Kozukata	Nichirin	215,000	10,805,419,000	50,258	小塚田	Morioka	NCH
+Senshima	Nichirin	215,000	9,383,016,000	43,642	朝鶴	Kochi, KC	NCH
 Horinukida	Nichirin	213,000	11,604,909,000	54,483	掘貫田	Koriyama	NCH
 Aomizu	Nichirin	210,000	7,349,174,000	34,996	青水	Hailar	NCH
 Akino	Nichirin	209,000	9,910,255,000	47,417	秋野	Akita	NCH
@@ -1209,8 +1209,8 @@ Namiura	Nichirin	145,000	13,800,000,000	95,172	波浦	Nampo	NCH
 Tsurutani	Nichirin	141,000	6,419,955,000	45,532	鶴谷	Kushiro	NCH
 Yatsuura	Nichirin	140,000	6,075,080,000	43,393	八浦	Hachinohe	NCH
 Tadaki	Nichirin	138,000	4,729,131,000	34,269	多滝	Jagdaqi	NCH
-Irie	Nichirin	137,000	5,932,000,000	43,299	入江	Sasebo	NCH
 Hyakutawara	Nichirin	137,000	6,806,963,000	49,686	百俵	Nagaoka	NCH
+Irie	Nichirin	137,000	5,932,000,000	43,299	入江	Sasebo	NCH
 Yawae	Nichirin	137,000	2,156,895,000	15,744	八重	Nenjiang	NCH
 Terao	Nichirin	133,000	7,386,569,000	55,538	寺尾	Suncheon	NCH
 Mizuchibuchi	Nichirin	132,000	2,446,832,000	18,537	蛟淵	Jiaohe	NCH
@@ -1223,17 +1223,17 @@ Sakyū	Nichirin	116,000	5,024,659,000	43,316	砂丘	Tottori	NCH
 Nemunagashi	Nichirin	111,000	4,760,571,000	42,888	眠流	Hirosaki	NCH
 Nishikibashi	Nichirin	110,000	6,483,811,000	58,944	錦橋	Iwakuni	NCH
 Uzuiwa	Nichirin	107,000	5,021,591,000	46,931	渦岩	Ishinomaki	NCH
-Kinohe	Nichirin	104,000	5,041,519,000	48,476	柵戸	Oshu	NCH
 Kabagishi	Nichirin	104,000	14,051,050,000	135,106	樺岸	Yuzhno-Sakhalinsk	NCH
+Kinohe	Nichirin	104,000	5,041,519,000	48,476	柵戸	Oshu	NCH
 Iwane	Nichirin	104,000	1,905,044,000	18,318	磐根	Panshi	NCH
 Hinata	Nichirin	100,000	1,827,635,000	18,276	日向	Shuangyang	NCH
 Kotodai	Nichirin	98,000	5,360,261,000	54,697	琴台	Chungju	NCH
 Mitsuyama	Nichirin	98,000	1,516,833,000	15,478	蜜山	Mishan	NCH
 Chikepnay	Nichirin	94,000	4,192,699,000	44,603	千景内	Muroran	NCH
 Nashizono	Nichirin	94,000	1,712,417,000	18,217	梨園	Longjing	NCH
-Shichidaika	Nichirin	92,000	1,419,568,000	15,430	七大花	Qitaihe	NCH
-Tenzato	Nichirin	92,000	1,419,774,000	15,432	貂里	Baoqing	NCH
 Toyoda	Nichirin	92,000	1,419,914,000	15,434	豊田	Qingan	NCH
+Tenzato	Nichirin	92,000	1,419,774,000	15,432	貂里	Baoqing	NCH
+Shichidaika	Nichirin	92,000	1,419,568,000	15,430	七大花	Qitaihe	NCH
 Arakawa	Nichirin	89,000	1,370,940,000	15,404	荒川	Nehe	NCH
 Neigawa	Nichirin	84,000	10,500,000,000	125,000	音川	Hoeryong	NCH
 Niitsu	Nichirin	84,000	3,810,116,000	45,359	新津	Nakhodka	NCH
@@ -1332,8 +1332,8 @@ Weinertitz	Ponurvia	108,000	8,299,629,000	76,848	-	Bend	PON
 Dranne	Ponurvia	97,000	9,118,050,000	94,001	-	Santa Barbara	PON
 Neu-Rendorf	Ponurvia	95,000	8,921,626,000	93,912	-	Redding, CA	PON
 Walberg	Ponurvia	94,000	8,823,045,000	93,862	-	Santa Cruz, CA	PON
-Topaz	Ponurvia	92,000	8,623,293,000	93,731	-	Visalia	PON
 Neu-Catamburg	Ponurvia	92,000	8,626,040,000	93,761	-	Chico, CA	PON
+Topaz	Ponurvia	92,000	8,623,293,000	93,731	-	Visalia	PON
 Volkstrom	Ponurvia	88,000	6,693,766,000	76,066	-	Medford, OR	PON
 Melden	Ponurvia	87,000	8,134,474,000	93,500	-	Merced, CA	PON
 Elyredon	Ponurvia	79,000	6,934,423,000	87,778	-	Grand Junction	PON
@@ -1350,8 +1350,8 @@ Perlemeer	Ponurvia	45,000	3,046,938,000	67,710	-	Sierra Vista	PON
 Enkelberg	Ponurvia	36,000	2,410,506,000	66,959	-	Kingman	PON
 Kräkenhafen	Ponurvia	26,000	2,288,529,000	88,020	-	Eureka	PON
 Neu-Arburg	Ponurvia	22,000	1,572,164,000	71,462	-	Elko	PON
-Nussbaum	Ponurvia	20,000	1,300,385,000	65,019	-	Nogales	PON
 Scheinfurt	Ponurvia	20,000	1,639,368,000	81,968	-	Durango, CO	PON
+Nussbaum	Ponurvia	20,000	1,300,385,000	65,019	-	Nogales	PON
 Recolotta City	Recolotta	3,693,000	6,640,945,000	1,798	-	Maputo	REC
 Permarello	Recolotta	1,081,000	1,828,070,000	1,691	-	Nampula	REC
 Kermaneon	Recolotta	975,000	1,767,773,000	1,813	-	Blantyre, MW	REC
@@ -1368,7 +1368,7 @@ Myer-Lee	Recolotta	115,000	173,868,000	1,512	-	Montequez	REC
 Losquet	Recolotta	104,000	156,449,000	1,504	-	Angoche	REC
 Brompadil	Recolotta	80,000	127,969,000	1,600	-	Zomba	REC
 Doranama	Recolotta	72,000	106,338,000	1,477	-	Inhamhane	REC
-Radagorsk	Rudania	14,403,000	1,728,736,877,000	120,026	Радагорск	Moscow	RUD
+Radagorsk	Rudania	14,403,000	1,399,999,611,000	97,202	Радагорск	Moscow	RUD
 Menisku	Rudania	2,097,000	78,093,660,000	37,241	Мениску	Minsk	RUD
 Novospatrya	Rudania	1,338,000	42,320,861,000	31,630	Новоспатря	Novosibirsk	RUD
 Nizhegorod	Rudania	1,189,000	49,584,827,000	41,703	Нижегород	Nizhny Novgorod	RUD
@@ -1410,8 +1410,8 @@ Olryretsk	Rudania	287,000	5,985,175,000	20,854	Олрыретск	Yoshkar-Ola	RU
 Sokol	Rudania	280,000	7,353,579,000	26,263	Сокол	Oryol	RUD
 Tukhachevosk	Rudania	277,000	5,700,753,000	20,580	Тухачевоск	Smolensk	RUD
 Kurchask	Rudania	275,000	8,820,521,000	32,075	Курчаск	Kursk	RUD
-Lugeck	Rudania	269,000	8,959,439,000	33,306	Лугецк	Lipetsk	RUD
 Iskiralsk	Rudania	269,000	12,353,843,000	45,925	Искиральск	Pavlodar	RUD
+Lugeck	Rudania	269,000	8,959,439,000	33,306	Лугецк	Lipetsk	RUD
 Kamennaya	Rudania	245,000	11,200,614,000	45,717	Каменная	Ust'-Kamenogorsk	RUD
 Rassvetin	Rudania	240,000	5,883,900,000	24,516	Рассветин	Sterlitamak	RUD
 Kyzyl-Perovsk	Rudania	238,000	10,863,232,000	45,644	Кызыл-Перовск	Kyzylorda	RUD
@@ -1454,8 +1454,8 @@ Sibaleuz	Rudania	70,000	2,894,607,000	41,352	Сибалеуз	Pervouralsk	RUD
 Kameshki	Rudania	69,000	2,849,390,000	41,296	Камешки	Kamensk-Uralsky	RUD
 Kakashask	Rudania	67,000	2,008,943,000	29,984	Какашаск	Zlatoust	RUD
 Zamorsk	Rudania	65,000	1,663,014,000	25,585	Заморск	Gorno-Altaysk	RUD
-Zasratov	Rudania	64,000	2,511,295,000	39,239	Засратов	Ishim	RUD
 Trioyka	Rudania	64,000	8,895,619,000	138,994	Тройка	Nyagan	RUD
+Zasratov	Rudania	64,000	2,511,295,000	39,239	Засратов	Ishim	RUD
 Lovatogorod	Rudania	62,000	1,417,887,000	22,869	Ловатогород	Velikiye Luki	RUD
 Okotsk	Rudania	61,000	2,710,168,000	44,429	Окотск	Magadan	RUD
 Kazarsary	Rudania	60,000	2,556,751,000	42,613	Казарсары	Kulsary	RUD
@@ -1565,8 +1565,8 @@ Branitzburg	Sankt Gerold Island	17,000	230,059,000	13,533	-	Kaimana	ALE
 	Sehreno	203,000	1,200,579,000	5,914	-	Tando Adam	SEH
 	Sehreno	197,000	1,461,119,000	7,417	-	Chichawatni	SEH
 	Sehreno	196,000	1,157,148,000	5,904	-	Tando Allahyar	SEH
-	Sehreno	192,000	355,099,000	1,849	-	Galkayo	SEH
 	Sehreno	192,000	1,422,205,000	7,407	-	Dipalpur	SEH
+	Sehreno	192,000	355,099,000	1,849	-	Galkayo	SEH
 	Sehreno	188,000	1,155,924,000	6,149	-	Turbat	SEH
 	Sehreno	186,000	1,375,576,000	7,396	-	Chenab Nagar	SEH
 	Sehreno	179,000	1,052,000,000	5,877	-	Umarkot	SEH
@@ -1575,10 +1575,10 @@ Branitzburg	Sankt Gerold Island	17,000	230,059,000	13,533	-	Kaimana	ALE
 	Sehreno	153,000	1,120,526,000	7,324	-	Talagang	SEH
 	Sehreno	152,000	1,112,838,000	7,321	-	Kot Addu	SEH
 	Sehreno	151,000	1,105,152,000	7,319	-	Haroonabad	SEH
-	Sehreno	150,000	274,018,000	1,827	-	Dhuusamareeb	SEH
 	Sehreno	150,000	1,097,468,000	7,316	-	Lodhran	SEH
-	Sehreno	149,000	272,101,000	1,826	-	Berbera	SEH
+	Sehreno	150,000	274,018,000	1,827	-	Dhuusamareeb	SEH
 	Sehreno	149,000	1,089,787,000	7,314	-	Bhakkar	SEH
+	Sehreno	149,000	272,101,000	1,826	-	Berbera	SEH
 	Sehreno	147,000	1,074,433,000	7,309	-	Layyah	SEH
 	Sehreno	140,000	1,020,776,000	7,291	-	Khushab	SEH
 	Sehreno	134,000	776,212,000	5,793	-	Shahdadpur	SEH
@@ -1589,8 +1589,8 @@ Branitzburg	Sankt Gerold Island	17,000	230,059,000	13,533	-	Kaimana	ALE
 	Sehreno	88,000	626,907,000	7,124	-	Taunsa	SEH
 	Sehreno	81,000	574,653,000	7,094	-	Chowk Azam	SEH
 	Sehreno	80,000	141,621,000	1,770	-	Bargal	SEH
-	Sehreno	79,000	320,576,000	4,058	-	Tank	SEH
 	Sehreno	79,000	483,361,000	6,118	-	Gilgit	SEH
+	Sehreno	79,000	320,576,000	4,058	-	Tank	SEH
 	Sehreno	78,000	552,326,000	7,081	-	Fateh Jang	SEH
 	Sehreno	70,000	493,003,000	7,043	-	Hasan Adbal	SEH
 	Sehreno	66,000	463,466,000	7,022	-	Basirpur	SEH
@@ -1683,8 +1683,8 @@ Enete	Selmira	111,000	3,804,080,000	34,271	-	Bafra	SEL
 Lefkoşa	Selmira	109,000	7,254,534,000	66,555	-	Nicosia	SEL
 Kastama	Selmira	88,000	3,225,426,000	36,653	-	Kastamonu	SEL
 Qers	Selmira	76,000	2,130,107,000	28,028	-	Kars	SEL
-Kevberos	Selmira	75,000	2,888,922,000	38,519	-	Ereğli	SEL
 Menteşe	Selmira	75,000	3,663,734,000	48,850	-	Mugla	SEL
+Kevberos	Selmira	75,000	2,888,922,000	38,519	-	Ereğli	SEL
 Kelesina	Selmira	74,000	2,707,107,000	36,583	-	Erzincan	SEL
 Seleucia	Selmira	67,000	2,227,778,000	33,250	-	Silifke	SEL
 Maraş	Selmira	61,000	1,937,637,000	31,765	-	Afsin	SEL
@@ -1816,8 +1816,8 @@ Szegvár	Turulia	122,000	5,561,823,000	45,589	-	Szeged	TUR
 Miklós	Turulia	116,000	3,969,077,000	34,216	-	Miskolc	TUR
 Szatmár	Turulia	80,000	3,648,588,000	45,607	-	Satu Mare	TUR
 Hídkővár	Turulia	56,000	2,932,622,000	52,368	-	Sopron	TUR
-Szalaváros	Turulia	54,000	1,982,422,000	36,712	-	Zalaegerszeg	TUR
 Délivár	Turulia	54,000	2,363,626,000	43,771	-	Békéscsaba	TUR
+Szalaváros	Turulia	54,000	1,982,422,000	36,712	-	Zalaegerszeg	TUR
 Arecaváros	Uj-Pannonia	1,404,000	13,823,474,000	9,846	-	Guwahati	TUR
 Kis-Brasso	Uj-Pannonia	233,000	2,096,680,000	8,999	-	Jorhat	TUR
 Sillóng	Uj-Pannonia	57,000	478,140,000	8,388	-	Sribhumi	TUR

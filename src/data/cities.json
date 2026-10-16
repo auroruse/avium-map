@@ -960,18 +960,6 @@
     "y": 2581
   },
   {
-    "name": "Sombáthar",
-    "nation": "Alemannia",
-    "population": 56000,
-    "gdp": 2454886000,
-    "gdpPerCapita": 43837,
-    "nativeScript": "",
-    "irlParallel": "Szombathely",
-    "alpha3": "ALE",
-    "x": 3174,
-    "y": 2616
-  },
-  {
     "name": "Troppen",
     "nation": "Alemannia",
     "population": 56000,
@@ -982,6 +970,18 @@
     "alpha3": "ALE",
     "x": 3103,
     "y": 2539
+  },
+  {
+    "name": "Sombáthar",
+    "nation": "Alemannia",
+    "population": 56000,
+    "gdp": 2454886000,
+    "gdpPerCapita": 43837,
+    "nativeScript": "",
+    "irlParallel": "Szombathely",
+    "alpha3": "ALE",
+    "x": 3174,
+    "y": 2616
   },
   {
     "name": "Wülst",
@@ -1059,8 +1059,8 @@
     "name": "Manbavi",
     "nation": "Arunya",
     "population": 20848000,
-    "gdp": 431175817000,
-    "gdpPerCapita": 20682,
+    "gdp": 415459394000,
+    "gdpPerCapita": 19928,
     "nativeScript": "मानभवी",
     "irlParallel": "Mumbai",
     "alpha3": "ARU",
@@ -2007,8 +2007,8 @@
     "name": "Lutèce",
     "nation": "Arverne",
     "population": 9364000,
-    "gdp": 1047993508000,
-    "gdpPerCapita": 111917,
+    "gdp": 1004648324000,
+    "gdpPerCapita": 107288,
     "nativeScript": "",
     "irlParallel": "Paris",
     "alpha3": "ARV",
@@ -3939,8 +3939,8 @@
     "name": "Baigau",
     "nation": "Cahaya",
     "population": 14902000,
-    "gdp": 497766350000,
-    "gdpPerCapita": 33403,
+    "gdp": 467572492000,
+    "gdpPerCapita": 31376,
     "nativeScript": "",
     "irlParallel": "Ho Chi Minh City",
     "alpha3": "CAH",
@@ -3963,8 +3963,8 @@
     "name": "Jelutong",
     "nation": "Cahaya",
     "population": 8513000,
-    "gdp": 603709907000,
-    "gdpPerCapita": 70916,
+    "gdp": 601845136000,
+    "gdpPerCapita": 70697,
     "nativeScript": "",
     "irlParallel": "Kuala Lumpur",
     "alpha3": "CAH",
@@ -6264,18 +6264,6 @@
     "y": 3092
   },
   {
-    "name": "Ortygia",
-    "nation": "E.S.U.",
-    "population": 76000,
-    "gdp": 6155437000,
-    "gdpPerCapita": 80993,
-    "nativeScript": "",
-    "irlParallel": "Scranton",
-    "alpha3": "ESU",
-    "x": 2100,
-    "y": 3141
-  },
-  {
     "name": "Trodes",
     "nation": "E.S.U.",
     "population": 76000,
@@ -6286,6 +6274,18 @@
     "alpha3": "ESU",
     "x": 1807,
     "y": 3192
+  },
+  {
+    "name": "Ortygia",
+    "nation": "E.S.U.",
+    "population": 76000,
+    "gdp": 6155437000,
+    "gdpPerCapita": 80993,
+    "nativeScript": "",
+    "irlParallel": "Scranton",
+    "alpha3": "ESU",
+    "x": 2100,
+    "y": 3141
   },
   {
     "name": "Claremont",
@@ -6348,18 +6348,6 @@
     "y": 3225
   },
   {
-    "name": "Moose Pen",
-    "nation": "E.S.U.",
-    "population": 63000,
-    "gdp": 3438369000,
-    "gdpPerCapita": 54577,
-    "nativeScript": "",
-    "irlParallel": "Bangor",
-    "alpha3": "ESU",
-    "x": 2293,
-    "y": 3066
-  },
-  {
     "name": "Riveren City",
     "nation": "E.S.U.",
     "population": 63000,
@@ -6370,6 +6358,18 @@
     "alpha3": "ESU",
     "x": 2131,
     "y": 3101
+  },
+  {
+    "name": "Moose Pen",
+    "nation": "E.S.U.",
+    "population": 63000,
+    "gdp": 3438369000,
+    "gdpPerCapita": 54577,
+    "nativeScript": "",
+    "irlParallel": "Bangor",
+    "alpha3": "ESU",
+    "x": 2293,
+    "y": 3066
   },
   {
     "name": "Haliville",
@@ -6384,18 +6384,6 @@
     "y": 3091
   },
   {
-    "name": "Millesani",
-    "nation": "E.S.U.",
-    "population": 53000,
-    "gdp": 3595232000,
-    "gdpPerCapita": 67835,
-    "nativeScript": "",
-    "irlParallel": "Sault Ste. Marie",
-    "alpha3": "ESU",
-    "x": 1931,
-    "y": 2957
-  },
-  {
     "name": "Foster",
     "nation": "E.S.U.",
     "population": 53000,
@@ -6406,6 +6394,18 @@
     "alpha3": "ESU",
     "x": 2021,
     "y": 2985
+  },
+  {
+    "name": "Millesani",
+    "nation": "E.S.U.",
+    "population": 53000,
+    "gdp": 3595232000,
+    "gdpPerCapita": 67835,
+    "nativeScript": "",
+    "irlParallel": "Sault Ste. Marie",
+    "alpha3": "ESU",
+    "x": 1931,
+    "y": 2957
   },
   {
     "name": "Lannahechee",
@@ -6531,8 +6531,8 @@
     "name": "Aspadana",
     "nation": "East Astriya",
     "population": 10057000,
-    "gdp": 748929767000,
-    "gdpPerCapita": 74469,
+    "gdp": 726158140000,
+    "gdpPerCapita": 72204,
     "nativeScript": "",
     "irlParallel": "Istanbul (European)",
     "alpha3": "AST",
@@ -7287,8 +7287,8 @@
     "name": "Dunmaris",
     "nation": "Elvester",
     "population": 10470000,
-    "gdp": 1227346274000,
-    "gdpPerCapita": 117225,
+    "gdp": 1141375608000,
+    "gdpPerCapita": 109014,
     "nativeScript": "",
     "irlParallel": "London, GB",
     "alpha3": "ELV",
@@ -7731,8 +7731,8 @@
     "name": "Yuecheng",
     "nation": "Furan",
     "population": 8077000,
-    "gdp": 515694274000,
-    "gdpPerCapita": 63847,
+    "gdp": 444307378000,
+    "gdpPerCapita": 55009,
     "nativeScript": "月城",
     "irlParallel": "Nanjing",
     "alpha3": "FUR",
@@ -9171,8 +9171,8 @@
     "name": "Shanggang",
     "nation": "Guandong",
     "population": 31083000,
-    "gdp": 2129920407000,
-    "gdpPerCapita": 68524,
+    "gdp": 1771362620000,
+    "gdpPerCapita": 56988,
     "nativeScript": "上港",
     "irlParallel": "Shanghai",
     "alpha3": "GUA",
@@ -9183,8 +9183,8 @@
     "name": "Beining",
     "nation": "Guandong",
     "population": 18202000,
-    "gdp": 1377441249000,
-    "gdpPerCapita": 75675,
+    "gdp": 1090080370000,
+    "gdpPerCapita": 59888,
     "nativeScript": "北宁",
     "irlParallel": "Beijing",
     "alpha3": "GUA",
@@ -9195,8 +9195,8 @@
     "name": "Fengzhou",
     "nation": "Guandong",
     "population": 11617000,
-    "gdp": 637883399000,
-    "gdpPerCapita": 54909,
+    "gdp": 592623612000,
+    "gdpPerCapita": 51013,
     "nativeScript": "凤州",
     "irlParallel": "Suzhou",
     "alpha3": "GUA",
@@ -10752,18 +10752,6 @@
     "y": 3166
   },
   {
-    "name": "Villa Libertador",
-    "nation": "Hollosend",
-    "population": 223000,
-    "gdp": 2109746000,
-    "gdpPerCapita": 9461,
-    "nativeScript": "",
-    "irlParallel": "Merida, VE",
-    "alpha3": "HOL",
-    "x": 1547,
-    "y": 3775
-  },
-  {
     "name": "Carmeloma",
     "nation": "Hollosend",
     "population": 223000,
@@ -10774,6 +10762,18 @@
     "alpha3": "HOL",
     "x": 1614,
     "y": 3604
+  },
+  {
+    "name": "Villa Libertador",
+    "nation": "Hollosend",
+    "population": 223000,
+    "gdp": 2109746000,
+    "gdpPerCapita": 9461,
+    "nativeScript": "",
+    "irlParallel": "Merida, VE",
+    "alpha3": "HOL",
+    "x": 1547,
+    "y": 3775
   },
   {
     "name": "Carthena",
@@ -11208,18 +11208,6 @@
     "y": 3602
   },
   {
-    "name": "Pris",
-    "nation": "Hollosend",
-    "population": 102000,
-    "gdp": 6973237000,
-    "gdpPerCapita": 68365,
-    "nativeScript": "",
-    "irlParallel": "Huntsville, AL",
-    "alpha3": "HOL",
-    "x": 1786,
-    "y": 3359
-  },
-  {
     "name": "Wallace",
     "nation": "Hollosend",
     "population": 102000,
@@ -11230,6 +11218,18 @@
     "alpha3": "HOL",
     "x": 1507,
     "y": 3345
+  },
+  {
+    "name": "Pris",
+    "nation": "Hollosend",
+    "population": 102000,
+    "gdp": 6973237000,
+    "gdpPerCapita": 68365,
+    "nativeScript": "",
+    "irlParallel": "Huntsville, AL",
+    "alpha3": "HOL",
+    "x": 1786,
+    "y": 3359
   },
   {
     "name": "Ashford",
@@ -11424,18 +11424,6 @@
     "y": 3604
   },
   {
-    "name": "Twin Rocks",
-    "nation": "Hollosend",
-    "population": 63000,
-    "gdp": 4315331000,
-    "gdpPerCapita": 68497,
-    "nativeScript": "",
-    "irlParallel": "Las Cruces",
-    "alpha3": "HOL",
-    "x": 1252,
-    "y": 3262
-  },
-  {
     "name": "Blackwater",
     "nation": "Hollosend",
     "population": 63000,
@@ -11446,6 +11434,18 @@
     "alpha3": "HOL",
     "x": 1448,
     "y": 3374
+  },
+  {
+    "name": "Twin Rocks",
+    "nation": "Hollosend",
+    "population": 63000,
+    "gdp": 4315331000,
+    "gdpPerCapita": 68497,
+    "nativeScript": "",
+    "irlParallel": "Las Cruces",
+    "alpha3": "HOL",
+    "x": 1252,
+    "y": 3262
   },
   {
     "name": "Juana",
@@ -11568,16 +11568,16 @@
     "y": 3229
   },
   {
-    "name": "Tuscan",
+    "name": "Calumet",
     "nation": "Hollosend",
     "population": 39000,
-    "gdp": 2275856000,
-    "gdpPerCapita": 58355,
+    "gdp": 2541073000,
+    "gdpPerCapita": 65156,
     "nativeScript": "",
-    "irlParallel": "Tupelo, MS",
+    "irlParallel": "Bartlesville",
     "alpha3": "HOL",
-    "x": 1751,
-    "y": 3397
+    "x": 1572,
+    "y": 3210
   },
   {
     "name": "Canebreak",
@@ -11592,16 +11592,16 @@
     "y": 3364
   },
   {
-    "name": "Calumet",
+    "name": "Tuscan",
     "nation": "Hollosend",
     "population": 39000,
-    "gdp": 2541073000,
-    "gdpPerCapita": 65156,
+    "gdp": 2275856000,
+    "gdpPerCapita": 58355,
     "nativeScript": "",
-    "irlParallel": "Bartlesville",
+    "irlParallel": "Tupelo, MS",
     "alpha3": "HOL",
-    "x": 1572,
-    "y": 3210
+    "x": 1751,
+    "y": 3397
   },
   {
     "name": "Owanjila",
@@ -11616,18 +11616,6 @@
     "y": 3258
   },
   {
-    "name": "Bacchus",
-    "nation": "Hollosend",
-    "population": 37000,
-    "gdp": 2404424000,
-    "gdpPerCapita": 64984,
-    "nativeScript": "",
-    "irlParallel": "Muskogee",
-    "alpha3": "HOL",
-    "x": 1570,
-    "y": 3263
-  },
-  {
     "name": "Limpany",
     "nation": "Hollosend",
     "population": 37000,
@@ -11638,6 +11626,18 @@
     "alpha3": "HOL",
     "x": 1594,
     "y": 3395
+  },
+  {
+    "name": "Bacchus",
+    "nation": "Hollosend",
+    "population": 37000,
+    "gdp": 2404424000,
+    "gdpPerCapita": 64984,
+    "nativeScript": "",
+    "irlParallel": "Muskogee",
+    "alpha3": "HOL",
+    "x": 1570,
+    "y": 3263
   },
   {
     "name": "Olisipo",
@@ -11688,18 +11688,6 @@
     "y": 3740
   },
   {
-    "name": "Redville",
-    "nation": "Hollosend",
-    "population": 20000,
-    "gdp": 1563475000,
-    "gdpPerCapita": 78174,
-    "nativeScript": "",
-    "irlParallel": "Elizabeth City, NC",
-    "alpha3": "HOL",
-    "x": 2034,
-    "y": 3328
-  },
-  {
     "name": "New Colter",
     "nation": "Hollosend",
     "population": 20000,
@@ -11710,6 +11698,18 @@
     "alpha3": "HOL",
     "x": 1441,
     "y": 3138
+  },
+  {
+    "name": "Redville",
+    "nation": "Hollosend",
+    "population": 20000,
+    "gdp": 1563475000,
+    "gdpPerCapita": 78174,
+    "nativeScript": "",
+    "irlParallel": "Elizabeth City, NC",
+    "alpha3": "HOL",
+    "x": 2034,
+    "y": 3328
   },
   {
     "name": "Teiburg",
@@ -11787,8 +11787,8 @@
     "name": "Pietari",
     "nation": "Karjania",
     "population": 4889000,
-    "gdp": 466226065000,
-    "gdpPerCapita": 95362,
+    "gdp": 423589319000,
+    "gdpPerCapita": 86641,
     "nativeScript": "",
     "irlParallel": "Saint Petersburg, RU",
     "alpha3": "KAR",
@@ -11808,18 +11808,6 @@
     "y": 2255
   },
   {
-    "name": "Kuittijärvi",
-    "nation": "Karjania",
-    "population": 273000,
-    "gdp": 12269770000,
-    "gdpPerCapita": 44944,
-    "nativeScript": "",
-    "irlParallel": "Cherepovets",
-    "alpha3": "KAR",
-    "x": 3005,
-    "y": 2112
-  },
-  {
     "name": "Murmánska",
     "nation": "Karjania",
     "population": 273000,
@@ -11830,6 +11818,18 @@
     "alpha3": "KAR",
     "x": 2686,
     "y": 2033
+  },
+  {
+    "name": "Kuittijärvi",
+    "nation": "Karjania",
+    "population": 273000,
+    "gdp": 12269770000,
+    "gdpPerCapita": 44944,
+    "nativeScript": "",
+    "irlParallel": "Cherepovets",
+    "alpha3": "KAR",
+    "x": 3005,
+    "y": 2112
   },
   {
     "name": "Väärnitsa",
@@ -13968,18 +13968,6 @@
     "y": 555
   },
   {
-    "name": "Senshima",
-    "nation": "Nichirin",
-    "population": 215000,
-    "gdp": 9383016000,
-    "gdpPerCapita": 43642,
-    "nativeScript": "朝鶴",
-    "irlParallel": "Kochi, KC",
-    "alpha3": "NCH",
-    "x": 2706,
-    "y": 605
-  },
-  {
     "name": "Kozukata",
     "nation": "Nichirin",
     "population": 215000,
@@ -13990,6 +13978,18 @@
     "alpha3": "NCH",
     "x": 2276,
     "y": 785
+  },
+  {
+    "name": "Senshima",
+    "nation": "Nichirin",
+    "population": 215000,
+    "gdp": 9383016000,
+    "gdpPerCapita": 43642,
+    "nativeScript": "朝鶴",
+    "irlParallel": "Kochi, KC",
+    "alpha3": "NCH",
+    "x": 2706,
+    "y": 605
   },
   {
     "name": "Horinukida",
@@ -14268,18 +14268,6 @@
     "y": 917
   },
   {
-    "name": "Irie",
-    "nation": "Nichirin",
-    "population": 137000,
-    "gdp": 5932000000,
-    "gdpPerCapita": 43299,
-    "nativeScript": "入江",
-    "irlParallel": "Sasebo",
-    "alpha3": "NCH",
-    "x": 2777,
-    "y": 625
-  },
-  {
     "name": "Hyakutawara",
     "nation": "Nichirin",
     "population": 137000,
@@ -14290,6 +14278,18 @@
     "alpha3": "NCH",
     "x": 2384,
     "y": 728
+  },
+  {
+    "name": "Irie",
+    "nation": "Nichirin",
+    "population": 137000,
+    "gdp": 5932000000,
+    "gdpPerCapita": 43299,
+    "nativeScript": "入江",
+    "irlParallel": "Sasebo",
+    "alpha3": "NCH",
+    "x": 2777,
+    "y": 625
   },
   {
     "name": "Yawae",
@@ -14436,18 +14436,6 @@
     "y": 754
   },
   {
-    "name": "Kinohe",
-    "nation": "Nichirin",
-    "population": 104000,
-    "gdp": 5041519000,
-    "gdpPerCapita": 48476,
-    "nativeScript": "柵戸",
-    "irlParallel": "Oshu",
-    "alpha3": "NCH",
-    "x": 2289,
-    "y": 772
-  },
-  {
     "name": "Kabagishi",
     "nation": "Nichirin",
     "population": 104000,
@@ -14458,6 +14446,18 @@
     "alpha3": "NCH",
     "x": 2110,
     "y": 778
+  },
+  {
+    "name": "Kinohe",
+    "nation": "Nichirin",
+    "population": 104000,
+    "gdp": 5041519000,
+    "gdpPerCapita": 48476,
+    "nativeScript": "柵戸",
+    "irlParallel": "Oshu",
+    "alpha3": "NCH",
+    "x": 2289,
+    "y": 772
   },
   {
     "name": "Iwane",
@@ -14532,16 +14532,16 @@
     "y": 685
   },
   {
-    "name": "Shichidaika",
+    "name": "Toyoda",
     "nation": "Nichirin",
     "population": 92000,
-    "gdp": 1419568000,
-    "gdpPerCapita": 15430,
-    "nativeScript": "七大花",
-    "irlParallel": "Qitaihe",
+    "gdp": 1419914000,
+    "gdpPerCapita": 15434,
+    "nativeScript": "豊田",
+    "irlParallel": "Qingan",
     "alpha3": "NCH",
-    "x": 2557,
-    "y": 792
+    "x": 2668,
+    "y": 786
   },
   {
     "name": "Tenzato",
@@ -14556,16 +14556,16 @@
     "y": 797
   },
   {
-    "name": "Toyoda",
+    "name": "Shichidaika",
     "nation": "Nichirin",
     "population": 92000,
-    "gdp": 1419914000,
-    "gdpPerCapita": 15434,
-    "nativeScript": "豊田",
-    "irlParallel": "Qingan",
+    "gdp": 1419568000,
+    "gdpPerCapita": 15430,
+    "nativeScript": "七大花",
+    "irlParallel": "Qitaihe",
     "alpha3": "NCH",
-    "x": 2668,
-    "y": 786
+    "x": 2557,
+    "y": 792
   },
   {
     "name": "Arakawa",
@@ -15744,18 +15744,6 @@
     "y": 2818
   },
   {
-    "name": "Topaz",
-    "nation": "Ponurvia",
-    "population": 92000,
-    "gdp": 8623293000,
-    "gdpPerCapita": 93731,
-    "nativeScript": "",
-    "irlParallel": "Visalia",
-    "alpha3": "PON",
-    "x": 1118,
-    "y": 2913
-  },
-  {
     "name": "Neu-Catamburg",
     "nation": "Ponurvia",
     "population": 92000,
@@ -15766,6 +15754,18 @@
     "alpha3": "PON",
     "x": 1184,
     "y": 2767
+  },
+  {
+    "name": "Topaz",
+    "nation": "Ponurvia",
+    "population": 92000,
+    "gdp": 8623293000,
+    "gdpPerCapita": 93731,
+    "nativeScript": "",
+    "irlParallel": "Visalia",
+    "alpha3": "PON",
+    "x": 1118,
+    "y": 2913
   },
   {
     "name": "Volkstrom",
@@ -15960,18 +15960,6 @@
     "y": 2827
   },
   {
-    "name": "Nussbaum",
-    "nation": "Ponurvia",
-    "population": 20000,
-    "gdp": 1300385000,
-    "gdpPerCapita": 65019,
-    "nativeScript": "",
-    "irlParallel": "Nogales",
-    "alpha3": "PON",
-    "x": 1115,
-    "y": 3229
-  },
-  {
     "name": "Scheinfurt",
     "nation": "Ponurvia",
     "population": 20000,
@@ -15982,6 +15970,18 @@
     "alpha3": "PON",
     "x": 1306,
     "y": 3070
+  },
+  {
+    "name": "Nussbaum",
+    "nation": "Ponurvia",
+    "population": 20000,
+    "gdp": 1300385000,
+    "gdpPerCapita": 65019,
+    "nativeScript": "",
+    "irlParallel": "Nogales",
+    "alpha3": "PON",
+    "x": 1115,
+    "y": 3229
   },
   {
     "name": "Recolotta City",
@@ -16179,8 +16179,8 @@
     "name": "Radagorsk",
     "nation": "Rudania",
     "population": 14403000,
-    "gdp": 1728736877000,
-    "gdpPerCapita": 120026,
+    "gdp": 1399999611000,
+    "gdpPerCapita": 97202,
     "nativeScript": "Радагорск",
     "irlParallel": "Moscow",
     "alpha3": "RUD",
@@ -16680,18 +16680,6 @@
     "y": 2233
   },
   {
-    "name": "Lugeck",
-    "nation": "Rudania",
-    "population": 269000,
-    "gdp": 8959439000,
-    "gdpPerCapita": 33306,
-    "nativeScript": "Лугецк",
-    "irlParallel": "Lipetsk",
-    "alpha3": "RUD",
-    "x": 3278,
-    "y": 2183
-  },
-  {
     "name": "Iskiralsk",
     "nation": "Rudania",
     "population": 269000,
@@ -16702,6 +16690,18 @@
     "alpha3": "RUD",
     "x": 3263,
     "y": 1581
+  },
+  {
+    "name": "Lugeck",
+    "nation": "Rudania",
+    "population": 269000,
+    "gdp": 8959439000,
+    "gdpPerCapita": 33306,
+    "nativeScript": "Лугецк",
+    "irlParallel": "Lipetsk",
+    "alpha3": "RUD",
+    "x": 3278,
+    "y": 2183
   },
   {
     "name": "Kamennaya",
@@ -17208,18 +17208,6 @@
     "y": 1350
   },
   {
-    "name": "Zasratov",
-    "nation": "Rudania",
-    "population": 64000,
-    "gdp": 2511295000,
-    "gdpPerCapita": 39239,
-    "nativeScript": "Засратов",
-    "irlParallel": "Ishim",
-    "alpha3": "RUD",
-    "x": 3145,
-    "y": 1692
-  },
-  {
     "name": "Trioyka",
     "nation": "Rudania",
     "population": 64000,
@@ -17230,6 +17218,18 @@
     "alpha3": "RUD",
     "x": 2950,
     "y": 1752
+  },
+  {
+    "name": "Zasratov",
+    "nation": "Rudania",
+    "population": 64000,
+    "gdp": 2511295000,
+    "gdpPerCapita": 39239,
+    "nativeScript": "Засратов",
+    "irlParallel": "Ishim",
+    "alpha3": "RUD",
+    "x": 3145,
+    "y": 1692
   },
   {
     "name": "Lovatogorod",
@@ -18708,18 +18708,6 @@
     "y": 3128
   },
   {
-    "name": "Kevberos",
-    "nation": "Selmira",
-    "population": 75000,
-    "gdp": 2888922000,
-    "gdpPerCapita": 38519,
-    "nativeScript": "",
-    "irlParallel": "Ereğli",
-    "alpha3": "SEL",
-    "x": 3442,
-    "y": 3158
-  },
-  {
     "name": "Menteşe",
     "nation": "Selmira",
     "population": 75000,
@@ -18730,6 +18718,18 @@
     "alpha3": "SEL",
     "x": 3419,
     "y": 3319
+  },
+  {
+    "name": "Kevberos",
+    "nation": "Selmira",
+    "population": 75000,
+    "gdp": 2888922000,
+    "gdpPerCapita": 38519,
+    "nativeScript": "",
+    "irlParallel": "Ereğli",
+    "alpha3": "SEL",
+    "x": 3442,
+    "y": 3158
   },
   {
     "name": "Kelesina",
@@ -20304,18 +20304,6 @@
     "y": 2606
   },
   {
-    "name": "Szalaváros",
-    "nation": "Turulia",
-    "population": 54000,
-    "gdp": 1982422000,
-    "gdpPerCapita": 36712,
-    "nativeScript": "",
-    "irlParallel": "Zalaegerszeg",
-    "alpha3": "TUR",
-    "x": 3185,
-    "y": 2615
-  },
-  {
     "name": "Délivár",
     "nation": "Turulia",
     "population": 54000,
@@ -20326,6 +20314,18 @@
     "alpha3": "TUR",
     "x": 3237,
     "y": 2554
+  },
+  {
+    "name": "Szalaváros",
+    "nation": "Turulia",
+    "population": 54000,
+    "gdp": 1982422000,
+    "gdpPerCapita": 36712,
+    "nativeScript": "",
+    "irlParallel": "Zalaegerszeg",
+    "alpha3": "TUR",
+    "x": 3185,
+    "y": 2615
   },
   {
     "name": "Arecaváros",
