@@ -66,6 +66,7 @@
   <div id="ui-left">
   <div id="bottom-sheet">
     <img id="bs-banner" alt="Avium">
+    <button id="irp-date" type="button" title="Time"></button>
     <div id="bs-home">
       <input id="bs-search" type="search" placeholder="Search Avium" autocomplete="off">
       <ul id="bs-results"></ul>
@@ -82,17 +83,18 @@
           <span class="bs-circle bs-pink"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="M21 16l-5-5-11 8"/></svg></span>
           <span class="bs-btn-label">Explore</span>
         </button>
-        <button class="bs-btn" data-view="export">
-          <span class="bs-circle bs-green"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="M8.5 11.5 12 15l3.5-3.5"/><path d="M7 11H6a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-7a1 1 0 0 0-1-1h-1"/></svg></span>
-          <span class="bs-btn-label">Export</span>
+        <div class="bs-sep" role="separator"></div>
+        <button class="bs-btn" data-view="time">
+          <span class="bs-circle bs-indigo"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span>
+          <span class="bs-btn-label">Time</span>
         </button>
         <button class="bs-btn" data-view="measure">
           <span class="bs-circle bs-purple"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><rect x="3" y="9" width="18" height="6.5" rx="1.5"/><path d="M7.5 9v3M12 9v3M16.5 9v3"/></svg></span>
           <span class="bs-btn-label">Measure</span>
         </button>
-        <button class="bs-btn" data-view="settings">
-          <span class="bs-circle bs-grey"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M4 7.5h8"/><path d="M18 7.5h2"/><circle cx="15" cy="7.5" r="2.4"/><path d="M4 16.5h2"/><path d="M12 16.5h8"/><circle cx="9" cy="16.5" r="2.4"/></svg></span>
-          <span class="bs-btn-label">Settings</span>
+        <button class="bs-btn" data-view="export">
+          <span class="bs-circle bs-green"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="M8.5 11.5 12 15l3.5-3.5"/><path d="M7 11H6a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-7a1 1 0 0 0-1-1h-1"/></svg></span>
+          <span class="bs-btn-label">Export</span>
         </button>
       </div>
     </div>

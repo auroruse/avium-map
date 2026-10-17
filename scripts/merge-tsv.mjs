@@ -8,6 +8,7 @@ import { resolve, dirname } from 'path'
 import { fileURLToPath } from 'url'
 import { writeCoords } from './coords.mjs'
 import { writeAreas } from './areas.mjs'
+import { writeZones } from './zones.mjs'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const tsvPath = resolve(process.argv[2] || `${root}/src/data/cities.tsv`)
@@ -125,6 +126,7 @@ writeCoords()
 // drawing is not on this machine, which is every checkout that is not the one it
 // was drawn on.
 const areas = await writeAreas()
+await writeZones()
 
 const placed = cities.filter(c => c.x != null).length
 const added = cities.filter(c => !coordMap.has(key(c))).length

@@ -6,9 +6,15 @@ import labelsData from './data/labels.json'
 // Vite fingerprints and emits it; the element lives in index.html so the column
 // has its header before any script runs.
 import bannerUrl from './assets/banner.png'
+import politicalThumb from './assets/map-modes/political.png'
+import zonesThumb from './assets/map-modes/zones.png'
+import daylightThumb from './assets/map-modes/daylight.png'
+import lightsThumb from './assets/map-modes/lights.png'
 import stationsData from './data/stations.json'
 import nationsTsv from './data/nations.tsv?raw'
 import areasData from './data/areas.json'
+import zonesData from './data/zones.json'
+import { icAt as icAtReal, icNow, rateNow, realAt } from './ictime'
 import { talopedia, type TalopediaEntry } from './data/talopedia'
 
 // --- Dev mode ---
@@ -150,6 +156,52 @@ function fmtGeo(g: Geo, places = 2): string {
   return `${Math.abs(g.lat).toFixed(places)}°${lat} ${Math.abs(g.lon).toFixed(places)}°${lon}`
 }
 
+// --- Time zones: data and clocks ---
+//
+// Up here because the nation labels, built during the first render, carry them.
+// The layer itself is further down, under Time zones and daylight.
+
+// Below this a nation's name is set smaller than its clock line would be, so the
+// line is left off
+const ZL_MIN_FS = 7.5
+
+const ZONES = zonesData as { nations: Record<string, number[]>; cities: Record<string, number> }
+const ZONE_LOOKUP = 1500
+const HOUR = 3_600_000
+
+function fmtZone(z: number): string {
+  return z ? `UTC${z > 0 ? '+' : '−'}${Math.abs(z)}` : 'UTC'
+}
+
+function solarZone(x: number, y: number): number {
+  const z = Math.round(toGeo(x, y).lon / 15)
+  return z === -12 ? 12 : z
+}
+
+function cityZone(c: City): number {
+  return ZONES.cities[`${c.name}|${c.nation}`] ?? (c.x != null && c.y != null ? solarZone(c.x, c.y) : 0)
+}
+
+function nationZones(name: string): number[] {
+  return ZONES.nations[name] ?? []
+}
+
+const two = (n: number) => String(n).padStart(2, '0')
+const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+function hhmm(z: number, ms = icNow()): string {
+  const d = new Date(ms + z * HOUR)
+  return `${two(d.getUTCHours())}:${two(d.getUTCMinutes())}`
+}
+
+// A city's clock, live, in a pill at the end of its coordinates line: the time,
+// then the day there and the offset
+function timeLine(z: number, ms = icNow()): string {
+  const d = new Date(ms + z * HOUR)
+  return `<b>${hhmm(z, ms)}</b> ${WEEKDAYS[d.getUTCDay()]} · ${fmtZone(z)}`
+}
+
 // --- Map ---
 
 const contentBounds = L.latLngBounds(px(0, CONTENT), px(CONTENT, 0))
@@ -192,9 +244,23 @@ function sidebarWidth(): number {
 // the view slides by half the difference so what was in the middle stays there
 // instead of ending up under the column.
 let lastCover = 0
+// While that slide runs the city labels are not re-placed frame by frame (the
+// pan is half a column, nothing worth streaming in) and the columns drop their
+// blur, which would otherwise re-blur the moving map under them every frame.
+// Both come back when the slide ends.
+let coverPanning = false
+let coverTimer = 0
 function syncCover() {
   const w = sidebarWidth()
   if (w === lastCover) return
+  coverPanning = true
+  document.body.classList.add('col-moving')
+  clearTimeout(coverTimer)
+  coverTimer = window.setTimeout(() => {
+    coverPanning = false
+    document.body.classList.remove('col-moving')
+    updateCities()
+  }, 340)
   map.panBy([-(w - lastCover) / 2, 0], { duration: 0.25 })
   lastCover = w
 }
@@ -243,7 +309,7 @@ function tiledLayer(name: string, pane = 'overlayPane'): L.TileLayer {
   })
 }
 
-tiledLayer('base', 'tilePane').addTo(map)
+const baseLayer = tiledLayer('base', 'tilePane').addTo(map)
 
 // Where the world stops. The ocean tile and the page behind it are both dark, so
 // without this the map has no visible edge at all when zoomed out.
@@ -263,122 +329,78 @@ if (DEV) {
   pangaeaImg.src = 'overlays/pangaea.png'
   pangaeaImg.onload = () => {
     pangaeaLayer = L.imageOverlay('overlays/pangaea.png', imgBounds, { opacity: 0.4 })
-    overlayControl['Pangaea'] = pangaeaLayer
-    layerCtrl.addOverlay(pangaeaLayer, 'Pangaea')
   }
 }
 
 // --- Layer control ---
-
-// The two raster overlays, in the order they stack on the map. Everything drawn
-// on top of them is a Settings toggle instead, since a layer control can only
-// say on or off and those need more than that.
-const overlayControl: Record<string, L.Layer> = {
-  'Borders': bordersLayer,
-  'Rivers': riversLayer,
-}
-
-// Collapsed and moved into the left stack, so layers is a button alongside zoom
-// and rotate rather than a permanent card taking a corner of the map to itself.
-const layerCtrl = L.control
-  .layers({}, overlayControl, { collapsed: true, position: 'topright' })
-  .addTo(map)
-
-// Leaflet opens a collapsed control on hover, so it springs open whenever the
-// pointer crosses that corner on its way somewhere else. Make it a click toggle.
 //
-// The hover pair comes off by reference. The button's own click handler is an
-// anonymous function inside an object literal, so it can't be removed the same
-// way — a capture-phase listener with stopImmediatePropagation gets in front of
-// it instead, which halts every remaining listener for that event in any phase.
-{
-  const ctrl = layerCtrl as unknown as {
-    _container?: HTMLElement
-    _layersLink?: HTMLElement
-    _expandSafely?: () => void
-    collapse: () => void
-    expand: () => void
-  }
-  const box = ctrl._container
-  const link = ctrl._layersLink
-  if (box && link && ctrl._expandSafely) {
-    L.DomEvent.off(box, { mouseenter: ctrl._expandSafely, mouseleave: ctrl.collapse }, ctrl)
-    const open = () => box.classList.contains('leaflet-control-layers-expanded')
-    link.addEventListener(
-      'click',
-      (e) => {
-        e.preventDefault()
-        e.stopImmediatePropagation()
-        open() ? ctrl.collapse() : ctrl._expandSafely!()
-      },
-      true
-    )
-    // Leaflet already closes it on a map click; this covers the rest of the page
-    document.addEventListener('click', (e) => {
-      if (open() && !box.contains(e.target as Node)) ctrl.collapse()
-    })
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && open()) ctrl.collapse()
-    })
-  }
-}
+// There is none: the Map sheet further down owns every layer, with the map
+// modes as tiles and the overlays as switches. Its button goes into the stack
+// here so it sits between zoom and rotate, where the layers button was.
+const mapBtn = L.DomUtil.create('a', 'map-btn') as HTMLAnchorElement
+mapBtn.href = '#'
+mapBtn.setAttribute('role', 'button')
+mapBtn.setAttribute('aria-label', 'Map')
+mapBtn.title = 'Map'
+new (L.Control.extend({
+  onAdd() {
+    const c = L.DomUtil.create('div', 'leaflet-bar leaflet-control map-btn-ctl')
+    c.appendChild(mapBtn)
+    L.DomEvent.disableClickPropagation(c)
+    return c
+  },
+}))({ position: 'topright' }).addTo(map)
 
 // --- Settings ---
 //
-// Borders and Rivers are tile layers with nothing to decide beyond on or off, so
-// they stay in Leaflet's own control. Everything below either splits one layer
-// group two ways (territory names and water names share labelLayer) or changes
-// how a layer renders rather than whether it is on the map, which the control
-// cannot express. Both are read during the first render, so this has to be
-// resolved before any of it runs.
+// What the map shows, as one record: which of the four maps it is, and which
+// overlays are on. A mode can rule an overlay out (the World Clock maps have no
+// borders, night has no names) without touching the switch, so going back to
+// the political map brings back exactly what was on before. Read during the
+// first render, so it has to be resolved before any of it runs.
+
+type MapMode = 'political' | 'zones' | 'daylight' | 'lights'
+const MAP_MODES: MapMode[] = ['political', 'zones', 'daylight', 'lights']
 
 interface Settings {
+  mode: MapMode
+  borders: boolean
+  rivers: boolean
   territories: boolean
   water: boolean
   cities: boolean
   stations: boolean
-  night: boolean
 }
 
 const SETTINGS_KEY = 'avium-settings'
 
 const settings: Settings = {
+  mode: 'political',
+  borders: true,
+  rivers: true,
   territories: true,
   water: true,
   cities: true,
   stations: true,
-  night: false,
 }
-
-// What was on before night took the map over. Night turns off every layer but
-// the cities, so this is how switching back restores the map the user had rather
-// than the one the defaults describe. Persisted alongside the settings, because
-// a reload while night is on would otherwise have nothing to restore to.
-interface PreNight {
-  territories: boolean
-  water: boolean
-  stations: boolean
-  borders: boolean
-  rivers: boolean
-}
-
-let preNight: PreNight | null = null
 
 // Key by key and typed, so a stale or hand-edited entry cannot introduce a
-// non-boolean that then reads as truthy forever.
+// non-boolean that then reads as truthy forever. An entry from before the modes
+// had night as a switch that overwrote the others and kept their old values
+// aside; that is read back as the lights map with those values restored.
 try {
   const saved = JSON.parse(localStorage.getItem(SETTINGS_KEY) ?? '{}')
   for (const k of Object.keys(settings) as (keyof Settings)[]) {
-    if (typeof saved?.[k] === 'boolean') settings[k] = saved[k]
+    if (k !== 'mode' && typeof saved?.[k] === 'boolean') settings[k] = saved[k]
   }
-  const p = saved?.preNight
-  if (p && typeof p === 'object') {
-    preNight = {
-      territories: !!p.territories,
-      water: !!p.water,
-      stations: !!p.stations,
-      borders: !!p.borders,
-      rivers: !!p.rivers,
+  if (MAP_MODES.includes(saved?.mode)) settings.mode = saved.mode
+  if (saved?.night === true) {
+    settings.mode = 'lights'
+    const p = saved.preNight
+    if (p && typeof p === 'object') {
+      for (const k of ['territories', 'water', 'stations', 'borders', 'rivers'] as const) {
+        if (typeof p[k] === 'boolean') settings[k] = p[k]
+      }
     }
   }
 } catch {
@@ -387,10 +409,26 @@ try {
 
 function saveSettings() {
   try {
-    localStorage.setItem(SETTINGS_KEY, JSON.stringify({ ...settings, preNight }))
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings))
   } catch {
     // private mode or a full quota; the session still works, it just forgets
   }
+}
+
+// What each mode leaves room for. The two World Clock maps and night are the
+// map as a backdrop, so the political overlays go; zones keeps the names, which
+// carry each nation's clock.
+const modeAllows = {
+  borders: (m: MapMode) => m === 'political',
+  rivers: (m: MapMode) => m === 'political',
+  territories: (m: MapMode) => m === 'political' || m === 'zones',
+  water: (m: MapMode) => m === 'political' || m === 'zones',
+  stations: (m: MapMode) => m === 'political' || m === 'zones',
+  cities: (_m: MapMode) => true,
+}
+
+function shows(k: keyof typeof modeAllows): boolean {
+  return settings[k] && modeAllows[k](settings.mode)
 }
 
 // Night is a sheet of near-black between the tiles and the markers rather than a
@@ -724,7 +762,7 @@ function suppressedSeas(z: number): Set<LabelDef> {
 function labelShown(def: LabelDef, z: number): boolean {
   // continent, nation and colony are the land names, so they answer to
   // Territories; ocean and sea answer to Bodies of Water.
-  if (!settings[WATER.has(def.type) ? 'water' : 'territories']) return false
+  if (!shows(WATER.has(def.type) ? 'water' : 'territories')) return false
   if (!inBand(def, z)) return false
   if (def.type === 'sea' && suppressedSeas(z).has(def)) return false
   return true
@@ -738,10 +776,13 @@ function makeLabelMarker(def: LabelDef, pos: [number, number]): L.Marker {
   // oceans and seas have no entry there, so they stay inert rather than
   // offering a click that does nothing. Dev keeps the label for editing.
   const nation = DEV ? undefined : nationByName.get(norm(def.text))
+  // With the time zones on, a nation's name carries its offset and clock
+  const zones = nationZones(nationByName.get(norm(def.text))?.name ?? '')
+  const zl = zones.length ? `<em class="zl" data-z="${zones.join(',')}">${zoneLine(zones)}</em>` : ''
   const m = L.marker(px(pos[0], pos[1]), {
     icon: L.divIcon({
       className: `map-label label-${def.type}` + (DEV ? ' dev-label' : nation ? ' label-link' : ''),
-      html: `<span>${labelLines(def).join('<br>')}${handles}</span>`,
+      html: `<span>${labelLines(def).join('<br>')}${zl}${handles}</span>`,
       iconSize: [0, 0],
       iconAnchor: [0, 0],
     }),
@@ -860,8 +901,11 @@ function updateLabels() {
   for (const [def, marker] of labelMarkers) {
     const el = marker.getElement()
     if (!el) continue
-    el.style.fontSize = areaFontSize(def, z).toFixed(1) + 'px'
+    const fs = areaFontSize(def, z)
+    el.style.fontSize = fs.toFixed(1) + 'px'
     el.classList.toggle('label-on', labelShown(def, z))
+    // A clock line bigger than the name it hangs under reads as the label
+    el.classList.toggle('zl-small', fs < ZL_MIN_FS)
   }
 }
 
@@ -1348,6 +1392,16 @@ function computePlacement(z: number, pinned: Placement[]): Placement[] {
     const water = WATER.has(def.type)
     if (water && areaFontSize(def, z) > cityFsMax * WATER_BLOCK) continue
     addBox({ ...b, water })
+    // The zone line hung under a nation's name takes ground the same way
+    if (settings.mode === 'zones' && !water && areaFontSize(def, z) >= ZL_MIN_FS) {
+      const zs = nationZones(nationByName.get(norm(def.text))?.name ?? '')
+      if (zs.length) {
+        // .zl is set at the name's size, held between 9 and 12px
+        const zf = Math.min(12, Math.max(9, areaFontSize(def, z)))
+        const w = zoneLine(zs).length * zf * 0.6
+        addBox({ x: b.x + b.w / 2 - w / 2, y: b.y + b.h - 2, w, h: zf * 1.3, water: false })
+      }
+    }
   }
 
   const placed: Placement[] = []
@@ -1706,7 +1760,7 @@ function updateCities() {
   // Empty falls through the same diff as any other change, so both toggles tear
   // the markers down without a separate path. Night has its own canvas layer, so
   // this pass has nothing to do there — which is also what makes it cheap.
-  const hidden = !settings.cities || settings.night || z < 2.5
+  const hidden = !settings.cities || settings.mode === 'lights' || z < 2.5
   const all = hidden ? [] : placementsAt(z)
 
   // Viewport cull: placement is still computed map-wide (so what renders is
@@ -2047,7 +2101,8 @@ function openCityPanel(c: City) {
     `<div class="cp-name">${displayName}</div>` +
     (c.nativeScript ? `<div class="cp-native">${c.nativeScript}</div>` : '') +
     (c.x != null && c.y != null
-      ? `<div class="cp-coord">${fmtGeo(toGeo(c.x, c.y))}</div>`
+      ? `<div class="cp-coord"><span>${fmtGeo(toGeo(c.x, c.y))}</span>` +
+        `<span class="cp-time" data-z="${cityZone(c)}">${timeLine(cityZone(c))}</span></div>`
       : '') +
     statStrip([
       {
@@ -2234,6 +2289,9 @@ function openNationPanel(n: Nation) {
     detailsCard([
       n.continent ? detailRow('Continent', n.continent) : '',
       n.capital ? detailRow('Capital', n.capital, !!cap) : '',
+      nationZones(n.name).length
+        ? detailRow(nationZones(n.name).length > 1 ? 'Time Zones' : 'Time Zone', nationZones(n.name).map(fmtZone).join(', '))
+        : '',
       n.status ? detailRow('Status', n.status) : '',
     ]) +
     (agg.count
@@ -2322,13 +2380,15 @@ map.on('zoomend', () => {
 // glides stream markers in; zoom animation frames skipped (zoomend covers them)
 let moveRaf = 0
 map.on('move', () => {
-  if (moveRaf) return
+  if (moveRaf || coverPanning) return
   moveRaf = requestAnimationFrame(() => {
     moveRaf = 0
     if (!(map as any)._animatingZoom) updateCities()
   })
 })
-map.on('moveend', () => updateCities())
+map.on('moveend', () => {
+  if (!coverPanning) updateCities()
+})
 
 updateLabels()
 updateCities()
@@ -3252,7 +3312,7 @@ bsFilter.addEventListener('input', () => rebuildList(false))
 
 // The rail stays on screen beside an open list, so it has to say which one is
 // open. Cities is the button labelled 'all' in the markup.
-function markNavOpen(view: 'all' | 'nations' | 'settings' | 'measure' | 'explore' | null) {
+function markNavOpen(view: 'all' | 'nations' | 'measure' | 'explore' | 'time' | null) {
   for (const b of document.querySelectorAll<HTMLElement>('.bs-btn')) {
     // Explore is a mode rather than a column, so it stays lit while it is on
     b.classList.toggle('is-on', (!!view && b.dataset.view === view) || (exploring && b.dataset.view === 'explore'))
@@ -3266,7 +3326,7 @@ function markNavOpen(view: 'all' | 'nations' | 'settings' | 'measure' | 'explore
 function openColumn(
   title: string,
   controls: boolean,
-  nav: 'all' | 'nations' | 'settings' | 'measure' | 'explore' | null
+  nav: 'all' | 'nations' | 'measure' | 'explore' | 'time' | null
 ) {
   // Another tab taking the column is leaving Explore
   if (nav !== 'explore') endExplore()
@@ -3317,8 +3377,8 @@ function navTab(view: string, open: () => void) {
 
 navTab('all', () => openListView('cities'))
 navTab('nations', () => openListView('nations'))
-navTab('settings', () => openSettings())
 navTab('measure', () => openMeasureMenu())
+navTab('time', () => openTimeView())
 document.querySelector('.bs-btn[data-view="export"]')!.addEventListener('click', () => exportView())
 
 // --- Measure tab ---
@@ -3349,106 +3409,35 @@ bsItems.addEventListener('click', e => {
   if (row) startMeasure(row.dataset.measure as MeasureMode)
 })
 
-// --- Settings tab ---
-//
-// The same column the city and nation lists use, with the search and sort row
-// hidden. A settings page is a list of rows in that column, and #bs-items
-// already styles a row, so the alternative was a fourth surface duplicating the
-// slide-out and bottom-sheet behaviour to say the same thing.
+// --- Applying the settings ---
 
-const SETTING_ROWS: [keyof Settings, string][] = [
-  ['territories', 'Territories'],
-  ['water', 'Bodies of Water'],
-  ['cities', 'Cities'],
-  ['stations', 'Research Stations'],
-  ['night', 'Night Mode'],
-]
-
-// Night owns the other layers while it is on, so their switches go dead rather
-// than offering a toggle that fights the mode. Cities stays live: it is the one
-// thing night is made of.
-const NIGHT_OWNS = new Set<keyof Settings>(['territories', 'water', 'stations'])
-
-function renderSettingRows() {
-  // A label around both halves, so the whole row toggles rather than the 40px
-  // of switch at the end of it.
-  bsItems.innerHTML = SETTING_ROWS.map(([key, label]) => {
-    const off = settings.night && NIGHT_OWNS.has(key)
-    return (
-      `<li class="set-row${off ? ' is-locked' : ''}"><label class="set-hit"><span>${label}</span>` +
-      `<input type="checkbox" class="set-switch" data-set="${key}"` +
-      `${settings[key] ? ' checked' : ''}${off ? ' disabled' : ''}>` +
-      `</label></li>`
-    )
-  }).join('')
-}
-
-function openSettings() {
-  openColumn('Settings', false, 'settings')
-  renderSettingRows()
-}
-
-// Night is the whole map at once: the borders, the rivers, every name and the
-// stations all go, because the view is city lights on darkness and anything else
-// is a daylight map showing through it. Borders and Rivers live in Leaflet's
-// control rather than in settings, so their state is read off the map.
-function setNight(on: boolean) {
-  if (on && !settings.night) {
-    preNight = {
-      territories: settings.territories,
-      water: settings.water,
-      stations: settings.stations,
-      borders: map.hasLayer(bordersLayer),
-      rivers: map.hasLayer(riversLayer),
-    }
-    settings.territories = false
-    settings.water = false
-    settings.stations = false
-  } else if (!on && preNight) {
-    settings.territories = preNight.territories
-    settings.water = preNight.water
-    settings.stations = preNight.stations
-    if (preNight.borders) bordersLayer.addTo(map)
-    if (preNight.rivers) riversLayer.addTo(map)
-    preNight = null
-  }
-  settings.night = on
-}
-
-// Delegated, so it survives rebuildList replacing the same innerHTML with city
-// rows. Those are click-driven and never fire change.
-bsItems.addEventListener('change', e => {
-  const box = e.target as HTMLInputElement
-  const key = box.dataset.set as keyof Settings | undefined
-  if (!key || !(key in settings)) return
-  if (key === 'night') setNight(box.checked)
-  else settings[key] = box.checked
-  applySettings()
-  saveSettings()
-  // Night moves three other switches, so the rows have to be redrawn to agree
-  if (key === 'night') renderSettingRows()
-})
-
-// Every toggle lands here. The label switches and Cities change what the update
-// passes emit; Night changes that and the map underneath them. Enforced rather
-// than applied on the transition, so a reload with night already on lands in the
-// same state as the click that turned it on.
+// Every switch and mode tile lands here, and so does the first render. Enforced
+// as a state rather than applied as a transition, so a reload lands where the
+// click did.
 function applySettings() {
-  document.body.classList.toggle('night', settings.night)
-  if (settings.night) {
-    nightVeil.addTo(map)
-    bordersLayer.remove()
-    riversLayer.remove()
-  } else {
-    nightVeil.remove()
-  }
-  if (settings.night && settings.cities) nightLights().addTo(map)
+  const m = settings.mode
+  document.body.classList.toggle('night', m === 'lights')
+  document.body.classList.toggle('clockmap', m === 'zones' || m === 'daylight')
+  document.body.classList.toggle('zones-on', m === 'zones')
+  const put = (l: L.Layer, on: boolean) => (on ? map.hasLayer(l) || l.addTo(map) : l.remove())
+  put(baseLayer, m === 'political' || m === 'lights')
+  // The zone layer paints every pixel, sea and unclaimed land included, so
+  // only Day & Night needs the grey base under it
+  put(monoLayer, m === 'daylight')
+  put(bordersLayer, shows('borders'))
+  put(riversLayer, shows('rivers'))
+  put(zonesLayer, m === 'zones')
+  if (m !== 'zones') zoneGlow.remove()
+  put(daylightLayer, m === 'daylight')
+  put(nightVeil, m === 'lights')
+  if (m === 'lights' && settings.cities) nightLights().addTo(map)
   else nightLayer?.remove()
   // Names reserve space in the placement grid, so hiding them hands it back
   invalidatePlacements()
   updateLabels()
   updateCities()
   updateStations()
+  renderMapSheet()
 }
 
 document.getElementById('bs-back')!.addEventListener('click', closeSheetList)
@@ -4059,7 +4048,7 @@ function stationIcon(station: Station, dir: 'right' | 'left'): L.DivIcon {
 function updateStations() {
   for (const [, m] of stationMarkers) stationLayer.removeLayer(m)
   stationMarkers.clear()
-  if (!settings.stations || map.getZoom() < STATION_MIN_ZOOM) return
+  if (!shows('stations') || map.getZoom() < STATION_MIN_ZOOM) return
 
   const s = scaleAt(map.getZoom())
   const taken: Box[] = []
@@ -4769,5 +4758,524 @@ lastCover = sidebarWidth()
     watch.observe(document.getElementById(id)!, { attributes: true, attributeFilter: ['hidden'] })
   }
 }
+
+// --- Time zones and daylight ---
+//
+// Zones come from scripts/zones.mjs: one clock per nation, set by where its land
+// sits, with the very widest split along meridians. Sea and unclaimed land keep
+// solar time. The layer is a tiled picture like the borders; zones.png beside it
+// is a quarter-size lookup (red = offset + 13, 0 for no zone) for saying which
+// zone a point is in.
+
+map.createPane('zones')
+map.getPane('zones')!.style.zIndex = '450' // over the borders and rivers, under night and the markers
+map.getPane('zones')!.style.pointerEvents = 'none'
+map.createPane('daylight')
+map.getPane('daylight')!.style.zIndex = '455'
+map.getPane('daylight')!.style.pointerEvents = 'none'
+
+const zonesLayer = tiledLayer('zones', 'zones')
+
+// The line under a nation's name: its offset and the time there, or its offsets
+// alone when it has more than one and no single time would be right
+function zoneLine(zs: number[], ms = icNow()): string {
+  if (zs.length === 1) return `${fmtZone(zs[0])} · ${hhmm(zs[0], ms)}`
+  return 'UTC' + zs.map(z => (z > 0 ? '+' : z < 0 ? '−' : '±') + Math.abs(z)).join(' / ')
+}
+
+function syncZoneLines(ms = icNow()) {
+  for (const el of document.querySelectorAll<HTMLElement>('.zl')) {
+    el.textContent = zoneLine(el.dataset.z!.split(',').map(Number), ms)
+  }
+}
+
+// Hover: the zone under the pointer lights up everywhere it is, and a readout
+// gives its time. Over sea and unclaimed land that is the solar hour.
+let zoneLook: Uint8Array | null = null
+let zoneLookLoading = false
+function loadZoneLookup() {
+  if (zoneLook || zoneLookLoading) return
+  zoneLookLoading = true
+  const img = new Image()
+  img.onload = () => {
+    const c = document.createElement('canvas')
+    c.width = c.height = ZONE_LOOKUP
+    const ctx = c.getContext('2d')!
+    ctx.drawImage(img, 0, 0)
+    const rgba = ctx.getImageData(0, 0, ZONE_LOOKUP, ZONE_LOOKUP).data
+    zoneLook = new Uint8Array(ZONE_LOOKUP * ZONE_LOOKUP)
+    for (let i = 0; i < zoneLook.length; i++) zoneLook[i] = rgba[i * 4]
+  }
+  img.onerror = () => (zoneLookLoading = false)
+  img.src = 'zones.png'
+}
+
+// The zone at a map point: the lookup covers sea and unclaimed land too (solar
+// time there); solar time is the answer anywhere it has not loaded
+function zoneAt(x: number, y: number): number {
+  if (zoneLook && x >= 0 && y >= 0 && x < CONTENT && y < CONTENT) {
+    const v = zoneLook[Math.floor(y / 4) * ZONE_LOOKUP + Math.floor(x / 4)]
+    if (v) return v - 13
+  }
+  return solarZone(x, y)
+}
+
+const zoneTip = document.createElement('div')
+zoneTip.className = 'zone-tip'
+zoneTip.hidden = true
+map.getContainer().appendChild(zoneTip)
+
+// The highlight is drawn tile by tile from zone-id tiles at the zone map's own
+// detail, so its edge sits exactly on the gold line at every zoom. Each tile
+// keeps its ids and is repainted when the hovered zone changes: the zone lifted
+// in white, with a crisp white edge.
+type GlowTile = HTMLCanvasElement & { ids?: Uint8Array }
+let glowZone: number | null = null
+
+function paintGlow(c: GlowTile) {
+  const ctx = c.getContext('2d')!
+  ctx.clearRect(0, 0, 256, 256)
+  const ids = c.ids
+  if (!ids || glowZone === null) return
+  const v = glowZone + 13
+  const img = ctx.createImageData(256, 256)
+  const a = img.data
+  for (let p = 0; p < 65536; p++) {
+    if (ids[p] !== v) continue
+    const x = p & 255, y = p >> 8
+    // a tile's own edge is not the zone's, so off-tile neighbours count as same
+    const edge =
+      (x > 0 && ids[p - 1] !== v) || (x < 255 && ids[p + 1] !== v) ||
+      (y > 0 && ids[p - 256] !== v) || (y < 255 && ids[p + 256] !== v)
+    a[p * 4] = a[p * 4 + 1] = a[p * 4 + 2] = 255
+    a[p * 4 + 3] = edge ? 235 : 38
+  }
+  ctx.putImageData(img, 0, 0)
+}
+
+const ZoneGlowLayer = L.GridLayer.extend({
+  createTile(coords: L.Coords, done: L.DoneCallback) {
+    const c = document.createElement('canvas') as GlowTile
+    c.width = c.height = 256
+    const img = new Image()
+    img.onload = () => {
+      const r = document.createElement('canvas')
+      r.width = r.height = 256
+      const rctx = r.getContext('2d')!
+      rctx.drawImage(img, 0, 0)
+      const d = rctx.getImageData(0, 0, 256, 256).data
+      c.ids = new Uint8Array(65536)
+      for (let p = 0; p < 65536; p++) c.ids[p] = d[p * 4]
+      paintGlow(c)
+      done(undefined, c)
+    }
+    img.onerror = () => done(undefined, c)
+    img.src = `tiles/zoneid/${coords.z}/${coords.y}/${coords.x}.png?v=${(zonesData as { v?: string }).v ?? ''}`
+    return c
+  },
+})
+const zoneGlow = new (ZoneGlowLayer as unknown as new (o: L.GridLayerOptions) => L.GridLayer)({
+  pane: 'zones',
+  zIndex: 2,
+  maxNativeZoom: 5,
+  maxZoom: MAX_ZOOM,
+  bounds: contentBounds,
+  updateWhenZooming: false,
+})
+
+// The layer is only on the map while something is lit. Its tiles each decode and
+// keep a canvas, and loaded behind every pan they made opening the side panel
+// over the zone map stutter; so it comes off when the pointer leaves the map,
+// which is on its way to the panel.
+function lightZone(z: number | null) {
+  if (z === glowZone) return
+  glowZone = z
+  if (z === null) {
+    zoneGlow.remove()
+    return
+  }
+  if (!map.hasLayer(zoneGlow)) zoneGlow.addTo(map)
+  const tiles = (zoneGlow as unknown as { _tiles: Record<string, { el: GlowTile }> })._tiles
+  for (const k in tiles) paintGlow(tiles[k].el)
+}
+
+map.on('mousemove', (e: L.LeafletMouseEvent) => {
+  if (!map.hasLayer(zonesLayer)) return
+  const [x, y] = toPx(e.latlng)
+  if (x < 0 || y < 0 || x >= CONTENT || y >= CONTENT) {
+    zoneTip.hidden = true
+    lightZone(null)
+    return
+  }
+  const z = zoneAt(x, y)
+  zoneTip.innerHTML = `<b>${hhmm(z)}</b> ${fmtZone(z)}`
+  zoneTip.style.left = `${e.containerPoint.x}px`
+  zoneTip.style.top = `${e.containerPoint.y}px`
+  zoneTip.classList.toggle('flip', e.containerPoint.x > map.getSize().x - 160)
+  zoneTip.hidden = false
+  lightZone(z)
+})
+map.getContainer().addEventListener('mouseleave', () => {
+  zoneTip.hidden = true
+  lightZone(null)
+})
+
+zonesLayer.on('add', () => {
+  loadZoneLookup()
+  syncZoneLines()
+})
+zonesLayer.on('remove', () => {
+  zoneTip.hidden = true
+  lightZone(null)
+})
+
+// Day and night: the sun's height over every point, from Avium's 45-degree tilt
+// with the spring equinox on 21 March, as the Time Counter draws it. Shaded on a
+// small canvas and stretched over the world, since the edge is soft anyway, with
+// the terminator itself drawn exactly as a line.
+const SHADE = 400
+const RAD = Math.PI / 180
+const shadeCanvas = document.createElement('canvas')
+shadeCanvas.width = shadeCanvas.height = SHADE
+const shadeOverlay = L.imageOverlay(shadeCanvas.toDataURL(), imgBounds, { pane: 'daylight', interactive: false })
+const terminator = L.polyline([], {
+  pane: 'daylight',
+  renderer: L.svg({ pane: 'daylight' }),
+  color: 'rgba(255, 255, 255, 0.7)',
+  weight: 1,
+  interactive: false,
+})
+const daylightLayer = L.layerGroup([shadeOverlay, terminator])
+
+function drawDaylight(ms: number) {
+  const y = new Date(ms).getUTCFullYear()
+  const L0 = (2 * Math.PI * (ms - Date.UTC(y, 2, 21))) / (365.2425 * 86_400_000)
+  const dec = Math.asin(Math.sin(45 * RAD) * Math.sin(L0))
+  const hours = (((ms % 86_400_000) + 86_400_000) % 86_400_000) / HOUR
+  const sunLon = (12 - hours) * 15
+  const sd = Math.sin(dec), cd = Math.cos(dec), step = CONTENT / SHADE
+  const ctx = shadeCanvas.getContext('2d')!
+  const img = ctx.createImageData(SHADE, SHADE)
+  const a = img.data
+  for (let j = 0; j < SHADE; j++) {
+    for (let i = 0; i < SHADE; i++) {
+      const g = toGeo((i + 0.5) * step, (j + 0.5) * step)
+      const la = g.lat * RAD
+      const alt = Math.sin(la) * sd + Math.cos(la) * cd * Math.cos((g.lon - sunLon) * RAD)
+      const p = (j * SHADE + i) * 4
+      a[p + 3] = Math.round(Math.min(1, Math.max(0, (0.03 - alt) / 0.1)) * 110)
+    }
+  }
+  ctx.putImageData(img, 0, 0)
+  shadeOverlay.setUrl(shadeCanvas.toDataURL())
+
+  // sin(lat)sin(dec) + cos(lat)cos(dec)cos(dLon) = 0, solved for lat; broken
+  // where it jumps across the world rather than drawn straight over it
+  const lines: L.LatLngExpression[][] = []
+  if (Math.abs(dec) > 1e-4) {
+    let run: L.LatLngExpression[] = []
+    let prev: { x: number; y: number } | null = null
+    for (let lon = -180; lon <= 180; lon += 0.5) {
+      const p = fromGeo(Math.atan(-Math.cos((lon - sunLon) * RAD) / Math.tan(dec)) / RAD, lon)
+      if (prev && Math.hypot(p.x - prev.x, p.y - prev.y) > CONTENT * 0.2) {
+        lines.push(run)
+        run = []
+      }
+      run.push(px(p.x, p.y))
+      prev = p
+    }
+    lines.push(run)
+  }
+  terminator.setLatLngs(lines)
+}
+daylightLayer.on('add', () => drawDaylight(icNow()))
+
+// The World Clock's base for both clock maps: the land in flat grey on black
+const monoLayer = tiledLayer('mono', 'tilePane')
+
+// --- Map sheet ---
+//
+// Apple Maps' map card: the four maps as picture tiles, and under them a switch
+// for each overlay. A switch the current map has no room for goes grey but keeps
+// its setting, so the political map comes back as it was left.
+
+const MODE_TILES: [MapMode, string, string][] = [
+  ['political', 'Political', politicalThumb],
+  ['zones', 'Time Zones', zonesThumb],
+  ['daylight', 'Day & Night', daylightThumb],
+  ['lights', 'Night Lights', lightsThumb],
+]
+
+const SHEET_ROWS: [keyof typeof modeAllows, string][] = [
+  ['borders', 'Borders'],
+  ['rivers', 'Rivers'],
+  ['territories', 'Nation Names'],
+  ['water', 'Water Names'],
+  ['cities', 'Cities'],
+  ['stations', 'Research Stations'],
+]
+
+const mapSheet = document.createElement('div')
+mapSheet.id = 'map-sheet'
+mapSheet.hidden = true
+mapSheet.innerHTML =
+  `<div class="ms-head"><span>Map</span><button class="ms-close" aria-label="Close">✕</button></div>` +
+  `<div class="ms-modes">` +
+  MODE_TILES.map(
+    ([m, label, src]) =>
+      `<button class="ms-mode" data-mode="${m}"><span class="ms-thumb"><img src="${src}" alt=""></span>` +
+      `<span class="ms-label">${label}</span></button>`
+  ).join('') +
+  `</div>` +
+  `<div class="ms-card">` +
+  SHEET_ROWS.map(
+    ([k, label]) =>
+      `<label class="ms-row" data-row="${k}"><span>${label}</span>` +
+      `<input type="checkbox" class="set-switch" data-set="${k}"></label>`
+  ).join('') +
+  (DEV
+    ? `<label class="ms-row"><span>Pangaea</span><input type="checkbox" class="set-switch" data-dev="pangaea"></label>`
+    : '') +
+  `</div>`
+document.body.appendChild(mapSheet)
+
+function renderMapSheet() {
+  for (const b of mapSheet.querySelectorAll<HTMLElement>('.ms-mode')) {
+    const on = b.dataset.mode === settings.mode
+    b.classList.toggle('is-on', on)
+    b.setAttribute('aria-pressed', String(on))
+  }
+  for (const [k] of SHEET_ROWS) {
+    const row = mapSheet.querySelector<HTMLElement>(`[data-row="${k}"]`)!
+    const box = row.querySelector('input')!
+    const allowed = modeAllows[k](settings.mode)
+    box.checked = settings[k]
+    box.disabled = !allowed
+    row.classList.toggle('is-locked', !allowed)
+  }
+}
+
+function openMapSheet(open: boolean) {
+  mapSheet.hidden = !open
+  mapBtn.classList.toggle('is-on', open)
+  if (open) renderMapSheet()
+}
+
+mapBtn.addEventListener('click', e => {
+  e.preventDefault()
+  openMapSheet(mapSheet.hidden)
+})
+mapSheet.querySelector('.ms-close')!.addEventListener('click', () => openMapSheet(false))
+mapSheet.addEventListener('click', e => {
+  const tile = (e.target as Element).closest<HTMLElement>('.ms-mode')
+  if (!tile) return
+  settings.mode = tile.dataset.mode as MapMode
+  saveSettings()
+  applySettings()
+})
+mapSheet.addEventListener('change', e => {
+  const box = e.target as HTMLInputElement
+  if (box.dataset.dev === 'pangaea') {
+    if (pangaeaLayer) box.checked ? pangaeaLayer.addTo(map) : pangaeaLayer.remove()
+    return
+  }
+  const k = box.dataset.set as keyof typeof modeAllows | undefined
+  if (!k) return
+  settings[k] = box.checked
+  saveSettings()
+  applySettings()
+})
+document.addEventListener('click', e => {
+  if (!mapSheet.hidden && !mapSheet.contains(e.target as Node) && !mapBtn.contains(e.target as Node)) openMapSheet(false)
+})
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && !mapSheet.hidden) openMapSheet(false)
+})
+
+// --- Time ---
+//
+// What was the Avium Time Counter: the in-RP date under the logo, and a Time tab
+// with the live clock, the countdowns to the next day, week, month and year, and
+// a converter between real time and in-RP time. All of it in UTC on the IC side.
+
+const WEEKDAYS_LONG = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+const MONTHS_LONG = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
+  'October', 'November', 'December']
+
+const irpDate = document.getElementById('irp-date') as HTMLButtonElement
+function syncIrpDate(ms = icNow()) {
+  const d = new Date(ms)
+  irpDate.innerHTML =
+    `<b>${d.getUTCDate()} ${MONTHS_LONG[d.getUTCMonth()]} ${d.getUTCFullYear()}</b>` +
+    `<span>${WEEKDAYS_LONG[d.getUTCDay()]} · ${two(d.getUTCHours())}:${two(d.getUTCMinutes())} UTC</span>`
+}
+syncIrpDate()
+irpDate.addEventListener('click', () => (navOpen() === 'time' ? closeSheetList() : openTimeView()))
+
+function duration(ms: number): string {
+  const t = Math.max(0, Math.round(ms / 1000))
+  const d = Math.floor(t / 86400), h = Math.floor((t % 86400) / 3600), m = Math.floor((t % 3600) / 60), s = t % 60
+  if (d) return `${d}d ${h}h ${two(m)}m`
+  if (h) return `${h}h ${two(m)}m ${two(s)}s`
+  return `${m}m ${two(s)}s`
+}
+
+const shortDate = (ms: number) => {
+  const d = new Date(ms)
+  return `${WEEKDAYS[d.getUTCDay()]} ${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`
+}
+
+// The four countdowns. Each runs from the start of the current day, week
+// (Monday), month or year to the next, and says how much real time is left at
+// the current rate, which IC date it ends on, and the real moment that is in the
+// viewer's own time zone.
+const realWhen = new Intl.DateTimeFormat(undefined, {
+  weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', timeZoneName: 'short',
+})
+function nextRows(ms: number, mult: number): string {
+  const d = new Date(ms)
+  const y = d.getUTCFullYear(), mo = d.getUTCMonth()
+  const day = Date.UTC(y, mo, d.getUTCDate())
+  const week = day - ((d.getUTCDay() + 6) % 7) * 86_400_000
+  const spans: [string, number, number][] = [
+    ['Day', day, day + 86_400_000],
+    ['Week', week, week + 7 * 86_400_000],
+    ['Month', Date.UTC(y, mo, 1), Date.UTC(y, mo + 1, 1)],
+    ['Year', Date.UTC(y, 0, 1), Date.UTC(y + 1, 0, 1)],
+  ]
+  return spans
+    .map(([name, a, b]) =>
+      `<div class="tv-row"><div class="tv-row-top"><span>${name}</span><b>${duration((b - ms) / mult)}</b></div>` +
+      `<div class="tv-bar"><i style="width:${(((ms - a) / (b - a)) * 100).toFixed(2)}%"></i></div>` +
+      `<div class="tv-row-at"><span>${shortDate(b)}</span><span>${realWhen.format(Date.now() + (b - ms) / mult)}</span></div></div>`
+    )
+    .join('')
+}
+
+let timeView: HTMLElement | null = null
+let timeRaf = 0
+let lastTvSec = -1
+
+function openTimeView() {
+  openColumn('Time', false, 'time')
+  const now = new Date()
+  const off = -now.getTimezoneOffset() / 60
+  const ic = new Date(icNow())
+  bsItems.innerHTML =
+    `<li class="tv">` +
+    `<div class="tv-clock"><div class="tv-top"><span class="tv-date"></span>` +
+    `<span class="tv-rate" title="In-RP seconds per real second">×${rateNow().mult.toFixed(2)}</span></div>` +
+    `<div class="tv-time"></div></div>` +
+    `<div class="cp-section">Next</div><div class="cp-card tv-next"></div>` +
+    `<div class="cp-section">Converter</div>` +
+    `<div class="cp-card tv-conv">` +
+    `<div class="tv-seg" role="group"><button data-dir="r2i" aria-pressed="true">Real → IRP</button>` +
+    `<button data-dir="i2r" aria-pressed="false">IRP → Real</button></div>` +
+    `<div class="tv-fields" data-for="r2i">` +
+    `<label>Date<input type="date" data-k="rd" value="${now.getFullYear()}-${two(now.getMonth() + 1)}-${two(now.getDate())}"></label>` +
+    `<label>Time<input type="time" data-k="rt" value="${two(now.getHours())}:${two(now.getMinutes())}"></label>` +
+    `<label>Hours from GMT<input type="number" step="0.5" data-k="ro" value="${off}"></label>` +
+    `<button class="tv-now" type="button">Now</button></div>` +
+    `<div class="tv-fields" data-for="i2r" hidden>` +
+    `<label>Date<input type="date" data-k="id" value="${ic.getUTCFullYear()}-${two(ic.getUTCMonth() + 1)}-${two(ic.getUTCDate())}"></label>` +
+    `<label>Time<input type="time" data-k="it" value="${two(ic.getUTCHours())}:${two(ic.getUTCMinutes())}"></label></div>` +
+    `<div class="tv-result" aria-live="polite"></div>` +
+    `</div></li>`
+  timeView = bsItems.querySelector('.tv')
+  lastTvSec = -1
+  convertTime()
+  cancelAnimationFrame(timeRaf)
+  timeRaf = requestAnimationFrame(tickTimeView)
+}
+
+// rAF while the tab is open, but the DOM only changes when the IC second does,
+// about seven times a real second at 52 days a year
+function tickTimeView() {
+  if (!timeView || !timeView.isConnected || navOpen() !== 'time') {
+    timeView = null
+    return
+  }
+  const ms = icNow()
+  const sec = Math.floor(ms / 1000)
+  if (sec !== lastTvSec) {
+    lastTvSec = sec
+    const d = new Date(ms)
+    const { mult } = rateNow()
+    timeView.querySelector('.tv-date')!.textContent =
+      `${WEEKDAYS_LONG[d.getUTCDay()]}, ${d.getUTCDate()} ${MONTHS_LONG[d.getUTCMonth()]} ${d.getUTCFullYear()}`
+    timeView.querySelector('.tv-time')!.innerHTML =
+      `${two(d.getUTCHours())}:${two(d.getUTCMinutes())}<span>:${two(d.getUTCSeconds())}</span>`
+    timeView.querySelector('.tv-next')!.innerHTML = nextRows(ms, mult)
+  }
+  timeRaf = requestAnimationFrame(tickTimeView)
+}
+
+function convertTime() {
+  if (!timeView) return
+  const val = (k: string) => (timeView!.querySelector(`[data-k="${k}"]`) as HTMLInputElement).value
+  const out = timeView.querySelector('.tv-result') as HTMLElement
+  const show = (main: string, sub = '', err = false) => {
+    out.innerHTML = main ? `<b>${main}</b>${sub ? `<span>${sub}</span>` : ''}` : ''
+    out.classList.toggle('is-error', err)
+  }
+  const r2i = timeView.querySelector('[data-dir="r2i"]')!.getAttribute('aria-pressed') === 'true'
+  if (r2i) {
+    const dv = val('rd')
+    if (!dv) return show('')
+    const [h, m] = (val('rt') || '00:00').split(':').map(Number)
+    const real = Date.UTC(+dv.slice(0, 4), +dv.slice(5, 7) - 1, +dv.slice(8, 10), h, m) - (parseFloat(val('ro')) || 0) * HOUR
+    const ic = new Date(icAtReal(real))
+    if (isNaN(ic.getTime())) return show('That date is out of range.', '', true)
+    show(
+      `${WEEKDAYS_LONG[ic.getUTCDay()]}, ${ic.getUTCDate()} ${MONTHS_LONG[ic.getUTCMonth()]} ${ic.getUTCFullYear()}`,
+      `${two(ic.getUTCHours())}:${two(ic.getUTCMinutes())} UTC in RP`
+    )
+  } else {
+    const dv = val('id')
+    if (!dv) return show('')
+    const [h, m] = (val('it') || '00:00').split(':').map(Number)
+    const r = realAt(Date.UTC(+dv.slice(0, 4), +dv.slice(5, 7) - 1, +dv.slice(8, 10), h, m))
+    if (r === 'before') return show('Before recorded time.', 'The RP calendar starts on 1 June 1931.', true)
+    if (r === 'skipped') return show('Skipped by a timeskip.', 'No real moment ever showed this date.', true)
+    const real = new Date(r)
+    show(
+      real.toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }),
+      real.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', timeZoneName: 'short' })
+    )
+  }
+}
+
+bsItems.addEventListener('click', e => {
+  if (!timeView) return
+  const t = e.target as HTMLElement
+  const seg = t.closest<HTMLElement>('.tv-seg button')
+  if (seg) {
+    for (const b of timeView.querySelectorAll('.tv-seg button')) b.setAttribute('aria-pressed', String(b === seg))
+    for (const f of timeView.querySelectorAll<HTMLElement>('.tv-fields')) f.hidden = f.dataset.for !== seg.dataset.dir
+    convertTime()
+  } else if (t.closest('.tv-now')) {
+    const now = new Date()
+    const set = (k: string, v: string) => ((timeView!.querySelector(`[data-k="${k}"]`) as HTMLInputElement).value = v)
+    set('rd', `${now.getFullYear()}-${two(now.getMonth() + 1)}-${two(now.getDate())}`)
+    set('rt', `${two(now.getHours())}:${two(now.getMinutes())}`)
+    set('ro', String(-now.getTimezoneOffset() / 60))
+    convertTime()
+  }
+})
+bsItems.addEventListener('input', () => convertTime())
+
+// One tick a real second; the work only happens when the IC minute turns, which
+// is about every eight seconds at 52 days a year.
+let lastIcMinute = -1
+setInterval(() => {
+  const ms = icNow()
+  const minute = Math.floor(ms / 60_000)
+  if (minute === lastIcMinute) return
+  lastIcMinute = minute
+  for (const el of document.querySelectorAll<HTMLElement>('.cp-time')) el.innerHTML = timeLine(+el.dataset.z!, ms)
+  syncIrpDate(ms)
+  if (map.hasLayer(zonesLayer)) syncZoneLines(ms)
+  if (map.hasLayer(daylightLayer)) drawDaylight(ms)
+}, 1000)
 
 applySettings()

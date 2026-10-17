@@ -4,6 +4,7 @@ import { existsSync, readFileSync, rmSync, statSync, writeFileSync } from 'fs'
 import { createHash } from 'crypto'
 import { join, resolve } from 'path'
 import { writeAreas } from './areas.mjs'
+import { writeZones } from './zones.mjs'
 
 const root = resolve(import.meta.dirname, '..')
 const layersDir = join(root, 'layers')
@@ -63,6 +64,31 @@ const LAYERS = {
   // transparent overlays: skip fully-empty tiles (most of the grid)
   borders: { skipBlanks: 0, background: CLEAR, areas: true },
   rivers: { skipBlanks: 0, background: CLEAR },
+  // drawn by zones.mjs from the borders and the cities, never by hand; after
+  // borders here so a redrawn border reaches the zones in the same run
+  zones: { skipBlanks: 0, background: CLEAR },
+  // the land in flat grey on black, for the day and night view; written from
+  // base.PNG whenever the base is tiled, so it comes after it
+  mono: { skipBlanks: -1, background: { r: 0, g: 0, b: 0, alpha: 255 } },
+}
+
+const MONO_LAND = [64, 64, 66]
+const monoPath = join(layersDir, 'mono.png')
+
+// Ground is land, and so is whatever of the white coastline inkCoastline kept as
+// the coast's edge; the white it returned to the sea, and the sea, are black.
+async function writeMono(data, kind, { width: W, height: H, channels: C }) {
+  const out = Buffer.alloc(W * H * 3)
+  for (let p = 0; p < W * H; p++) {
+    const i = p * C
+    const land = kind[p] === GROUND ||
+      (kind[p] === WHITE && data[i] === COAST[0] && data[i + 1] === COAST[1] && data[i + 2] === COAST[2])
+    if (!land) continue
+    out[p * 3] = MONO_LAND[0]
+    out[p * 3 + 1] = MONO_LAND[1]
+    out[p * 3 + 2] = MONO_LAND[2]
+  }
+  await sharp(out, { raw: { width: W, height: H, channels: 3 } }).png({ compressionLevel: 9 }).toFile(monoPath)
 }
 
 // What every pixel of the drawing is: land, the white coastline, or sea. Both the
@@ -301,6 +327,7 @@ for (const [name, opts] of Object.entries(todo)) {
     const { kind, whiteN } = classify(data, info)
     await writeLandMask(kind, info)
     img = inkCoastline(data, kind, info, whiteN, COAST_PX)
+    await writeMono(data, kind, info)
   } else {
     img = sharp(input)
   }
@@ -331,6 +358,8 @@ for (const [name, opts] of Object.entries(todo)) {
   if (opts.areas) {
     const r = await writeAreas(root)
     if (r) console.log(`  areas: ${r.nations} nations, ${(r.measured / 1e6).toFixed(2)}M km²`)
+    const z = await writeZones(root)
+    if (z) console.log(`  zones: ${z.nations} nations, ${z.split.length} with more than one`)
   }
 
   stamp[name] = sig

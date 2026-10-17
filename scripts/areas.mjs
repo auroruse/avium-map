@@ -46,7 +46,10 @@ function pxArea(x, y) {
   return t <= 0 ? 0 : (AREA_K * Math.sin((t * Math.PI) / 2)) / t
 }
 
-export async function writeAreas(root = resolve(import.meta.dirname, '..')) {
+// Every territory on borders.PNG and whose it is: the per-pixel component label
+// and, for each component, its colour, size, centroid and owning nation. The
+// areas below and the time zones in zones.mjs are both read off this.
+export async function territories(root = resolve(import.meta.dirname, '..')) {
   const bordersPath = join(root, 'layers', 'borders.png')
   const dataDir = join(root, 'src', 'data')
   if (!existsSync(bordersPath)) return null
@@ -146,6 +149,14 @@ export async function writeAreas(root = resolve(import.meta.dirname, '..')) {
     }
     if (best) { c.owner = best.owner; adopted++ } else orphanArea += c.area
   }
+  return { W, H, label, comps, adopted, orphanArea }
+}
+
+export async function writeAreas(root = resolve(import.meta.dirname, '..')) {
+  const t = await territories(root)
+  if (!t) return null
+  const { comps, adopted, orphanArea } = t
+  const dataDir = join(root, 'src', 'data')
 
   const total = new Map()
   for (const c of comps) if (c.owner) total.set(c.owner, (total.get(c.owner) ?? 0) + c.area)

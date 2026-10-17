@@ -916,87 +916,6 @@ html, body {
   border-color: rgba(100,180,255,0.4);
 }
 
-/* Layer control — Apple-style frosted card, same height as zoom buttons */
-.leaflet-control-layers {
-  background: rgba(24, 27, 29, 0.82) !important;
-  backdrop-filter: blur(24px) saturate(1.4);
-  -webkit-backdrop-filter: blur(24px) saturate(1.4);
-  border: 1px solid rgba(255,255,255,0.09) !important;
-  border-radius: 12px !important;
-  box-shadow: 0 10px 36px rgba(0,0,0,0.5) !important;
-  color: #fff !important;
-  font-family: -apple-system, 'SF Pro Text', 'SF Pro Display', 'Inter', system-ui, sans-serif;
-}
-
-.leaflet-control-layers-expanded {
-  padding: 0 !important;
-}
-
-.leaflet-control-layers-overlays label {
-  margin: 0;
-  padding: 0 12px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  color: #fff !important;
-  font-size: 13px;
-  font-weight: 500;
-}
-
-.leaflet-control-layers-overlays label + label {
-  border-top: 1px solid rgba(255,255,255,0.08);
-}
-
-/* Row: name left, switch right */
-.leaflet-control-layers-overlays label > span {
-  display: flex;
-  flex-direction: row-reverse;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-/* iOS-style switch */
-.leaflet-control-layers-selector {
-  appearance: none;
-  -webkit-appearance: none;
-  flex: none;
-  width: 34px;
-  height: 21px;
-  border-radius: 11px;
-  background: rgba(120,120,128,0.4);
-  position: relative;
-  top: 0 !important;
-  margin: 0;
-  cursor: pointer;
-  transition: background 0.22s;
-}
-
-.leaflet-control-layers-selector::after {
-  content: '';
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 17px;
-  height: 17px;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 1.5px 4px rgba(0,0,0,0.35);
-  transition: transform 0.22s cubic-bezier(0.32, 0.72, 0, 1);
-}
-
-.leaflet-control-layers-selector:checked {
-  background: #34c759;
-}
-
-.leaflet-control-layers-selector:checked::after {
-  transform: translateX(13px);
-}
-
-.leaflet-control-layers-separator {
-  border-top-color: rgba(255,255,255,0.08) !important;
-}
-
 /* Kill attribution watermark */
 .leaflet-control-attribution {
   display: none !important;
@@ -1113,6 +1032,7 @@ html, body {
 .bs-grey   { background: #8e8e93; }
 .bs-purple { background: #bf5af2; }
 .bs-pink   { background: #ff375f; }
+.bs-indigo { background: #5e5ce6; }
 
 .bs-btn-label {
   font-size: 11px;
@@ -1246,24 +1166,6 @@ html, body {
   font-weight: 600;
 }
 
-/* Settings rows: #bs-items li already gives them the hover and radius a city row
-   has, so only the switch is new. The padding moves onto the inner label so the
-   hit target is the whole row rather than the 40px of switch at the end of it. */
-#bs-items .set-row {
-  padding: 0;
-  font-size: 14px;
-}
-
-.set-hit {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  width: 100%;
-  padding: 9px 8px;
-  cursor: pointer;
-}
-
 .set-switch {
   appearance: none;
   -webkit-appearance: none;
@@ -1304,13 +1206,6 @@ html, body {
   outline-offset: 2px;
 }
 
-/* Night owns these three while it is on. Dimmed rather than removed, so the tab
-   still says what the mode did instead of the rows silently disappearing. */
-#bs-items .set-row.is-locked {
-  opacity: 0.4;
-}
-
-.set-row.is-locked .set-hit,
 .set-switch:disabled {
   cursor: default;
 }
@@ -2040,46 +1935,6 @@ html, body {
   font-size: 11.5px;
   font-weight: 500;
   cursor: pointer;
-}
-
-/* ============ Layers as a control-bar button ============
-   Collapsed, in the left stack with zoom and rotate. Leaflet ships a background
-   image for the toggle; it's replaced with a mask so the glyph takes currentColor
-   and matches the other two buttons instead of being a fixed dark PNG. */
-.leaflet-control-layers-toggle {
-  width: 36px !important;
-  height: 36px !important;
-  background-image: none !important;
-  position: relative;
-}
-
-.leaflet-control-layers-toggle::before {
-  content: '';
-  position: absolute;
-  inset: 9px;
-  background: #fff;
-  -webkit-mask: var(--layers-glyph) center / 18px 18px no-repeat;
-  mask: var(--layers-glyph) center / 18px 18px no-repeat;
-}
-
-.leaflet-control-layers {
-  /* Stack spacing to match .leaflet-control-zoom's own margin */
-  margin-top: 10px !important;
-  overflow: hidden;
-}
-
-.leaflet-control-layers:hover .leaflet-control-layers-toggle {
-  background: rgba(255,255,255,0.12) !important;
-}
-
-/* Expanded, the panel keeps the same glass and rounding as the buttons above */
-.leaflet-control-layers-expanded {
-  padding: 4px 0 !important;
-  min-width: 176px;
-}
-
-.leaflet-control-layers-expanded .leaflet-control-layers-toggle {
-  display: none !important;
 }
 
 :root {
@@ -2991,3 +2846,514 @@ body.exploring .city-icon-carded { display: none; }
   padding: 3px 12px !important;
 }
 
+
+/* --- Time zones --- */
+
+/* A nation's offset and clock, hung under its name while the zones are on. Out
+   of flow, so the name's own box (which placement measures) does not change. */
+.map-label span {
+  position: relative;
+}
+.zl {
+  display: none;
+}
+body.zones-on .zl-small .zl {
+  display: none;
+}
+body.zones-on :not(.zl-small) > span > .zl {
+  display: block;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 1px;
+  font: 600 clamp(9px, 1em, 12px) -apple-system, 'SF Pro Text', 'Inter', system-ui, sans-serif;
+  font-style: normal;
+  letter-spacing: 0;
+  text-transform: none;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.zone-tip {
+  position: absolute;
+  z-index: 1000;
+  transform: translate(14px, 14px);
+  padding: 5px 10px;
+  border-radius: 9px;
+  background: rgba(30, 32, 35, 0.86);
+  backdrop-filter: blur(20px) saturate(1.5);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+  color: rgba(255, 255, 255, 0.7);
+  font: 500 12px -apple-system, 'SF Pro Text', 'Inter', system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.zone-tip b {
+  color: #fff;
+  font-weight: 600;
+}
+.zone-tip.flip {
+  transform: translate(calc(-100% - 14px), 14px);
+}
+.zone-tip[hidden] {
+  display: none;
+}
+
+.cp-clock {
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- The two World Clock maps: grey land on black --- */
+
+body.clockmap #map {
+  background: #000;
+}
+
+/* The city's own time, live, in a pill at the end of the coordinates line */
+.cp-coord:has(.cp-time) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.cp-time {
+  flex: none;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #9aa0a5;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.cp-time b {
+  color: #fff;
+  font-weight: 600;
+  margin-right: 1px;
+}
+
+/* --- Map button and sheet --- */
+
+.map-btn-ctl {
+  background: rgba(24, 27, 29, 0.82) !important;
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.09) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 36px rgba(0, 0, 0, 0.5) !important;
+  overflow: hidden;
+}
+.map-btn {
+  display: block;
+  position: relative;
+  width: 36px !important;
+  height: 36px !important;
+  background: transparent !important;
+  border: none !important;
+}
+.map-btn::before {
+  content: '';
+  position: absolute;
+  inset: 9px;
+  background: #fff;
+  -webkit-mask: var(--layers-glyph) center / 18px 18px no-repeat;
+  mask: var(--layers-glyph) center / 18px 18px no-repeat;
+}
+.map-btn:hover,
+.map-btn.is-on {
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+
+#map-sheet {
+  position: fixed;
+  top: 10px;
+  right: 58px;
+  z-index: 1100;
+  width: 332px;
+  padding: 14px 14px 16px;
+  box-sizing: border-box;
+  border-radius: 18px;
+  background: rgba(30, 32, 35, 0.86);
+  backdrop-filter: blur(30px) saturate(1.5);
+  -webkit-backdrop-filter: blur(30px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-family: -apple-system, 'SF Pro Text', 'Inter', system-ui, sans-serif;
+  animation: sheet-in 0.18s cubic-bezier(0.32, 0.72, 0, 1);
+}
+#map-sheet[hidden] {
+  display: none;
+}
+@keyframes sheet-in {
+  from { opacity: 0; transform: translateY(-6px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+
+.ms-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 2px 12px;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.ms-close {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 12px;
+  cursor: pointer;
+}
+.ms-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.ms-modes {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.ms-mode {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: rgba(255, 255, 255, 0.7);
+  font: inherit;
+  cursor: pointer;
+}
+.ms-thumb {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
+  transition: box-shadow 0.15s;
+}
+.ms-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ms-label {
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-align: center;
+}
+.ms-mode:hover .ms-thumb {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3);
+}
+.ms-mode.is-on {
+  color: #fff;
+}
+.ms-mode.is-on .ms-label {
+  font-weight: 600;
+}
+.ms-mode.is-on .ms-thumb {
+  box-shadow: 0 0 0 2.5px #0a84ff;
+}
+
+.ms-card {
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+.ms-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  height: 44px;
+  padding: 0 12px 0 14px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.ms-row + .ms-row {
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+.ms-row.is-locked {
+  opacity: 0.38;
+  cursor: default;
+}
+
+@media (max-width: 600px) {
+  #map-sheet {
+    top: auto;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    width: auto;
+  }
+}
+
+/* While a column slides and the map pans under it, the columns go near-solid
+   instead of blurring a map that moves every frame; syncCover takes the class
+   off when the slide is done */
+body.col-moving #city-panel,
+body.col-moving #bs-list,
+body.col-moving #bottom-sheet {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background: rgba(24, 27, 29, 0.97);
+}
+@media (min-width: 900px) {
+  #city-panel,
+  #bs-list {
+    will-change: transform;
+  }
+}
+
+/* --- Time --- */
+
+/* The in-RP date, always under the logo; a tap opens the Time tab */
+#irp-date {
+  display: block;
+  width: 100%;
+  margin: -4px 0 12px;
+  padding: 0 2px;
+  border: none;
+  background: none;
+  font-family: -apple-system, 'SF Pro Text', 'Inter', system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+}
+#irp-date b {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+}
+#irp-date span {
+  display: block;
+  margin-top: 1px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #8e8e93;
+}
+#irp-date:hover span {
+  color: #c7ccd1;
+}
+
+#bs-items li.tv {
+  display: block;
+  padding: 0;
+  cursor: default;
+}
+#bs-items li.tv:hover {
+  background: none;
+}
+
+.tv-clock {
+  padding: 6px 2px 4px;
+}
+.tv-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.tv-date {
+  font-size: 15px;
+  font-weight: 500;
+  color: #9aa0a5;
+}
+/* How fast RP time runs, as a pill beside the date */
+.tv-rate {
+  flex: none;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(94, 92, 230, 0.22);
+  color: #a5a4ff;
+  font-size: 12px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.tv-time {
+  margin-top: 2px;
+  font-size: 68px;
+  font-weight: 200;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  color: #fff;
+}
+.tv-time span {
+  font-size: 34px;
+  color: #8e8e93;
+  letter-spacing: -0.01em;
+}
+
+.tv-row {
+  padding: 11px 14px 10px;
+}
+.tv-row + .tv-row {
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+.tv-row-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #c7ccd1;
+}
+.tv-row-top b {
+  color: #fff;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.tv-bar {
+  height: 4px;
+  margin: 8px 0 6px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+.tv-bar i {
+  display: block;
+  height: 100%;
+  border-radius: 2px;
+  background: #5e5ce6;
+}
+.tv-row-at {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12px;
+  color: #8e8e93;
+  font-variant-numeric: tabular-nums;
+}
+/* The real moment it arrives, in the viewer's own zone */
+.tv-row-at span + span {
+  color: #c7ccd1;
+}
+
+.tv-conv {
+  padding: 12px 14px 14px;
+}
+.tv-seg {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 2px;
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.08);
+}
+.tv-seg button {
+  padding: 6px 0;
+  border: none;
+  border-radius: 7px;
+  background: none;
+  color: #c7ccd1;
+  font: 500 13px -apple-system, 'SF Pro Text', 'Inter', system-ui, sans-serif;
+  cursor: pointer;
+}
+.tv-seg button[aria-pressed='true'] {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+.tv-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 12px;
+}
+.tv-fields[hidden] {
+  display: none;
+}
+.tv-fields label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #8e8e93;
+}
+.tv-fields input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 7px 9px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.25);
+  color: #fff;
+  color-scheme: dark;
+  font: 500 14px -apple-system, 'SF Pro Text', 'Inter', system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.tv-fields input:focus {
+  outline: none;
+  border-color: #5e5ce6;
+}
+.tv-now {
+  align-self: end;
+  height: 33px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(94, 92, 230, 0.22);
+  color: #a5a4ff;
+  font: 600 13px -apple-system, 'SF Pro Text', 'Inter', system-ui, sans-serif;
+  cursor: pointer;
+}
+.tv-now:hover {
+  background: rgba(94, 92, 230, 0.32);
+}
+.tv-result {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+.tv-result:empty {
+  display: none;
+}
+.tv-result b {
+  display: block;
+  font-size: 17px;
+  font-weight: 600;
+  color: #fff;
+}
+.tv-result span {
+  display: block;
+  margin-top: 2px;
+  font-size: 13px;
+  color: #8e8e93;
+  font-variant-numeric: tabular-nums;
+}
+.tv-result.is-error b {
+  color: #ff6961;
+}
+
+/* The rail in two groups: places to browse, then tools. On a phone the buttons
+   are one row of circles and the divider has no place in it. */
+.bs-sep {
+  display: none;
+}
+@media (min-width: 900px) {
+  .bs-sep {
+    display: block;
+    height: 1px;
+    margin: 8px 10px;
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
