@@ -13,7 +13,7 @@
 // country's clock is set by where its land sits, the average longitude of its
 // home territory over 15, rounded. A large country (SPLIT_KM2 and up) wider
 // than SPLIT hours between its 5th and 95th percentile of land takes about one
-// zone per hour of that spread, cut into bands of equal land along meridians.
+// zone per hour of that spread, cut on the half-hour meridians.
 // The size floor matters: meridians run diagonally here, and across a smaller
 // country lying along them (Recolotta) a cut came out as a strip one coast wide. Islands off the coast keep the mainland's clock; a
 // colony far from home keeps its own longitude rather than its metropole's.
@@ -37,6 +37,8 @@ const S = Math.SQRT1_2
 const SPLIT_KM2 = 2_000_000
 const SPLIT = 1.5 // hours of spread before a nation is given more than one zone
 const PER = 1 // hours of spread per zone once it is split
+// A slice of a split nation smaller than this share of its land joins its neighbour
+const MIN_SHARE = 0.15
 // How far outside its mainland's bounding box a territory can sit and still be
 // counted as home rather than as a colony with a clock of its own, in map px
 const HOME = 400
@@ -45,8 +47,10 @@ const OVERRIDES = {}
 // A nation named here is cut at exactly these hours of longitude instead of into
 // equal land. Nichirin's own cut fell between Futahashi and Shinkeisei, through
 // the capital; 6.5 is the true +6/+7 meridian and puts the whole Senpan Bay
-// region on +7.
-const CUTS = { Nichirin: [6.5] }
+// region on +7. Seignid is under the size floor but splits on the 8.5 line
+// anyway, so its north matches Furan's +9 beside it. Hollosend runs across
+// three bands and takes all three, so its east matches E.S.U. and Eivorie.
+const CUTS = { Nichirin: [6.5], Seignid: [8.5], Hollosend: [-4.5, -3.5] }
 
 const NONE = 127
 const LOOKUP = 1500
@@ -155,12 +159,39 @@ export async function writeZones(root = resolve(import.meta.dirname, '..')) {
     const big = (areas[n] ?? 0) >= SPLIT_KM2
     const fixed = CUTS[n]
     const k = fixed ? fixed.length + 1 : OVERRIDES[n] ?? (!big || spread <= SPLIT ? 1 : Math.max(2, Math.round(spread / PER)))
-    const cuts = [-Infinity]
-    if (fixed) cuts.push(...fixed)
-    else for (let i = 1; i < k; i++) cuts.push(q(i / k))
-    cuts.push(Infinity)
+    // Cut on the real half-hour meridians, so a split nation's zone edges line up
+    // with its neighbours' and with the bands at sea; a slice holding less than
+    // MIN_SHARE of the land folds into the slice beside it
+    const share = (a0, b0) => {
+      let w = 0
+      for (let b = 0; b < BINS; b++) { const h = b / 20 - 12 + 0.025; if (h >= a0 && h < b0) w += a[b] }
+      return w / sum
+    }
+    let inner = []
+    if (fixed) inner = [...fixed]
+    else if (k > 1) for (let h = Math.ceil(q(0.02) - 0.5) + 0.5; h < q(0.98); h++) inner.push(h)
+    if (!fixed) {
+      for (let changed = true; changed && inner.length; ) {
+        changed = false
+        const edges = [-Infinity, ...inner, Infinity]
+        for (let i = 0; i < edges.length - 1; i++) {
+          // too small, or one slice more than the nation's spread warrants: the
+          // smallest slice goes first
+          const sh = share(edges[i], edges[i + 1])
+          const smallest = Math.min(...edges.slice(0, -1).map((e, j) => share(e, edges[j + 1])))
+          if (sh >= MIN_SHARE && (inner.length + 1 <= k || sh > smallest)) continue
+          // drop the cut on the side with less land beyond it
+          const left = i > 0 ? share(edges[i - 1], edges[i]) : Infinity
+          const right = i < edges.length - 2 ? share(edges[i + 1], edges[i + 2]) : Infinity
+          inner.splice(left <= right ? i - 1 : i, 1)
+          changed = true
+          break
+        }
+      }
+    }
+    const cuts = [-Infinity, ...inner, Infinity]
     const list = []
-    for (let i = 0; i < k; i++) {
+    for (let i = 0; i < cuts.length - 1; i++) {
       let s = 0, w = 0
       for (let b = 0; b < BINS; b++) {
         const h = b / 20 - 12 + 0.025
@@ -320,16 +351,24 @@ export async function writeZones(root = resolve(import.meta.dirname, '..')) {
     // only the zones that hold real land: a band can round onto an hour no pixel ended up in
     nationZones[n] = [...zs].sort((a, b) => a - b)
   }
-  const used = new Map()
+  // Which zones hold land at all, and which hold land at home. The line under a
+  // nation's name gives only the home clocks; a colony's own hour belongs to the
+  // panel, not to the name of a country it is nowhere near.
+  const used = new Map(), usedHome = new Map()
   for (let p = 0; p < W * H; p += 7) {
     const z = zone[p]; if (z === NONE) continue
-    const o = comps[label[p]].owner
-    if (!used.has(o)) used.set(o, new Set())
+    const l = label[p], o = comps[l].owner
+    if (!used.has(o)) { used.set(o, new Set()); usedHome.set(o, new Set()) }
     used.get(o).add(z)
+    if (home[l]) usedHome.get(o).add(z)
   }
-  for (const n of Object.keys(nationZones)) nationZones[n] = nationZones[n].filter(z => used.get(n)?.has(z))
+  const homeZones = {}
+  for (const n of Object.keys(nationZones)) {
+    nationZones[n] = nationZones[n].filter(z => used.get(n)?.has(z))
+    homeZones[n] = nationZones[n].filter(z => usedHome.get(n)?.has(z))
+  }
 
-  writeFileSync(join(root, 'src', 'data', 'zones.json'), JSON.stringify({ v: idVersion, nations: nationZones, cities: cityZones }) + '\n')
+  writeFileSync(join(root, 'src', 'data', 'zones.json'), JSON.stringify({ v: idVersion, nations: nationZones, home: homeZones, cities: cityZones }) + '\n')
   const split = Object.entries(nationZones).filter(([, z]) => z.length > 1)
   return { nations: Object.keys(nationZones).length, split }
 }

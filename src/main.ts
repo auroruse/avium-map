@@ -165,7 +165,11 @@ function fmtGeo(g: Geo, places = 2): string {
 // line is left off
 const ZL_MIN_FS = 7.5
 
-const ZONES = zonesData as { nations: Record<string, number[]>; cities: Record<string, number> }
+const ZONES = zonesData as {
+  nations: Record<string, number[]>
+  home: Record<string, number[]>
+  cities: Record<string, number>
+}
 const ZONE_LOOKUP = 1500
 const HOUR = 3_600_000
 
@@ -182,8 +186,14 @@ function cityZone(c: City): number {
   return ZONES.cities[`${c.name}|${c.nation}`] ?? (c.x != null && c.y != null ? solarZone(c.x, c.y) : 0)
 }
 
+// Every zone a nation holds land in, colonies included (its panel lists these)
 function nationZones(name: string): number[] {
   return ZONES.nations[name] ?? []
+}
+
+// Only the zones of its home territory: what the line under its name gives
+function homeZones(name: string): number[] {
+  return ZONES.home?.[name] ?? nationZones(name)
 }
 
 const two = (n: number) => String(n).padStart(2, '0')
@@ -777,7 +787,7 @@ function makeLabelMarker(def: LabelDef, pos: [number, number]): L.Marker {
   // offering a click that does nothing. Dev keeps the label for editing.
   const nation = DEV ? undefined : nationByName.get(norm(def.text))
   // With the time zones on, a nation's name carries its offset and clock
-  const zones = nationZones(nationByName.get(norm(def.text))?.name ?? '')
+  const zones = homeZones(nationByName.get(norm(def.text))?.name ?? '')
   const zl = zones.length ? `<em class="zl" data-z="${zones.join(',')}">${zoneLine(zones)}</em>` : ''
   const m = L.marker(px(pos[0], pos[1]), {
     icon: L.divIcon({
@@ -1394,7 +1404,7 @@ function computePlacement(z: number, pinned: Placement[]): Placement[] {
     addBox({ ...b, water })
     // The zone line hung under a nation's name takes ground the same way
     if (settings.mode === 'zones' && !water && areaFontSize(def, z) >= ZL_MIN_FS) {
-      const zs = nationZones(nationByName.get(norm(def.text))?.name ?? '')
+      const zs = homeZones(nationByName.get(norm(def.text))?.name ?? '')
       if (zs.length) {
         // .zl is set at the name's size, held between 9 and 12px
         const zf = Math.min(12, Math.max(9, areaFontSize(def, z)))
