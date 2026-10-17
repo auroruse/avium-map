@@ -3074,7 +3074,7 @@ let sortAsc = true
 // them scattered a page apart. The filter narrows Cities to just those, keeping
 // whatever sort is in force; it lives in the sort menu because that is where the
 // list's other ways of being cut already are.
-let photoOnly = true
+let photoOnly = false
 const hasPhoto = (c: City) => !!byCityName(banners, c.name)
 const PHOTO_ICON =
   '<svg class="bs-photo" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" ' +
@@ -3352,11 +3352,11 @@ function openListView(mode: 'cities' | 'nations', filter = '') {
     sortField = 'population'
     sortAsc = false
   } else {
-    // Cities opens on the photographed places, richest first. A nation's own
-    // "View N cities" is asking for all of them, so that one opens unfiltered.
+    // Cities opens on every place, richest first; With Photo is a filter the
+    // reader turns on
     sortField = 'gdp'
     sortAsc = false
-    photoOnly = !filter
+    photoOnly = false
   }
   rebuildList(false)
 }
