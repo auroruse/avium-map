@@ -72,12 +72,12 @@
     "span": 288.5213801127062
   },
   {
-    "text": "BAY OF TONKIN",
+    "text": "THE NORTHERN BAY",
     "type": "sea",
-    "x": 4230,
-    "y": 712,
+    "x": 4219,
+    "y": 717,
     "minZoom": 3.5,
-    "span": 226.55737193230618
+    "span": 293.5351810386177
   },
   {
     "text": "NORTH SEA",
@@ -328,7 +328,7 @@
     "size": 11
   },
   {
-    "text": "SIDANYA",
+    "text": "SYLEZYJO",
     "type": "nation",
     "x": 3256,
     "y": 2331,
@@ -475,16 +475,6 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "size": 11
-  },
-  {
-    "text": "TONKIN",
-    "type": "colony",
-    "x": 4124,
-    "y": 869,
-    "minZoom": 3.5,
-    "maxZoom": 5,
-    "tier": 5,
     "size": 11
   },
   {
@@ -1341,5 +1331,43 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "size": 5.399097131695245
+  },
+  {
+    "text": "GREAT AI",
+    "type": "nation",
+    "x": 4243,
+    "y": 865,
+    "minZoom": 3.5,
+    "maxZoom": 5,
+    "tier": 13,
+    "size": 13
+  },
+  {
+    "text": "SEHRENO",
+    "type": "nation",
+    "x": 3937,
+    "y": 4178,
+    "minZoom": 3.5,
+    "maxZoom": 5,
+    "tier": 13,
+    "size": 13
+  },
+  {
+    "text": "DEMÂRUZ",
+    "type": "nation",
+    "x": 3470,
+    "y": 2209,
+    "minZoom": 3.5,
+    "maxZoom": 5,
+    "tier": 13,
+    "size": 13
+  },
+  {
+    "text": "LAKE LUCCON",
+    "type": "sea",
+    "x": 4443,
+    "y": 1091,
+    "minZoom": 3.5,
+    "span": 30.96108428825291
   }
 ]

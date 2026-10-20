@@ -327,7 +327,7 @@ Al-Sabkha	Barbary	184,000	3,297,761,000	17,923	-	Touggourt	ARV
 Nouvelle-Havre	Barbary	110,000	1,921,509,000	17,468	-	Adrar	ARV
 Ganjau	Cahaya	41,022,000	819,472,998,000	19,976	-	Jakarta	CAH
 Balambangan	Cahaya	26,240,000	365,854,349,000	13,943	-	Manila	CAH
-Baigau	Cahaya	14,902,000	467,572,492,000	31,376	-	Ho Chi Minh City	CAH
+Baigau	Cahaya	14,902,000	462,646,376,000	31,046		Ho Chi Minh City	CAH
 Lada	Cahaya	8,749,000	148,185,150,000	16,937	-	Bandung	CAH
 Jelutong	Cahaya	8,513,000	601,845,136,000	70,697	-	Kuala Lumpur	CAH
 Tali Sawah	Cahaya	6,886,000	119,666,718,000	17,378	-	Surabaya	CAH
@@ -371,9 +371,9 @@ Citandui	Cahaya	418,000	6,638,813,000	15,882	-	Bengkulu	CAH
 Bidau	Cahaya	394,000	2,076,311,000	5,270	-	Dili	CAH
 Batu Putih	Cahaya	389,000	9,366,161,000	24,078	-	Sandakan	CAH
 Batu Hitam	Cahaya	286,000	12,670,670,000	44,303	-	Kuantan	CAH
-Terusan Nipah	Cahaya	284,000	5,059,957,000	17,817	-	Rạch Giá	CAH
+Terusan Nipah	Cahaya	284,000	3,517,778,000	12,387		Rach Gia	CAH
 Payahan	Cahaya	282,000	2,013,404,000	7,140	-	Legazpi	CAH
-Wijayakarta	Cahaya	268,000	4,760,910,000	17,765		Vinh Long	CAH
+Wijayakarta	Cahaya	268,000	3,472,433,000	12,957		Vinh Long	CAH
 Arado	Cahaya	239,000	2,634,509,000	11,023	-	Butuan	CAH
 Petani	Cahaya	234,000	6,530,528,000	27,908	-	Songkhla	CAH
 Nara	Cahaya	197,000	2,150,328,000	10,915	-	Puerto Princesa	CAH
@@ -438,6 +438,56 @@ Jiekŋaluokta	Cuohpnjalla	1,000	86,842,000	86,842	-	Barentsburg	KAR
 Neu-Klagenhafen	Dämmerung Islands	547,000	47,685,103,000	87,176	-	Honolulu	ALE
 Marnelui	Dämmerung Islands	54,000	4,791,774,000	88,737	-	Kahului	ALE
 Ranpua	Dämmerung Islands	45,000	3,959,210,000	87,982	-	Hilo	ALE
+Buzrâbekhaz	Demâruz	1,983,000	68,475,263,000	34,531	-	Baku	DEM
+Demâr-dûm	Demâruz	1,333,000	27,777,757,000	20,839	-	Tabriz	DEM
+Khudshelgethlar	Demâruz	1,031,000	32,761,715,000	31,777	-	Yerevan	DEM
+Hrabukh-dûm	Demâruz	992,000	49,488,626,000	49,888	-	Tbilisi	DEM
+Gêmdubân	Demâruz	750,000	10,937,777,000	14,584	-	Makhachkala	DEM
+Khebbâr	Demâruz	741,000	29,115,579,000	39,292	-	Krasnodar	DEM
+Sundabâr	Demâruz	686,000	14,242,597,000	20,762	-	Urmia	DEM
+Belegost	Demâruz	663,000	21,133,965,000	31,876	-	Sumqayit	DEM
+Astrakhân	Demâruz	520,000	20,216,577,000	38,878	-	Astrakhan	DEM
+Maguzmgethlar	Demâruz	404,000	9,267,571,000	22,940	-	Ganja	DEM
+Karâz-id-Karâk	Demâruz	400,000	7,216,459,000	18,041	-	Ardabil	DEM
+Stravrobûl	Demâruz	353,000	6,126,553,000	17,356	-	Stavropol	DEM
+Vladikavkaz	Demâruz	313,000	5,353,804,000	17,105	-	Vladikavkaz	DEM
+Simtherbûl	Demâruz	293,000	4,980,328,000	16,998	-	Simferopol	DEM
+Novorodubân	Demâruz	245,000	9,108,371,000	37,177	-	Novorossiysk	DEM
+Sevastobûl	Demâruz	221,000	4,883,934,000	22,099	-	Sevastopol	DEM
+Nogrod	Demâruz	211,000	3,569,023,000	16,915	-	Pyatigorsk	DEM
+Buzrâgethlar	Demâruz	210,000	2,873,724,000	13,684	-	Khasavyurt	DEM
+Markarth	Demâruz	204,000	22,705,257,000	111,300	-	Atyrau	DEM
+Khvoy	Demâruz	192,000	3,740,375,000	19,481	-	Khvoy	DEM
+Felbâr	Demâruz	189,000	6,935,875,000	36,698	-	Sochi	DEM
+Adbâr	Demâruz	179,000	6,551,067,000	36,598	-	Armavir, RU	DEM
+Hrakhamâr	Demâruz	179,000	4,265,214,000	23,828	-	Nakhichevan	DEM
+Hundkhebbâr	Demâruz	170,000	5,146,572,000	30,274	-	Batumi	DEM
+Zirinkhebbâr	Demâruz	152,000	2,926,744,000	19,255	-	Mahabad	DEM
+Zarinbad	Demâruz	148,000	2,763,124,000	18,670	-	Maragheh	DEM
+Nazran	Demâruz	145,000	1,220,385,000	8,416	-	Nazran	DEM
+Khudshel-dûm	Demâruz	139,000	1,988,517,000	14,306	-	Cherkessk	DEM
+Rustavi	Demâruz	133,000	2,902,254,000	21,821	-	Rustavi	DEM
+Mirovuz	Demâruz	132,000	2,603,310,000	19,722	-	Kutaisi	DEM
+Volgodonsk	Demâruz	129,000	3,999,636,000	31,005	-	Volgodonsk	DEM
+Mikilgethlar	Demâruz	129,000	2,906,411,000	22,530	-	Mingechaur	DEM
+Nuldubân	Demâruz	125,000	2,462,021,000	19,696	-	Maykop	DEM
+Danakhdubân	Demâruz	124,000	2,042,423,000	16,471	-	Kislovodsk	DEM
+Lankharân	Demâruz	122,000	2,627,749,000	21,539	-	Lankaran	DEM
+Demâriddîn	Demâruz	120,000	1,973,300,000	16,444	-	Yessentuki	DEM
+Danakh-Khizdîn	Demâruz	113,000	1,129,375,000	9,994	-	Grozny	DEM
+Dankhul	Demâruz	113,000	1,499,157,000	13,267	-	Derbent	DEM
+Bintuhf	Demâruz	111,000	3,415,784,000	30,773	-	Bataysk	DEM
+Baruk-Khizdîn	Demâruz	109,000	2,004,119,000	18,386	-	Marand	DEM
+Mikil-id-Karâk	Demâruz	104,000	1,698,001,000	16,327	-	Nevinnomyssk	DEM
+Ehomgethlar	Demâruz	99,000	1,811,518,000	18,298	-	Ahar	DEM
+Nuldubân	Demâruz	96,000	1,767,442,000	18,411	-	Elista	DEM
+Ziringethlar	Demâruz	91,000	1,475,864,000	16,218	-	Mineralnyye Vody	DEM
+Ehomdubân	Demâruz	91,000	1,458,950,000	16,032	-	Yevpatoria	DEM
+Nilakhîn	Demâruz	85,000	2,233,629,000	26,278	-	Gyumri	DEM
+Zhikgethlar	Demâruz	81,000	2,849,218,000	35,176	-	Gelendzhik	DEM
+Vanadzor	Demâruz	79,000	1,808,367,000	22,891	-	Vanadzor	DEM
+Ehomdubân	Demâruz	74,000	961,188,000	12,989	-	Kizlyar	DEM
+Azov	Demâruz	71,000	2,136,597,000	30,093	-	Azov	DEM
 Bachstadt	Divia	7,065,000	107,492,096,000	15,215	-	Baghdad	ALE
 Kut	Divia	3,733,000	202,711,308,000	54,303	-	Kuwait City	ALE
 Madinat Al-Dosser	Divia	2,672,000	206,328,232,000	77,219	-	Dammam	ALE
@@ -784,6 +834,89 @@ Gromovsk	Giathka	56,000	1,223,051,000	21,840	-	Krasnovodsk	GIA
 Svobodinsk	Giathka	44,000	418,736,000	9,517	-	Azadshahr	GIA
 Petrovskaya	Giathka	32,000	59,431,000	1,857	-	Gardez	GIA
 Nagoniara	Gonenite Islands	143,000	385,275,000	2,694	-	Honiara	ALE
+Vongkac	Great Ai	19,364,000	1,067,716,773,000	55,139	Vọng Các	Bangkok	GAI
+Tallon	Great Ai	4,912,000	137,761,956,000	28,046	Thăng Long	Ha Noi	GAI
+Namvan	Great Ai	2,475,000	32,815,361,000	13,259	Nam Vang	Phnom Penh	GAI
+Kean	Great Ai	1,189,000	20,927,599,000	17,601	Kẻ Hàn	Da Nang	GAI
+Ninhai	Great Ai	904,000	25,042,585,000	27,702	Ninh Hải	Hai Phong	GAI
+Cam Phanh	Great Ai	620,000	12,560,717,000	20,259	Cam Phanh	Vientiane	GAI
+Chợ Lớn	Great Ai	446,000	8,355,601,000	18,735	Chợ Lớn	Tay Ninh	GAI
+Ea Trang	Great Ai	443,000	7,857,711,000	17,737	Ea Trang	Nha Trang	GAI
+Phú Xuân	Great Ai	381,000	4,492,271,000	11,791	Phú Xuân	Hue	GAI
+Thiên Trường	Great Ai	351,000	5,006,092,000	14,262	Thiên Trường	Nam Dinh	GAI
+Vĩnh	Great Ai	348,000	3,734,159,000	10,730	Vĩnh	Vinh	GAI
+Hòa Nghĩa	Great Ai	347,000	5,588,426,000	16,105	Hòa Nghĩa	Quang Ngai	GAI
+Lạc Giao	Great Ai	322,000	4,131,128,000	12,830	Lạc Giao	Buon Ma Thuot	GAI
+Lục Bại	Great Ai	313,000	2,533,284,000	8,094	Lục Bại	Siem Reap	GAI
+Thị Nại	Great Ai	272,000	3,670,530,000	13,495	Thị Nại	Quy Nhon	GAI
+Ba Đê Nhã	Great Ai	258,000	13,419,671,000	52,014	Ba Đê Nhã	Pattaya	GAI
+Hạc Thành	Great Ai	257,000	3,558,699,000	13,847	Hạc Thành	Thanh Hoa	GAI
+Tây Thái	Great Ai	256,000	4,579,685,000	17,889	Tây Thái	Thai Nguyen	GAI
+Chôn Bu Ri	Great Ai	255,000	13,255,874,000	51,984	Chôn Bu Ri	Chon Buri	GAI
+Plơi Kơdưr	Great Ai	235,000	3,148,131,000	13,396	Plơi Kơdưr	Pleiku	GAI
+Bình Lỗ	Great Ai	230,000	5,287,966,000	22,991	Bình Lỗ	Viet Yen	GAI
+Đạ Lạch	Great Ai	228,000	3,817,139,000	16,742	Đạ Lạch	Da Lat	GAI
+Phan Rang	Great Ai	211,000	3,518,868,000	16,677	Phan Rang	Phan Thiet	GAI
+Bồng Sơn	Great Ai	208,000	2,769,479,000	13,315	Bồng Sơn	Hoai Nhon	GAI
+Lạng Thương	Great Ai	184,000	4,183,436,000	22,736	Lạng Thương	Bac Giang	GAI
+Lạc Hoàn	Great Ai	179,000	6,129,848,000	34,245	Lạc Hoàn	Nakhon Pathom	GAI
+Kon Trang-Or	Great Ai	160,000	2,478,960,000	15,494	Kon Trang-Or	Kon Tum	GAI
+Mộ Đức	Great Ai	151,000	2,332,756,000	15,449	Mộ Đức	Duc Pho	GAI
+Ninh Thuận	Great Ai	151,000	2,538,037,000	16,808	Ninh Thuận	Phan Rang-Thap Cham	GAI
+Lưỡng Giới Thương Thành	Great Ai	151,000	1,496,590,000	9,911	Lưỡng Giới Thương Thành	Poipet	GAI
+B'Lao	Great Ai	147,000	2,407,629,000	16,378	B'Lao	Bao Loc	GAI
+Tiên Yên	Great Ai	144,000	5,016,903,000	34,840	Tiên Yên	Cam Pha	GAI
+Hòa Tường	Great Ai	142,000	1,748,730,000	12,315	Hòa Tường	Tuy Hoa	GAI
+Xuân Lộc	Great Ai	134,000	3,203,316,000	23,905	Xuân Lộc	Long Khanh	GAI
+Hà Đông	Great Ai	128,000	1,735,789,000	13,561	Hà Đông	Phu Ly	GAI
+Vân Đồn	Great Ai	124,000	4,287,932,000	34,580	Vân Đồn	Ha Long	GAI
+Hòa Bình	Great Ai	123,000	1,664,665,000	13,534	Hòa Bình	Ninh Binh	GAI
+Bát Tầm Môn	Great Ai	123,000	1,102,472,000	8,963	Bát Tầm Bôn	Battambang	GAI
+Quỳnh Thiện	Great Ai	114,000	1,156,871,000	10,148	Quỳnh Thiện	Hoang Mai	GAI
+Tam Dương	Great Ai	113,000	1,973,741,000	17,467	Tam Dương	Vinh Yen	GAI
+Lộc Hòa	Great Ai	111,000	2,628,626,000	23,681	Lộc Hòa	Tan Phu	GAI
+La-dik	Great Ai	108,000	1,741,812,000	16,128	La-dik	La Gi	GAI
+Xát Ta Híp	Great Ai	107,000	5,325,914,000	49,775	Xát Ta Híp	Sattahip	GAI
+Thanh Yên	Great Ai	106,000	2,504,441,000	23,627	Thanh Yên	Phuoc Long	GAI
+Hà Tuyên	Great Ai	105,000	893,219,000	8,507	Hà Tuyên	Tuyen Quang	GAI
+Bạc Hạc	Great Ai	105,000	1,827,286,000	17,403	Bạc Hạc	Viet Tri	GAI
+Pắc Xế	Great Ai	101,000	1,349,745,000	13,364	Pắc Xế	Pakse	GAI
+Hải Hưng	Great Ai	100,000	1,550,858,000	15,509	Hải Hưng	Hung Yen	GAI
+Kâm Póng Sao	Great Ai	96,000	806,743,000	8,404	Kâm Póng Sao	Sihanoukville	GAI
+Đoàn Thành	Great Ai	95,000	1,055,869,000	11,114	Đoàn Thành	Lang Son	GAI
+Xa Van Na Khẹt	Great Ai	92,000	959,264,000	10,427	Xa Van Na Khẹt	Savannakhet	GAI
+Hoài Phố	Great Ai	87,000	1,343,612,000	15,444	Hoài Phố	Hoi An	GAI
+Bình Khang	Great Ai	87,000	1,422,550,000	16,351	Bình Khang	Ninh Hoa	GAI
+Tam Lộ	Great Ai	86,000	1,327,401,000	15,435	Tam Lộ	Tam Ky	GAI
+Cẩm Xuyên	Great Ai	83,000	1,181,516,000	14,235	Cẩm Xuyên	Ky Anh	GAI
+Lũy Thầy	Great Ai	82,000	1,026,345,000	12,516	Lỹ Thầy	Dong Hoi	GAI
+Quy Hóa	Great Ai	80,000	1,066,896,000	13,336	Quy Hóa	Yen Bai	GAI
+Sê-rây Sao-phoan	Great Ai	79,000	758,029,000	9,595	Sê-rêi Sao-phoan	Serei Saophoan	GAI
+Bảo Thắng	Great Ai	75,000	996,992,000	13,293	Bảo Thắng	Lao Cai	GAI
+Mục Mã	Great Ai	74,000	574,830,000	7,768	Mục Mã	Cao Bang	GAI
+Khe Sanh	Great Ai	70,000	869,244,000	12,418	Khe Sanh	Dong Ha	GAI
+Kăm M'ran	Great Ai	70,000	1,132,205,000	16,174	Kăm M'ran	Cam Ranh	GAI
+Hàm Hoan	Great Ai	68,000	958,390,000	14,094	Hàm Hoan	Ha Tinh	GAI
+Nam Chưởng	Great Ai	65,000	584,505,000	8,992	Nam Chưởng	Luang Prabang	GAI
+Nghĩa Tín	Great Ai	64,000	1,005,531,000	15,711	Nghĩa Tín	Gia Nghia	GAI
+Ra-yong	Great Ai	64,000	4,177,632,000	65,276	Ra-yong	Rayong	GAI
+Bắc Nao	Great Ai	64,000	3,004,517,000	46,946	Bắc Nao	Chachoengsao	GAI
+Phúc Túc	Great Ai	63,000	452,502,000	7,183	Phúc Túc	Pursat	GAI
+Bang Cương	Great Ai	63,000	2,633,683,000	41,804	Bang Cương	Prachin Buri	GAI
+Hưng Hóa	Great Ai	62,000	700,243,000	11,294	Hưng Hóa	Son La	GAI
+Rát Bu Ri	Great Ai	60,000	1,613,557,000	26,893	Rát Bu Ri	Ratchaburi	GAI
+Mường Thanh	Great Ai	58,000	485,915,000	8,378	Mường Thanh	Dien Bien Phu	GAI
+Chư Prông	Great Ai	57,000	711,378,000	12,480	Chư Prông	Chu Se	GAI
+An Lộc	Great Ai	57,000	1,305,595,000	22,905	An Lộc	Binh Long	GAI
+Khờ-leng	Great Ai	57,000	3,699,217,000	64,899	Khờ-leng	Klaeng	GAI
+Cam-pông Cam	Great Ai	55,000	444,963,000	8,090	Cam-pông Cam	Kampong Cham	GAI
+Êa Ryu	Great Ai	54,000	605,690,000	11,216	Êa Ryu	Phu Yen	GAI
+Ý Dĩ	Great Ai	54,000	385,924,000	7,147	Ý Dĩ	Kampong Chhnang	GAI
+Cẩm Bài	Great Ai	53,000	455,467,000	8,594	Cẩm Bài	Pailin	GAI
+Chơ-ba Mon	Great Ai	51,000	417,166,000	8,180	Chơ-ha Mon	Chbar Mon	GAI
+Phôn Xa Vẳn	Great Ai	49,000	620,918,000	12,672	Phôn Xa Vẳn	Muang Phonsavan	GAI
+Phong Thổ	Great Ai	42,000	524,274,000	12,483	Phong Thổ	Lai Chau	GAI
+Cam Môn	Great Ai	39,000	456,204,000	11,698	Cam Môn	Muang Khammouan	GAI
 Shanggang	Guandong	31,083,000	1,771,362,620,000	56,988	上港	Shanghai	GUA
 Beining	Guandong	18,202,000	1,090,080,370,000	59,888	北宁	Beijing	GUA
 Fengzhou	Guandong	11,617,000	592,623,612,000	51,013	凤州	Suzhou	GUA
@@ -1491,110 +1624,59 @@ Moana	Salishia	18,000	1,727,970,000	95,998	-	Aberdeen, OR	SAL
 Fort Abigail	Salishia	12,000	826,236,000	68,853	-	Ontario, OR	SAL
 Falkenheim	Sankt Gerold Island	313,000	4,899,604,000	15,654	-	Sorong	ALE
 Branitzburg	Sankt Gerold Island	17,000	230,059,000	13,533	-	Kaimana	ALE
-	Sehreno	21,615,000	254,865,056,000	11,791	-	Karachi	SEH
-	Sehreno	14,433,000	130,540,639,000	9,045	-	Lahore	SEH
-	Sehreno	5,835,000	51,267,107,000	8,786	-	Faisalabad	SEH
-	Sehreno	5,052,000	46,135,434,000	9,132	-	Islamabad-Rawalpindi	SEH
-	Sehreno	3,878,000	6,466,950,000	1,668	-	Sana'a	SEH
-	Sehreno	3,567,000	17,512,196,000	4,910	-	Peshawar	SEH
-	Sehreno	3,166,000	26,979,405,000	8,522	-	Gujranwala	SEH
-	Sehreno	3,036,000	20,555,907,000	6,771	-	Hyderabad, PA	SEH
-	Sehreno	3,032,000	25,781,701,000	8,503	-	Multan	SEH
-	Sehreno	1,876,000	15,573,649,000	8,302	-	Sialkot	SEH
-	Sehreno	1,514,000	3,104,669,000	2,051	-	Hargeisa	SEH
-	Sehreno	1,322,000	2,089,077,000	1,580	-	Taizz	SEH
-	Sehreno	1,317,000	6,151,591,000	4,671	-	Mardan	SEH
-	Sehreno	1,143,000	9,256,450,000	8,098	-	Sargodha	SEH
-	Sehreno	993,000	4,573,188,000	4,605	-	Mingaora	SEH
-	Sehreno	970,000	6,474,016,000	6,674	-	Quetta	SEH
-	Sehreno	873,000	1,351,221,000	1,548	-	Ibb	SEH
-	Sehreno	842,000	5,346,844,000	6,350	-	Sukkur	SEH
-	Sehreno	818,000	6,514,587,000	7,964	-	Gujrat	SEH
-	Sehreno	815,000	3,716,532,000	4,560	-	Abbottabad	SEH
-	Sehreno	799,000	1,231,220,000	1,541	-	Al Hudaydah	SEH
-	Sehreno	790,000	3,596,921,000	4,553	-	Nowshera	SEH
-	Sehreno	750,000	5,947,169,000	7,930	-	Bahawalpur	SEH
-	Sehreno	702,000	5,548,172,000	7,903	-	Sahiwal	SEH
-	Sehreno	687,000	5,423,761,000	7,895	-	Okara	SEH
-	Sehreno	663,000	5,224,986,000	7,881	-	Rahimyar Khan	SEH
-	Sehreno	662,000	2,987,606,000	4,513	-	Bannu	SEH
-	Sehreno	644,000	4,035,060,000	6,266	-	Larkana	SEH
-	Sehreno	595,000	903,450,000	1,518	-	Al Mukalia	SEH
-	Sehreno	592,000	4,639,100,000	7,836	-	Sheikhupura	SEH
-	Sehreno	559,000	4,367,957,000	7,814	-	Kasur	SEH
-	Sehreno	537,000	2,398,255,000	4,466	-	Swabbi	SEH
-	Sehreno	519,000	782,686,000	1,508	-	Aden	SEH
-	Sehreno	517,000	4,024,028,000	7,783	-	Dera Ghazi Khan	SEH
-	Sehreno	491,000	2,479,685,000	5,050	-	Dire Dawa	SEH
-	Sehreno	488,000	3,787,362,000	7,761	-	Jhang Sadr	SEH
-	Sehreno	475,000	2,108,389,000	4,439	-	Kohat	SEH
-	Sehreno	451,000	1,996,677,000	4,427	-	Haripur	SEH
-	Sehreno	441,000	3,405,309,000	7,722	-	Jhelum	SEH
-	Sehreno	439,000	3,389,095,000	7,720	-	Sadiqabad	SEH
-	Sehreno	435,000	2,183,608,000	5,020	-	Jijiga	SEH
-	Sehreno	422,000	3,251,427,000	7,705	-	Hafizabad	SEH
-	Sehreno	415,000	3,194,821,000	7,698	-	Daska	SEH
-	Sehreno	412,000	791,636,000	1,921	-	Burao	SEH
-	Sehreno	407,000	3,130,186,000	7,691	-	Kamoke	SEH
-	Sehreno	395,000	1,737,198,000	4,398	-	Charsadda	SEH
-	Sehreno	392,000	1,723,347,000	4,396	-	Dera Ismail Khan	SEH
-	Sehreno	354,000	2,152,649,000	6,081	-	Mirpur Khas	SEH
-	Sehreno	348,000	514,422,000	1,478	-	Dhamar	SEH
-	Sehreno	342,000	2,607,494,000	7,624	-	Pakpattan	SEH
-	Sehreno	338,000	2,575,482,000	7,620	-	Gojra	SEH
-	Sehreno	326,000	2,479,559,000	7,606	-	Narowal	SEH
-	Sehreno	310,000	1,872,620,000	6,041	-	Jacobabad	SEH
-	Sehreno	302,000	1,821,911,000	6,033	-	Nawabshah	SEH
-	Sehreno	289,000	1,739,653,000	6,020	-	Shikarpur	SEH
-	Sehreno	278,000	2,097,698,000	7,546	-	Khanewal	SEH
-	Sehreno	269,000	11,279,058,000	41,930	-	Najran	SEH
-	Sehreno	269,000	2,026,450,000	7,533	-	Khanpur	SEH
-	Sehreno	258,000	1,544,261,000	5,986	-	Dadu	SEH
-	Sehreno	257,000	374,190,000	1,456	-	Yarim	SEH
-	Sehreno	253,000	474,417,000	1,875	-	Bosaso	SEH
-	Sehreno	251,000	1,500,297,000	5,977	-	Khairpur	SEH
-	Sehreno	243,000	1,821,305,000	7,495	-	Vehari	SEH
-	Sehreno	240,000	1,797,703,000	7,490	-	Chakwal	SEH
-	Sehreno	235,000	1,758,170,000	7,482	-	Shakargarh	SEH
-	Sehreno	235,000	1,758,104,000	7,481	-	Attock Khurd	SEH
-	Sehreno	231,000	1,726,985,000	7,476	-	Samundri	SEH
-	Sehreno	224,000	1,087,731,000	4,856	-	Harar	SEH
-	Sehreno	216,000	1,609,431,000	7,451	-	Mianwali	SEH
-	Sehreno	208,000	1,546,632,000	7,436	-	Ahmadpur East	SEH
-	Sehreno	208,000	1,546,556,000	7,435	-	Bahawalnagar	SEH
-	Sehreno	203,000	1,200,579,000	5,914	-	Tando Adam	SEH
-	Sehreno	197,000	1,461,119,000	7,417	-	Chichawatni	SEH
-	Sehreno	196,000	1,157,148,000	5,904	-	Tando Allahyar	SEH
-	Sehreno	192,000	1,422,205,000	7,407	-	Dipalpur	SEH
-	Sehreno	192,000	355,099,000	1,849	-	Galkayo	SEH
-	Sehreno	188,000	1,155,924,000	6,149	-	Turbat	SEH
-	Sehreno	186,000	1,375,576,000	7,396	-	Chenab Nagar	SEH
-	Sehreno	179,000	1,052,000,000	5,877	-	Umarkot	SEH
-	Sehreno	172,000	824,263,000	4,792	-	Gode	SEH
-	Sehreno	163,000	953,492,000	5,850	-	Kandhkot	SEH
-	Sehreno	153,000	1,120,526,000	7,324	-	Talagang	SEH
-	Sehreno	152,000	1,112,838,000	7,321	-	Kot Addu	SEH
-	Sehreno	151,000	1,105,152,000	7,319	-	Haroonabad	SEH
-	Sehreno	150,000	1,097,468,000	7,316	-	Lodhran	SEH
-	Sehreno	150,000	274,018,000	1,827	-	Dhuusamareeb	SEH
-	Sehreno	149,000	1,089,787,000	7,314	-	Bhakkar	SEH
-	Sehreno	149,000	272,101,000	1,826	-	Berbera	SEH
-	Sehreno	147,000	1,074,433,000	7,309	-	Layyah	SEH
-	Sehreno	140,000	1,020,776,000	7,291	-	Khushab	SEH
-	Sehreno	134,000	776,212,000	5,793	-	Shahdadpur	SEH
-	Sehreno	133,000	967,254,000	7,273	-	Jampur	SEH
-	Sehreno	119,000	214,886,000	1,806	-	Erigavo	SEH
-	Sehreno	114,000	683,619,000	5,997	-	Khuzdar	SEH
-	Sehreno	102,000	182,774,000	1,792	-	Garoowe	SEH
-	Sehreno	88,000	626,907,000	7,124	-	Taunsa	SEH
-	Sehreno	81,000	574,653,000	7,094	-	Chowk Azam	SEH
-	Sehreno	80,000	141,621,000	1,770	-	Bargal	SEH
-	Sehreno	79,000	483,361,000	6,118	-	Gilgit	SEH
-	Sehreno	79,000	320,576,000	4,058	-	Tank	SEH
-	Sehreno	78,000	552,326,000	7,081	-	Fateh Jang	SEH
-	Sehreno	70,000	493,003,000	7,043	-	Hasan Adbal	SEH
-	Sehreno	66,000	463,466,000	7,022	-	Basirpur	SEH
-	Sehreno	60,000	419,329,000	6,989	-	Jaboka	SEH
+Marsakbir	Sehreno	10,808,000	921,111,800,000	85,225	-	Karachi	SEH
+Xagħra	Sehreno	1,939,000	37,610,783,000	19,397	-	Sana'a	SEH
+Rabat Għaden	Sehreno	1,784,000	51,668,208,000	28,962	-	Peshawar	SEH
+San Pawl tal-Baħar	Sehreno	1,518,000	105,848,622,000	69,729	-	Hyderabad, PA	SEH
+Mtarfa	Sehreno	757,000	24,659,275,000	32,575	-	Hargeisa	SEH
+Sliema	Sehreno	661,000	12,482,985,000	18,885	-	Taizz	SEH
+San Mark l-Evanġelista	Sehreno	659,000	37,091,156,000	56,284	-	Mardan	SEH
+Marsaxatt	Sehreno	497,000	13,108,375,000	26,375	-	Mingaora	SEH
+Tas-Sliema	Sehreno	485,000	9,073,380,000	18,708	-	Quetta	SEH
+Iż-Żejtun	Sehreno	437,000	7,399,721,000	16,933	-	Ibb	SEH
+Bieb il-Baħar	Sehreno	421,000	11,573,290,000	27,490	-	Sukkur	SEH
+Kalkara	Sehreno	408,000	6,569,208,000	16,101	-	Abbottabad	SEH
+Żabbar	Sehreno	400,000	5,595,200,000	13,988	-	Al Hudaydah	SEH
+Għajn id-Deheb	Sehreno	395,000	5,316,305,000	13,459	-	Nowshera	SEH
+Wied l-Għaqda	Sehreno	331,000	4,249,047,000	12,837	-	Bannu	SEH
+Il-Qinalija	Sehreno	322,000	4,000,528,000	12,424	-	Larkana	SEH
+Safarja	Sehreno	298,000	4,006,014,000	13,443	-	Al Mukalia	SEH
+Fawwara	Sehreno	269,000	7,725,411,000	28,719	-	Swabbi	SEH
+Marsa l-Għatran	Sehreno	260,000	20,438,080,000	78,608	-	Aden	SEH
+Gudja	Sehreno	246,000	8,505,942,000	34,577	-	Dire Dawa	SEH
+Dingli	Sehreno	238,000	3,361,750,000	14,125	-	Kohat	SEH
+Safja	Sehreno	226,000	3,387,514,000	14,989	-	Haripur	SEH
+Ponta	Sehreno	218,000	2,752,468,000	12,626	-	Jijiga	SEH
+Rikażli	Sehreno	206,000	2,869,374,000	13,929	-	Burao	SEH
+Ħal-Far	Sehreno	198,000	2,217,996,000	11,202	-	Charsadda	SEH
+Santa Luċija	Sehreno	196,000	1,823,780,000	9,305	-	Dera Ismail Khan	SEH
+L-Imdina	Sehreno	177,000	8,241,120,000	46,560	-	Mirpur Khas	SEH
+Safar	Sehreno	174,000	1,760,184,000	10,116	-	Dhamar	SEH
+Bir Miftuħ	Sehreno	155,000	1,518,845,000	9,799	-	Jacobabad	SEH
+Baħrija	Sehreno	151,000	1,326,988,000	8,788	-	Nawabshah	SEH
+Tarxien	Sehreno	145,000	1,281,075,000	8,835	-	Shikarpur	SEH
+Wied il-Għajn	Sehreno	135,000	3,747,330,000	27,758	-	Najran	SEH
+San Ġiljan	Sehreno	129,000	1,349,598,000	10,462	-	Dadu	SEH
+L-Għarb	Sehreno	129,000	1,289,871,000	9,999	-	Yarim	SEH
+Kalkara	Sehreno	127,000	1,173,988,000	9,244	-	Bosaso	SEH
+Qiegħa	Sehreno	126,000	1,208,466,000	9,591	-	Khairpur	SEH
+L-Isla	Sehreno	112,000	794,864,000	7,097	-	Harar	SEH
+Bormla	Sehreno	102,000	817,428,000	8,014	-	Tando Adam	SEH
+Naxxar	Sehreno	98,000	496,860,000	5,070	-	Tando Allahyar	SEH
+Żebbuġ	Sehreno	96,000	722,880,000	7,530	-	Galkayo	SEH
+Siġġiewi	Sehreno	94,000	720,604,000	7,666	-	Turbat	SEH
+Gżira	Sehreno	90,000	373,680,000	4,152	-	Umarkot	SEH
+Għajn Messaoud	Sehreno	86,000	9,732,190,000	113,165	-	Gode	SEH
+San Ġwann	Sehreno	82,000	633,286,000	7,723	-	Kandhkot	SEH
+Safi	Sehreno	75,000	338,475,000	4,513	-	Berbera	SEH
+Qormi	Sehreno	75,000	326,625,000	4,355	-	Dhuusamareeb	SEH
+Mosta	Sehreno	67,000	440,860,000	6,580	-	Shahdadpur	SEH
+Kappara	Sehreno	60,000	281,760,000	4,696	-	Erigavo	SEH
+Kastell	Sehreno	57,000	352,032,000	6,176	-	Khuzdar	SEH
+Mellieħa	Sehreno	51,000	230,877,000	4,527	-	Garoowe	SEH
+Lija	Sehreno	40,000	266,080,000	6,652	-	Gilgit	SEH
+Sannat	Sehreno	40,000	250,560,000	6,264	-	Bargal	SEH
+Lvant	Sehreno	40,000	240,640,000	6,016	-	Tank	SEH
 Tanglaoi	Seignid	28,771,000	1,056,017,848,000	36,704	-	Shenzhen-Dongguan	SGD
 Atanao	Seignid	28,176,000	1,033,098,805,000	36,666	-	Guangzhou-Foshan	SGD
 Yalakawa	Seignid	13,254,000	467,986,008,000	35,309	-	Jieyang-Shantou-Chaozhou	SGD
@@ -1709,31 +1791,6 @@ Helbron	Shivon	132,000	820,000,000	6,212	חֶבְרוֹן	Al Suwayda	SHI
 Yehora	Shivon	126,000	8,351,639,000	66,283	יהורה	Yambu	SHI
 Mohonon	Shivon	117,000	2,162,848,000	18,486	מָחֳנוֹן	Arish	SHI
 Hadrei-Sheol	Shivon	55,000	3,497,546,000	63,592	חדרי-שאול	Duba	SHI
-Groscown	Sidanya	2,580,000	61,625,474,000	23,886	-	Kyiv	SID
-Salira	Sidanya	1,287,000	29,690,564,000	23,070	-	Kharkiv	SID
-Grestopol	Sidanya	1,024,000	31,377,050,000	30,642	-	Rostov-on-Don	SID
-Ruscow	Sidanya	760,000	17,076,881,000	22,470	-	Dnipro	SID
-Gravil	Sidanya	689,000	15,406,063,000	22,360	-	Donetsk	SID
-Olivock	Sidanya	625,000	13,906,259,000	22,250	-	Zaporizhzhia	SID
-Marintov	Sidanya	607,000	13,485,782,000	22,217	-	Lviv	SID
-Homyel	Sidanya	573,000	19,998,777,000	34,902	-	Homieĺ	SID
-Doministad	Sidanya	398,000	13,640,124,000	34,272	-	Brest, BY	SID
-Dorigrad	Sidanya	364,000	15,385,437,000	42,268	-	Belgorod	SID
-Morensk	Sidanya	363,000	7,860,516,000	21,654	-	Mariupol	SID
-Deristopol	Sidanya	357,000	7,724,283,000	21,637	-	Vinnytsia	SID
-Gilensk	Sidanya	342,000	7,383,083,000	21,588	-	Luhansk	SID
-Stirsgrad	Sidanya	233,000	4,933,928,000	21,176	-	Cherkasy	SID
-Kartov	Sidanya	228,000	4,823,840,000	21,157	-	Poltava	SID
-Sudakov	Sidanya	222,000	4,690,409,000	21,128	-	Chernihiv	SID
-Grovingard	Sidanya	210,000	4,424,138,000	21,067	-	Zhytomyr	SID
-Eton	Sidanya	202,000	4,247,419,000	21,027	-	Lutsk	SID
-Tarnovsky	Sidanya	183,000	3,828,758,000	20,922	-	Ternopil	SID
-Makovi	Sidanya	176,000	3,675,479,000	20,883	-	Sumy	SID
-Istonia	Sidanya	112,000	2,286,430,000	20,415	-	Melitopol	SID
-Drolov	Sidanya	110,000	2,243,192,000	20,393	-	Nikopol	SID
-Schevock	Sidanya	105,000	3,366,587,000	32,063	-	Mazyr	SID
-Lobotomir	Sidanya	91,000	1,838,400,000	20,202	-	Sloviansk	SID
-Berumistad	Sidanya	73,000	1,458,738,000	19,983	-	Uman	SID
 Strålholm	Skjarnland	1,565,000	166,031,805,000	106,091	-	Stockholm	SKJ
 Hävnia	Skjarnland	1,268,000	156,894,497,000	123,734	-	Copenhagen	SKJ
 Kjellberg	Skjarnland	902,000	110,071,017,000	122,030	-	Oslo	SKJ
@@ -1796,18 +1853,35 @@ Zula	Southeast Aphirica	99,000	149,152,000	1,507	-	Yambio	SHI
 Dukuzaya	Southeast Aphirica	89,000	133,358,000	1,498	-	Malakal	SHI
 Acra	Southeast Aphirica	73,000	108,328,000	1,484	-	Rumbek	SHI
 Långdalshamn	Spetsbergen	3,000	275,235,000	91,745	-	Longyearbyen	SKJ
+Bramytolne	Sylezyjo	2,580,000	61,625,474,000	23,886	-	Kyiv	SYL
+Miastokotow	Sylezyjo	1,287,000	29,690,564,000	23,070	-	Kharkiv	SYL
+Czynstoskrywol	Sylezyjo	1,024,000	31,377,050,000	30,642	-	Rostov-on-Don	SYL
+Domyna	Sylezyjo	760,000	17,076,881,000	22,470	-	Dnipro	SYL
+Brzuchwola	Sylezyjo	689,000	15,406,063,000	22,360	-	Donetsk	SYL
+Gora Jeleni	Sylezyjo	625,000	13,906,259,000	22,250	-	Zaporizhzhia	SYL
+Tynglod	Sylezyjo	607,000	13,485,782,000	22,217	-	Lviv	SYL
+Sniezno-ojla	Sylezyjo	573,000	19,998,777,000	34,902	-	Homieĺ	SYL
+Miastonog	Sylezyjo	398,000	13,640,124,000	34,272	-	Brest, BY	SYL
+Necgila	Sylezyjo	364,000	15,385,437,000	42,268	-	Belgorod	SYL
+Ping	Sylezyjo	363,000	7,860,516,000	21,654	-	Mariupol	SYL
+Najymca	Sylezyjo	357,000	7,724,283,000	21,637	-	Vinnytsia	SYL
+Bioly	Sylezyjo	342,000	7,383,083,000	21,588	-	Luhansk	SYL
+Kludzic	Sylezyjo	233,000	4,933,928,000	21,176	-	Cherkasy	SYL
+Rant	Sylezyjo	228,000	4,823,840,000	21,157	-	Poltava	SYL
+Odbytbyka	Sylezyjo	222,000	4,690,409,000	21,128	-	Chernihiv	SYL
+Ryba	Sylezyjo	210,000	4,424,138,000	21,067	-	Zhytomyr	SYL
+Te	Sylezyjo	202,000	4,247,419,000	21,027	-	Lutsk	SYL
+Jastrzob-Jezioro	Sylezyjo	183,000	3,828,758,000	20,922	-	Ternopil	SYL
+Wyngiel	Sylezyjo	176,000	3,675,479,000	20,883	-	Sumy	SYL
+Slynsk	Sylezyjo	112,000	2,286,430,000	20,415	-	Melitopol	SYL
+Slav	Sylezyjo	110,000	2,243,192,000	20,393	-	Nikopol	SYL
+Tabak	Sylezyjo	105,000	3,366,587,000	32,063	-	Mazyr	SYL
+Wita	Sylezyjo	91,000	1,838,400,000	20,202	-	Sloviansk	SYL
+Gora	Sylezyjo	73,000	1,458,738,000	19,983	-	Uman	SYL
 Cartishire	Thule	22,000	1,285,580,000	58,435	-	Sept-Îles	ELV
 Chuparosa	Tierra Arcadia	230,000	15,112,711,000	65,707	-	Halifax	ASK
 Federico	Tierra Arcadia	65,000	4,009,720,000	61,688	-	Fredericton	ASK
 Ciudad de Manteca	Tierra Arcadia	16,000	920,198,000	57,512	-	Bathurst, NB	ASK
-Ville Tonkinoise	Tonkin	4,912,000	100,921,299,000	20,546	-	Hanoi	ARV
-Haitenfon	Tonkin	904,000	17,066,299,000	18,879	-	Haiphong	ARV
-Kevan	Tonkin	351,000	6,320,261,000	18,006	-	Nam Định	ARV
-Cheman	Tonkin	257,000	4,555,602,000	17,726	-	Thanh Hóa	ARV
-Thévallée	Tonkin	256,000	4,537,131,000	17,723	-	Thái Nguyên	ARV
-Kamfa	Tonkin	144,000	2,479,952,000	17,222	-	Cẩm Phả	ARV
-Hongay	Tonkin	124,000	2,119,607,000	17,094	-	Hạ Long	ARV
-Valcœur	Tonkin	58,000	954,470,000	16,456	-	Điện Biên Phủ	ARV
 Szerencsehely	Turulia	1,743,000	90,765,847,000	52,074	-	Budapest	TUR
 Csernovic	Turulia	226,000	4,779,113,000	21,147	-	Chernivtsi	TUR
 Dobrezliem	Turulia	140,000	6,425,051,000	45,893	-	Debrecen	TUR
