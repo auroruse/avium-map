@@ -327,7 +327,7 @@ Al-Sabkha	Barbary	184,000	3,297,761,000	17,923	-	Touggourt	ARV
 Nouvelle-Havre	Barbary	110,000	1,921,509,000	17,468	-	Adrar	ARV
 Ganjau	Cahaya	41,022,000	819,472,998,000	19,976	-	Jakarta	CAH
 Balambangan	Cahaya	26,240,000	365,854,349,000	13,943	-	Manila	CAH
-Baigau	Cahaya	14,902,000	462,646,376,000	31,046		Ho Chi Minh City	CAH
+Baigau	Cahaya	14,902,000	462,646,376,000	31,046	-	Ho Chi Minh City	CAH
 Lada	Cahaya	8,749,000	148,185,150,000	16,937	-	Bandung	CAH
 Jelutong	Cahaya	8,513,000	601,845,136,000	70,697	-	Kuala Lumpur	CAH
 Tali Sawah	Cahaya	6,886,000	119,666,718,000	17,378	-	Surabaya	CAH
@@ -371,9 +371,9 @@ Citandui	Cahaya	418,000	6,638,813,000	15,882	-	Bengkulu	CAH
 Bidau	Cahaya	394,000	2,076,311,000	5,270	-	Dili	CAH
 Batu Putih	Cahaya	389,000	9,366,161,000	24,078	-	Sandakan	CAH
 Batu Hitam	Cahaya	286,000	12,670,670,000	44,303	-	Kuantan	CAH
-Terusan Nipah	Cahaya	284,000	3,517,778,000	12,387		Rach Gia	CAH
+Terusan Nipah	Cahaya	284,000	3,517,778,000	12,387	-	Rach Gia	CAH
 Payahan	Cahaya	282,000	2,013,404,000	7,140	-	Legazpi	CAH
-Wijayakarta	Cahaya	268,000	3,472,433,000	12,957		Vinh Long	CAH
+Wijayakarta	Cahaya	268,000	3,472,433,000	12,957	-	Vinh Long	CAH
 Arado	Cahaya	239,000	2,634,509,000	11,023	-	Butuan	CAH
 Petani	Cahaya	234,000	6,530,528,000	27,908	-	Songkhla	CAH
 Nara	Cahaya	197,000	2,150,328,000	10,915	-	Puerto Princesa	CAH
@@ -867,15 +867,15 @@ Lưỡng Giới Thương Thành	Great Ai	151,000	1,496,590,000	9,911	Lưỡng Gi
 B'Lao	Great Ai	147,000	2,407,629,000	16,378	B'Lao	Bao Loc	GAI
 Tiên Yên	Great Ai	144,000	5,016,903,000	34,840	Tiên Yên	Cam Pha	GAI
 Hòa Tường	Great Ai	142,000	1,748,730,000	12,315	Hòa Tường	Tuy Hoa	GAI
-Xuân Lộc	Great Ai	134,000	3,203,316,000	23,905	Xuân Lộc	Long Khanh	GAI
+Xuân Lộc	Cahaya	134,000	3,203,316,000	23,905	Xuân Lộc	Long Khanh	CAH
 Hà Đông	Great Ai	128,000	1,735,789,000	13,561	Hà Đông	Phu Ly	GAI
 Vân Đồn	Great Ai	124,000	4,287,932,000	34,580	Vân Đồn	Ha Long	GAI
 Hòa Bình	Great Ai	123,000	1,664,665,000	13,534	Hòa Bình	Ninh Binh	GAI
 Bát Tầm Môn	Great Ai	123,000	1,102,472,000	8,963	Bát Tầm Bôn	Battambang	GAI
 Quỳnh Thiện	Great Ai	114,000	1,156,871,000	10,148	Quỳnh Thiện	Hoang Mai	GAI
 Tam Dương	Great Ai	113,000	1,973,741,000	17,467	Tam Dương	Vinh Yen	GAI
-Lộc Hòa	Great Ai	111,000	2,628,626,000	23,681	Lộc Hòa	Tan Phu	GAI
-La-dik	Great Ai	108,000	1,741,812,000	16,128	La-dik	La Gi	GAI
+Lộc Hòa	Cahaya	111,000	2,628,626,000	23,681	Lộc Hòa	Tan Phu	CAH
+La-dik	Cahaya	108,000	1,741,812,000	16,128	La-dik	La Gi	CAH
 Xát Ta Híp	Great Ai	107,000	5,325,914,000	49,775	Xát Ta Híp	Sattahip	GAI
 Thanh Yên	Great Ai	106,000	2,504,441,000	23,627	Thanh Yên	Phuoc Long	GAI
 Hà Tuyên	Great Ai	105,000	893,219,000	8,507	Hà Tuyên	Tuyen Quang	GAI
