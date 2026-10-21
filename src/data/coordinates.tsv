@@ -208,7 +208,7 @@ city	Bhusawl Peta	Arunya		3794	4643	-36.5550	-42.8908	36.55°SE 42.89°SW
 city	Bianzhou	Guandong		3472	669	27.8850	121.8401	27.88°NW 121.84°NE
 city	Bidau	Cahaya		4720	1078	3.0300	113.0666	3.03°NW 113.07°NE
 city	Bidéa	Côte de Saumon		2548	3863	-6.1650	-42.3510	6.16°SE 42.35°SW
-city	Bieb il-Baħar	Sehreno		3946	4336	-34.2300	-18.8811	34.23°SE 18.88°SW
+city	Bieb il-Baħar	Sehreno		4088	4323	-36.1650	-11.7860	36.16°SE 11.79°SW
 city	Bierastia	Rudania		3079	2378	8.1450	23.1226	8.14°NW 23.12°NE
 city	Bigongburh	Eivorie		2090	3792	1.7700	-52.0843	1.77°NW 52.08°SW
 city	Bingang	Furan		3347	468	32.7750	135.8375	32.77°NW 135.84°NE
@@ -567,7 +567,7 @@ city	Geoluæppeltun	Eivorie		2290	3875	-2.4750	-48.8946	2.47°SE 48.89°SW
 city	Geriano	Vicily		3022	3253	-4.1250	-7.2629	4.13°SE 7.26°SW
 city	Geronde	Arverne		2900	2989	1.6650	-2.7203	1.66°NW 2.72°SW
 city	Għajn id-Deheb	Sehreno		4164	4359	-37.8450	-10.0949	37.84°SE 10.09°SW
-city	Għajn Messaoud	Sehreno		3685	4271	-29.3400	-26.0831	29.34°SE 26.08°SW
+city	Għajn Messaoud	Sehreno		3779	4071	-27.7500	-12.6651	27.75°SE 12.67°SW
 city	Gilang	Seignid		3732	698	23.5500	123.2777	23.55°NW 123.28°NE
 city	Gimhathitha	Arunya		3372	4869	-33.6150	-71.6840	33.61°SE 71.68°SW
 city	Giwangan	Cahaya		4691	1267	0.6300	103.4441	0.63°NW 103.44°NE
@@ -769,7 +769,7 @@ city	Kalarov	Rudania		3156	2236	9.1200	30.7122	9.12°NW 30.71°NE
 city	Kaligarang	Cahaya		4687	1256	0.8550	103.9172	0.85°NW 103.92°NE
 city	Kalinghat	Noradia		3897	4844	-41.1150	-52.3044	41.11°SE 52.30°SW
 city	Kalisat	Cahaya		4704	1182	1.7100	107.7064	1.71°NW 107.71°NE
-city	Kalkara	Sehreno		3845	4136	-29.7150	-13.0331	29.71°SE 13.03°SW
+city	Kalkara	Sehreno		3787	3974	-26.4150	-7.9406	26.41°SE 7.94°SW
 city	Kalkara	Sehreno		3845	4136	-29.7150	-13.0331	29.71°SE 13.03°SW
 city	Kalynyn	Rudania		3067	2178	11.3250	30.5091	11.32°NW 30.51°NE
 city	Kăm M'ran	Great Ai		4394	852	11.3100	121.5326	11.31°NW 121.53°NE
@@ -806,7 +806,7 @@ city	Kaseki	Perovska		3629	1691	10.2000	65.5714	10.20°NW 65.57°NE
 city	Kasil	Seignid		3848	555	23.9550	134.6218	23.96°NW 134.62°NE
 city	Kasowice	Cortesia		3175	2516	4.6350	20.8434	4.63°NW 20.84°NE
 city	Kastama	Selmira		3551	3122	-10.0950	14.4960	10.09°SE 14.50°NE
-city	Kastell	Sehreno		4040	4165	-33.0750	-5.9289	33.07°SE 5.93°SW
+city	Kastell	Sehreno		3750	4162	-28.6800	-18.1409	28.68°SE 18.14°SW
 city	Kastelmark	Alemannia		2984	2629	5.8050	11.3843	5.80°NW 11.38°NE
 city	Kaukásos	Auritania		1509	3834	9.8550	-78.3268	9.86°NW 78.33°SW
 city	Kawaoka	Nichirin		2820	558	39.3300	120.5329	39.33°NW 120.53°NE
@@ -923,7 +923,7 @@ city	Kuybyshev	Rudania		3239	2025	11.0400	41.5122	11.04°NW 41.51°NE
 city	Kyakhta	Perovska		3584	1586	12.4500	69.5629	12.45°NW 69.56°NE
 city	Kyzyl-Perovsk	Rudania		3581	1787	9.4800	60.1565	9.48°NW 60.16°NE
 city	L-Għarb	Sehreno		3779	4080	-27.8850	-13.0838	27.88°SE 13.08°SW
-city	L-Imdina	Sehreno		3878	4357	-33.5250	-22.9004	33.52°SE 22.90°SW
+city	L-Imdina	Sehreno		3873	4233	-31.5900	-16.6410	31.59°SE 16.64°SW
 city	L-Isla	Sehreno		3681	4155	-27.5400	-20.4899	27.54°SE 20.49°SW
 city	La Capilla	El Magreb		2546	3072	5.7300	-16.8530	5.73°NW 16.85°SW
 city	La Torre	Hollosend		1988	3509	7.5450	-49.8053	7.54°NW 49.81°SW
@@ -1033,8 +1033,8 @@ city	Marjava	Cortesia		3138	2556	4.5900	18.3983	4.59°NW 18.40°NE
 city	Markarth	Demâruz		3429	2043	7.9200	45.5921	7.92°NW 45.59°NE
 city	Marnelui	Dämmerung Islands		885	2642	37.0950	-89.6683	37.09°NW 89.67°SW
 city	Marrowby	Hollosend		1974	3707	4.7850	-54.9093	4.78°NW 54.91°SW
-city	Marsa l-Għatran	Sehreno		3780	4133	-28.6950	-15.5469	28.69°SE 15.55°SW
-city	Marsakbir	Sehreno		3850	4319	-32.5350	-22.0360	32.53°SE 22.04°SW
+city	Marsa l-Għatran	Sehreno		3933	4100	-30.4950	-7.5775	30.49°SE 7.58°SW
+city	Marsakbir	Sehreno		3960	4160	-31.8000	-9.2784	31.80°SE 9.28°SW
 city	Marsaxatt	Sehreno		4186	4370	-38.3400	-9.6167	38.34°SE 9.62°SW
 city	Marston	Elvester		2722	2668	9.1500	1.8033	9.15°NW 1.80°NE
 city	Martelon	Arverne		3023	2887	1.3500	4.1421	1.35°NW 4.14°NE
@@ -1059,7 +1059,7 @@ city	Mehrāvar	Varahmehr		4118	3679	-26.9550	18.8009	26.95°SE 18.80°NE
 city	Melcarta	East Astriya		3244	3136	-5.7000	3.4591	5.70°SE 3.46°NE
 city	Melden	Ponurvia		1124	2866	30.1500	-78.5865	30.15°NW 78.59°SW
 city	Melidene	Selmira		3709	3202	-13.6650	17.9328	13.66°SE 17.93°NE
-city	Mellieħa	Sehreno		3873	4233	-31.5900	-16.6410	31.59°SE 16.64°SW
+city	Mellieħa	Sehreno		3878	4357	-33.5250	-22.9004	33.52°SE 22.90°SW
 city	Memlyn	Livonia		2981	2373	9.6900	20.4408	9.69°NW 20.44°NE
 city	Memphipolis	Kemet		3560	3444	-15.0600	4.1793	15.06°SE 4.18°NE
 city	Mempolis	Hollosend		1706	3322	14.5800	-57.8520	14.58°NW 57.85°SW
@@ -1126,7 +1126,7 @@ city	Mostagneau	Barbary		2664	3043	4.3950	-11.9537	4.39°NW 11.95°SW
 city	Mostovsk	Giathka		3831	1874	4.4250	61.7458	4.42°NW 61.75°NE
 city	Motohora	Nichirin		2885	680	36.5250	111.3324	36.52°NW 111.33°NE
 city	Moynaq	Perovska		3615	1553	12.4800	71.8189	12.48°NW 71.82°NE
-city	Mtarfa	Sehreno		3750	4162	-28.6800	-18.1409	28.68°SE 18.14°SW
+city	Mtarfa	Sehreno		4040	4165	-33.0750	-5.9289	33.07°SE 5.93°SW
 city	Mục Mã	Great Ai		4061	865	16.1100	116.7844	16.11°NW 116.78°NE
 city	Mundar	Noradia		4058	4982	-45.6000	-56.1892	45.60°SE 56.19°SW
 city	Mundcaester	Eivorie		2273	3732	-0.0750	-43.8065	0.07°SE 43.81°SW
@@ -1463,8 +1463,8 @@ city	Sadegna	Vicily		3166	3038	-3.0600	3.9752	3.06°SE 3.98°NE
 city	Saderno	Vicily		3066	2996	-0.9300	2.1219	0.93°SE 2.12°NE
 city	Sadet	Skjarnland		2817	2298	13.2750	18.2639	13.27°NW 18.26°NE
 city	Sadograd	Giathka		4001	1936	0.9450	62.6074	0.94°NW 62.61°NE
-city	Safar	Sehreno		3779	4071	-27.7500	-12.6651	27.75°SE 12.67°SW
-city	Safarja	Sehreno		3933	4100	-30.4950	-7.5775	30.49°SE 7.58°SW
+city	Safar	Sehreno		3685	4271	-29.3400	-26.0831	29.34°SE 26.08°SW
+city	Safarja	Sehreno		3780	4133	-28.6950	-15.5469	28.69°SE 15.55°SW
 city	Safasso	Vicily		2980	3142	-1.8300	-4.9609	1.83°SE 4.96°SW
 city	Safi	Sehreno		3782	4138	-28.8000	-15.7059	28.80°SE 15.71°SW
 city	Safja	Sehreno		4166	4394	-38.4000	-11.9302	38.40°SE 11.93°SW
@@ -1492,17 +1492,17 @@ city	San Ġiljan	Sehreno		3916	4318	-33.5100	-19.2140	33.51°SE 19.21°SW
 city	San Ġwann	Sehreno		3955	4343	-34.4700	-18.8655	34.47°SE 18.87°SW
 city	San Isidoro	Hollosend		1768	3603	9.4350	-61.4969	9.43°NW 61.50°SW
 city	San Luis	Auritania		1193	3761	15.6900	-93.3064	15.69°NW 93.31°SW
-city	San Mark l-Evanġelista	Sehreno		4171	4358	-37.9350	-9.6975	37.94°SE 9.70°SW
+city	San Mark l-Evanġelista	Sehreno		4113	4077	-32.8500	1.7008	32.85°SE 1.70°NE
 city	San Mateo	Auritania		1393	3758	12.7350	-82.6441	12.74°NW 82.64°SW
 city	San Pablo	Auritania		1591	4241	2.5200	-81.7901	2.52°NW 81.79°SW
-city	San Pawl tal-Baħar	Sehreno		3873	4344	-33.2550	-22.4108	33.25°SE 22.41°SW
+city	San Pawl tal-Baħar	Sehreno		4041	4252	-34.3950	-10.2455	34.39°SE 10.25°SW
 city	Sandspitze	Kogelland		2651	5368	-30.2850	-122.8485	30.28°SE 122.85°SW
 city	Sang-e Sefid	Varahmehr		4067	3431	-22.4700	25.4287	22.47°SE 25.43°NE
 city	Sangde	Guandong		3021	715	33.9600	111.1028	33.96°NW 111.10°NE
 city	Sankt Bernhardt	Alemannia		3128	2612	3.9000	16.1812	3.90°NW 16.18°NE
 city	Sankt Franz-Josenthal	Ponurvia		1127	2800	31.0950	-76.6845	31.09°NW 76.68°SW
 city	Sankt Michell	Albatrossinseln		3652	2971	-9.3450	22.7971	9.34°SE 22.80°NE
-city	Sannat	Sehreno		3960	4160	-31.8000	-9.2784	31.80°SE 9.28°SW
+city	Sannat	Sehreno		3850	4319	-32.5350	-22.0360	32.53°SE 22.04°SW
 city	Sanshan	Guandong		3312	710	29.6700	116.4495	29.67°NW 116.45°NE
 city	Santa Alejandra	Auritania		1333	3996	10.0650	-89.9493	10.06°NW 89.95°SW
 city	Santa Gabriella	Vicily		2952	3175	-1.9050	-6.8347	1.90°SE 6.83°SW
@@ -1581,7 +1581,7 @@ city	Sibaleuz	Rudania		3128	1868	15.0600	45.3963	15.06°NW 45.40°NE
 city	Sibirskaya	Giathka		3705	1881	6.2100	58.7755	6.21°NW 58.78°NE
 city	Sidoréjo	Cahaya		4692	1246	0.9300	104.4594	0.93°NW 104.46°NE
 city	Siegerdenkmal	Ponurvia		1085	2983	28.9800	-83.9823	28.98°NW 83.98°SW
-city	Siġġiewi	Sehreno		4113	4077	-32.8500	1.7008	32.85°SE 1.70°NE
+city	Siġġiewi	Sehreno		4171	4358	-37.9350	-9.6975	37.94°SE 9.70°SW
 city	Sikov	Rudania		2987	2239	11.6100	25.7635	11.61°NW 25.76°NE
 city	Sile	Kemet		3557	3630	-17.8050	-2.7301	17.80°SE 2.73°SW
 city	Silemani	Divia		3928	3326	-18.8100	22.8319	18.81°SE 22.83°NE
@@ -1686,7 +1686,7 @@ city	Tarnovetskygrad	Giathka		3806	1847	5.2050	62.3775	5.21°NW 62.38°NE
 city	Tarnovostok	Giathka		3636	1938	6.3900	54.8332	6.39°NW 54.83°NE
 city	Tarracon	Arverne		2852	3014	2.0100	-4.9710	2.01°NW 4.97°SW
 city	Tarxien	Sehreno		3946	4326	-34.0800	-18.3476	34.08°SE 18.35°SW
-city	Tas-Sliema	Sehreno		4041	4252	-34.3950	-10.2455	34.39°SE 10.25°SW
+city	Tas-Sliema	Sehreno		3873	4344	-33.2550	-22.4108	33.25°SE 22.41°SW
 city	Tatari	Vicily		2956	3022	0.3300	-1.9873	0.33°NW 1.99°SW
 city	Tatsuhama	Nichirin		2809	599	38.8800	116.7254	38.88°NW 116.73°NE
 city	Taurasia	Vicily		2939	2932	1.9350	0.2146	1.94°NW 0.21°NE
@@ -1872,8 +1872,8 @@ city	Weidenstadt	Kogelland		2466	5174	-24.6000	-111.7982	24.60°SE 111.80°SW
 city	Weinertitz	Ponurvia		1291	2683	30.3900	-63.0498	30.39°NW 63.05°SW
 city	Welstenberg	Alemannia		3019	2663	4.7700	11.2777	4.77°NW 11.28°NE
 city	Werpestade	Alemannia		2948	2656	5.9400	9.3790	5.94°NW 9.38°NE
-city	Wied il-Għajn	Sehreno		3787	3974	-26.4150	-7.9406	26.41°SE 7.94°SW
-city	Wied l-Għaqda	Sehreno		4088	4323	-36.1650	-11.7860	36.16°SE 11.79°SW
+city	Wied il-Għajn	Sehreno		3845	4136	-29.7150	-13.0331	29.71°SE 13.03°SW
+city	Wied l-Għaqda	Sehreno		3946	4336	-34.2300	-18.8811	34.23°SE 18.88°SW
 city	Wijayakarta	Cahaya		4447	987	8.4900	114.6117	8.49°NW 114.61°NE
 city	Willard	Hollosend		1672	3179	17.2350	-55.9184	17.23°NW 55.92°SW
 city	Williamsby	Elvester		2770	2649	8.7150	4.0192	8.71°NW 4.02°NE

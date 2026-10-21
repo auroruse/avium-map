@@ -19256,8 +19256,8 @@
     "nativeScript": "",
     "irlParallel": "Karachi",
     "alpha3": "SEH",
-    "x": 3850,
-    "y": 4319
+    "x": 3960,
+    "y": 4160
   },
   {
     "name": "Xagħra",
@@ -19292,8 +19292,8 @@
     "nativeScript": "",
     "irlParallel": "Hyderabad, PA",
     "alpha3": "SEH",
-    "x": 3873,
-    "y": 4344
+    "x": 4041,
+    "y": 4252
   },
   {
     "name": "Mtarfa",
@@ -19304,8 +19304,8 @@
     "nativeScript": "",
     "irlParallel": "Hargeisa",
     "alpha3": "SEH",
-    "x": 3750,
-    "y": 4162
+    "x": 4040,
+    "y": 4165
   },
   {
     "name": "Sliema",
@@ -19328,8 +19328,8 @@
     "nativeScript": "",
     "irlParallel": "Mardan",
     "alpha3": "SEH",
-    "x": 4171,
-    "y": 4358
+    "x": 4113,
+    "y": 4077
   },
   {
     "name": "Marsaxatt",
@@ -19352,8 +19352,8 @@
     "nativeScript": "",
     "irlParallel": "Quetta",
     "alpha3": "SEH",
-    "x": 4041,
-    "y": 4252
+    "x": 3873,
+    "y": 4344
   },
   {
     "name": "Iż-Żejtun",
@@ -19376,8 +19376,8 @@
     "nativeScript": "",
     "irlParallel": "Sukkur",
     "alpha3": "SEH",
-    "x": 3946,
-    "y": 4336
+    "x": 4088,
+    "y": 4323
   },
   {
     "name": "Kalkara",
@@ -19388,8 +19388,8 @@
     "nativeScript": "",
     "irlParallel": "Abbottabad",
     "alpha3": "SEH",
-    "x": 3845,
-    "y": 4136
+    "x": 3787,
+    "y": 3974
   },
   {
     "name": "Żabbar",
@@ -19424,8 +19424,8 @@
     "nativeScript": "",
     "irlParallel": "Bannu",
     "alpha3": "SEH",
-    "x": 4088,
-    "y": 4323
+    "x": 3946,
+    "y": 4336
   },
   {
     "name": "Il-Qinalija",
@@ -19448,8 +19448,8 @@
     "nativeScript": "",
     "irlParallel": "Al Mukalia",
     "alpha3": "SEH",
-    "x": 3933,
-    "y": 4100
+    "x": 3780,
+    "y": 4133
   },
   {
     "name": "Fawwara",
@@ -19472,8 +19472,8 @@
     "nativeScript": "",
     "irlParallel": "Aden",
     "alpha3": "SEH",
-    "x": 3780,
-    "y": 4133
+    "x": 3933,
+    "y": 4100
   },
   {
     "name": "Gudja",
@@ -19568,8 +19568,8 @@
     "nativeScript": "",
     "irlParallel": "Mirpur Khas",
     "alpha3": "SEH",
-    "x": 3878,
-    "y": 4357
+    "x": 3873,
+    "y": 4233
   },
   {
     "name": "Safar",
@@ -19580,8 +19580,8 @@
     "nativeScript": "",
     "irlParallel": "Dhamar",
     "alpha3": "SEH",
-    "x": 3779,
-    "y": 4071
+    "x": 3685,
+    "y": 4271
   },
   {
     "name": "Bir Miftuħ",
@@ -19628,8 +19628,8 @@
     "nativeScript": "",
     "irlParallel": "Najran",
     "alpha3": "SEH",
-    "x": 3787,
-    "y": 3974
+    "x": 3845,
+    "y": 4136
   },
   {
     "name": "San Ġiljan",
@@ -19736,8 +19736,8 @@
     "nativeScript": "",
     "irlParallel": "Turbat",
     "alpha3": "SEH",
-    "x": 4113,
-    "y": 4077
+    "x": 4171,
+    "y": 4358
   },
   {
     "name": "Gżira",
@@ -19760,8 +19760,8 @@
     "nativeScript": "",
     "irlParallel": "Gode",
     "alpha3": "SEH",
-    "x": 3685,
-    "y": 4271
+    "x": 3779,
+    "y": 4071
   },
   {
     "name": "San Ġwann",
@@ -19832,8 +19832,8 @@
     "nativeScript": "",
     "irlParallel": "Khuzdar",
     "alpha3": "SEH",
-    "x": 4040,
-    "y": 4165
+    "x": 3750,
+    "y": 4162
   },
   {
     "name": "Mellieħa",
@@ -19844,8 +19844,8 @@
     "nativeScript": "",
     "irlParallel": "Garoowe",
     "alpha3": "SEH",
-    "x": 3873,
-    "y": 4233
+    "x": 3878,
+    "y": 4357
   },
   {
     "name": "Lija",
@@ -19868,8 +19868,8 @@
     "nativeScript": "",
     "irlParallel": "Bargal",
     "alpha3": "SEH",
-    "x": 3960,
-    "y": 4160
+    "x": 3850,
+    "y": 4319
   },
   {
     "name": "Lvant",
