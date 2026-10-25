@@ -9,7 +9,7 @@
 // How a country gets measured
 // ---------------------------
 // borders.PNG is a flat colour fill, but the colours are blocs rather than
-// nations: 188,0,45 is Nichirin and also Kinshū, Hōrai, Mizuho and Ryūgu. Colour
+// nations: 188,0,45 is Nichirin and also Kinshū, Shashanka, Iriria and Dar Hadid. Colour
 // alone cannot answer "how big is Nichirin".
 //
 // Connected components of one colour can. Nichirin proper is one region of red

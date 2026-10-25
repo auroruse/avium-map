@@ -442,6 +442,9 @@ Jiekŋaluokta	Cuohpnjalla	1,000	86,842,000	86,842	-	Barentsburg	KAR
 Neu-Klagenhafen	Dämmerung Islands	547,000	47,685,103,000	87,176	-	Honolulu	ALE
 Marnelui	Dämmerung Islands	54,000	4,791,774,000	88,737	-	Kahului	ALE
 Ranpua	Dämmerung Islands	45,000	3,959,210,000	87,982	-	Hilo	ALE
+Shin-Chukyo	Dar Hadid	7,364,000	18,429,532,000	2,503	新中京	Khartoum-Omdurman	NCH
+Tsuruse	Dar Hadid	355,000	763,458,000	2,151	鶴瀬	Atbara-Damir	NCH
+Misono	Dar Hadid	234,000	492,796,000	2,106	御園	Shendi	NCH
 Buzrâbekhaz	Demâruz	1,983,000	68,475,263,000	34,531	-	Baku	DEM
 Demâr-dûm	Demâruz	1,333,000	27,777,757,000	20,839	-	Tabriz	DEM
 Khudshelgethlar	Demâruz	1,031,000	32,761,715,000	31,777	-	Yerevan	DEM
@@ -1131,11 +1134,10 @@ Lindenford	Hollosend	21,000	161,828,000	7,706	-	El Callao, VE	HOL
 New Colter	Hollosend	20,000	1,593,687,000	79,684	-	Liberal, KS	HOL
 Redville	Hollosend	20,000	1,563,475,000	78,174	-	Elizabeth City, NC	HOL
 Teiburg	Hollosend	2,000	4,566,000	2,283	-	Tiébo	HOL
-Tsubayo	Hōrai	38,198,000	428,863,864,000	11,227	津映	Dhaka, BD	NCH
-Shiwane	Hōrai	5,275,000	53,642,670,000	10,169	潮嵐	Chittagong	NCH
-Kureha	Hōrai	1,221,000	11,540,133,000	9,451	暮葉	Sylhet	NCH
-Hinatachi	Hōrai	683,000	6,270,685,000	9,181	日立	Mymensingh	NCH
-Kusune	Hōrai	406,000	3,631,678,000	8,945	糸根	Tangail	NCH
+Tokisaka	Iriria	2,286,000	78,677,009,000	34,417	時坂	San Jose, CR	NCH
+Kanegahara	Iriria	1,004,000	20,196,193,000	20,116	金ヶ原	Trujillo	NCH
+Wakamiya	Iriria	54,000	1,541,102,000	28,539	若宮	Liberia, CR	NCH
+Isohara	Iriria	51,000	1,450,730,000	28,446	磯原	Limón	NCH
 Pietari	Karjania	4,889,000	423,589,319,000	86,641	-	Saint Petersburg, RU	KAR
 Roudanjärvi	Karjania	1,000,000	72,124,738,000	72,125	-	Helsinki-Tallinn	KAR
 Murmánska	Karjania	273,000	19,207,677,000	70,358	-	Murmansk	KAR
@@ -1219,10 +1221,6 @@ Windau	Livonia	33,000	1,357,849,000	41,147	-	Ventspils	LVO
 Wolmar	Livonia	23,000	929,450,000	40,411	-	Valmiera	LVO
 Solhamn	Malschellskobbarna	230,000	8,699,916,000	37,826	-	Male	SKJ
 Ingvarstad	Malschellskobbarna	30,000	1,075,644,000	35,855	-	Victoria, SC	SKJ
-Tokisaka	Mizuho	2,286,000	78,677,009,000	34,417	時坂	San Jose, CR	NCH
-Kanegahara	Mizuho	1,004,000	20,196,193,000	20,116	金ヶ原	Trujillo	NCH
-Wakamiya	Mizuho	54,000	1,541,102,000	28,539	若宮	Liberia, CR	NCH
-Isohara	Mizuho	51,000	1,450,730,000	28,446	磯原	Limón	NCH
 Port-de-Orssier	Napolyon Bonparterre Islands	155,000	10,775,651,000	69,520	-	Noumea	ARV
 Ifira	Napolyon Bonparterre Islands	76,000	311,567,000	4,100	-	Port Vila	ARV
 Wangerhafen	Neuhollmar	1,637,000	99,309,497,000	60,666	-	Auckland	ALE
@@ -1615,9 +1613,6 @@ Bitsik-Tura	Rudania	42,000	1,117,379,000	26,604	Бицик-Тура	Kuybyshev	RU
 Mersky	Rudania	29,000	1,048,351,000	36,150	Мерский	Kudymkar	RUD
 Saikarsk	Rudania	28,000	1,148,539,000	41,019	Сайкарск	Chelkar	RUD
 Kagyrgyn	Rudania	14,000	1,911,324,000	136,523	Кагыргын	Anadyr	RUD
-Shin-Chukyo	Ryūgu	7,364,000	18,429,532,000	2,503	新中京	Khartoum-Omdurman	NCH
-Tsuruse	Ryūgu	355,000	763,458,000	2,151	鶴瀬	Atbara-Damir	NCH
-Misono	Ryūgu	234,000	492,796,000	2,106	御園	Shendi	NCH
 Port Mercer	Salishia	2,455,000	301,338,071,000	122,745	-	Seattle-Tacoma	SAL
 Port Columbia	Salishia	2,220,000	163,389,632,000	73,599	-	Vancouver	SAL
 Salish City	Salishia	1,855,000	164,333,013,000	88,589	-	Portland, OR	SAL
@@ -1784,6 +1779,11 @@ Kelesina	Selmira	74,000	2,707,107,000	36,583	-	Erzincan	SEL
 Seleucia	Selmira	67,000	2,227,778,000	33,250	-	Silifke	SEL
 Maraş	Selmira	61,000	1,937,637,000	31,765	-	Afsin	SEL
 Rodos	Selmira	28,000	1,238,586,000	44,235	-	Chios	SEL
+Tsubayo	Shashanka	38,198,000	428,863,864,000	11,227	津映	Dhaka, BD	NCH
+Shiwane	Shashanka	5,275,000	53,642,670,000	10,169	潮嵐	Chittagong	NCH
+Kureha	Shashanka	1,221,000	11,540,133,000	9,451	暮葉	Sylhet	NCH
+Hinatachi	Shashanka	683,000	6,270,685,000	9,181	日立	Mymensingh	NCH
+Kusune	Shashanka	406,000	3,631,678,000	8,945	糸根	Tangail	NCH
 Rabba	Shivon	6,460,000	86,786,798,000	13,434	רַבָּה	Amman	SHI
 Kadmona	Shivon	3,967,000	28,500,000,000	7,184	קַדְמוֹנָה	Damascus	SHI
 Aram	Shivon	3,266,000	11,200,000,000	3,429	אֲרָם	Aleppo	SHI
