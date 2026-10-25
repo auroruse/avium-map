@@ -328,7 +328,7 @@
     "size": 11
   },
   {
-    "text": "SYLEZYJO",
+    "text": "SYLESYJO",
     "type": "nation",
     "x": 3256,
     "y": 2331,
@@ -1369,5 +1369,15 @@
     "y": 1091,
     "minZoom": 3.5,
     "span": 30.96108428825291
+  },
+  {
+    "text": "WOXZA",
+    "type": "nation",
+    "x": 3485,
+    "y": 5184,
+    "minZoom": 3.5,
+    "maxZoom": 5,
+    "tier": 13,
+    "size": 13
   }
 ]

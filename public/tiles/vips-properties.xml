@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<image xmlns="http://www.vips.ecs.soton.ac.uk//dzsave" date="2026-10-20T23:50:02.422022+02" version="8.15.3">
+<image xmlns="http://www.vips.ecs.soton.ac.uk//dzsave" date="2026-10-24T15:44:05.047356+02" version="8.15.3">
   <properties>
     <property>
       <name>width</name>
@@ -23,11 +23,11 @@
     </property>
     <property>
       <name>xres</name>
-      <value type="gdouble">1</value>
+      <value type="gdouble">2.8346456692913389</value>
     </property>
     <property>
       <name>yres</name>
-      <value type="gdouble">1</value>
+      <value type="gdouble">2.8346456692913389</value>
     </property>
     <property>
       <name>vips-loader</name>

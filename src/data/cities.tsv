@@ -36,6 +36,7 @@ Mürrsten	Alemannia	270,000	29,129,682,000	107,888	-	Münster	ALE
 Linden	Alemannia	245,000	19,191,725,000	78,334	-	Linz	ALE
 Kastelmark	Alemannia	239,000	24,402,362,000	102,102	-	Kassel	ALE
 Leinenfeld	Alemannia	239,000	19,725,244,000	82,532	-	Bielefeld	ALE
+Travemar	Alemannia	232,000	6,244,976,000	26,918	-	Kiel	ALE
 Kjellshaven	Alemannia	232,000	20,529,295,000	88,488	-	Kiel	ALE
 Glerden	Alemannia	226,000	14,037,315,000	62,112	-	Mönchengladbach	ALE
 Maintal	Alemannia	224,000	29,998,909,000	133,924	-	Mainz	ALE
@@ -381,7 +382,10 @@ Lampam	Cahaya	160,000	2,421,561,000	15,135	-	Ketapang	CAH
 Ikanikan	Cahaya	153,000	8,607,055,000	56,255	-	Sibu	CAH
 Tabaruan	Cahaya	148,000	1,283,567,000	8,673	-	Tuguegarao	CAH
 Ligor	Cahaya	145,000	3,951,459,000	27,251	-	Nakhon Si Thammarat	CAH
+Xuân Lộc	Cahaya	134,000	3,203,316,000	23,905	Xuân Lộc	Long Khanh	CAH
+Lộc Hòa	Cahaya	111,000	2,628,626,000	23,681	Lộc Hòa	Tan Phu	CAH
 Perangat	Cahaya	109,000	1,618,692,000	14,850	-	Tanjung Redeb	CAH
+La-dik	Cahaya	108,000	1,741,812,000	16,128	La-dik	La Gi	CAH
 Munggu	Cahaya	103,000	1,525,269,000	14,808	-	Payakambuh	CAH
 Serapat	Cahaya	101,000	1,493,860,000	14,791	-	Palangkaraya	CAH
 Kemena	Cahaya	92,000	5,044,410,000	54,831	-	Bintulu	CAH
@@ -867,15 +871,12 @@ Lưỡng Giới Thương Thành	Great Ai	151,000	1,496,590,000	9,911	Lưỡng Gi
 B'Lao	Great Ai	147,000	2,407,629,000	16,378	B'Lao	Bao Loc	GAI
 Tiên Yên	Great Ai	144,000	5,016,903,000	34,840	Tiên Yên	Cam Pha	GAI
 Hòa Tường	Great Ai	142,000	1,748,730,000	12,315	Hòa Tường	Tuy Hoa	GAI
-Xuân Lộc	Cahaya	134,000	3,203,316,000	23,905	Xuân Lộc	Long Khanh	CAH
 Hà Đông	Great Ai	128,000	1,735,789,000	13,561	Hà Đông	Phu Ly	GAI
 Vân Đồn	Great Ai	124,000	4,287,932,000	34,580	Vân Đồn	Ha Long	GAI
 Hòa Bình	Great Ai	123,000	1,664,665,000	13,534	Hòa Bình	Ninh Binh	GAI
 Bát Tầm Môn	Great Ai	123,000	1,102,472,000	8,963	Bát Tầm Bôn	Battambang	GAI
 Quỳnh Thiện	Great Ai	114,000	1,156,871,000	10,148	Quỳnh Thiện	Hoang Mai	GAI
 Tam Dương	Great Ai	113,000	1,973,741,000	17,467	Tam Dương	Vinh Yen	GAI
-Lộc Hòa	Cahaya	111,000	2,628,626,000	23,681	Lộc Hòa	Tan Phu	CAH
-La-dik	Cahaya	108,000	1,741,812,000	16,128	La-dik	La Gi	CAH
 Xát Ta Híp	Great Ai	107,000	5,325,914,000	49,775	Xát Ta Híp	Sattahip	GAI
 Thanh Yên	Great Ai	106,000	2,504,441,000	23,627	Thanh Yên	Phuoc Long	GAI
 Hà Tuyên	Great Ai	105,000	893,219,000	8,507	Hà Tuyên	Tuyen Quang	GAI
@@ -1182,10 +1183,19 @@ Koganehama	Kinshū	274,000	18,233,911,000	66,547	黄金浜	Gold Coast	NCH
 Iwasaki	Kinshū	208,000	13,653,591,000	65,642	岩崎	Newcastle, NSW	NCH
 Aotani	Kinshū	168,000	10,908,668,000	64,933	陽草	Geelong	NCH
 Okasumi	Kinshū	157,000	8,469,318,000	53,945	青谷	Wellington	NCH
+Tatarahama	Kinshū	151,000	4,452,537,000	29,487	鑪浜	Wollongong	NCH
 Shizumisaki	Kinshū	85,000	4,447,015,000	52,318	静岬	Dunedin	NCH
 Shinoshima	Kinshū	76,000	3,953,909,000	52,025	新大島	Palmerston North	NCH
+Bashōura	Kinshū	75,000	1,828,650,000	24,382	芭蕉浦	Coffs Harbour	NCH
+Omokage	Kinshū	60,000	1,716,780,000	28,613	面影	New Plymouth	NCH
 Himinato	Kinshū	56,000	2,867,998,000	51,214	陽港	Napier	NCH
 Hiura	Kinshū	54,000	3,313,553,000	61,362	陽浦	Port Macquarie	NCH
+Kazahaya	Kinshū	52,000	1,406,392,000	27,046	風早	Invercargill	NCH
+Utano	Kinshū	43,000	1,082,009,000	25,163	歌野	Tamworth	NCH
+Seori	Kinshū	40,000	883,760,000	22,094	瀬織	Whanganui	NCH
+Ebizome	Kinshū	33,000	869,814,000	26,358	葡萄染	Blenheim	NCH
+Kumoi	Kinshū	31,000	926,001,000	29,871	雲居	Queenstown	NCH
+Kurogishi	Kinshū	28,000	733,992,000	26,214	黒岸	Traralgon	NCH
 Marienhafen	Kogelland	508,000	19,468,436,000	38,324	-	Concepción, CL	ALE
 Montbach	Kogelland	238,000	8,781,359,000	36,896	-	Puerto Montt	ALE
 Kommodorefels	Kogelland	164,000	5,074,627,000	30,943	-	Comodoro Rivadavia	ALE
@@ -1218,7 +1228,10 @@ Ifira	Napolyon Bonparterre Islands	76,000	311,567,000	4,100	-	Port Vila	ARV
 Wangerhafen	Neuhollmar	1,637,000	99,309,497,000	60,666	-	Auckland	ALE
 Eichenau	Neuhollmar	451,000	31,572,828,000	70,006	-	Hamilton, ON	ALE
 Flutheim	Neuhollmar	123,000	6,556,000,000	53,301	-	Tauranga	ALE
+Bad Höllenbrunn	Neuhollmar	59,000	1,366,912,000	23,168	-	Rotorua	ALE
 Hügelfels	Neuhollmar	57,000	2,923,574,000	51,291	-	Whangārei	ALE
+Frühwacht	Neuhollmar	39,000	841,308,000	21,572	-	Gisborne	ALE
+Tiefenmaar	Neuhollmar	28,000	678,636,000	24,237	-	Taupō	ALE
 Cakobau	New Celyddon	248,000	4,267,778,000	17,209	-	Suva	ELV
 Nugolefa	New Celyddon	53,000	449,859,000	8,488	-	Nuku'alofa	ELV
 Shinkeisei	Nichirin	33,061,000	2,228,860,912,000	67,417	新恵星	Tokyo	NCH
@@ -1853,31 +1866,31 @@ Zula	Southeast Aphirica	99,000	149,152,000	1,507	-	Yambio	SHI
 Dukuzaya	Southeast Aphirica	89,000	133,358,000	1,498	-	Malakal	SHI
 Acra	Southeast Aphirica	73,000	108,328,000	1,484	-	Rumbek	SHI
 Långdalshamn	Spetsbergen	3,000	275,235,000	91,745	-	Longyearbyen	SKJ
-Bramytolne	Sylezyjo	2,580,000	61,625,474,000	23,886	-	Kyiv	SYL
-Miastokotow	Sylezyjo	1,287,000	29,690,564,000	23,070	-	Kharkiv	SYL
-Czynstoskrywol	Sylezyjo	1,024,000	31,377,050,000	30,642	-	Rostov-on-Don	SYL
-Domyna	Sylezyjo	760,000	17,076,881,000	22,470	-	Dnipro	SYL
-Brzuchwola	Sylezyjo	689,000	15,406,063,000	22,360	-	Donetsk	SYL
-Gora Jeleni	Sylezyjo	625,000	13,906,259,000	22,250	-	Zaporizhzhia	SYL
-Tynglod	Sylezyjo	607,000	13,485,782,000	22,217	-	Lviv	SYL
-Sniezno-ojla	Sylezyjo	573,000	19,998,777,000	34,902	-	Homieĺ	SYL
-Miastonog	Sylezyjo	398,000	13,640,124,000	34,272	-	Brest, BY	SYL
-Necgila	Sylezyjo	364,000	15,385,437,000	42,268	-	Belgorod	SYL
-Ping	Sylezyjo	363,000	7,860,516,000	21,654	-	Mariupol	SYL
-Najymca	Sylezyjo	357,000	7,724,283,000	21,637	-	Vinnytsia	SYL
-Bioly	Sylezyjo	342,000	7,383,083,000	21,588	-	Luhansk	SYL
-Kludzic	Sylezyjo	233,000	4,933,928,000	21,176	-	Cherkasy	SYL
-Rant	Sylezyjo	228,000	4,823,840,000	21,157	-	Poltava	SYL
-Odbytbyka	Sylezyjo	222,000	4,690,409,000	21,128	-	Chernihiv	SYL
-Ryba	Sylezyjo	210,000	4,424,138,000	21,067	-	Zhytomyr	SYL
-Te	Sylezyjo	202,000	4,247,419,000	21,027	-	Lutsk	SYL
-Jastrzob-Jezioro	Sylezyjo	183,000	3,828,758,000	20,922	-	Ternopil	SYL
-Wyngiel	Sylezyjo	176,000	3,675,479,000	20,883	-	Sumy	SYL
-Slynsk	Sylezyjo	112,000	2,286,430,000	20,415	-	Melitopol	SYL
-Slav	Sylezyjo	110,000	2,243,192,000	20,393	-	Nikopol	SYL
-Tabak	Sylezyjo	105,000	3,366,587,000	32,063	-	Mazyr	SYL
-Wita	Sylezyjo	91,000	1,838,400,000	20,202	-	Sloviansk	SYL
-Gora	Sylezyjo	73,000	1,458,738,000	19,983	-	Uman	SYL
+Bramytolne	Sylesyjo	2,580,000	61,625,474,000	23,886	-	Kyiv	SYL
+Miastokotow	Sylesyjo	1,287,000	29,690,564,000	23,070	-	Kharkiv	SYL
+Czynstoskrywol	Sylesyjo	1,024,000	31,377,050,000	30,642	-	Rostov-on-Don	SYL
+Domyna	Sylesyjo	760,000	17,076,881,000	22,470	-	Dnipro	SYL
+Brzuchwola	Sylesyjo	689,000	15,406,063,000	22,360	-	Donetsk	SYL
+Gora Jeleni	Sylesyjo	625,000	13,906,259,000	22,250	-	Zaporizhzhia	SYL
+Tynglod	Sylesyjo	607,000	13,485,782,000	22,217	-	Lviv	SYL
+Sniezno-ojla	Sylesyjo	573,000	19,998,777,000	34,902	-	Homieĺ	SYL
+Miastonog	Sylesyjo	398,000	13,640,124,000	34,272	-	Brest, BY	SYL
+Necgila	Sylesyjo	364,000	15,385,437,000	42,268	-	Belgorod	SYL
+Ping	Sylesyjo	363,000	7,860,516,000	21,654	-	Mariupol	SYL
+Najymca	Sylesyjo	357,000	7,724,283,000	21,637	-	Vinnytsia	SYL
+Bioly	Sylesyjo	342,000	7,383,083,000	21,588	-	Luhansk	SYL
+Kludzic	Sylesyjo	233,000	4,933,928,000	21,176	-	Cherkasy	SYL
+Rant	Sylesyjo	228,000	4,823,840,000	21,157	-	Poltava	SYL
+Odbytbyka	Sylesyjo	222,000	4,690,409,000	21,128	-	Chernihiv	SYL
+Ryba	Sylesyjo	210,000	4,424,138,000	21,067	-	Zhytomyr	SYL
+Te	Sylesyjo	202,000	4,247,419,000	21,027	-	Lutsk	SYL
+Jastrzob-Jezioro	Sylesyjo	183,000	3,828,758,000	20,922	-	Ternopil	SYL
+Wyngiel	Sylesyjo	176,000	3,675,479,000	20,883	-	Sumy	SYL
+Slynsk	Sylesyjo	112,000	2,286,430,000	20,415	-	Melitopol	SYL
+Slav	Sylesyjo	110,000	2,243,192,000	20,393	-	Nikopol	SYL
+Tabak	Sylesyjo	105,000	3,366,587,000	32,063	-	Mazyr	SYL
+Wita	Sylesyjo	91,000	1,838,400,000	20,202	-	Sloviansk	SYL
+Gora	Sylesyjo	73,000	1,458,738,000	19,983	-	Uman	SYL
 Cartishire	Thule	22,000	1,285,580,000	58,435	-	Sept-Îles	ELV
 Chuparosa	Tierra Arcadia	230,000	15,112,711,000	65,707	-	Halifax	ASK
 Federico	Tierra Arcadia	65,000	4,009,720,000	61,688	-	Fredericton	ASK
@@ -1996,3 +2009,8 @@ Coulne	West Bangala	1,101,000	10,352,622,000	9,403	-	Khulna	ARV
 Bérampour	West Bangala	1,078,000	9,337,327,000	8,662	-	Berhampore	ARV
 Carapour	West Bangala	765,000	6,513,562,000	8,514	-	Kharagpur	ARV
 Farride	West Bangala	328,000	2,902,982,000	8,851	-	Faridpur	ARV
+Zixza	Woxza	27,000	791,586,000	29,318	-	Alice Springs	WXZ
+Fōfik	Woxza	3,000	71,382,000	23,794	-	Ceduna	WXZ
+Jatōkip	Woxza	2,000	59,280,000	29,640	-	Yulara	WXZ
+Zōtō	Woxza	1,000	25,871,000	25,871	-	Marla	WXZ
+Nōkōki	Woxza	1,000	20,433,000	20,433	-	Warburton	WXZ
