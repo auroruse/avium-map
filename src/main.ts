@@ -29,11 +29,11 @@ const norm = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCa
 const TILE_GRID = 8192
 const CONTENT = 6000
 const U = 256
-// Two user levels past the tile resolution. Native detail stops at z5, so the
+// Six user levels past the tile resolution. Native detail stops at z5, so the
 // top of the range is upscaled and will look soft — the point of it is spacing,
 // not detail: cities the placer drops for want of room at one level have room
 // at the next, so the last few crowded names resolve instead of never rendering.
-const MAX_ZOOM = 7
+const MAX_ZOOM = 8
 
 // Lore scale: the 6000px map diagonal equals Earth's pole-to-pole distance
 // (half the meridional circumference, 20,003.93 km) → ~2.357 km per px. Up here
@@ -2697,32 +2697,59 @@ function matchRank(c: City, q: string): number {
   return MISS
 }
 
+// One nation's cities at a time. Each option carries how many are left, so the
+// drop-down doubles as the worklist of which nations still need work.
+const nationSelect = document.getElementById('place-nation') as HTMLSelectElement
+
+function syncNationFilter() {
+  const left = new Map<string, number>()
+  for (const c of cities) left.set(c.nation, (left.get(c.nation) ?? 0) + (c.x == null ? 1 : 0))
+  const keep = nationSelect.value
+  nationSelect.innerHTML = ''
+  nationSelect.add(new Option('All nations', ''))
+  for (const n of [...left.keys()].sort((a, b) => a.localeCompare(b))) {
+    const k = left.get(n)!
+    nationSelect.add(new Option(k ? `${n} (${k} left)` : n, n))
+  }
+  nationSelect.value = keep
+}
+
+syncNationFilter()
+nationSelect.addEventListener('change', renderResults)
+
 function renderResults() {
   const q = norm(searchInput.value.trim())
   resultsList.innerHTML = ''
+  nationSelect.hidden = tab !== 'cities'
   // An empty box browses rather than sitting blank. On labels that is all of
   // them, a hundred or so. On cities it is the ones still to place, biggest
   // first — the work queue, which is what the tab is opened to do. All 1763 is
-  // not a list anybody reads.
+  // not a list anybody reads. With a nation picked it is that whole nation,
+  // unplaced first, which is short enough to read.
   const browsing = !q
   if (!browsing && q.length < 2) return
+  const nation = tab === 'cities' ? nationSelect.value : ''
+  const pool = nation ? cities.filter(c => c.nation === nation) : cities
 
   const matches =
     tab !== 'cities'
       ? []
       : browsing
-        ? cities
-            .filter(c => c.x == null)
-            .sort((a, b) => b.population - a.population)
-            .slice(0, PLACE_MAX)
-        : cities
+        ? nation
+          ? sortUnplacedFirst([...pool].sort((a, b) => b.population - a.population), c => c.x != null)
+          : pool
+              .filter(c => c.x == null)
+              .sort((a, b) => b.population - a.population)
+              .slice(0, PLACE_MAX)
+        : pool
             .filter(c => matchRank(c, q) < MISS)
             .sort((a, b) => matchRank(a, q) - matchRank(b, q) || b.population - a.population)
-            .slice(0, PLACE_MAX)
+            .slice(0, nation ? 400 : PLACE_MAX)
 
   for (const c of matches) {
     const li = document.createElement('li')
     const placed = c.x != null
+    if (c === selectedCity) li.classList.add('is-selected')
     // The parallel is always on the row, placed or not. It is how a city is
     // recognised when the Avium name is the thing that will not come — and it is
     // what a search for "fukuoka" matched on, so a row that showed it only
@@ -2778,8 +2805,9 @@ function selectCity(c: City) {
   selectedStation = null
   setSpanTarget(null)
   syncEditRow()
-  resultsList.innerHTML = ''
-  searchInput.value = c.name
+  // The search and the list stay as they were, with this row lit, so the next
+  // city is one click away once this one lands
+  renderResults()
   statusEl.textContent = `Click the map to place ${c.name}`
   statusEl.className = 'status-active'
 
@@ -2856,8 +2884,8 @@ map.on('click', (e: L.LeafletMouseEvent) => {
     saveProgress()
 
     selectedCity = null
-    searchInput.value = ''
-    searchInput.focus()
+    syncNationFilter()
+    renderResults()
 
     setTimeout(() => {
       if (placedMarker) {

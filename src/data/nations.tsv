@@ -10,8 +10,9 @@ Hochbrunn-am-Saharameer	Bundesprotektorat Hochbrunn-am-Saharameer	1,146,000	4,20
 Kienam	Bundesprotektorat Kienam	863,000	3,714,376,000	4,304	35.1	5.2%	0.190	Kaisershafen	ALE	Colony	-	Valtheria
 Gonenite Islands	Bundesprotektorat Gonenite-Inseln	891,000	2,759,938,000	3,098	33.6	5.6%	0.182	Nagoniara	ALE	Colony	-	Valtheria
 Andam Islands	Bundesprotektorat Andam-Inseln	415,000	1,359,382,000	3,276	32.5	12.5%	0.233	Johannshafen	ALE	Colony	-	Valtheria
+Antiqa	Godly Republic of Antiqa	34,260,000	868,825,000,000	25,360	37.0	43.0%	0.455	Nawasca	ANT	Pending	12	Elysia
 Arunya	United Provinces of Arunya	411,210,000	9,290,000,000,000	22,592	26.9	10.1%	0.206	Bhanagiri	ARU	Admin Control	6	Pelagonia
-Arverne	Arvernois Empire	80,095,000	5,074,930,700,000	63,361	55.2	95.7%	0.796	Lutèce	ARV	Admin Control	1	Evria
+Arverne	Arvernois Empire	96,043,000	6,207,450,700,000	64,632	56.0	95.6%	0.802	Lutèce	ARV	Admin Control	1	Evria
 West Bangala	Territoire du Bangala-Ouest	135,335,000	1,834,644,801,000	13,556	40.4	23.4%	0.379	Kolkutta	ARV	Colony	-	Pelagonia
 Barbary	Territoire du Barbarie	50,741,000	959,435,006,000	18,908	37.3	11.2%	0.287	Algernon	ARV	Colony	-	Evria
 Côte de Saumon	Territoire du Côte de Saumon	138,079,000	502,335,526,000	3,638	33.5	4.3%	0.169	Aubourg	ARV	Colony	-	Pelagonia
@@ -24,15 +25,15 @@ East Astriya	Kingdom of East Astriya	18,066,000	1,035,800,000,000	57,334	42.4	31
 Auritania	Glorious Republic of Auritania	141,514,000	3,601,940,000,000	25,453	33.1	31.4%	0.376	Auritania City	AUR	NPC (Kirin)	-	Elysia
 Axerfreditenshin	Axerfreditenshin Kehanate	33,028,000	866,700,000,000	26,241	27.4	10.5%	0.216	Kulun	AXE	Admin Control	12	Valtheria
 Cahaya	Sabinic People's Republic of Cahaya	501,175,000	10,537,393,577,000	21,025	33.1	33.4%	0.379	Rajawali	CAH	Active	4	Valtheria
-Cortesia	Federated States of Cortesia	55,568,000	2,206,240,621,000	39,703	42.9	50.7%	0.545	Corslawa	COR	Active	9	Evria
+Cortesia	Federated States of Cortesia	77,478,000	2,752,026,943,000	35,520	43.0	53.4%	0.550	Corslawa	COR	Active	9	Evria
 Demâruz	Federation of Demâruz	49,624,000	1,222,323,284,000	24,632	39.5	85.0%	0.596	Khudshelgethlar	DEM	Pending	9	Evria
+Dias	Astral Republic of Dias	2,170,000	147,985,000,000	68,196	60.0	99.0%	0.844	Astralis	DIA	Pending	15	Pelagonia
 Eivorie	Protectorate of Eivorie	62,000,000	4,030,000,000,000	65,000	46.5	78.0%	0.678	Mundcaester	EIV	Active	9	Pelagonia
 Elvester	Empire of Elvester	78,692,000	4,915,420,000,000	62,464	56.1	94.8%	0.800	Dunmaris	ELV	NPC (Seal)	3	Evria
 Noradia	Royal Federation of Noradia	118,868,000	1,026,338,689,000	8,634	25.0	10.5%	0.176	Noradia City	ELV	Admin Control	9	Pelagonia
 Thule	Thule Governorate	564,000	38,407,558,000	68,099	35.8	17.7%	0.349	Cartishire	ELV	Colony	-	Elysia
 New Celyddon	New Celyddon Governorate	990,000	12,727,485,000	12,856	40.9	15.6%	0.333	Cakobau	ELV	Colony	-	Valtheria
 E.S.U.	Elysian State of Unity	151,167,000	12,192,415,000,000	80,655	59.5	95.6%	0.837	Nexus	ESU	Active	CAPPED	Elysia
-Flandonia	Kingdom of Flandonia	15,948,000	1,132,520,000,000	71,013	60.0	95.0%	0.834	Dortdaam	FLA	Pending	9	Evria
 Furan	United Sovereign Provinces of Furan	351,569,000	7,056,122,963,000	20,070	37.3	24.7%	0.375	Nongcheng	FUR	NPC (Kirin)	6	Valtheria
 Great Ai	The Great Ai State	120,128,000	2,544,783,858,000	21,184	44.8	22.0%	0.408	Tallon	GAI	Pending	6	Valtheria
 Giathka	Armed Republic of Giathka	115,500,000	1,161,000,000,000	10,052	29.8	14.5%	0.248	Britannica	GIA	Active	9	Valtheria
@@ -68,10 +69,10 @@ Spetsbergen	Territoriet Spetsbergen	3,000	245,000,000	81,667	61.2	98.9%	0.859	L�
 Vikomte Islands	Territoriet Vikomte-Öarna	5,000	113,091,000	22,618	36.3	22.8%	0.360	Torvbukta	SKJ	Colony	-	Pelagonia
 Adelsköldland	Territoriet Adelsköldland	1,000	72,000,000	72,000	58.1	92.4%	0.813	Maasvik	SKJ	Colony	-	Elysia
 Slytlia	Kingdom of Slytlia	28,550,000	655,745,581,000	22,968	41.7	40.2%	0.479	Rětny	SLY	Pending	9	Evria
+Santee	Social Republic of Santee	12,070,000	1,199,577,689,000	99,385	62.0	97.0%	0.868	Wisaka	SNT	Pending	12	Elysia
 Sylesyjo	Grand Duchy of Sylesyjo	40,178,000	820,000,000,000	20,409	42.5	66.7%	0.570	Bramytolne	SYL	Pending	9	Evria
-Turulia	Republic of Turulia	21,910,000	545,786,322,000	24,910	43.2	60.2%	0.564	Szerencsehely	TUR	Active	6	Evria
-Uj-Pannonia	Uj-Pannonia Terület	39,277,000	81,562,914,000	2,077	27.0	7.0%	0.151	Arecaváros	TUR	Colony	-	Pelagonia
 Varahmehr	Federal Republic of Varahmehr	60,599,000	3,380,600,000,000	55,786	32.1	6.4%	0.225	Nourabad	VAR	Active	9	Evria
 Vicily	Kingdom of Vicily	120,152,000	4,913,679,388,000	40,896	48.0	60.3%	0.618	Trinacria	VIC	Active	6	Evria
 Vicilian North Aphirica	Territorio Aphirica del Nord	15,509,000	3,589,804,000	231	32.3	3.7%	0.096	Obangia	VIC	Colony	-	Pelagonia
 Woxza	Territories of Woxza	42,000	1,260,000,000	30,000	41.5	58.0%	0.549	Fōfik	WXZ	Pending	15	Pelagonia
+Zephran	Empire of Zephran	34,300,000	765,460,617,000	22,317	33.0	11.0%	0.262	Greyholm	ZPH	Pending	12	Valtheria

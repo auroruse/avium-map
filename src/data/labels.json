@@ -300,22 +300,12 @@
   {
     "text": "CORTESIA",
     "type": "nation",
-    "x": 3091,
-    "y": 2458,
+    "x": 3128,
+    "y": 2483,
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
     "size": 11
-  },
-  {
-    "text": "TURULIA",
-    "type": "nation",
-    "x": 3209,
-    "y": 2553,
-    "minZoom": 3.5,
-    "maxZoom": 5,
-    "tier": 13,
-    "size": 7.94430159930849
   },
   {
     "text": "SHIVON",
@@ -490,12 +480,12 @@
   {
     "text": "NEUHOLLMAR",
     "type": "colony",
-    "x": 3222,
-    "y": 5660,
+    "x": 3179,
+    "y": 5638,
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
-    "size": 11
+    "size": 4.051704989057169
   },
   {
     "text": "EL MAGREB",
@@ -680,15 +670,6 @@
     "minZoom": 3.5,
     "maxZoom": 5,
     "size": 9
-  },
-  {
-    "text": "UJ-PANNONIA",
-    "type": "colony",
-    "x": 4233,
-    "y": 5086,
-    "minZoom": 3.5,
-    "maxZoom": 5,
-    "size": 8.494962610211829
   },
   {
     "text": "VERWUSTUNG ISLANDS",
@@ -1324,15 +1305,6 @@
     "size": 9
   },
   {
-    "text": "FLANDONIA",
-    "type": "nation",
-    "x": 2925,
-    "y": 2713,
-    "minZoom": 3.5,
-    "maxZoom": 5,
-    "size": 5.399097131695245
-  },
-  {
     "text": "GREAT AI",
     "type": "nation",
     "x": 4243,
@@ -1379,5 +1351,45 @@
     "maxZoom": 5,
     "tier": 13,
     "size": 13
+  },
+  {
+    "text": "SANTEE",
+    "type": "nation",
+    "x": 1630,
+    "y": 2942,
+    "minZoom": 3.5,
+    "maxZoom": 5,
+    "tier": 13,
+    "size": 13
+  },
+  {
+    "text": "ZEPHRAN",
+    "type": "nation",
+    "x": 3915,
+    "y": 2099,
+    "minZoom": 3.5,
+    "maxZoom": 5,
+    "tier": 13,
+    "size": 13
+  },
+  {
+    "text": "DIAS",
+    "type": "nation",
+    "x": 3060,
+    "y": 5326,
+    "minZoom": 3.5,
+    "maxZoom": 5,
+    "tier": 13,
+    "size": 13
+  },
+  {
+    "text": "ANTIQA",
+    "type": "nation",
+    "x": 1575,
+    "y": 4466,
+    "minZoom": 3.5,
+    "maxZoom": 5,
+    "tier": 13,
+    "size": 11.533673746528782
   }
 ]

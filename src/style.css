@@ -248,6 +248,15 @@ html, body {
   contain: layout style;
 }
 
+/* Every city name and territory label lives in this one pane. Without its own
+   compositing layer, each marker the pan culling adds or drops invalidated the
+   whole pane and every name in it was re-rasterised: 4.3s of raster over a
+   12s zoom-and-pan run, and half the pan frames missed. As a layer, raster
+   fell to 0.5s and no pan frame missed. */
+.leaflet-marker-pane {
+  will-change: transform;
+}
+
 /* Re-added by viewport culling or zoom-out: appear instantly, no fade */
 .city-icon-still {
   animation: none;
@@ -1845,6 +1854,31 @@ html, body {
 #place-search {
   width: 100%;
   box-sizing: border-box;
+}
+
+#place-nation {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 6px;
+  background: rgba(0,0,0,0.26);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 9px;
+  color: #fff;
+  font: inherit;
+  font-size: 12px;
+  padding: 5px 8px;
+  outline: none;
+}
+#place-nation:focus {
+  border-color: #0a84ff;
+}
+#place-nation[hidden] {
+  display: none;
+}
+
+#place-results li.is-selected {
+  background: rgba(10,132,255,0.28);
+  opacity: 1;
 }
 
 /* One column with the whole height of the panel to fall down. Two columns and a
