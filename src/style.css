@@ -2916,32 +2916,6 @@ body.exploring .city-icon-carded { display: none; }
 
 /* --- Time zones --- */
 
-/* A nation's offset and clock, hung under its name while the zones are on. Out
-   of flow, so the name's own box (which placement measures) does not change. */
-.map-label span {
-  position: relative;
-}
-.zl {
-  display: none;
-}
-body.zones-on .zl-small .zl {
-  display: none;
-}
-body.zones-on :not(.zl-small) > span > .zl {
-  display: block;
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  margin-top: 1px;
-  font: 600 clamp(9px, 1em, 12px) -apple-system, 'SF Pro Text', 'Inter', system-ui, sans-serif;
-  font-style: normal;
-  letter-spacing: 0;
-  text-transform: none;
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-
 .zone-tip {
   position: absolute;
   z-index: 1000;

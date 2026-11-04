@@ -158,12 +158,7 @@ function fmtGeo(g: Geo, places = 2): string {
 
 // --- Time zones: data and clocks ---
 //
-// Up here because the nation labels, built during the first render, carry them.
 // The layer itself is further down, under Time zones and daylight.
-
-// Below this a nation's name is set smaller than its clock line would be, so the
-// line is left off
-const ZL_MIN_FS = 7.5
 
 const ZONES = zonesData as {
   nations: Record<string, number[]>
@@ -189,11 +184,6 @@ function cityZone(c: City): number {
 // Every zone a nation holds land in, colonies included (its panel lists these)
 function nationZones(name: string): number[] {
   return ZONES.nations[name] ?? []
-}
-
-// Only the zones of its home territory: what the line under its name gives
-function homeZones(name: string): number[] {
-  return ZONES.home?.[name] ?? nationZones(name)
 }
 
 const two = (n: number) => String(n).padStart(2, '0')
@@ -786,13 +776,10 @@ function makeLabelMarker(def: LabelDef, pos: [number, number]): L.Marker {
   // oceans and seas have no entry there, so they stay inert rather than
   // offering a click that does nothing. Dev keeps the label for editing.
   const nation = DEV ? undefined : nationByName.get(norm(def.text))
-  // With the time zones on, a nation's name carries its offset and clock
-  const zones = homeZones(nationByName.get(norm(def.text))?.name ?? '')
-  const zl = zones.length ? `<em class="zl" data-z="${zones.join(',')}">${zoneLine(zones)}</em>` : ''
   const m = L.marker(px(pos[0], pos[1]), {
     icon: L.divIcon({
       className: `map-label label-${def.type}` + (DEV ? ' dev-label' : nation ? ' label-link' : ''),
-      html: `<span>${labelLines(def).join('<br>')}${zl}${handles}</span>`,
+      html: `<span>${labelLines(def).join('<br>')}${handles}</span>`,
       iconSize: [0, 0],
       iconAnchor: [0, 0],
     }),
@@ -914,8 +901,6 @@ function updateLabels() {
     const fs = areaFontSize(def, z)
     el.style.fontSize = fs.toFixed(1) + 'px'
     el.classList.toggle('label-on', labelShown(def, z))
-    // A clock line bigger than the name it hangs under reads as the label
-    el.classList.toggle('zl-small', fs < ZL_MIN_FS)
   }
 }
 
@@ -1402,16 +1387,6 @@ function computePlacement(z: number, pinned: Placement[]): Placement[] {
     const water = WATER.has(def.type)
     if (water && areaFontSize(def, z) > cityFsMax * WATER_BLOCK) continue
     addBox({ ...b, water })
-    // The zone line hung under a nation's name takes ground the same way
-    if (settings.mode === 'zones' && !water && areaFontSize(def, z) >= ZL_MIN_FS) {
-      const zs = homeZones(nationByName.get(norm(def.text))?.name ?? '')
-      if (zs.length) {
-        // .zl is set at the name's size, held between 9 and 12px
-        const zf = Math.min(12, Math.max(9, areaFontSize(def, z)))
-        const w = zoneLine(zs).length * zf * 0.6
-        addBox({ x: b.x + b.w / 2 - w / 2, y: b.y + b.h - 2, w, h: zf * 1.3, water: false })
-      }
-    }
   }
 
   const placed: Placement[] = []
@@ -4814,18 +4789,6 @@ map.getPane('daylight')!.style.pointerEvents = 'none'
 
 const zonesLayer = tiledLayer('zones', 'zones')
 
-// The line under a nation's name: its offset and the time there, or its offsets
-// alone when it has more than one and no single time would be right
-function zoneLine(zs: number[], ms = icNow()): string {
-  if (zs.length === 1) return `${fmtZone(zs[0])} · ${hhmm(zs[0], ms)}`
-  return 'UTC' + zs.map(z => (z > 0 ? '+' : z < 0 ? '−' : '±') + Math.abs(z)).join(' / ')
-}
-
-function syncZoneLines(ms = icNow()) {
-  for (const el of document.querySelectorAll<HTMLElement>('.zl')) {
-    el.textContent = zoneLine(el.dataset.z!.split(',').map(Number), ms)
-  }
-}
 
 // Hover: the zone under the pointer lights up everywhere it is, and a readout
 // gives its time. Over sea and unclaimed land that is the solar hour.
@@ -4958,10 +4921,7 @@ map.getContainer().addEventListener('mouseleave', () => {
   lightZone(null)
 })
 
-zonesLayer.on('add', () => {
-  loadZoneLookup()
-  syncZoneLines()
-})
+zonesLayer.on('add', loadZoneLookup)
 zonesLayer.on('remove', () => {
   zoneTip.hidden = true
   lightZone(null)
@@ -5312,7 +5272,6 @@ setInterval(() => {
   lastIcMinute = minute
   for (const el of document.querySelectorAll<HTMLElement>('.cp-time')) el.innerHTML = timeLine(+el.dataset.z!, ms)
   syncIrpDate(ms)
-  if (map.hasLayer(zonesLayer)) syncZoneLines(ms)
   if (map.hasLayer(daylightLayer)) drawDaylight(ms)
 }, 1000)
 
