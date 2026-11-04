@@ -528,6 +528,18 @@
     "y": 2550
   },
   {
+    "name": "Mariensburg",
+    "nation": "Alemannia",
+    "population": 438000,
+    "gdp": 16999895000,
+    "gdpPerCapita": 38813,
+    "nativeScript": "",
+    "irlParallel": "Kaliningrad",
+    "alpha3": "ALE",
+    "x": 2999,
+    "y": 2398
+  },
+  {
     "name": "Tilburg",
     "nation": "Alemannia",
     "population": 207000,
@@ -5472,18 +5484,6 @@
     "y": 2399
   },
   {
-    "name": "Stalowice",
-    "nation": "Cortesia",
-    "population": 438000,
-    "gdp": 16999895000,
-    "gdpPerCapita": 38813,
-    "nativeScript": "",
-    "irlParallel": "Kaliningrad",
-    "alpha3": "COR",
-    "x": 3004,
-    "y": 2403
-  },
-  {
     "name": "Jiezmene",
     "nation": "Cortesia",
     "population": 268000,
@@ -5842,6 +5842,18 @@
     "alpha3": "COR",
     "x": 3022,
     "y": 2392
+  },
+  {
+    "name": "Kasczelowyck",
+    "nation": "Cortesia",
+    "population": 23000,
+    "gdp": 966827000,
+    "gdpPerCapita": 42036,
+    "nativeScript": "",
+    "irlParallel": "Bartoszyce",
+    "alpha3": "COR",
+    "x": 3020,
+    "y": 2411
   },
   {
     "name": "Canot",

@@ -1,5 +1,5 @@
 COMMON NAME	OFFICIAL NAME	POPULATION	GDP PPP ($)	REAL GDP P/C ($)	LIFE EXPECTANCY	LITERACY RATE	HDI	CAPITAL	ALPHA-3 CODE	STATUS	EXPANSION POINTS	CONTINENT
-Alemannia	Alemannian Confederation	157,800,000	9,640,000,000,000	61,090	56.6	92.6%	0.796	Franmark	ALE	Active	4	Evria
+Alemannia	Alemannian Confederation	160,210,000	9,749,639,782,000	60,855	56.7	92.7%	0.796	Franmark	ALE	Active	4	Evria
 Divia	Bundesprotektorat Divia	80,282,000	622,009,512,000	7,748	36.2	12.3%	0.272	Bachstadt	ALE	Colony	-	Evria
 Neuhollmar	Bundesprotektorat Neuhollmar	4,453,000	195,053,525,000	43,803	51.0	92.4%	0.740	Wangerhafen	ALE	Colony	-	Pelagonia
 Dämmerung Islands	Bundesprotektorat Dammerung-Inseln	1,951,000	127,980,000,000	65,597	54.6	77.3%	0.739	Neu-Klagenhafen	ALE	Colony	-	Elysia
@@ -25,7 +25,7 @@ East Astriya	Kingdom of East Astriya	18,066,000	1,035,800,000,000	57,334	42.4	31
 Auritania	Glorious Republic of Auritania	141,514,000	3,601,940,000,000	25,453	33.1	31.4%	0.376	Auritania City	AUR	NPC (Kirin)	-	Elysia
 Axerfreditenshin	Axerfreditenshin Kehanate	33,028,000	866,700,000,000	26,241	27.4	10.5%	0.216	Kulun	AXE	Admin Control	12	Valtheria
 Cahaya	Sabinic People's Republic of Cahaya	501,175,000	10,537,393,577,000	21,025	33.1	33.4%	0.379	Rajawali	CAH	Active	4	Valtheria
-Cortesia	Federated States of Cortesia	77,478,000	2,752,026,943,000	35,520	43.0	53.4%	0.550	Corslawa	COR	Active	9	Evria
+Cortesia	Federated States of Cortesia	75,068,000	2,642,387,161,000	35,200	42.4	51.9%	0.545	Corslawa	COR	Active	6	Evria
 Demâruz	Federation of Demâruz	49,624,000	1,222,323,284,000	24,632	39.5	85.0%	0.596	Khudshelgethlar	DEM	Pending	9	Evria
 Dias	Astral Republic of Dias	2,170,000	147,985,000,000	68,196	60.0	99.0%	0.844	Astralis	DIA	Pending	15	Pelagonia
 Eivorie	Protectorate of Eivorie	62,000,000	4,030,000,000,000	65,000	46.5	78.0%	0.678	Mundcaester	EIV	Active	9	Pelagonia
