@@ -18,7 +18,7 @@ drawn in map space. No white ice: the ice sheets are coloured by height like any
 
 build(land, has, KM) -> list of (rows, cols, land_mask, heights, sea_min_depth) per continent, all crops of the 12000 grid.
 The ice is coloured by height like any other ground: no white and no ice tint (user, 15 Nov 2026)."""
-import heapq, numpy as np
+import heapq, os, numpy as np
 from scipy import ndimage as ndi
 
 def _ss(x): x = np.clip(x, 0, 1); return x * x * (3 - 2 * x)
@@ -425,6 +425,25 @@ REGIONS = (("Hyperborea", slice(0, 3400), slice(0, 3400), lambda yy, xx: yy + xx
 RIFT = (10392, 11320)                 # the Rift's central island, 12000 grid (row, col), measured from the drawing
 
 def build(land, has, KM, seed=23, log=print):
+    """cached: rebuilt only when this file, the land or the real-elevation mask in the polar corners, or the two transplant
+    fits change (work/polar_cache.npz)"""
+    import hashlib, sys
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); from common import WORK
+    key = hashlib.sha1(open(os.path.abspath(__file__), "rb").read() + repr((KM, seed)).encode())
+    for _, rs, cs, _ in REGIONS: key.update(np.packbits(land[rs, cs]).tobytes()); key.update(np.packbits(has[rs, cs]).tobytes())
+    for f in ("tartarus_fit.npy", "hyperborea_fit.npy"):
+        p = os.path.join(WORK, f); key.update(open(p, "rb").read() if os.path.exists(p) else b"-")
+    key = key.hexdigest(); cache = os.path.join(WORK, "polar_cache.npz")
+    if os.path.exists(cache):
+        c = np.load(cache)
+        if str(c["key"]) == key:
+            log("  polar continents: unchanged, from the cache")
+            return [(rs, cs, c["P%d" % i], c["z%d" % i], c["s%d" % i]) for i, (_, rs, cs, _) in enumerate(REGIONS)]
+    out = _build(land, has, KM, seed, log)
+    np.savez(cache, key=key, **{k: v for i, (_, _, P, z, s) in enumerate(out) for k, v in (("P%d" % i, P), ("z%d" % i, z), ("s%d" % i, s))})
+    return out
+
+def _build(land, has, KM, seed, log):
     out = []; polar_all = 0
     for name, rs, cs, corner in REGIONS:
         rng = np.random.default_rng(seed + len(out)); L = land[rs, cs]; yy, xx = np.mgrid[rs, cs]

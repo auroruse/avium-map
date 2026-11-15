@@ -42,7 +42,7 @@ def ramp(v, stops):
 SEA = [(-9000, (26, 35, 62)), (-6200, (38, 50, 82)), (-5000, (49, 63, 96)), (-3800, (62, 78, 111)), (-2600, (74, 93, 128)), (-1200, (88, 109, 145)), (-200, (101, 123, 159)), (0, (110, 133, 168))]
 def finish(rgb, path):
     rgb[coast] = COAST
-    write_png(path, np.clip(rgb, 0, 255).astype(np.uint8))
+    write_png(path, np.clip(rgb, 0, 255).astype(np.uint8), zlevel=1)   # an intermediate for the tiler: speed over size
     print("wrote", os.path.basename(path), round(time.time() - t0), "s", flush=True)
 
 # ---- relief: the base map's own grey and navy, modelled by the terrain
@@ -91,5 +91,5 @@ lines(range(1000, 9000, 1000), 2.0, 0.62, (64, 48, 38), land_in)
 Z = Zs; gy, gx = np.gradient(Z); g = np.maximum(np.hypot(gx, gy), 1e-3); del gx, gy
 lines([-200, -1000, -2000, -3000, -4000, -5000, -6000, -8000], 1.3, 0.34, (150, 172, 208), sea_in)
 out = np.dstack([col, np.clip(alpha * 255, 0, 255).astype(np.uint8)])
-write_png(os.path.join(LAYERS, "contours.png"), out)
+write_png(os.path.join(LAYERS, "contours.png"), out, zlevel=1)
 print("wrote contours.png", round(time.time() - t0), "s")

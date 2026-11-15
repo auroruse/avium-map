@@ -14,3 +14,4 @@ src/assets/city-cards/
 topo/data/
 topo/.venv/
 topo/work/
+__pycache__/

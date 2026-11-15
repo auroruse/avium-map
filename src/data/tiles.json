@@ -1,11 +1,11 @@
 {
   "base": "8f93662dc8946905",
   "borders": "f005b1e277cedbf3",
-  "rivers": "a7791bf8cf5c40cb",
+  "rivers": "b4f132539fd5694b",
   "zones": "161d0f3ff3e80647",
   "mono": "08a1f5f7fc0c1a61",
-  "relief": "d59220f6872ec8af",
-  "terrain": "93140becc3b2ab8a",
-  "contours": "27c9d9a547d9b3da",
-  "tint": "733e074bbe5896c5"
+  "relief": "069bf6d431e00958",
+  "terrain": "b6769cbf0639ca69",
+  "contours": "2c4827b58f2fa259",
+  "tint": "174a35e1422344da"
 }

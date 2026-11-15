@@ -133,6 +133,13 @@ areas; that was chosen over streaks.
   dune grain across the slope and flat patches over subglacial lakes. No white and no ice tint (tried and removed at the user's word). The two continents get a palette of their own on the Terrain map instead (`render.py`, `POLAR`): at every height the main ramp's CIELAB lightness less 10, in slate, blue-grey and violet-grey, so they do not read as farmland and steppe. Neither
   continent's drawing gives the Tartarean gateways a water passage, and Tartarus's coast does not meet itself
   across the 180th meridian (62.7°S on the right edge, 83.5°S on the bottom one).
+- **Eivorie** (`eivorie.py`). Its own ground, made from the Eivorian map (`data/eivorie/eivorie_map.png`, laid on the
+  grid by `affine_coast.npy`: fitted to the city dots, then to the coast, which agree to about 6 px). The map's
+  shading cannot be lifted off it (its translucent names would come back as ridges), so it only says where the
+  uplands and plains are, read from its lit slopes alone. The ground is built: an upland envelope in that pattern
+  (an assumption: the map gives no heights; set to sit with the neighbours, Fiergenweald upland to about 1,100 m),
+  valleys along Eivorie's drawn rivers, and hills carved by a drainage running into them, eased into the
+  neighbours' ground over about 50 km.
 - **Rivers** (`riverlayer.py`). Real rivers, laid in the valleys of the Avium terrain. Each Natural Earth river
   arrives through the warps a few km off its valley, so it is re-traced on the terrain from its upper end down,
   inside a corridor round the warped line, along the route that climbs least and keeps to the valley floor.

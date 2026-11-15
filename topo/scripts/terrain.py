@@ -19,6 +19,8 @@ print("avium land %.2f%% | with real elevation %.2f%% of land" % (100 * land.mea
 # Where the fit is a little off at a coast, Avium land samples the real sea and would come out as a dead-flat strip.
 # Those pixels take the relief of the valid ground next to them, mirrored across the edge of the strip, so the
 # terrain carries on to the shore. Counted and reported; it is a repair, the georeference is what is being repaired.
+def tick(what): print("  [%4.0f s] %s" % (time.time() - t0, what), flush=True)
+tick("inputs loaded")
 valid = land & has & (E >= 2.0)
 dist, (iy, ix) = ndi.distance_transform_edt(~valid, return_indices=True)
 fill = land & ~valid & (dist <= 80)
@@ -32,14 +34,20 @@ print("land repaired by mirroring: %.2f%% of Avium land (of which landed on real
 del dist, iy, ix, valid, fill
 
 # ---------------- land
+tick("repair")
 h = np.where(has, np.maximum(E, 2.0), FLAT).astype(np.float32)
 # the polar continents have no Earth under them: their ground is made from their Talopedia articles (polar.py)
 import polar
 pol = polar.build(land, has, KM); hasl = has.copy()
 for rs, cs, P, z, _ in pol:
     hc = h[rs, cs]; hc[P] = z[P]; hl = hasl[rs, cs]; hl |= P
+# Eivorie has its own ground, made from the Eivorian map (eivorie.py); its rivers are fictional and drawn
+tick("polar continents")
+import eivorie
+h = eivorie.build(h, land, KM)
 wl, nw = ndi.label(~land); wsz = np.bincount(wl.ravel()); ocean = wsz[1:].argmax() + 1
 # a coast Earth does not have: high ground at an Avium-made shore comes down to the sea like a coastal range (flank.py)
+tick("Eivorie")
 import flank
 h_pre = h.copy(); h = flank.descend(h, land, wl == ocean, E, has, KM)
 # every inland water body is a lake at the height of its own shore, not a piece of sea
@@ -50,6 +58,7 @@ for i, sl in enumerate(ndi.find_objects(wl), 1):
     m = wl[sl] == i; ring = ndi.binary_dilation(m, iterations=5) & land[sl] & hasl[sl]
     if ring.sum() < 5: continue
     lv = float(max(np.percentile(h[sl][ring], 30), 0.0)); level[sl][m] = lv; nlake += 1
+tick("flank and lakes")
 print("lakes given their own level:", nlake, "| highest", float(level.max()), "m")
 d_in, (iy, ix) = ndi.distance_transform_edt(land, return_indices=True)   # px to the nearest water, and which water
 base = level[iy, ix]; del iy, ix
@@ -60,6 +69,7 @@ del d_in, base
 np.save(os.path.join(WORK, "waterlevel.npy"), level); lake = (~land) & (wl != ocean); del wl
 
 # ---------------- sea
+tick("shore levels")
 import seafloor
 depth = seafloor.build(land, (~land) & ~lake, h_pre, E, (~land) & ovland & has, KM); del h_pre
 depth = np.maximum(depth, 1.0)
@@ -67,5 +77,6 @@ for rs, cs, P, _, sea in pol:                      # Hyperborea's trench, the Ta
     dc = depth[rs, cs]; np.maximum(dc, sea, out=dc)
 del pol, hasl
 H = np.where(land, h, -depth)
+tick("sea floor")
 np.save(os.path.join(WORK, "height_raw.npy"), np.round(H).astype(np.int16)); np.save(os.path.join(WORK, "land12k.npy"), land)
 print("done", round(time.time() - t0), "s | land max", float(h[land].max()), "| sea min", float(-depth[~land].max()))
