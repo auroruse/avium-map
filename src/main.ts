@@ -8,8 +8,7 @@ import labelsData from './data/labels.json'
 import bannerUrl from './assets/banner.png'
 import politicalThumb from './assets/map-modes/political.png'
 import zonesThumb from './assets/map-modes/zones.png'
-import daylightThumb from './assets/map-modes/daylight.png'
-import lightsThumb from './assets/map-modes/lights.png'
+import terrainThumb from './assets/map-modes/terrain.png'
 import stationsData from './data/stations.json'
 import nationsTsv from './data/nations.tsv?raw'
 import areasData from './data/areas.json'
@@ -37,8 +36,8 @@ const MAX_ZOOM = 8
 
 // Lore scale: the 6000px map diagonal equals Earth's pole-to-pole distance
 // (half the meridional circumference, 20,003.93 km) → ~2.357 km per px. Up here
-// with the other constants rather than down in Measure, because the night lights
-// are sized in real kilometres too and are built well before that section.
+// with the other constants rather than down in Measure, because the planet's
+// radius below is built from it.
 const PX2KM = 20_003.93 / (6000 * Math.SQRT2)
 
 function px(x: number, y: number): L.LatLngExpression {
@@ -289,14 +288,22 @@ const imgBounds = L.latLngBounds(px(0, CONTENT), px(CONTENT, 0)) as L.LatLngBoun
 // here is what produced the "scrambled" transposed map previously.
 // The base is tiled too: an imageOverlay base rounds its position through a
 // different code path than tile layers, drifting 1-2px at half-step zooms.
-function tiledLayer(name: string, pane = 'overlayPane'): L.TileLayer {
+function tiledLayer(
+  name: string,
+  pane = 'overlayPane',
+  // The terrain layers are drawn at 12000px, one zoom level finer than the rest,
+  // and the two opaque ones are WebP: shaded relief is the one thing here that
+  // PNG cannot make small.
+  { ext = 'png', maxNative = 5, zIndex = 1 } = {}
+): L.TileLayer {
   // Versioned per layer, from the signature scripts/tile.mjs stamps its output
   // with. Tile paths never change, so without this a browser keeps serving the
   // copy it cached the first time and a retiled border only reaches the reader
   // on the zoom levels their cache happened to drop.
   const v = (tileVersions as Record<string, string>)[name]
-  return L.tileLayer(`tiles/${name}/{z}/{y}/{x}.png` + (v ? `?v=${v}` : ''), {
-    maxNativeZoom: 5,
+  return L.tileLayer(`tiles/${name}/{z}/{y}/{x}.${ext}` + (v ? `?v=${v}` : ''), {
+    maxNativeZoom: maxNative,
+    zIndex,
     maxZoom: MAX_ZOOM,
     bounds: contentBounds,
     pane,
@@ -320,7 +327,10 @@ L.rectangle(contentBounds, {
   interactive: false,
 }).addTo(map)
 const bordersLayer = tiledLayer('borders').addTo(map)
-const riversLayer = tiledLayer('rivers').addTo(map)
+// Drawn at 12000px like the terrain it runs through, so it stays a line one level deeper
+const riversLayer = tiledLayer('rivers', 'overlayPane', { maxNative: 6, zIndex: 3 }).addTo(map)
+// Over the border tint, under the rivers
+const contoursLayer = tiledLayer('contours', 'overlayPane', { ext: 'webp', maxNative: 6, zIndex: 2 })
 
 // Pangaea reference overlay (dev-only toggle in layer control)
 let pangaeaLayer: L.ImageOverlay | null = null
@@ -353,19 +363,22 @@ new (L.Control.extend({
 
 // --- Settings ---
 //
-// What the map shows, as one record: which of the four maps it is, and which
-// overlays are on. A mode can rule an overlay out (the World Clock maps have no
-// borders, night has no names) without touching the switch, so going back to
-// the political map brings back exactly what was on before. Read during the
-// first render, so it has to be resolved before any of it runs.
+// What the map shows, as one record: which of the three maps it is, and which
+// switches are on. A map can rule a switch out (Time Zones has no borders,
+// only Terrain has contour lines, only Time Zones has day and night) without touching it, so going back to a map
+// brings back exactly what was on before. Read during the first render, so it
+// has to be resolved before any of it runs.
 
-type MapMode = 'political' | 'zones' | 'daylight' | 'lights'
-const MAP_MODES: MapMode[] = ['political', 'zones', 'daylight', 'lights']
+type MapMode = 'political' | 'terrain' | 'zones'
+const MAP_MODES: MapMode[] = ['political', 'terrain', 'zones']
 
 interface Settings {
   mode: MapMode
+  relief: boolean
+  daylight: boolean
   borders: boolean
   rivers: boolean
+  contours: boolean
   territories: boolean
   water: boolean
   cities: boolean
@@ -376,8 +389,11 @@ const SETTINGS_KEY = 'avium-settings'
 
 const settings: Settings = {
   mode: 'political',
+  relief: true,
+  daylight: false,
   borders: true,
   rivers: true,
+  contours: true,
   territories: true,
   water: true,
   cities: true,
@@ -385,17 +401,24 @@ const settings: Settings = {
 }
 
 // Key by key and typed, so a stale or hand-edited entry cannot introduce a
-// non-boolean that then reads as truthy forever. An entry from before the modes
-// had night as a switch that overwrote the others and kept their old values
-// aside; that is read back as the lights map with those values restored.
+// non-boolean that then reads as truthy forever. Relief and Day & Night were
+// maps of their own until 15 Nov 2026 and Night Lights was a third; an entry
+// left on Relief comes back as the political map with Relief on, one on Day &
+// Night as Time Zones with it on, and one on Night Lights as the political map.
 try {
   const saved = JSON.parse(localStorage.getItem(SETTINGS_KEY) ?? '{}')
   for (const k of Object.keys(settings) as (keyof Settings)[]) {
     if (k !== 'mode' && typeof saved?.[k] === 'boolean') settings[k] = saved[k]
   }
   if (MAP_MODES.includes(saved?.mode)) settings.mode = saved.mode
+  else if (saved?.mode === 'relief') settings.relief = true
+  else if (saved?.mode === 'daylight') {
+    settings.mode = 'zones'
+    settings.daylight = true
+  }
+  // Older still: night as a switch that overwrote the others and kept their
+  // old values aside
   if (saved?.night === true) {
-    settings.mode = 'lights'
     const p = saved.preNight
     if (p && typeof p === 'object') {
       for (const k of ['territories', 'water', 'stations', 'borders', 'rivers'] as const) {
@@ -415,48 +438,25 @@ function saveSettings() {
   }
 }
 
-// What each mode leaves room for. The two World Clock maps and night are the
-// map as a backdrop, so the political overlays go; zones keeps the names, which
-// carry each nation's clock.
+// What each map leaves room for. Time Zones is the map as a backdrop for the
+// clocks: its colours cover every pixel, so the ground and the lines go, and
+// the names stay because they carry each nation's clock. Day and night belongs
+// to the clocks, contour lines to the terrain.
 const modeAllows = {
-  borders: (m: MapMode) => m === 'political',
-  rivers: (m: MapMode) => m === 'political',
-  territories: (m: MapMode) => m === 'political' || m === 'zones',
-  water: (m: MapMode) => m === 'political' || m === 'zones',
-  stations: (m: MapMode) => m === 'political' || m === 'zones',
+  relief: (m: MapMode) => m !== 'zones',
+  daylight: (m: MapMode) => m === 'zones',
+  borders: (m: MapMode) => m !== 'zones',
+  rivers: (m: MapMode) => m !== 'zones',
+  contours: (m: MapMode) => m === 'terrain',
+  territories: (_m: MapMode) => true,
+  water: (_m: MapMode) => true,
   cities: (_m: MapMode) => true,
+  stations: (_m: MapMode) => true,
 }
 
 function shows(k: keyof typeof modeAllows): boolean {
   return settings[k] && modeAllows[k](settings.mode)
 }
-
-// Night is a sheet of near-black between the tiles and the markers rather than a
-// CSS filter on the panes. A filter would be one line, but html2canvas does not
-// implement filters, so every night export would come out in daylight. This is
-// an ordinary SVG rectangle, which it renders like anything else.
-map.createPane('night')
-const nightPane = map.getPane('night')!
-nightPane.style.zIndex = '550' // over overlayPane's borders and rivers, under markerPane
-nightPane.style.pointerEvents = 'none'
-
-// Exactly the world, so night stops where the map does and everything past the
-// edge stays the page colour it is by day.
-//
-// The blue strip this once showed was never the veil's size. tile.mjs pads the
-// edge tiles out to 6144 with the sea colour, the same value as #map's background, so
-// the padding and the page behind it are indistinguishable — until night gave
-// #map a darker background and stranded the padding as a lit band between them.
-// Widening the veil to cover it only moved the seam out to the veil's own edge,
-// which is the dark overflow that replaced the strip. The background override is
-// gone; this stays where the world is.
-const nightVeil = L.rectangle(contentBounds, {
-  stroke: false,
-  fillColor: '#04070f',
-  fillOpacity: 0.82,
-  interactive: false,
-  pane: 'night',
-})
 
 // --- Labels ---
 
@@ -1112,31 +1112,6 @@ function cityMarkerHtml(g: { d: number; rim: number; ring: number }, ink: string
   )
 }
 
-// A city at night is a light, so the day marker's white ring and pale core both
-// go — those exist to hold a dark dot off light ground, and there is no light
-// ground any more.
-const NIGHT_RGB = '255, 201, 84'
-
-// How wide a metro's lights actually read from orbit. Urban land area grows
-// sublinearly with population — ten times the people cover well under ten times
-// the ground, because a bigger city is a denser one — so the observed radius of
-// the lit blob goes as roughly P^0.4. Steep across the small towns, flattening
-// through the megacities: the step from 50k to 500k more than doubles the light,
-// the step from 5M to 41M does not.
-//
-// Calibrated against real metros: a million people light a blob about 11km in
-// radius, Tokyo's 37M reaches about 45km, a 100k town about 4km. Avium's largest
-// city is 41.8M, which the curve puts at 49km.
-const LIT_EXP = 0.4
-const LIT_KM_AT_1M = 11
-const LIT_K = LIT_KM_AT_1M / 1e6 ** LIT_EXP
-
-// Sized against the ground, not the screen: the map has a real scale, so a
-// city's lights can be laid down at the size they would actually be, and stay
-// that size relative to the terrain at every zoom. L.circle takes its radius in
-// CRS units, which px() puts at U/TILE_GRID of a map pixel.
-const litRadius = (pop: number) => ((LIT_K * pop ** LIT_EXP) / PX2KM) * (U / TILE_GRID)
-
 // The ladder, read top down. An index into it is a city's rank, so this is also
 // the placement priority order — the two used to be separate functions holding
 // the same seven numbers with nothing keeping them honest.
@@ -1574,97 +1549,6 @@ function placementsAt(z: number): Placement[] {
   return result
 }
 
-// --- Night lights ---
-//
-// Night draws its cities into a single canvas rather than as 1716 divIcons. The
-// divIcon carries a name span, an anchor, a click binding and its own absolutely
-// positioned element, and Leaflet moves every one of them on every pan; the day
-// map can afford that because a zoom level only ever places a few hundred. Night
-// has no names to place, no collisions to resolve and no size that changes with
-// zoom, so all of that machinery buys nothing. Circles on a canvas cost one
-// element and one redraw, and the layer is built once per session.
-//
-// Constant radius is what lets it be built once: a circleMarker's radius is in
-// screen px, so zooming repositions the dots without resizing them and there is
-// nothing to rebuild. Dropping the population cull with it is the point of the
-// view — the day map hides everything under 5M until user zoom 1, and a world
-// lit by its four largest cities is not a world lit at night.
-map.createPane('night-cities')
-const nightCityPane = map.getPane('night-cities')!
-nightCityPane.style.zIndex = '560' // over the veil at 550, under markerPane's names at 600
-
-let nightLayer: L.LayerGroup | null = null
-
-// A light is one circle whose fill fades to nothing at its own rim, not a solid
-// disc with a halo behind it — a flat fill leaves a visible edge however faint
-// the halo around it is, and stacking more discs to hide that edge only moves it
-// outward. Leaflet's canvas renderer always fills flat, so the fill is the one
-// thing overridden here; the path it has already traced is the circle.
-//
-// GLOW is how far past the light the falloff reaches. The stops put half opacity
-// at 1/GLOW of the radius, so the size the eye reads as the lit area stays the
-// radius the curve asked for and everything past it is skyglow — which really
-// does carry tens of kilometres out from a large metro.
-const GLOW = 2.9
-
-const GLOW_STOPS: [number, number][] = [
-  [0, 1],
-  [0.18, 0.92],
-  [1 / GLOW, 0.5],
-  [0.52, 0.2],
-  [0.72, 0.06],
-  [1, 0],
-]
-
-const GlowCanvas = L.Canvas.extend({
-  _fillStroke(ctx: CanvasRenderingContext2D, layer: { _point: L.Point; _radius: number }) {
-    const { x, y } = layer._point
-    // The same radius _updateCircle traced the arc with, so the gradient ends
-    // exactly where the path does
-    const r = Math.max(Math.round(layer._radius), 1)
-    const grad = ctx.createRadialGradient(x, y, 0, x, y, r)
-    for (const [at, alpha] of GLOW_STOPS) grad.addColorStop(at, `rgba(${NIGHT_RGB}, ${alpha})`)
-    // The alpha is in the stops. Leaflet's own fill leaves globalAlpha set to
-    // the last layer's fillOpacity, and inheriting that would dim these.
-    ctx.globalAlpha = 1
-    ctx.fillStyle = grad
-    ctx.fill()
-  },
-  // @types/leaflet declares L.Canvas with a no-argument constructor, which the
-  // extend() return type inherits; the runtime one takes renderer options.
-}) as unknown as new (options?: L.RendererOptions) => L.Canvas
-
-function nightLights(): L.LayerGroup {
-  if (nightLayer) return nightLayer
-  // Only ever renders these layers, so overriding its fill for all of them is
-  // safe. Redraws happen at the end of a gesture, not per frame, so building a
-  // gradient per light costs one frame per pan rather than one per tick.
-  const renderer = new GlowCanvas({ pane: 'night-cities', padding: 0.4 })
-  const group = L.layerGroup()
-
-  // Night is a picture of the world, not a way through it. Nothing here opens a
-  // panel, which also spares the canvas renderer a hit test over 1716 glows that
-  // overlap each other wherever the map is worth looking at.
-  //
-  // L.circle rather than L.circleMarker: the first measures its radius on the
-  // ground and reprojects it at every zoom, the second is a fixed number of
-  // screen pixels.
-  for (const c of cities) {
-    if (c.x == null || c.y == null) continue
-    group.addLayer(
-      L.circle(px(c.x, c.y), {
-        renderer,
-        radius: litRadius(c.population) * GLOW,
-        stroke: false,
-        interactive: false,
-      })
-    )
-  }
-
-  nightLayer = group
-  return group
-}
-
 function invalidatePlacements() {
   placementCache.clear()
   // Which seas a nation name covers is geometry too, so it goes stale for the
@@ -1743,9 +1627,8 @@ function placementKey(p: Placement): string {
 function updateCities() {
   const z = map.getZoom()
   // Empty falls through the same diff as any other change, so both toggles tear
-  // the markers down without a separate path. Night has its own canvas layer, so
-  // this pass has nothing to do there — which is also what makes it cheap.
-  const hidden = !settings.cities || settings.mode === 'lights' || z < 2.5
+  // the markers down without a separate path.
+  const hidden = !settings.cities || z < 2.5
   const all = hidden ? [] : placementsAt(z)
 
   // Viewport cull: placement is still computed map-wide (so what renders is
@@ -3429,22 +3312,26 @@ bsItems.addEventListener('click', e => {
 // click did.
 function applySettings() {
   const m = settings.mode
-  document.body.classList.toggle('night', m === 'lights')
-  document.body.classList.toggle('clockmap', m === 'zones' || m === 'daylight')
+  const relief = shows('relief')
+  document.body.classList.toggle('clockmap', m === 'zones')
   document.body.classList.toggle('zones-on', m === 'zones')
   const put = (l: L.Layer, on: boolean) => (on ? map.hasLayer(l) || l.addTo(map) : l.remove())
-  put(baseLayer, m === 'political' || m === 'lights')
   // The zone layer paints every pixel, sea and unclaimed land included, so
-  // only Day & Night needs the grey base under it
-  put(monoLayer, m === 'daylight')
+  // Time Zones needs no ground under it
+  put(baseLayer, m === 'political' && !relief)
+  put(reliefLayer, m === 'political' && relief)
+  put(terrainLayer, m === 'terrain' && relief)
+  put(tintLayer, m === 'terrain' && !relief)
   put(bordersLayer, shows('borders'))
+  // The fills are opaque, so over the shaded ground they are let down far
+  // enough for the hills to read through: a little on the political map, most
+  // of the way on the terrain, where they are only a tint
+  bordersLayer.setOpacity(m === 'terrain' ? 0.22 : relief ? 0.75 : 1)
+  put(contoursLayer, shows('contours'))
   put(riversLayer, shows('rivers'))
   put(zonesLayer, m === 'zones')
   if (m !== 'zones') zoneGlow.remove()
-  put(daylightLayer, m === 'daylight')
-  put(nightVeil, m === 'lights')
-  if (m === 'lights' && settings.cities) nightLights().addTo(map)
-  else nightLayer?.remove()
+  put(daylightLayer, shows('daylight'))
   // Names reserve space in the placement grid, so hiding them hands it back
   invalidatePlacements()
   updateLabels()
@@ -3503,7 +3390,7 @@ async function exportView() {
     const canvas = await html2canvas(mapEl, {
       // #map's own background, which is what shows outside the world bounds.
       // html2canvas fills with white otherwise. Read rather than hardcoded, so
-      // night mode's darker page comes through.
+      // the Time Zones map's black page comes through.
       backgroundColor: getComputedStyle(mapEl).backgroundColor,
       // The label text is re-rendered at this scale and comes out crisp. The
       // tiles are only upscaled, since past z5 there is no more detail to draw
@@ -4450,10 +4337,6 @@ for (const b of tabButtons) {
 // an input inside it would take the caret away from the page for everyone else
 setTab('cities', false)
 
-// Last line of the module, because it touches the label, city and station
-// layers and all three are built further up. Only matters when night was left
-// on: everything else was already read straight out of `settings` as each layer
-// first rendered.
 // --- Explore ---
 //
 // The photographed cities as photographs: each one stands on the map as a small
@@ -4781,7 +4664,7 @@ lastCover = sidebarWidth()
 // zone a point is in.
 
 map.createPane('zones')
-map.getPane('zones')!.style.zIndex = '450' // over the borders and rivers, under night and the markers
+map.getPane('zones')!.style.zIndex = '450' // over the borders and rivers, under day and night and the markers
 map.getPane('zones')!.style.pointerEvents = 'none'
 map.createPane('daylight')
 map.getPane('daylight')!.style.zIndex = '455'
@@ -4988,30 +4871,36 @@ function drawDaylight(ms: number) {
 }
 daylightLayer.on('add', () => drawDaylight(icNow()))
 
-// The World Clock's base for both clock maps: the land in flat grey on black
-const monoLayer = tiledLayer('mono', 'tilePane')
+// The ground: the same land and sea as the base, modelled by the terrain under
+// them (relief) or coloured by height as well (terrain), and the terrain's
+// colours unshaded (tint) for when Relief is off. Built by topo/ from real
+// elevation carried through the Pangaea overlay; see topo/README.md.
+const reliefLayer = tiledLayer('relief', 'tilePane', { ext: 'webp', maxNative: 6 })
+const terrainLayer = tiledLayer('terrain', 'tilePane', { ext: 'webp', maxNative: 6 })
+const tintLayer = tiledLayer('tint', 'tilePane', { ext: 'webp', maxNative: 6 })
 
 // --- Map sheet ---
 //
-// Apple Maps' map card: the four maps as picture tiles, and under them a switch
-// for each overlay. A switch the current map has no room for goes grey but keeps
-// its setting, so the political map comes back as it was left.
+// Apple Maps' map card: the three maps as picture tiles, and under them the
+// switches in groups. A switch the current map has no room for goes grey but
+// keeps its setting, so the map it belongs to comes back as it was left.
 
 const MODE_TILES: [MapMode, string, string][] = [
   ['political', 'Political', politicalThumb],
+  ['terrain', 'Terrain', terrainThumb],
   ['zones', 'Time Zones', zonesThumb],
-  ['daylight', 'Day & Night', daylightThumb],
-  ['lights', 'Night Lights', lightsThumb],
 ]
 
-const SHEET_ROWS: [keyof typeof modeAllows, string][] = [
-  ['borders', 'Borders'],
-  ['rivers', 'Rivers'],
-  ['territories', 'Nation Names'],
-  ['water', 'Water Names'],
-  ['cities', 'Cities'],
-  ['stations', 'Research Stations'],
+const SHEET_GROUPS: [string, [keyof typeof modeAllows, string][]][] = [
+  ['Shading', [['relief', 'Relief'], ['daylight', 'Day & Night']]],
+  ['Lines', [['borders', 'Borders'], ['rivers', 'Rivers'], ['contours', 'Contour Lines']]],
+  ['Labels', [['territories', 'Nation Names'], ['water', 'Water Names'], ['cities', 'Cities'], ['stations', 'Research Stations']]],
 ]
+const SHEET_ROWS = SHEET_GROUPS.flatMap(([, rows]) => rows)
+
+const sheetRow = (label: string, attr: string, key = '') =>
+  `<label class="ms-row"${key ? ` data-row="${key}"` : ''}><span>${label}</span>` +
+  `<input type="checkbox" class="set-switch" ${attr}></label>`
 
 const mapSheet = document.createElement('div')
 mapSheet.id = 'map-sheet'
@@ -5025,16 +4914,13 @@ mapSheet.innerHTML =
       `<span class="ms-label">${label}</span></button>`
   ).join('') +
   `</div>` +
-  `<div class="ms-card">` +
-  SHEET_ROWS.map(
-    ([k, label]) =>
-      `<label class="ms-row" data-row="${k}"><span>${label}</span>` +
-      `<input type="checkbox" class="set-switch" data-set="${k}"></label>`
+  SHEET_GROUPS.map(
+    ([title, rows]) =>
+      `<div class="ms-group">${title}</div><div class="ms-card">` +
+      rows.map(([k, label]) => sheetRow(label, `data-set="${k}"`, k)).join('') +
+      `</div>`
   ).join('') +
-  (DEV
-    ? `<label class="ms-row"><span>Pangaea</span><input type="checkbox" class="set-switch" data-dev="pangaea"></label>`
-    : '') +
-  `</div>`
+  (DEV ? `<div class="ms-group">Dev</div><div class="ms-card">${sheetRow('Pangaea', 'data-dev="pangaea"')}</div>` : '')
 document.body.appendChild(mapSheet)
 
 function renderMapSheet() {

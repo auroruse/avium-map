@@ -70,6 +70,15 @@ const LAYERS = {
   // the land in flat grey on black, for the day and night view; written from
   // base.PNG whenever the base is tiled, so it comes after it
   mono: { skipBlanks: -1, background: { r: 0, g: 0, b: 0, alpha: 255 } },
+  // The ground, written into layers/ by topo/scripts/render.py at 12000px, so
+  // these three tile one zoom level deeper than the drawings. Shaded relief is
+  // photographic as far as a codec is concerned: as PNG the two opaque layers
+  // would be several times the size of everything else here put together.
+  relief: { skipBlanks: -1, background: OCEAN, format: 'webp' },
+  terrain: { skipBlanks: -1, background: OCEAN, format: 'webp' },
+  // the terrain's colours unshaded, for the Terrain map with Relief off
+  tint: { skipBlanks: -1, background: OCEAN, format: 'webp' },
+  contours: { skipBlanks: 0, background: CLEAR, format: 'webp' },
 }
 
 const MONO_LAND = [64, 64, 66]
@@ -344,13 +353,12 @@ for (const [name, opts] of Object.entries(todo)) {
     })
   }
 
-  await img
-    .png()
+  await (opts.format === 'webp' ? img.webp({ quality: 78, alphaQuality: 90 }) : img.png())
     .tile({ size: 256, layout: 'google', skipBlanks: opts.skipBlanks })
     .toFile(output)
 
   // clean up the blank tile dzsave creates
-  const blank = join(output, 'blank.png')
+  const blank = join(output, `blank.${opts.format ?? 'png'}`)
   if (existsSync(blank)) rmSync(blank)
 
   // The nation areas are read off this drawing, so they are only ever as current

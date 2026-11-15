@@ -1,0 +1,5 @@
+# hand anchors that are not city dots: lon lat x y !   (x,y on the 3000px overlay grid)
+-169.65 66.08 829 847 !   # Cape Dezhnev
+-168.09 65.60 826 855 !   # Cape Prince of Wales
+123.50 53.30 1332 485 !   # China's northern tip (Mohe), just inside China
+123.60 53.75 1333 497 !   # Russia across the Amur from Mohe

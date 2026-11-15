@@ -9,3 +9,8 @@ banners-original/
 # derived from src/assets/cities by scripts/thumbs.mjs, rebuilt on every build
 src/assets/city-thumbs/
 src/assets/city-cards/
+
+# topography build: downloaded source data and the Python environment
+topo/data/
+topo/.venv/
+topo/work/

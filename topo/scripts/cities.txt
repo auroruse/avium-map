@@ -1,0 +1,316 @@
+# The overlay's own city dots, named from the labels printed beside them.
+# lon lat  #dot-index | x y (3000px grid, snapped to the dot)   name   country (Natural Earth ADM0_A3)
+126.98 37.57 #6 Seoul KOR
+125.75 39.02 #10 Pyongyang PRK
+132.46 34.39 #17 Hiroshima JPN
+126.65 45.75 #25 Harbin CHN
+123.43 41.80 #20 Shenyang CHN
+135.07 48.48 #42 Khabarovsk RUS
+139.69 35.69 1213.3 340 Tokyo JPN
+135.50 34.69 1302.7 325.7 Osaka JPN
+131.89 43.12 1283.5 366 Vladivostok RUS
+121.60 38.92 1500 321 Dalian CHN
+121.56 25.04 #0 Taipei TWN
+121.47 31.23 #5 Shanghai CHN
+118.78 32.06 #8 Nanjing CHN
+117.00 36.67 #16 Jinan CHN
+117.20 39.13 #19 Tianjin CHN
+116.40 39.90 #23 Beijing CHN
+113.65 34.76 #24 Zhengzhou CHN
+114.30 30.59 #18 Wuhan CHN
+112.55 37.87 #26 Taiyuan CHN
+108.94 34.27 #28 Xian CHN
+106.55 29.56 #31 Chongqing CHN
+104.07 30.67 #38 Chengdu CHN
+103.83 36.06 #40 Lanzhou CHN
+106.92 47.92 #53 Ulaanbaatar MNG
+104.28 52.29 #75 Irkutsk RUS
+113.26 23.13 #3 Guangzhou CHN
+158.65 53.02 #105 Petropavlovsk RUS
+40.54 64.54 #169 Arkhangelsk RUS
+92.87 56.01 #106 Krasnoyarsk RUS
+83.76 53.35 #115 Barnaul RUS
+84.95 56.49 #117 Tomsk RUS
+82.93 55.03 #118 Novosibirsk RUS
+87.62 43.83 #109 Urumqi CHN
+71.43 51.17 #129 Astana KAZ
+74.59 42.87 #124 Bishkek KGZ
+69.24 41.30 #142 Tashkent UZB
+68.78 38.56 #144 Dushanbe TJK
+69.17 34.53 #147 Kabul AFG
+56.25 58.01 #150 Perm RUS
+49.11 55.79 #156 Kazan RUS
+55.10 51.77 #154 Orenburg RUS
+58.38 37.95 #163 Ashgabat TKM
+59.60 36.30 #164 Mashhad IRN
+44.00 56.33 #190 NizhnyNovgorod RUS
+39.87 57.63 #200 Yaroslavl RUS
+60.60 56.84 1567.7 918.3 Yekaterinburg RUS
+114.17 22.30 #1 HongKong CHN
+105.85 21.03 #41 Hanoi VNM
+102.63 17.97 #52 Vientiane LAO
+104.92 11.56 #60 PhnomPenh KHM
+100.50 13.75 #76 Bangkok THA
+96.16 16.80 #89 Rangoon MMR
+120.98 14.60 2268.3 513.3 Manila PHL
+101.69 3.14 #102 KualaLumpur MYS
+98.67 3.59 #104 Medan IDN
+104.75 -2.99 #110 Palembang IDN
+106.85 -6.21 2339.3 669.3 Jakarta IDN
+-113.49 53.55 #326 Edmonton CAN
+-123.12 49.28 #331 Vancouver CAN
+-114.07 51.05 #339 Calgary CAN
+-122.33 47.61 #345 Seattle USA
+-122.68 45.52 #349 Portland USA
+-104.62 50.45 #358 Regina CAN
+-97.14 49.90 #368 Winnipeg CAN
+-122.42 37.77 #375 SanFrancisco USA
+-111.89 40.76 #387 SaltLakeCity USA
+-93.27 44.98 #397 Minneapolis USA
+-118.24 34.05 #408 LosAngeles USA
+-104.99 39.74 #416 Denver USA
+-149.90 61.22 784 977 Anchorage USA
+10.75 59.91 #296 Oslo NOR
+18.07 59.33 #270 Stockholm SWE
+-21.90 64.13 1340 1294 Reykjavik ISL
+-51.72 64.18 1235 1352.7 Nuuk GRL
+-6.26 53.35 1386.7 1323.3 Dublin IRL
+-0.13 51.51 1422 1370 London GBR
+-8.61 41.15 #386 Porto PRT
+-9.14 38.72 1278.3 1455 Lisbon PRT
+-3.70 40.42 #396 Madrid ESP
+-5.98 37.39 #411 Sevilla ESP
+-71.21 46.81 #415 Quebec CAN
+-75.70 45.42 #419 Ottawa CAN
+-73.57 45.50 #421 Montreal CAN
+-63.57 44.65 #426 Halifax CAN
+-0.63 35.70 #425 Oran DZA
+-6.84 34.02 1225 1526 Rabat MAR
+-79.38 43.65 1003.3 1535 Toronto CAN
+-115.47 32.65 #436 Mexicali MEX
+-87.63 41.88 #439 Chicago USA
+-86.16 39.77 #460 Indianapolis USA
+-90.20 38.63 #464 StLouis USA
+-106.49 31.74 #493 CiudadJuarez MEX
+-96.80 32.78 #500 Dallas USA
+-84.39 33.75 #512 Atlanta USA
+-97.74 30.27 #520 Austin USA
+-90.07 29.95 #530 NewOrleans USA
+-95.37 29.76 779.3 1779.3 Houston USA
+-90.05 35.15 852.3 1659.3 Memphis USA
+-107.39 24.80 #533 Culiacan MEX
+-100.32 25.67 #555 Monterrey MEX
+-103.35 20.67 #583 Guadalajara MEX
+-97.86 22.25 #600 Tampico MEX
+-99.13 19.43 #608 MexicoCity MEX
+-99.89 16.86 #629 Acapulco MEX
+-82.37 23.13 #543 Havana CUB
+-66.90 10.49 810 1830 Caracas VEN
+-58.16 6.80 #573 Georgetown GUY
+-71.64 10.65 #563 Maracaibo VEN
+-75.50 10.40 #578 Cartagena COL
+-71.14 8.60 #581 MeridaVE VEN
+-75.57 6.25 #615 Medellin COL
+-74.07 4.71 #627 Bogota COL
+-60.67 2.82 #611 BoaVista BRA
+-7.99 31.63 #447 Marrakesh MAR
+-75.16 39.95 #468 Philadelphia USA
+-77.04 38.90 #479 Washington USA
+-74.00 40.71 1094.3 1591 NewYork USA
+-71.06 42.36 1116.7 1571.7 Boston USA
+-81.69 41.50 #452 Cleveland USA
+-83.05 42.33 #444 Detroit USA
+-15.98 18.08 #518 Nouakchott MRT
+-3.01 16.77 #538 Timbuktu MLI
+-8.00 12.64 #557 Bamako MLI
+-1.52 12.37 #571 Ouagadougou BFA
+2.11 13.51 #570 Niamey NER
+7.49 9.06 #609 Abuja NGA
+15.04 12.11 #607 NDjamena TCD
+-10.80 6.30 #590 Monrovia LBR
+-4.03 5.32 #616 Abidjan CIV
+-0.19 5.60 #620 Accra GHA
+3.39 6.45 #622 Lagos NGA
+-17.44 14.69 975 1761.7 Dakar SEN
+-15.60 11.86 #551 Bissau GNB
+-13.70 9.51 #569 Conakry GIN
+-48.50 -1.46 #624 Belem BRA
+-44.30 -2.53 #625 SaoLuis BRA
+-38.54 -3.73 #626 Fortaleza BRA
+37.62 55.75 #214 Moscow RUS
+30.32 59.94 #226 StPetersburg RUS
+25.28 54.69 #276 Vilnius LTU
+27.57 53.90 #274 Minsk BLR
+30.52 50.45 #277 Kiev UKR
+21.01 52.23 #306 Warsaw POL
+19.94 50.06 #324 Krakow POL
+13.40 52.52 #334 Berlin DEU
+9.99 53.55 #343 Hamburg DEU
+14.42 50.08 #344 Prague CZE
+19.04 47.50 #341 Budapest HUN
+12.57 55.68 1462 1243.6 Copenhagen DNK
+4.90 52.37 #356 Amsterdam NLD
+4.35 50.85 #360 Brussels BEL
+2.35 48.86 #373 Paris FRA
+7.45 46.95 #370 Bern CHE
+11.58 48.14 #357 Munich DEU
+4.84 45.76 #382 Lyon FRA
+5.37 43.30 #389 Marseille FRA
+9.19 45.46 #391 Milan ITA
+-0.58 44.84 1425.6 1432 Bordeaux FRA
+2.17 41.39 1438.6 1505 Barcelona ESP
+3.06 36.75 1376 1519 Algiers DZA
+12.50 41.90 1500 1519 Rome ITA
+10.18 36.81 #434 Tunis TUN
+14.27 40.85 1519.6 1551.6 Naples ITA
+18.41 43.86 #422 Sarajevo BIH
+20.46 44.80 #427 Belgrade SRB
+14.51 46.06 1553.6 1474.6 Ljubljana SVN
+15.98 45.81 1554 1491 Zagreb HRV
+13.19 32.89 #474 Tripoli LBY
+19.82 41.33 1570 1579.6 Tirana ALB
+44.52 48.71 #211 Volgograd RUS
+39.20 51.67 #221 Voronezh RUS
+39.72 47.23 1693.2 1117 Rostov RUS
+30.73 46.48 #288 Odessa UKR
+28.86 47.01 #301 Chisinau MDA
+26.10 44.43 #325 Bucharest ROU
+44.83 41.72 #266 Tbilisi GEO
+49.87 40.41 1787 1116 Baku AZE
+44.51 40.18 1770 1173 Yerevan ARM
+46.29 38.08 #278 Tabriz IRN
+23.32 42.70 #453 Sofia BGR
+32.86 39.93 #458 Ankara TUR
+28.98 41.01 #467 Istanbul TUR
+23.73 37.98 1611.7 1648.3 Athens GRC
+36.29 33.51 #499 Damascus SYR
+35.21 31.77 #501 Jerusalem ISR
+35.93 31.95 #511 Amman JOR
+31.24 30.04 #517 Cairo EGY
+29.92 31.20 #502 Alexandria EGY
+31.18 27.18 #526 Asyut EGY
+32.90 24.09 #546 Aswan EGY
+39.61 24.47 #568 Medina SAU
+37.22 19.62 #587 PortSudan SDN
+39.83 21.42 #589 Mecca SAU
+33.99 17.70 #604 Atbara SDN
+32.53 15.59 #610 Khartoum SDN
+30.22 13.18 #612 ElObeid SDN
+38.93 15.34 #623 Asmara ERI
+27.14 38.42 1694.3 1634.3 Izmir TUR
+44.37 33.31 #506 Baghdad IRQ
+47.78 30.51 #527 Basra IRQ
+47.98 29.37 #531 KuwaitCity KWT
+51.67 32.65 #524 Esfahan IRN
+52.53 29.61 #554 Shiraz IRN
+51.53 25.29 #572 Doha QAT
+46.72 24.69 #574 Riyadh SAU
+54.37 24.47 2074.3 1879 AbuDhabi ARE
+55.30 25.27 2090 1866.7 Dubai ARE
+58.41 23.59 2137.3 1886.7 Muscat OMN
+-89.62 20.97 #631 MeridaMX MEX
+-76.53 3.45 #634 Cali COL
+-78.47 -0.18 #657 Quito ECU
+-88.77 17.25 #659 Belmopan BLZ
+-90.51 14.63 #669 GuatemalaCity GTM
+-89.19 13.69 614 2161.7 SanSalvador SLV
+-87.21 14.07 #681 Tegucigalpa HND
+-86.25 12.13 #693 Managua NIC
+-84.09 9.93 #700 SanJose CRI
+-77.04 -12.05 #708 Lima PER
+-79.52 8.98 784 2281.7 PanamaCity PAN
+-73.25 -3.75 #664 Iquitos PER
+-79.90 -2.19 706 2129.3 Guayaquil ECU
+-79.03 -8.11 750 2221 Trujillo PER
+-71.97 -13.53 #710 Cuzco PER
+-71.54 -16.40 #728 Arequipa PER
+-70.31 -18.48 #743 Arica CHL
+-70.15 -20.21 924 2362.3 Iquique CHL
+-70.40 -23.65 948.3 2415.7 Antofagasta CHL
+-68.13 -16.50 #719 LaPaz BOL
+-60.02 -3.12 #642 Manaus BRA
+-35.21 -5.79 #633 Natal BRA
+-34.88 -8.05 1298.3 2031.7 Recife BRA
+11.52 3.87 #639 Yaounde CMR
+18.56 4.36 #646 Bangui CAF
+9.45 0.39 #654 Libreville GAB
+-38.50 -12.97 1279.3 2115 Salvador BRA
+-47.88 -15.79 #688 Brasilia BRA
+-49.25 -16.68 #692 Goiania BRA
+-56.10 -15.60 #698 Cuiaba BRA
+13.23 -8.84 #695 Luanda AGO
+-43.94 -19.92 #701 BeloHorizonte BRA
+-43.20 -22.91 #720 RioDeJaneiro BRA
+15.74 -12.78 #721 Huambo AGO
+-46.63 -23.55 #731 SaoPaulo BRA
+-49.27 -25.43 #754 Curitiba BRA
+-48.55 -27.60 #765 Florianopolis BRA
+-51.23 -30.03 #779 PortoAlegre BRA
+-57.58 -25.28 #762 Asuncion PRY
+-65.26 -19.04 #733 Sucre BOL
+-65.41 -24.78 #771 Salta ARG
+17.08 -22.56 #788 Windhoek NAM
+44.21 15.35 #637 Sanaa YEM
+43.15 11.59 1858.3 2047.3 Djibouti DJI
+45.03 12.79 #650 Aden YEM
+38.75 9.03 #652 AddisAbaba ETH
+31.58 4.85 #660 Juba SDS
+25.20 0.52 #671 Kisangani COD
+32.58 0.35 1638.3 2176 Kampala UGA
+29.36 -3.38 #690 Bujumbura BDI
+36.82 -1.29 #691 Nairobi KEN
+36.68 -3.37 #703 Arusha TZA
+23.60 -6.15 #702 MbujiMayi COD
+35.75 -6.17 #715 Dodoma TZA
+39.28 -6.80 1706 2314 DarEsSalaam TZA
+45.34 2.04 1851.7 2202.7 Mogadishu SOM
+47.52 -18.91 #727 Antananarivo MDG
+27.48 -11.67 #739 Lubumbashi COD
+28.64 -12.97 #752 Ndola ZMB
+28.28 -15.42 #766 Lusaka ZMB
+33.78 -13.98 #767 Lilongwe MWI
+31.05 -17.83 #782 Harare ZWE
+72.88 19.08 #711 Mumbai IND
+77.59 12.97 #772 Bangalore IND
+79.86 6.93 1690 2420.7 Colombo LKA
+80.27 13.08 #794 Madras IND
+79.09 21.15 #761 Nagpur IND
+67.01 24.86 #675 Karachi PAK
+67.00 30.18 #668 Quetta PAK
+71.47 30.20 #684 Multan PAK
+73.05 33.69 #687 Islamabad PAK
+74.34 31.55 #696 Lahore PAK
+75.79 26.91 #714 Jaipur IND
+77.21 28.61 #722 NewDelhi IND
+85.32 27.71 #781 Kathmandu NPL
+-64.18 -31.42 #806 Cordoba ARG
+-60.65 -32.95 #811 Rosario ARG
+-56.16 -34.90 1205.3 2511 Montevideo URY
+-58.38 -34.60 #815 BuenosAires ARG
+-68.84 -32.89 #817 Mendoza ARG
+-70.67 -33.45 1032 2555.3 Santiago CHL
+-62.27 -38.72 #835 BahiaBlanca ARG
+25.91 -24.65 #810 Gaborone BWA
+28.19 -25.75 #819 Pretoria ZAF
+26.21 -29.12 #836 Bloemfontein ZAF
+27.48 -29.32 #839 Maseru LSO
+18.42 -33.92 #843 CapeTown ZAF
+-72.94 -41.47 1115 2641 PuertoMontt CHL
+-68.30 -54.80 #864 Ushuaia ARG
+28.58 -20.15 #800 Bulawayo ZWE
+34.84 -19.84 #804 Beira MOZ
+31.13 -26.32 #830 Mbabane SWZ
+32.57 -25.97 #831 Maputo MOZ
+130.84 -12.46 #859 Darwin AUS
+144.96 -37.81 #860 Melbourne AUS
+149.13 -35.28 #878 Canberra AUS
+151.21 -33.87 1502.3 2751.7 Sydney AUS
+153.03 -27.47 #896 Brisbane AUS
+138.60 -34.93 1571.7 2640 Adelaide AUS
+147.18 -9.44 #884 PortMoresby PNG
+174.78 -41.29 1530 2821 Wellington NZL
+174.76 -36.85 #903 Auckland NZL
+89.64 27.47 #809 Thimphu BTN
+91.10 29.65 #814 Lhasa CHN
+88.36 22.57 #816 Calcutta IND
+90.41 23.81 #824 Dhaka BGD

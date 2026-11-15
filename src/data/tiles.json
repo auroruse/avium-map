@@ -1,7 +1,11 @@
 {
   "base": "8f93662dc8946905",
   "borders": "f005b1e277cedbf3",
-  "rivers": "2f5c7beac808bd6c",
+  "rivers": "a7791bf8cf5c40cb",
   "zones": "161d0f3ff3e80647",
-  "mono": "08a1f5f7fc0c1a61"
+  "mono": "08a1f5f7fc0c1a61",
+  "relief": "d59220f6872ec8af",
+  "terrain": "93140becc3b2ab8a",
+  "contours": "27c9d9a547d9b3da",
+  "tint": "733e074bbe5896c5"
 }

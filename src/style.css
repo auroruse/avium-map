@@ -17,21 +17,6 @@ html, body {
   background: #3e4e6f;
 }
 
-/* Night mode. The darkness itself is a Leaflet rectangle over the tiles, not a
-   filter here — html2canvas has no filter support, so a filtered night map would
-   export in daylight.
-
-   #map keeps its daylight background. tile.mjs pads the edge tiles with this
-   exact colour, so the strip of padding past the 6000px world and the page
-   behind it are the same colour, and the veil covers both — which is what makes
-   the world edge seamless. Overriding it here for night put two different darks
-   either side of 6144 and drew a grey band down the edge of the map. */
-
-/* The lights themselves are circles on a canvas in their own pane, drawn by
-   Leaflet — there is nothing here to style. Their bloom is a wider circle under
-   each one rather than a filter, for the same export reason and because a filter
-   on a viewport-sized canvas re-blurs the whole surface on every pan. */
-
 .leaflet-image-layer {
   will-change: transform;
 }
@@ -1698,13 +1683,6 @@ html, body {
   opacity: 0;
 }
 
-/* The night lights deliberately have no rule here. Leaflet CSS-scales a canvas
-   renderer for the length of a zoom instead of redrawing it, which is wrong for
-   anything sized in screen pixels and was what made the bloom breathe while the
-   dot held still. The lights are sized on the ground now, so growing with the
-   map is exactly what they should do — the scale is right for the whole
-   transition and only the sharpness catches up at the end, same as the tiles. */
-
 /* Research station markers (Hyperborea and Tartarus) */
 .station-icon {
   background: none !important;
@@ -2948,7 +2926,7 @@ body.exploring .city-icon-carded { display: none; }
   font-variant-numeric: tabular-nums;
 }
 
-/* --- The two World Clock maps: grey land on black --- */
+/* --- The Time Zones map: on black --- */
 
 body.clockmap #map {
   background: #000;
@@ -3031,6 +3009,12 @@ body.clockmap #map {
 #map-sheet[hidden] {
   display: none;
 }
+/* Three groups of switches under the maps run taller than a short window */
+#map-sheet {
+  max-height: calc(100vh - 20px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
 @keyframes sheet-in {
   from { opacity: 0; transform: translateY(-6px) scale(0.98); }
   to { opacity: 1; transform: none; }
@@ -3061,7 +3045,7 @@ body.clockmap #map {
 
 .ms-modes {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
   margin-bottom: 14px;
 }
@@ -3111,6 +3095,17 @@ body.clockmap #map {
   box-shadow: 0 0 0 2.5px #0a84ff;
 }
 
+.ms-group {
+  margin: 14px 4px 6px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+.ms-modes + .ms-group {
+  margin-top: 0;
+}
 .ms-card {
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.06);
