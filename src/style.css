@@ -2931,6 +2931,10 @@ body.exploring .city-icon-carded { display: none; }
 body.clockmap #map {
   background: #000;
 }
+/* The Hybrid map's sea, matching HYBRID_OCEAN in scripts/tile.mjs */
+body.hybridmap #map {
+  background: #153258;
+}
 
 /* The city's own time, live, in a pill at the end of the coordinates line */
 .cp-coord:has(.cp-time) {
@@ -3045,7 +3049,7 @@ body.clockmap #map {
 
 .ms-modes {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
   margin-bottom: 14px;
 }

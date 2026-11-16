@@ -1,7 +1,7 @@
 # topo — the ground under Avium
 
 Builds the ground layers (shaded relief for the Political map, shaded and unshaded tints for the
-Terrain map), the contour lines and the rivers layer from real elevation.
+Terrain map, the Hybrid map's ground), the contour lines and the rivers layers from real elevation.
 
 `layers/pangaea.PNG` is a present-day political map bent into Pangaea, and Avium's coast was traced
 over it. So every pixel of Avium land is a piece of the real Earth that has been moved. This folder
@@ -136,10 +136,12 @@ areas; that was chosen over streaks.
 - **Eivorie** (`eivorie.py`). Its own ground, made from the Eivorian map (`data/eivorie/eivorie_map.png`, laid on the
   grid by `affine_coast.npy`: fitted to the city dots, then to the coast, which agree to about 6 px). The map's
   shading cannot be lifted off it (its translucent names would come back as ridges), so it only says where the
-  uplands and plains are, read from its lit slopes alone. The ground is built: an upland envelope in that pattern
-  (an assumption: the map gives no heights; set to sit with the neighbours, Fiergenweald upland to about 1,100 m),
-  valleys along Eivorie's drawn rivers, and hills carved by a drainage running into them, eased into the
-  neighbours' ground over about 50 km.
+  uplands and plains are, read from its lit slopes alone. The ground is built as running water would leave it: every cell
+  drains to Eivorie's drawn rivers or the sea, and stands above the cell it drains to by the slope a stream of its size
+  holds, steep where the map is rugged, so a river's head is on high ground and its valley grows downstream. Heights are
+  an assumption (the map gives none), set to sit with the neighbours: 98% under 900 m, summits about 1,500 m. Its relief
+  was matched to the neighbours' scale by scale (3-30 km bands within a few metres of theirs). Eased into the neighbours'
+  ground over about 50 km.
 - **Borders onto rivers** (`riverborders.py`, by hand after `riverlayer.py`; writes `work/borders_snapped.PNG`, and
   `layers/borders.PNG` with `install`). Each pair of neighbours' border is redrawn as the cheapest line that separates
   them, where a line may only run under a river (cheapest down the middle of its drawn width, so the river hides it), on

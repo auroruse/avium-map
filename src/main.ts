@@ -9,6 +9,7 @@ import bannerUrl from './assets/banner.png'
 import politicalThumb from './assets/map-modes/political.png'
 import zonesThumb from './assets/map-modes/zones.png'
 import terrainThumb from './assets/map-modes/terrain.png'
+import hybridThumb from './assets/map-modes/hybrid.png'
 import stationsData from './data/stations.json'
 import nationsTsv from './data/nations.tsv?raw'
 import areasData from './data/areas.json'
@@ -388,8 +389,8 @@ new (L.Control.extend({
 // it was. Read during the first render, so it has to be resolved before any of
 // it runs.
 
-type MapMode = 'political' | 'terrain' | 'zones'
-const MAP_MODES: MapMode[] = ['political', 'terrain', 'zones']
+type MapMode = 'political' | 'terrain' | 'hybrid' | 'zones'
+const MAP_MODES: MapMode[] = ['political', 'terrain', 'hybrid', 'zones']
 
 interface Settings {
   mode: MapMode
@@ -397,6 +398,7 @@ interface Settings {
   daylight: boolean
   borders: boolean
   terrainBorders: boolean
+  hybridBorders: boolean
   rivers: boolean
   contours: boolean
   territories: boolean
@@ -417,6 +419,7 @@ const settings: Settings = {
   daylight: false,
   borders: true,
   terrainBorders: false,
+  hybridBorders: true,
   rivers: true,
   contours: false,
   territories: true,
@@ -470,7 +473,7 @@ function saveSettings() {
 // the names stay because they carry each nation's clock. Day and night belongs
 // to the clocks, contour lines to the terrain.
 const modeAllows = {
-  relief: (m: MapMode) => m !== 'zones',
+  relief: (m: MapMode) => m === 'political' || m === 'terrain',
   daylight: (m: MapMode) => m === 'zones',
   borders: (m: MapMode) => m !== 'zones',
   rivers: (m: MapMode) => m !== 'zones',
@@ -484,7 +487,7 @@ const modeAllows = {
 // The setting a switch stands for on the current map: only Borders has two
 type Switch = keyof typeof modeAllows
 const settingKey = (k: Switch): keyof Settings =>
-  k === 'borders' && settings.mode === 'terrain' ? 'terrainBorders' : k
+  k !== 'borders' ? k : settings.mode === 'terrain' ? 'terrainBorders' : settings.mode === 'hybrid' ? 'hybridBorders' : k
 
 function shows(k: Switch): boolean {
   return (settings[settingKey(k)] as boolean) && modeAllows[k](settings.mode)
@@ -3347,6 +3350,7 @@ function applySettings() {
   const relief = shows('relief')
   document.body.classList.toggle('clockmap', m === 'zones')
   document.body.classList.toggle('zones-on', m === 'zones')
+  document.body.classList.toggle('hybridmap', m === 'hybrid')
   const put = (l: L.Layer, on: boolean) => (on ? map.hasLayer(l) || l.addTo(map) : l.remove())
   // The zone layer paints every pixel, sea and unclaimed land included, so
   // Time Zones needs no ground under it
@@ -3354,13 +3358,17 @@ function applySettings() {
   put(reliefLayer, m === 'political' && relief)
   put(terrainLayer, m === 'terrain' && relief)
   put(tintLayer, m === 'terrain' && !relief)
-  put(bordersLayer, shows('borders'))
+  put(hybridLayer, m === 'hybrid')
+  // Hybrid draws its borders as lines over the ground and leaves the fills off
+  put(bordersLayer, shows('borders') && m !== 'hybrid')
+  showBorderLines(shows('borders') && m === 'hybrid')
   // The fills are opaque, so over the shaded ground they are let down far
   // enough for the hills to read through: a little on the political map, most
   // of the way on the terrain, where they are only a tint
   bordersLayer.setOpacity(m === 'terrain' ? 0.22 : relief ? 0.75 : 1)
   put(contoursLayer, shows('contours'))
-  put(riversLayer, shows('rivers'))
+  put(riversLayer, shows('rivers') && m !== 'hybrid')
+  put(riversFineLayer, shows('rivers') && m === 'hybrid')
   put(zonesLayer, m === 'zones')
   if (m !== 'zones') zoneGlow.remove()
   put(daylightLayer, shows('daylight'))
@@ -4910,6 +4918,50 @@ daylightLayer.on('add', () => drawDaylight(icNow()))
 const reliefLayer = tiledLayer('relief', 'tilePane', { ext: 'webp', maxNative: 6 })
 const terrainLayer = tiledLayer('terrain', 'tilePane', { ext: 'webp', maxNative: 6 })
 const tintLayer = tiledLayer('tint', 'tilePane', { ext: 'webp', maxNative: 6 })
+// The terrain's land again over a deep blue sea, with no line inked at the coast
+const hybridLayer = tiledLayer('hybrid', 'tilePane', { ext: 'webp', maxNative: 6 })
+// The rivers at something near their real width, in the colour of that sea's shallows: the rivers layer draws
+// them several kilometres wide, which over this ground outweighs the borders
+const riversFineLayer = tiledLayer('rivers-fine', 'overlayPane', { maxNative: 6, zIndex: 3 })
+
+// The Hybrid map's borders: every border as a line of one weight at every zoom,
+// traced off the fills by scripts/borderlines.mjs. A tiled line would be eight
+// times as thick at the deepest zoom as at the level it was cut for. In a pane
+// of its own over the rivers, because a border that follows a river was moved
+// to run down the middle of it and would be hidden for its whole length.
+map.createPane('borderlines')
+map.getPane('borderlines')!.style.zIndex = '440' // over the rivers, under the zones and the markers
+map.getPane('borderlines')!.style.pointerEvents = 'none'
+let borderLines: L.Polyline | null = null
+let borderLinesOn = false
+let borderLinesLoading = false
+function showBorderLines(on: boolean) {
+  borderLinesOn = on
+  if (borderLines) {
+    on ? map.hasLayer(borderLines) || borderLines.addTo(map) : borderLines.remove()
+    return
+  }
+  // Fetched the first time Hybrid is opened, so no other map pays for it
+  if (!on || borderLinesLoading) return
+  borderLinesLoading = true
+  import('./data/borderlines.json').then(m => {
+    const lines = (m.default as number[][]).map(l => {
+      const pts: L.LatLngExpression[] = []
+      for (let i = 0; i < l.length; i += 2) pts.push(px(l[i], l[i + 1]))
+      return pts
+    })
+    borderLines = L.polyline(lines, {
+      pane: 'borderlines',
+      renderer: L.svg({ pane: 'borderlines' }),
+      color: '#34163e',
+      opacity: 0.9,
+      weight: 1.5,
+      interactive: false,
+    })
+    // Whatever the map is by the time the lines arrive, not what it was when they were asked for
+    if (borderLinesOn) borderLines.addTo(map)
+  })
+}
 
 // --- Map sheet ---
 //
@@ -4920,6 +4972,7 @@ const tintLayer = tiledLayer('tint', 'tilePane', { ext: 'webp', maxNative: 6 })
 const MODE_TILES: [MapMode, string, string][] = [
   ['political', 'Political', politicalThumb],
   ['terrain', 'Terrain', terrainThumb],
+  ['hybrid', 'Hybrid', hybridThumb],
   ['zones', 'Time Zones', zonesThumb],
 ]
 

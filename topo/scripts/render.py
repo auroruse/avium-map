@@ -1,8 +1,11 @@
-"""height.npy -> the drawings the map tiles: layers/relief.png, layers/terrain.png, layers/tint.png, layers/contours.png (12000px)."""
+"""height.npy -> the drawings the map tiles: layers/relief.png, terrain.png, hybrid.png, tint.png, contours.png (12000px).
+Name some of them (render.py hybrid) to write only those; with no names it writes all five."""
 import sys, time; sys.path.insert(0, __import__("os").path.dirname(__file__))
 from common import *
 from scipy import ndimage as ndi
 t0 = time.time()
+ONLY = set(sys.argv[1:])
+def want(name): return not ONLY or name in ONLY
 Hi = np.load(os.path.join(WORK, "height.npy")); land = np.load(os.path.join(WORK, "land12k.npy"))
 H = Hi.astype(np.float32); del Hi
 CELL = 1750.0                       # real metres per px
@@ -40,8 +43,9 @@ def ramp(v, stops):
     xs = [s[0] for s in stops]
     return np.stack([np.interp(v, xs, [s[1][c] for s in stops]).astype(np.float32) for c in range(3)], -1)
 SEA = [(-9000, (26, 35, 62)), (-6200, (38, 50, 82)), (-5000, (49, 63, 96)), (-3800, (62, 78, 111)), (-2600, (74, 93, 128)), (-1200, (88, 109, 145)), (-200, (101, 123, 159)), (0, (110, 133, 168))]
-def finish(rgb, path):
-    rgb[coast] = COAST
+def finish(rgb, path, ink=True):
+    if not want(os.path.basename(path)[:-4]): return
+    if ink: rgb[coast] = COAST
     write_png(path, np.clip(rgb, 0, 255).astype(np.uint8), zlevel=1)   # an intermediate for the tiler: speed over size
     print("wrote", os.path.basename(path), round(time.time() - t0), "s", flush=True)
 
@@ -67,11 +71,22 @@ def landtint(shade):
 rgb = np.where(land[..., None], landtint(True), sea_rgb)
 del sea_rgb
 finish(rgb, os.path.join(LAYERS, "terrain.png"))
+# ---- hybrid: the terrain's land over a deep blue sea, for the Hybrid map. No line is inked at the coast: this sea is
+# dark and blue enough against any land beside it to make the shore by itself, where the slate sea above is not. The
+# shore is eased over a pixel instead, since land12k is a 6000 px mask and its edge would otherwise step in twos.
+if want("hybrid"):
+    HSEA = [(-9000, (10, 28, 58)), (-5000, (17, 42, 78)), (-3000, (24, 56, 96)), (-1200, (32, 72, 112)), (-200, (44, 92, 128)), (0, (58, 110, 140))]
+    rgb = np.where(land[..., None], landtint(True), ramp(H, HSEA) * k[..., None])
+    shore = ndi.binary_dilation(land, iterations=1) & ~ndi.binary_erosion(land, iterations=1)
+    for c in range(3): rgb[..., c][shore] = ndi.gaussian_filter(rgb[..., c], 0.7)[shore]
+    del shore
+    finish(rgb, os.path.join(LAYERS, "hybrid.png"), ink=False)
 # ---- tint: the terrain's colours with no shading, for the Terrain map with Relief switched off
 rgb = np.where(land[..., None], landtint(False), ramp(H, SEA))
 finish(rgb, os.path.join(LAYERS, "tint.png"))
 del rgb, k
 
+if not want("contours"): sys.exit(0)
 # ---- contours: analytic, anti-aliased, from a lightly smoothed surface
 Zl = ndi.gaussian_filter(Hl, 1.6); Zs = ndi.gaussian_filter(np.where(land, 0, H), 1.6); del H, Hl
 Z = Zl

@@ -13,4 +13,5 @@ ${=PY} scripts/riverlayer.py
 ${=PY} scripts/carve.py
 ${=PY} scripts/render.py
 ${=PY} scripts/install_rivers.py
+${=PY} scripts/riverfine.py
 ${=PY} scripts/thumbs.py

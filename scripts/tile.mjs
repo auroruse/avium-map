@@ -5,6 +5,7 @@ import { createHash } from 'crypto'
 import { join, resolve } from 'path'
 import { writeAreas } from './areas.mjs'
 import { writeZones } from './zones.mjs'
+import { writeBorderLines } from './borderlines.mjs'
 
 const root = resolve(import.meta.dirname, '..')
 const layersDir = join(root, 'layers')
@@ -41,6 +42,9 @@ const stamp = existsSync(stampPath)
 // right and bottom edges.
 const OCEAN = { r: 62, g: 78, b: 111, alpha: 255 }
 const CLEAR = { r: 0, g: 0, b: 0, alpha: 0 }
+// The Hybrid map's sea at the same depth OCEAN stands for, from HSEA in
+// topo/scripts/render.py; body.hybridmap #map in style.css is the same value
+const HYBRID_OCEAN = { r: 21, g: 50, b: 88, alpha: 255 }
 
 // The base map is drawn with a pure white coastline, and white is the one value
 // it cannot afford to spend there. It outranks the city labels and the markers'
@@ -64,6 +68,8 @@ const LAYERS = {
   // transparent overlays: skip fully-empty tiles (most of the grid)
   borders: { skipBlanks: 0, background: CLEAR, areas: true },
   rivers: { skipBlanks: 0, background: CLEAR },
+  // the same rivers near their real width, for the Hybrid map; written by topo/scripts/riverfine.py
+  'rivers-fine': { skipBlanks: 0, background: CLEAR },
   // drawn by zones.mjs from the borders and the cities, never by hand; after
   // borders here so a redrawn border reaches the zones in the same run
   zones: { skipBlanks: 0, background: CLEAR },
@@ -76,6 +82,8 @@ const LAYERS = {
   // would be several times the size of everything else here put together.
   relief: { skipBlanks: -1, background: OCEAN, format: 'webp' },
   terrain: { skipBlanks: -1, background: OCEAN, format: 'webp' },
+  // the terrain's land over a deep blue sea with no line at the coast, for the Hybrid map
+  hybrid: { skipBlanks: -1, background: HYBRID_OCEAN, format: 'webp' },
   // the terrain's colours unshaded, for the Terrain map with Relief off
   tint: { skipBlanks: -1, background: OCEAN, format: 'webp' },
   contours: { skipBlanks: 0, background: CLEAR, format: 'webp' },
@@ -368,6 +376,8 @@ for (const [name, opts] of Object.entries(todo)) {
     if (r) console.log(`  areas: ${r.nations} nations, ${(r.measured / 1e6).toFixed(2)}M km²`)
     const z = await writeZones(root)
     if (z) console.log(`  zones: ${z.nations} nations, ${z.split.length} with more than one`)
+    const b = await writeBorderLines(root)
+    if (b) console.log(`  border lines: ${b.lines} lines, ${b.after} points`)
   }
 
   stamp[name] = sig

@@ -2,22 +2,28 @@
 terrain for Eivorie"). That map is drawn over its own relief shading, but the shading cannot be lifted off it: the big
 translucent names (FIERGENWEALD, MIDDELSAERIMMA and the rest) sit in it and would come back as ridges. So the map only says
 where the uplands and the plains are, read from its lit slopes alone (lettering only ever darkens), and the ground is built
-here: an upland envelope in that pattern, valleys along Eivorie's drawn rivers (its rivers are fictional), and hills and
-mountains carved by a drainage that runs into those rivers.
+here as running water would leave it (_fluvial): every cell drains to Eivorie's drawn rivers (they are fictional) or to the
+sea, and stands above the cell it drains to by the slope a stream of its size holds, steep where the map is rugged.
 
 Heights are an assumption; the map gives none. They are set to sit with the ground round Eivorie (user: "Maybe too high
 comparatively to surrounding elevation"): within ~280 km the neighbours reach 650 m at the 95th percentile and 910 m at the
-99th, so Fiergenweald (Old English firgen, mountain, and weald, forest) is upland to about 1,100 m, the plains 20-200 m.
+99th, so Fiergenweald (Old English firgen, mountain, and weald, forest) is upland with 98% of Eivorie under TOP (900 m)
+and summits to about 1,500 m, the plains 20-200 m.
 
 The map is laid on the 6000 grid by the affine in data/eivorie/affine_coast.npy: fitted to the city dots, then to the coast
 (the two coastlines agree to about 6 px). build(h, land, KM) rewrites h over Eivorie, easing into the neighbours' ground."""
-import os, sys, csv, numpy as np
+import os, sys, csv, heapq, numpy as np
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from scipy import ndimage as ndi
 from common import *
-from polar import _n, _ss, _valleys
+from polar import _n, _ss
 
 HERE = os.path.join(DATA, "eivorie")
+THETA = 0.45                      # how fast a stream's slope falls as it gathers water (slope ~ area ** -THETA), as on real rivers
+SETTLE = 8                        # times the water is re-routed down the ground it made
+HEAD = 6.0                        # cells of water below which the ground is hillside, not channel
+TOP = 900.0                       # m: the height 98% of Eivorie stands under
+RIM = 60                          # px (12000 grid) of the neighbours' land the drainage is built across as well
 
 def _mask6000():
     """Eivorie's land on the borders layer (6000 grid), found as riverlayer.py finds it: the fills its cities stand in"""
@@ -69,6 +75,80 @@ def _up_lin(a, shape):
     yy = (np.arange(shape[0]) + 0.5) * a.shape[0] / shape[0] - 0.5; xx = (np.arange(shape[1]) + 0.5) * a.shape[1] / shape[1] - 0.5
     return ndi.map_coordinates(a, np.meshgrid(yy, xx, indexing="ij"), order=1, mode="nearest")
 
+def _thin(m):
+    """A stroke down to its middle line, one pixel wide (Zhang-Suen)"""
+    m = m.copy()
+    while True:
+        gone = False
+        for step in (0, 1):
+            P = np.pad(m, 1); n = [P[:-2, 1:-1], P[:-2, 2:], P[1:-1, 2:], P[2:, 2:], P[2:, 1:-1], P[2:, :-2], P[1:-1, :-2], P[:-2, :-2]]
+            B = sum(v.astype(np.uint8) for v in n); A = sum((~n[i] & n[(i + 1) % 8]).astype(np.uint8) for i in range(8))
+            c = (~(n[0] & n[2] & n[4]) & ~(n[2] & n[4] & n[6])) if step == 0 else (~(n[0] & n[2] & n[6]) & ~(n[0] & n[4] & n[6]))
+            rm = m & (B >= 2) & (B <= 6) & (A == 1) & c
+            if rm.any(): m &= ~rm; gone = True
+        if not gone: return m
+
+def _fluvial(dom, outlet, skel, steep, rng, log=print):
+    """Ground as running water leaves it, over the cells of `dom`.
+    Every cell is given the cell it drains to: the cheapest way down to an `outlet` cell (the shore, the rim) or to a
+    drawn river (`skel`, one pixel wide), over ground whose cost is noise, which is what makes the streams wander and
+    join. Travel along a drawn river costs nothing, so a river is one channel from its head to its mouth and everything
+    beside it drains into it. Then the water is counted down the tree (A: cells draining through each cell) and the
+    ground is raised up it from the outlets: a cell stands above the one it drains to by steep * (A + HEAD) ** -THETA,
+    the slope a stream of that size holds when it cuts as fast as the land rises (HEAD: a hillside is not a stream, and
+    the first few cells of water do not steepen it). Small streams are steep and big ones nearly
+    flat, so valleys, spurs and sharp divides come out at every scale, a river's bed falls all the way to its mouth,
+    and its head stands on high ground.
+    -> G (rise above the outlet per unit of steepness; z = base + K * G), A"""
+    sh = dom.shape; m = sh[1]; dom = dom.copy(); dom[0], dom[-1], dom[:, 0], dom[:, -1] = False, False, False, False
+    N = 0.7 * _n(sh, 2.5, rng) + 0.5 * _n(sh, 8, rng) + 0.3 * _n(sh, 1.0, rng)
+    w = np.exp(0.9 * N).ravel().tolist(); dl = dom.ravel().tolist(); sk = (skel & dom).ravel().tolist()
+    n = dom.size; best = [np.inf] * n; pr = [-1] * n; seen = [False] * n; order = []; cnt = 0; heap = []
+    for i in np.flatnonzero((outlet & dom).ravel()).tolist(): best[i] = 0.0; heap.append((0.0, cnt, i)); cnt += 1
+    heapq.heapify(heap); offs = ((-m - 1, 1.4142), (-m, 1.0), (-m + 1, 1.4142), (-1, 1.0), (1, 1.0), (m - 1, 1.4142), (m, 1.0), (m + 1, 1.4142))
+    while heap:
+        c, _, i = heapq.heappop(heap)
+        if seen[i]: continue
+        seen[i] = True; order.append(i); si = sk[i]
+        for o, ln in offs:
+            j = i + o
+            if dl[j] and not seen[j]:
+                cj = c if (si and sk[j]) else c + w[j] * ln
+                if cj < best[j]: best[j] = cj; pr[j] = i; cnt += 1; heapq.heappush(heap, (cj, cnt, j))
+    pr0 = pr; st = steep.ravel(); Gr = None
+    def raise_(order, pr):
+        A = [1.0] * n
+        for i in reversed(order):
+            if pr[i] >= 0: A[pr[i]] += A[i]
+        o = np.array(order, np.int64); pred = np.array(pr, np.int64); A = np.array(A, np.float32)
+        ln = np.where(np.isin(np.abs(o - pred[o]), (1, m)), 1.0, 1.4142)
+        gain = (st[o] * (A[o] + HEAD) ** -THETA * ln).tolist(); G = [0.0] * n; pl = pred[o].tolist()
+        for k, i in enumerate(order):
+            if pl[k] >= 0: G[i] = G[pl[k]] + gain[k]
+        return np.array(G, np.float32), A
+    G, A = raise_(order, pr)
+    # A fixed drainage leaves ground that disagrees with itself across a divide: a basin that reaches its river the long
+    # way round stands as a table above the slope beside it. So the water is sent down the ground it has just made, lowest
+    # first from the outlets, and the ground raised again, until the two agree. The drawn rivers keep their channels.
+    for it in range(SETTLE):
+        Gr = G if Gr is None else 0.5 * (Gr + G); key = Gr.tolist()
+        seen = [False] * n; pr = [-1] * n; order = []; cnt = 0; heap = []
+        for i in np.flatnonzero((outlet & dom).ravel()).tolist(): seen[i] = True; heap.append((0.0, cnt, i)); cnt += 1
+        heapq.heapify(heap)
+        while heap:
+            lv, _, i = heapq.heappop(heap); order.append(i)
+            for o, _ln in offs:
+                j = i + o
+                if dl[j] and not seen[j]:
+                    if sk[j]:
+                        if pr0[j] != i: continue                                     # a drawn river is entered only from downstream
+                        seen[j] = True; pr[j] = i; cnt += 1; heapq.heappush(heap, (lv, cnt, j))
+                    else: seen[j] = True; pr[j] = i; cnt += 1; heapq.heappush(heap, (max(lv, key[j]), cnt, j))
+        G2, A = raise_(order, pr); moved = float(np.abs(G2 - G)[dom.ravel()].mean() / max(float(G2[dom.ravel()].mean()), 1e-6)); G = G2
+    log("    drainage: %d cells, %d on drawn rivers; the largest stream drains %.0f km2; last settling pass moved the ground %.1f%%"
+        % (len(order), int(np.sum(sk)), float(A.max()) * 3.06, 100 * moved))
+    return G.reshape(sh), A.reshape(sh)
+
 def build(h, land, KM, seed=31, log=print):
     rng = np.random.default_rng(seed)
     eiv6 = _mask6000(); ys, xs = np.nonzero(ndi.binary_dilation(eiv6, iterations=40))
@@ -85,20 +165,20 @@ def build(h, land, KM, seed=31, log=print):
     dr6 = (read_png(os.path.join(LAYERS, "rivers-drawn.PNG"))[..., 3] > 0) & ndi.binary_dilation(eiv6, iterations=8)
     rv = dr6.repeat(2, 0).repeat(2, 1)[rs, cs] & L
     drv = (ndi.distance_transform_edt(~rv) * KM).astype(np.float32) if rv.any() else np.full(sh, 1e4, np.float32)
-    dco = (ndi.distance_transform_edt(L) * KM).astype(np.float32)
-    # envelope: plains rising gently inland, uplands where the map is rugged
-    env = 30.0 + 110.0 * _ss(dco / 60.0) + 800.0 * (Ug ** 1.4) * (0.75 + 0.25 * _n(sh, 90, rng)) + 40.0 * _n(sh, 160, rng)
-    env = np.maximum(env, 15.0)
-    # valleys along the rivers: broad and shallow in the plains, tighter in the uplands
-    floor = 8.0 + 0.3 * ndi.gaussian_filter(env, 30.0)
-    w = 7.0 + 18.0 * (1.0 - Ug)
-    z = floor + (env - floor) * (1.0 - np.exp(-(drv / w) ** 2))
-    # the ground's own grain: rolling hills in the plains, rough country in the uplands
-    z = z + (40.0 + 75.0 * Ug) * _n(sh, 14, rng) + (15.0 + 30.0 * Ug) * _n(sh, 5, rng)
-    z = np.maximum(z, 5.0)
-    # carved by a drainage that runs into the drawn rivers and the sea
-    z = _valleys(z, L & (z > 40.0), (~L) | rv, KM, rng, S=1, keep=0.25, side=420.0, trunk=800.0, log=log)
-    z = np.maximum(z, 3.0)
+    # The ground is what its rivers have made of it (user, 16 Nov 2026: "eivorie looks unrealistic terrainwise compared to
+    # surroundings"; before this it was an envelope of smooth noise with a trough pressed along each river, two thirds of the
+    # neighbours' relief at every scale and no sharp divide anywhere). The drainage is built across RIM px of the neighbours'
+    # land as well and let out at the far side of it, or every border would be a divide and stand as a ridge.
+    dom = L & (ndi.distance_transform_edt(~E12) <= RIM)
+    water = ndi.binary_dilation(~L, structure=np.ones((3, 3), bool)); far = ndi.binary_dilation(L & ~dom, structure=np.ones((3, 3), bool))
+    skel = _thin(rv) & dom
+    mouths = skel & ndi.binary_dilation(~L, iterations=5)
+    # how steep the country is: the map's uplands, the plains a tenth of them, and long swells so no two ranges match
+    steep = (0.10 + 0.90 * Ug ** 1.3) * np.exp(0.25 * _n(sh, 60, rng))
+    G, A = _fluvial(dom, (water | far | mouths) & dom, skel, steep.astype(np.float32), rng, log)
+    K = TOP / float(np.percentile(G[E12 & L], 98))
+    z = np.where(dom, 2.0 + K * G, h[rs, cs]).astype(np.float32)
+    z = np.where(dom, _nconv(z, dom, 0.6), z)                              # hillsides creep: no divide is a knife edge
     # Joined to the neighbours without a seam along the border. A crossfade by distance from the border draws the border
     # itself into the ground (user: "what's with the sharp fucking cutoff where Eivorie's borders are?"). Instead the
     # broad level is corrected by a field that equals the neighbours' level at the border and relaxes away from it
