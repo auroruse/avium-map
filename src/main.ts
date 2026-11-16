@@ -8,7 +8,6 @@ import labelsData from './data/labels.json'
 import bannerUrl from './assets/banner.png'
 import politicalThumb from './assets/map-modes/political.png'
 import zonesThumb from './assets/map-modes/zones.png'
-import terrainThumb from './assets/map-modes/terrain.png'
 import hybridThumb from './assets/map-modes/hybrid.png'
 import stationsData from './data/stations.json'
 import nationsTsv from './data/nations.tsv?raw'
@@ -389,15 +388,14 @@ new (L.Control.extend({
 // it was. Read during the first render, so it has to be resolved before any of
 // it runs.
 
-type MapMode = 'political' | 'terrain' | 'hybrid' | 'zones'
-const MAP_MODES: MapMode[] = ['political', 'terrain', 'hybrid', 'zones']
+type MapMode = 'hybrid' | 'political' | 'zones'
+const MAP_MODES: MapMode[] = ['hybrid', 'political', 'zones']
 
 interface Settings {
   mode: MapMode
   relief: boolean
   daylight: boolean
   borders: boolean
-  terrainBorders: boolean
   hybridBorders: boolean
   rivers: boolean
   contours: boolean
@@ -410,15 +408,15 @@ interface Settings {
 const SETTINGS_KEY = 'avium-settings'
 // Bumped when a default changes and saved entries should take it: 2 (16 Nov
 // 2026) turned contour lines off by default, and every entry before it had
-// saved the old default of on
-const SETTINGS_VERSION = 2
+// saved the old default of on; 3 (16 Nov 2026) made Hybrid the default map and
+// dropped Terrain
+const SETTINGS_VERSION = 3
 
 const settings: Settings = {
-  mode: 'political',
+  mode: 'hybrid',
   relief: true,
   daylight: false,
   borders: true,
-  terrainBorders: false,
   hybridBorders: true,
   rivers: true,
   contours: false,
@@ -435,12 +433,14 @@ const settings: Settings = {
 // Night as Time Zones with it on, and one on Night Lights as the political map.
 try {
   const saved = JSON.parse(localStorage.getItem(SETTINGS_KEY) ?? '{}')
-  const old = !(typeof saved?.v === 'number' && saved.v >= SETTINGS_VERSION)
+  const v = typeof saved?.v === 'number' ? saved.v : 0
+  const old = v < 2
   for (const k of Object.keys(settings) as (keyof Settings)[]) {
     if (old && k === 'contours') continue
     if (k !== 'mode' && typeof saved?.[k] === 'boolean') settings[k] = saved[k]
   }
-  if (MAP_MODES.includes(saved?.mode)) settings.mode = saved.mode
+  // Before 3 the political map was the default, so a saved one was rarely a choice
+  if (MAP_MODES.includes(saved?.mode) && !(v < 3 && saved.mode === 'political')) settings.mode = saved.mode
   else if (saved?.mode === 'relief') settings.relief = true
   else if (saved?.mode === 'daylight') {
     settings.mode = 'zones'
@@ -471,13 +471,13 @@ function saveSettings() {
 // What each map leaves room for. Time Zones is the map as a backdrop for the
 // clocks: its colours cover every pixel, so the ground and the lines go, and
 // the names stay because they carry each nation's clock. Day and night belongs
-// to the clocks, contour lines to the terrain.
+// to the clocks, contour lines to Hybrid's ground.
 const modeAllows = {
-  relief: (m: MapMode) => m === 'political' || m === 'terrain',
+  relief: (m: MapMode) => m === 'political',
   daylight: (m: MapMode) => m === 'zones',
   borders: (m: MapMode) => m !== 'zones',
   rivers: (m: MapMode) => m !== 'zones',
-  contours: (m: MapMode) => m === 'terrain',
+  contours: (m: MapMode) => m === 'hybrid',
   territories: (_m: MapMode) => true,
   water: (_m: MapMode) => true,
   cities: (_m: MapMode) => true,
@@ -487,7 +487,7 @@ const modeAllows = {
 // The setting a switch stands for on the current map: only Borders has two
 type Switch = keyof typeof modeAllows
 const settingKey = (k: Switch): keyof Settings =>
-  k !== 'borders' ? k : settings.mode === 'terrain' ? 'terrainBorders' : settings.mode === 'hybrid' ? 'hybridBorders' : k
+  k !== 'borders' ? k : settings.mode === 'hybrid' ? 'hybridBorders' : k
 
 function shows(k: Switch): boolean {
   return (settings[settingKey(k)] as boolean) && modeAllows[k](settings.mode)
@@ -3356,16 +3356,13 @@ function applySettings() {
   // Time Zones needs no ground under it
   put(baseLayer, m === 'political' && !relief)
   put(reliefLayer, m === 'political' && relief)
-  put(terrainLayer, m === 'terrain' && relief)
-  put(tintLayer, m === 'terrain' && !relief)
   put(hybridLayer, m === 'hybrid')
   // Hybrid draws its borders as lines over the ground and leaves the fills off
   put(bordersLayer, shows('borders') && m !== 'hybrid')
   showBorderLines(shows('borders') && m === 'hybrid')
   // The fills are opaque, so over the shaded ground they are let down far
-  // enough for the hills to read through: a little on the political map, most
-  // of the way on the terrain, where they are only a tint
-  bordersLayer.setOpacity(m === 'terrain' ? 0.22 : relief ? 0.75 : 1)
+  // enough for the hills to read through
+  bordersLayer.setOpacity(relief ? 0.75 : 1)
   put(contoursLayer, shows('contours'))
   put(riversLayer, shows('rivers') && m !== 'hybrid')
   put(riversFineLayer, shows('rivers') && m === 'hybrid')
@@ -4912,12 +4909,9 @@ function drawDaylight(ms: number) {
 daylightLayer.on('add', () => drawDaylight(icNow()))
 
 // The ground: the same land and sea as the base, modelled by the terrain under
-// them (relief) or coloured by height as well (terrain), and the terrain's
-// colours unshaded (tint) for when Relief is off. Built by topo/ from real
-// elevation carried through the Pangaea overlay; see topo/README.md.
+// them (relief). Built by topo/ from real elevation carried through the
+// Pangaea overlay; see topo/README.md.
 const reliefLayer = tiledLayer('relief', 'tilePane', { ext: 'webp', maxNative: 6 })
-const terrainLayer = tiledLayer('terrain', 'tilePane', { ext: 'webp', maxNative: 6 })
-const tintLayer = tiledLayer('tint', 'tilePane', { ext: 'webp', maxNative: 6 })
 // The terrain's land again over a deep blue sea, with no line inked at the coast
 const hybridLayer = tiledLayer('hybrid', 'tilePane', { ext: 'webp', maxNative: 6 })
 // The rivers at something near their real width, in the colour of that sea's shallows: the rivers layer draws
@@ -4970,9 +4964,8 @@ function showBorderLines(on: boolean) {
 // keeps its setting, so the map it belongs to comes back as it was left.
 
 const MODE_TILES: [MapMode, string, string][] = [
-  ['political', 'Political', politicalThumb],
-  ['terrain', 'Terrain', terrainThumb],
   ['hybrid', 'Hybrid', hybridThumb],
+  ['political', 'Political', politicalThumb],
   ['zones', 'Time Zones', zonesThumb],
 ]
 

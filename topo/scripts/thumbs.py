@@ -1,8 +1,7 @@
-"""Mode-tile thumbnails for the Map sheet: Political, Terrain, Hybrid and Time Zones, all cut from one box (6000 grid) so
-the four tiles show the same place at the same scale, each drawn as the app draws that map with its default switches:
-Political is the shaded relief with the borders at 0.75 and the rivers, Terrain the terrain with the rivers (borders
-and contour lines start off there), Hybrid its own ground with its fine rivers and the borders as lines, Time Zones the
-zone layer over the black page. Run after the layers change."""
+"""Mode-tile thumbnails for the Map sheet: Hybrid, Political and Time Zones, all cut from one box (6000 grid) so
+the three tiles show the same place at the same scale, each drawn as the app draws that map with its default switches:
+Political is the shaded relief with the borders at 0.75 and the rivers, Hybrid its own ground with its fine rivers and
+the borders as lines, Time Zones the zone layer over the black page. Run after the layers change."""
 import sys, json; sys.path.insert(0, __import__("os").path.dirname(__file__))
 from common import *
 from scipy import ndimage as ndi
@@ -31,7 +30,7 @@ def crop12(name):
 
 rv, ry, rx = crop12("rivers.PNG")
 bd = read_png(os.path.join(LAYERS, "borders.PNG")).repeat(2, 0).repeat(2, 1)[ry:ry + rv.shape[0], rx:rx + rv.shape[1]]
-for name, ground, borders in (("political", "relief.png", 0.75), ("terrain", "terrain.png", 0.0)):
+for name, ground, borders in (("political", "relief.png", 0.75),):
     g = crop12(ground)[0][..., :3]
     img = over(g, bd, borders) if borders else g.astype(np.float32)
     img = over(img, rv)
@@ -50,4 +49,4 @@ write_png(os.path.join(MAP, "src", "assets", "map-modes", "hybrid.png"), np.clip
 z = read_png(os.path.join(LAYERS, "zones.png"))
 t = shrink(over(np.zeros(z.shape[:2] + (3,), np.uint8), z), K, X0, Y0)
 write_png(os.path.join(MAP, "src", "assets", "map-modes", "zones.png"), np.clip(np.round(t), 0, 255).astype(np.uint8))
-print("thumbs: political, terrain, hybrid, zones at %dx%d from x %d-%d, y %d-%d (6000 grid)" % (W, H, X0, X0 + W * K, Y0, Y0 + H * K))
+print("thumbs: political, hybrid, zones at %dx%d from x %d-%d, y %d-%d (6000 grid)" % (W, H, X0, X0 + W * K, Y0, Y0 + H * K))

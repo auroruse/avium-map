@@ -77,15 +77,12 @@ const LAYERS = {
   // base.PNG whenever the base is tiled, so it comes after it
   mono: { skipBlanks: -1, background: { r: 0, g: 0, b: 0, alpha: 255 } },
   // The ground, written into layers/ by topo/scripts/render.py at 12000px, so
-  // these three tile one zoom level deeper than the drawings. Shaded relief is
+  // these tile one zoom level deeper than the drawings. Shaded relief is
   // photographic as far as a codec is concerned: as PNG the two opaque layers
   // would be several times the size of everything else here put together.
   relief: { skipBlanks: -1, background: OCEAN, format: 'webp' },
-  terrain: { skipBlanks: -1, background: OCEAN, format: 'webp' },
   // the terrain's land over a deep blue sea with no line at the coast, for the Hybrid map
   hybrid: { skipBlanks: -1, background: HYBRID_OCEAN, format: 'webp' },
-  // the terrain's colours unshaded, for the Terrain map with Relief off
-  tint: { skipBlanks: -1, background: OCEAN, format: 'webp' },
   contours: { skipBlanks: 0, background: CLEAR, format: 'webp' },
 }
 

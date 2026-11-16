@@ -1,7 +1,7 @@
 # topo — the ground under Avium
 
-Builds the ground layers (shaded relief for the Political map, shaded and unshaded tints for the
-Terrain map, the Hybrid map's ground), the contour lines and the rivers layers from real elevation.
+Builds the ground layers (shaded relief for the Political map, the Hybrid map's ground, and the
+elevation tints the check sheets are drawn on), the contour lines and the rivers layers from real elevation.
 
 `layers/pangaea.PNG` is a present-day political map bent into Pangaea, and Avium's coast was traced
 over it. So every pixel of Avium land is a piece of the real Earth that has been moved. This folder
@@ -105,6 +105,15 @@ areas; that was chosen over streaks.
     straits or a broad mouth join a sea to the ocean changes nothing. Mountains round a narrow sea deepen it.
   - *Islands.* A small island is a volcano: almost no shelf, a flank straight down to the deep floor, and a shared
     ridge under a chain or cluster. Only a large island carries a shelf, in proportion to its size.
+- **Ocean islands** (`islands.py`). Most of Avium's ocean islands sit on open sea on the overlay and sampled nothing, so
+  they stood flat at the placeholder height. Each takes a real island's ground: an island with a city takes the island
+  its city's stat donor stands on (Ranpua is Hilo, so Hawaii); one without a city near an island with one takes the best
+  match by outline among that donor's archipelago (real islands within 1,200 km), each real island used once where the
+  group allows; one further out takes the best match among the real islands round the place the overlay puts the
+  nearest Avium land. Each is laid on its outline by the turn, mirror, scale and shift that make the outlines agree best
+  (ETOPO 2022 60s surface, so Svalbard's ice caps are their surface). A real island shrunk onto a smaller Avium one is
+  smoothed so its grain does not alias, and keeps its summits at a little less height. The donors' positions are the
+  `DONORS` table; a new island city needs its donor added there. Polar ground is left to `polar.py`.
 - **Coasts Earth does not have** (`flank.py`). Where Avium's shore cuts through ground that is high on Earth (the
   Himalayan Sea against Tibet and the Tarim basin) the real relief would stand as a wall at the water. Such a shore
   is known by what lies off it: the real elevation carries on under the sea as high ground. Behind it the land is
@@ -130,7 +139,7 @@ areas; that was chosen over streaks.
   troughs, two more rings on land, all inward-facing scarps that show through the ice), hydrothermal vent cones
   on its floor and broad fractures running out from it. Ranges are cut by a drainage flooded in from the sea, as
   in `flank.py`. Ice surfaces carry streams that branch back from where the ice leaves, flow lines along them,
-  dune grain across the slope and flat patches over subglacial lakes. No white and no ice tint (tried and removed at the user's word). The two continents get a palette of their own on the Terrain map instead (`render.py`, `POLAR`): at every height the main ramp's CIELAB lightness less 10, in slate, blue-grey and violet-grey, so they do not read as farmland and steppe. Neither
+  dune grain across the slope and flat patches over subglacial lakes. No white and no ice tint (tried and removed at the user's word). The two continents get a palette of their own on the Hybrid map instead (`render.py`, `POLAR`): at every height the main ramp's CIELAB lightness less 10, in slate, blue-grey and violet-grey, so they do not read as farmland and steppe. Neither
   continent's drawing gives the Tartarean gateways a water passage, and Tartarus's coast does not meet itself
   across the 180th meridian (62.7°S on the right edge, 83.5°S on the bottom one).
 - **Eivorie** (`eivorie.py`). Its own ground, made from the Eivorian map (`data/eivorie/eivorie_map.png`, laid on the

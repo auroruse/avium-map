@@ -41,8 +41,14 @@ import polar
 pol = polar.build(land, has, KM); hasl = has.copy()
 for rs, cs, P, z, _ in pol:
     hc = h[rs, cs]; hc[P] = z[P]; hl = hasl[rs, cs]; hl |= P
-# Eivorie has its own ground, made from the Eivorian map (eivorie.py); its rivers are fictional and drawn
+# ocean islands with nothing under them take a real island's ground: their city's donor's, or their archipelago's (islands.py)
 tick("polar continents")
+import islands
+pm = np.zeros((OUT, OUT), bool)
+for rs, cs, P, _, _ in pol: pm[rs, cs] |= P
+h, _, irep = islands.build(h, land, np.load(os.path.join(WORK, "ehas_adj.npy")), pm, KM); del pm, irep
+# Eivorie has its own ground, made from the Eivorian map (eivorie.py); its rivers are fictional and drawn
+tick("islands")
 import eivorie
 h = eivorie.build(h, land, KM)
 wl, nw = ndi.label(~land); wsz = np.bincount(wl.ravel()); ocean = wsz[1:].argmax() + 1

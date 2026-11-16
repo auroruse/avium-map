@@ -13,7 +13,8 @@ Four more are written here by `topo/`, never exported by hand (see `topo/README.
 |------|-------|
 | `rivers.png` | Real rivers carried through the Pangaea overlay, plus Eivorie's from the drawing. Exporting layer 4 over it puts the hand-drawn rivers back |
 | `rivers-drawn.PNG` | The hand-drawn rivers as last exported. `topo/` reads Eivorie's rivers and the river cities from it |
-| `relief.png`, `terrain.png`, `contours.png` | 12000×12000, the ground maps |
+| `relief.png`, `contours.png` | 12000×12000, the Political map's shaded ground and the contour lines |
+| `terrain.png` | 12000×12000, elevation tints. Not tiled since the Terrain map went; `topo/`'s check sheets are drawn on it |
 | `hybrid.png`, `rivers-fine.png` | 12000×12000, the Hybrid map's ground (the terrain over a deep blue sea, no coastline) and its rivers at near their real width |
 
 **Do not export** layers 2 (grid — built into the app), 5 (Pangaea overlay), 6 (city markers), 7 (city names), or 8 (nation names).

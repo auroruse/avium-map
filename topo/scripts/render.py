@@ -53,7 +53,8 @@ def finish(rgb, path, ink=True):
 sea_rgb = ramp(H, SEA) * k[..., None]
 rgb = np.where(land[..., None], LAND[None, None] * k[..., None], sea_rgb)
 finish(rgb, os.path.join(LAYERS, "relief.png"))
-# ---- terrain: elevation tints
+# ---- terrain: elevation tints. No map shows this one since the Terrain map went (16 Nov 2026); the check sheets
+# (look.py, overview.py, spotlook.py) are drawn on it, and the Hybrid ground is its land
 TINT = [(0, (116, 148, 122)), (150, (138, 162, 124)), (400, (170, 176, 128)), (800, (196, 180, 128)), (1400, (192, 158, 118)),
         (2200, (170, 132, 108)), (3200, (150, 124, 118)), (4200, (190, 182, 186)), (5200, (232, 232, 238)), (9000, (250, 250, 252))]
 # Hyperborea and Tartarus in a palette of their own, so their coasts and heights do not read as farmland and steppe
@@ -81,9 +82,6 @@ if want("hybrid"):
     for c in range(3): rgb[..., c][shore] = ndi.gaussian_filter(rgb[..., c], 0.7)[shore]
     del shore
     finish(rgb, os.path.join(LAYERS, "hybrid.png"), ink=False)
-# ---- tint: the terrain's colours with no shading, for the Terrain map with Relief switched off
-rgb = np.where(land[..., None], landtint(False), ramp(H, SEA))
-finish(rgb, os.path.join(LAYERS, "tint.png"))
 del rgb, k
 
 if not want("contours"): sys.exit(0)
