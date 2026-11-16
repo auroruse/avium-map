@@ -254,6 +254,41 @@ for i, p in enumerate(paths, 1):
     if p["son"] != 0: continue
     c = p["cells"]; h = ndi.gaussian_filter1d(hof(c), 1.5, mode="nearest"); k = int(np.argmax(h))
     if 0 < k < 0.45 * len(c) and h[k] - h[0] > 30 and not (set(map(tuple, c[:k].tolist())) & ends): p["cells"] = c[k:]; headcut += 1
+# A channel that runs beside a longer river for much of its way reads as the same river drawn twice (user: "Duplicate
+# rivers to fix", the Ob's Small Ob and a split of the Ob near Govnovka; a split Chao Phraya too). It goes, unless other
+# rivers run into it: those are carried on, from where they met it, to the nearest point of the river it ran beside.
+def twins(R=18, share=0.35, run=40):
+    al = [(i, p) for i, p in enumerate(paths, 1) if p["alive"]]; idm = np.zeros((M, M), np.int32); endm = np.zeros((M, M), bool)
+    for i, p in al:
+        c = p["cells"]; idm[c[:, 0], c[:, 1]] = np.where(idm[c[:, 0], c[:, 1]] == 0, i, idm[c[:, 0], c[:, 1]]); endm[c[0, 0], c[0, 1]] = endm[c[-1, 0], c[-1, 1]] = True
+    jd = ndi.distance_transform_edt(~endm); ln = np.zeros(len(paths) + 1, np.int64)
+    for i, p in al: ln[i] = len(p["cells"])
+    offs = [(dy, dx) for dy in range(-R, R + 1) for dx in range(-R, R + 1) if 9 < dy * dy + dx * dx <= R * R][::3]
+    gone = kept = carried = 0
+    for i, p in al:
+        c = p["cells"]
+        if len(c) < run: continue
+        near = np.zeros(len(c), bool); who = np.zeros(len(c), np.int64)
+        for dy, dx in offs:
+            v = idm[np.clip(c[:, 0] + dy, 0, M - 1), np.clip(c[:, 1] + dx, 0, M - 1)]; hit = (v != 0) & (v != i) & (ln[v] >= len(c))
+            who = np.where(hit & ~near, v, who); near |= hit
+        near &= jd[c[:, 0], c[:, 1]] > 30
+        best = cur = 0
+        for b in near: cur = cur + 1 if b else 0; best = max(best, cur)
+        if near.mean() > share and best > run:
+            j = int(np.bincount(who[near]).argmax()); mc = paths[j - 1]["cells"]; links = []
+            for k, q in enumerate(paths, 1):
+                if not (q["alive"] and q["kind"] == "river" and q["to"] == i): continue
+                e = q["cells"][-1]; t = int(np.argmin(np.abs(mc - e).max(1))); f = mc[t]; n = int(np.abs(f - e).max())
+                if n > 3 * R: links = None; break
+                seg = np.round(np.linspace(e, f, n + 1)).astype(np.int64)[1:]; links.append((k, q, seg, j))
+            if links is None: kept += 1; continue
+            for k, q, seg, j in links:
+                q["cells"] = np.concatenate([q["cells"], seg]); q["to"] = j
+                free = (occ[seg[:, 0], seg[:, 1]] == 0) | (occ[seg[:, 0], seg[:, 1]] == i); occ[seg[free, 0], seg[free, 1]] = k
+            occ[(occ == i)] = 0; p["alive"] = False; gone += 1; carried += len(links)
+    print("channels running beside a bigger river dropped: %d, their %d tributaries carried on to it | kept: %d" % (gone, carried, kept), flush=True)
+twins()
 # drop what would read as a spur: short rivers, and rivers that end in mid-air unless they are long; never one that others run into
 while True:
     fed = set(p["to"] for p in paths if p["alive"] and p["kind"] == "river"); n = 0

@@ -140,7 +140,23 @@ areas; that was chosen over streaks.
   (an assumption: the map gives no heights; set to sit with the neighbours, Fiergenweald upland to about 1,100 m),
   valleys along Eivorie's drawn rivers, and hills carved by a drainage running into them, eased into the
   neighbours' ground over about 50 km.
-- **Rivers** (`riverlayer.py`). Real rivers, laid in the valleys of the Avium terrain. Each Natural Earth river
+- **Borders onto rivers** (`riverborders.py`, by hand after `riverlayer.py`; writes `work/borders_snapped.PNG`, and
+  `layers/borders.PNG` with `install`). Each pair of neighbours' border is redrawn as the cheapest line that separates
+  them, where a line may only run under a river (cheapest down the middle of its drawn width, so the river hides it), on
+  the border as drawn, or on a short link between the two through ground that lies between a border and a river no more
+  than 15 px apart. Nowhere else, so a border with no river beside it stays exactly as drawn. A quarter of all border was
+  drawn on the hand-drawn rivers (`layers/rivers-drawn.PNG`); such a stretch may go 30 px to the traced river. Every patch
+  that changes hands is then checked (mostly river on its new edge, no country split, no city moved to another country
+  unless it stands at the river) and put back as drawn if it fails. Never touched: the sea, the base map's white
+  coastline stroke, stray pieces of 40 px or less. `borderprev.py` draws before/after pictures; the report is
+  `work/riverborders_report.txt`; the layer as drawn is kept in `work/borders_before_rivers.PNG`. Earlier tries that
+  failed: a zone round borders on drawn rivers (caught 35 patches), any border near any river, a watershed, boxes.
+- **Cities out of rivers** (`citybanks.py`, after `riverborders.py`; `write` to apply, then `node scripts/coords.mjs`).
+  `riverlayer.py` runs a traced river through every city that stood on a drawn one, so the dot sat on the river's line.
+  Each such dot goes to the nearest px clear of the river, on ground, in the country it was in, at most 8 px away; a city
+  left on the far bank of a river that became its country's border is brought back to its own bank.
+- **Rivers** (`riverlayer.py`). A channel that runs beside a bigger river for most of its way (the Ob's Small Ob, a split
+  Chao Phraya) is dropped and its tributaries carried on to the main river: at map scale it reads as one river drawn twice. Real rivers, laid in the valleys of the Avium terrain. Each Natural Earth river
   arrives through the warps a few km off its valley, so it is re-traced on the terrain from its upper end down,
   inside a corridor round the warped line, along the route that climbs least and keeps to the valley floor.
   A trace ends the moment it comes within reach of the sea, a lake or a river already traced, so rivers join and

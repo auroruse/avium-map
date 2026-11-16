@@ -45,7 +45,7 @@
     "irlParallel": "Ruhr MA",
     "alpha3": "ALE",
     "x": 2932,
-    "y": 2656
+    "y": 2655
   },
   {
     "name": "Berelstein",
@@ -68,7 +68,7 @@
     "nativeScript": "",
     "irlParallel": "Hamburg",
     "alpha3": "ALE",
-    "x": 2929,
+    "x": 2928,
     "y": 2577
   },
   {
@@ -80,8 +80,8 @@
     "nativeScript": "",
     "irlParallel": "Rotterdam-The Hague",
     "alpha3": "ALE",
-    "x": 2886,
-    "y": 2676
+    "x": 2885,
+    "y": 2675
   },
   {
     "name": "Veynach",
@@ -128,7 +128,7 @@
     "nativeScript": "",
     "irlParallel": "Bonn",
     "alpha3": "ALE",
-    "x": 2965,
+    "x": 2964,
     "y": 2685
   },
   {
@@ -176,8 +176,8 @@
     "nativeScript": "",
     "irlParallel": "Basel",
     "alpha3": "ALE",
-    "x": 3032,
-    "y": 2756
+    "x": 3035,
+    "y": 2755
   },
   {
     "name": "Dusterburg",
@@ -188,8 +188,8 @@
     "nativeScript": "",
     "irlParallel": "Düsseldorf",
     "alpha3": "ALE",
-    "x": 2942,
-    "y": 2665
+    "x": 2940,
+    "y": 2666
   },
   {
     "name": "Franmark",
@@ -272,8 +272,8 @@
     "nativeScript": "",
     "irlParallel": "Dresden",
     "alpha3": "ALE",
-    "x": 3023,
-    "y": 2574
+    "x": 3024,
+    "y": 2572
   },
   {
     "name": "Werpestade",
@@ -716,8 +716,8 @@
     "nativeScript": "",
     "irlParallel": "Oldenburg",
     "alpha3": "ALE",
-    "x": 2915,
-    "y": 2605
+    "x": 2916,
+    "y": 2604
   },
   {
     "name": "Saalebergen",
@@ -836,7 +836,7 @@
     "nativeScript": "",
     "irlParallel": "Paderborn",
     "alpha3": "ALE",
-    "x": 2959,
+    "x": 2960,
     "y": 2635
   },
   {
@@ -861,7 +861,7 @@
     "irlParallel": "Ingolstadt",
     "alpha3": "ALE",
     "x": 3054,
-    "y": 2656
+    "y": 2654
   },
   {
     "name": "Köseln",
@@ -920,8 +920,8 @@
     "nativeScript": "",
     "irlParallel": "Wels",
     "alpha3": "ALE",
-    "x": 3106,
-    "y": 2633
+    "x": 3105,
+    "y": 2632
   },
   {
     "name": "Slin",
@@ -992,8 +992,8 @@
     "nativeScript": "",
     "irlParallel": "Kladno",
     "alpha3": "ALE",
-    "x": 3055,
-    "y": 2584
+    "x": 3054,
+    "y": 2585
   },
   {
     "name": "Züharin",
@@ -1424,8 +1424,8 @@
     "nativeScript": "பரதா",
     "irlParallel": "Perth",
     "alpha3": "ARU",
-    "x": 3554,
-    "y": 4895
+    "x": 3553,
+    "y": 4894
   },
   {
     "name": "Kosigoda",
@@ -1556,7 +1556,7 @@
     "nativeScript": "नासिके",
     "irlParallel": "Nashik",
     "alpha3": "ARU",
-    "x": 3754,
+    "x": 3756,
     "y": 4582
   },
   {
@@ -1736,7 +1736,7 @@
     "nativeScript": "ಗುಲ್ಬುರಗಿ",
     "irlParallel": "Kalaburagi",
     "alpha3": "ARU",
-    "x": 3713,
+    "x": 3714,
     "y": 4724
   },
   {
@@ -1856,7 +1856,7 @@
     "nativeScript": "बालाजीपूर",
     "irlParallel": "Dhule",
     "alpha3": "ARU",
-    "x": 3793,
+    "x": 3790,
     "y": 4602
   },
   {
@@ -2060,8 +2060,8 @@
     "nativeScript": "கொற்கை",
     "irlParallel": "Thoothukkudi",
     "alpha3": "ARU",
-    "x": 3518,
-    "y": 4865
+    "x": 3520,
+    "y": 4866
   },
   {
     "name": "Rayachooru",
@@ -2073,7 +2073,7 @@
     "irlParallel": "Raichur",
     "alpha3": "ARU",
     "x": 3683,
-    "y": 4749
+    "y": 4748
   },
   {
     "name": "Yevata",
@@ -2096,8 +2096,8 @@
     "nativeScript": "पांजे",
     "irlParallel": "Panaji",
     "alpha3": "ARU",
-    "x": 3632,
-    "y": 4616
+    "x": 3634,
+    "y": 4618
   },
   {
     "name": "Udupa",
@@ -2192,8 +2192,8 @@
     "nativeScript": "वासुगडा",
     "irlParallel": "Vasco da Gama",
     "alpha3": "ARU",
-    "x": 3626,
-    "y": 4623
+    "x": 3628,
+    "y": 4624
   },
   {
     "name": "Gortari",
@@ -2264,8 +2264,8 @@
     "nativeScript": "पांडवग्राम",
     "irlParallel": "Ratnagiri",
     "alpha3": "ARU",
-    "x": 3640,
-    "y": 4599
+    "x": 3646,
+    "y": 4602
   },
   {
     "name": "Yalpanam",
@@ -2325,7 +2325,7 @@
     "irlParallel": "Paris",
     "alpha3": "ARV",
     "x": 2897,
-    "y": 2772
+    "y": 2773
   },
   {
     "name": "Barcino",
@@ -2433,7 +2433,7 @@
     "irlParallel": "Bordeaux",
     "alpha3": "ARV",
     "x": 2856,
-    "y": 2863
+    "y": 2862
   },
   {
     "name": "Bellecôte",
@@ -2589,7 +2589,7 @@
     "irlParallel": "Tours",
     "alpha3": "ARV",
     "x": 2857,
-    "y": 2814
+    "y": 2815
   },
   {
     "name": "Carnelune",
@@ -2601,7 +2601,7 @@
     "irlParallel": "Orléans, FR",
     "alpha3": "ARV",
     "x": 2899,
-    "y": 2796
+    "y": 2794
   },
   {
     "name": "Remaire",
@@ -2756,7 +2756,7 @@
     "nativeScript": "",
     "irlParallel": "Metz",
     "alpha3": "ARV",
-    "x": 2988,
+    "x": 2989,
     "y": 2737
   },
   {
@@ -2864,7 +2864,7 @@
     "nativeScript": "",
     "irlParallel": "Poitiers",
     "alpha3": "ARV",
-    "x": 2876,
+    "x": 2874,
     "y": 2828
   },
   {
@@ -2936,7 +2936,7 @@
     "nativeScript": "",
     "irlParallel": "Namur",
     "alpha3": "ARV",
-    "x": 2937,
+    "x": 2938,
     "y": 2714
   },
   {
@@ -2996,8 +2996,8 @@
     "nativeScript": "",
     "irlParallel": "Madrid",
     "alpha3": "ASK",
-    "x": 2732,
-    "y": 2944
+    "x": 2733,
+    "y": 2942
   },
   {
     "name": "Olisibona",
@@ -3057,7 +3057,7 @@
     "irlParallel": "Córdoba, AR",
     "alpha3": "ASK",
     "x": 2642,
-    "y": 2985
+    "y": 2983
   },
   {
     "name": "Sarakusta",
@@ -3080,8 +3080,8 @@
     "nativeScript": "",
     "irlParallel": "Seville",
     "alpha3": "ASK",
-    "x": 2598,
-    "y": 2989
+    "x": 2597,
+    "y": 2987
   },
   {
     "name": "Malaca",
@@ -3368,8 +3368,8 @@
     "nativeScript": "",
     "irlParallel": "Toledo, ES",
     "alpha3": "ASK",
-    "x": 2653,
-    "y": 2934
+    "x": 2654,
+    "y": 2933
   },
   {
     "name": "Puerto Delgado",
@@ -3584,7 +3584,7 @@
     "nativeScript": "",
     "irlParallel": "Cartagena, CO",
     "alpha3": "AUR",
-    "x": 1429,
+    "x": 1428,
     "y": 3769
   },
   {
@@ -3608,8 +3608,8 @@
     "nativeScript": "",
     "irlParallel": "Villahermosa",
     "alpha3": "AUR",
-    "x": 1195,
-    "y": 4113
+    "x": 1196,
+    "y": 4114
   },
   {
     "name": "Tuchtlan",
@@ -3705,7 +3705,7 @@
     "irlParallel": "Villavicencio",
     "alpha3": "AUR",
     "x": 1530,
-    "y": 3971
+    "y": 3969
   },
   {
     "name": "Nauhcampa",
@@ -3812,7 +3812,7 @@
     "nativeScript": "",
     "irlParallel": "Barrancabermeja",
     "alpha3": "AUR",
-    "x": 1493,
+    "x": 1491,
     "y": 3844
   },
   {
@@ -3836,7 +3836,7 @@
     "nativeScript": "",
     "irlParallel": "Neiva",
     "alpha3": "AUR",
-    "x": 1490,
+    "x": 1488,
     "y": 4024
   },
   {
@@ -3992,7 +3992,7 @@
     "nativeScript": "",
     "irlParallel": "San Cristóbal de las Casas",
     "alpha3": "AUR",
-    "x": 1177,
+    "x": 1178,
     "y": 4174
   },
   {
@@ -4064,7 +4064,7 @@
     "nativeScript": "",
     "irlParallel": "Salina Cruz",
     "alpha3": "AUR",
-    "x": 1290,
+    "x": 1292,
     "y": 4040
   },
   {
@@ -4197,7 +4197,7 @@
     "irlParallel": "Yinchuan",
     "alpha3": "AXE",
     "x": 3391,
-    "y": 863
+    "y": 861
   },
   {
     "name": "Ku",
@@ -4221,7 +4221,7 @@
     "irlParallel": "Shizuishan",
     "alpha3": "AXE",
     "x": 3371,
-    "y": 873
+    "y": 871
   },
   {
     "name": "Chinger",
@@ -4280,7 +4280,7 @@
     "nativeScript": "",
     "irlParallel": "Kyzyl",
     "alpha3": "AXE",
-    "x": 3201,
+    "x": 3203,
     "y": 1250
   },
   {
@@ -4556,8 +4556,8 @@
     "nativeScript": "",
     "irlParallel": "Surabaya",
     "alpha3": "CAH",
-    "x": 4679,
-    "y": 1207
+    "x": 4678,
+    "y": 1208
   },
   {
     "name": "Kenanga",
@@ -5036,8 +5036,8 @@
     "nativeScript": "ꨕꨯꨗꨰ",
     "irlParallel": "Long Xuyen",
     "alpha3": "CAH",
-    "x": 4450,
-    "y": 1006
+    "x": 4448,
+    "y": 1005
   },
   {
     "name": "Temuan",
@@ -5084,7 +5084,7 @@
     "nativeScript": "ꨠꩀꨧꨤꨯꨮ",
     "irlParallel": "My Tho",
     "alpha3": "CAH",
-    "x": 4452,
+    "x": 4450,
     "y": 976
   },
   {
@@ -5132,8 +5132,8 @@
     "nativeScript": "",
     "irlParallel": "Vinh Long",
     "alpha3": "CAH",
-    "x": 4456,
-    "y": 992
+    "x": 4455,
+    "y": 991
   },
   {
     "name": "Baram",
@@ -5384,8 +5384,8 @@
     "nativeScript": "ꨝꨪꨊꨪ",
     "irlParallel": "Hong Ngu",
     "alpha3": "CAH",
-    "x": 4440,
-    "y": 1008
+    "x": 4441,
+    "y": 1006
   },
   {
     "name": "Corslawa",
@@ -5409,7 +5409,7 @@
     "irlParallel": "Budapest",
     "alpha3": "COR",
     "x": 3191,
-    "y": 2574
+    "y": 2572
   },
   {
     "name": "Jelgawa",
@@ -5540,8 +5540,8 @@
     "nativeScript": "",
     "irlParallel": "Toruń",
     "alpha3": "COR",
-    "x": 3034,
-    "y": 2464
+    "x": 3036,
+    "y": 2465
   },
   {
     "name": "Królewice",
@@ -5588,8 +5588,8 @@
     "nativeScript": "",
     "irlParallel": "Olsztyn",
     "alpha3": "COR",
-    "x": 3037,
-    "y": 2421
+    "x": 3036,
+    "y": 2422
   },
   {
     "name": "Pélyes",
@@ -5660,8 +5660,8 @@
     "nativeScript": "",
     "irlParallel": "Kecskemét",
     "alpha3": "COR",
-    "x": 3232,
-    "y": 2601
+    "x": 3234,
+    "y": 2599
   },
   {
     "name": "Szatmár",
@@ -5864,8 +5864,8 @@
     "nativeScript": "",
     "irlParallel": "Kano",
     "alpha3": "ARV",
-    "x": 2702,
-    "y": 3833
+    "x": 2701,
+    "y": 3832
   },
   {
     "name": "Cadounie",
@@ -5901,7 +5901,7 @@
     "irlParallel": "Sokoto",
     "alpha3": "ARV",
     "x": 2586,
-    "y": 3751
+    "y": 3749
   },
   {
     "name": "Cassiné",
@@ -6008,8 +6008,8 @@
     "nativeScript": "",
     "irlParallel": "Bauchi",
     "alpha3": "ARV",
-    "x": 2681,
-    "y": 3866
+    "x": 2682,
+    "y": 3867
   },
   {
     "name": "Argungu",
@@ -6032,7 +6032,7 @@
     "nativeScript": "",
     "irlParallel": "Hadejia",
     "alpha3": "ARV",
-    "x": 2732,
+    "x": 2729,
     "y": 3810
   },
   {
@@ -6045,7 +6045,7 @@
     "irlParallel": "Djougou",
     "alpha3": "ARV",
     "x": 2453,
-    "y": 3807
+    "y": 3805
   },
   {
     "name": "Bareba",
@@ -6140,8 +6140,8 @@
     "nativeScript": "新中京",
     "irlParallel": "Khartoum-Omdurman",
     "alpha3": "NCH",
-    "x": 3449,
-    "y": 3896
+    "x": 3451,
+    "y": 3894
   },
   {
     "name": "Tsuruse",
@@ -6237,7 +6237,7 @@
     "irlParallel": "Atyrau",
     "alpha3": "DEM",
     "x": 3429,
-    "y": 2043
+    "y": 2041
   },
   {
     "name": "Belegost",
@@ -6428,7 +6428,7 @@
     "nativeScript": "",
     "irlParallel": "Volgodonsk",
     "alpha3": "DEM",
-    "x": 3389,
+    "x": 3387,
     "y": 2200
   },
   {
@@ -6776,8 +6776,8 @@
     "nativeScript": "",
     "irlParallel": "Adelaide",
     "alpha3": "DIA",
-    "x": 3106,
-    "y": 5300
+    "x": 3107,
+    "y": 5298
   },
   {
     "name": "Port Verran",
@@ -6788,8 +6788,8 @@
     "nativeScript": "",
     "irlParallel": "Geelong",
     "alpha3": "DIA",
-    "x": 3099,
-    "y": 5286
+    "x": 3100,
+    "y": 5284
   },
   {
     "name": "Daston",
@@ -6884,8 +6884,8 @@
     "nativeScript": "",
     "irlParallel": "Baghdad",
     "alpha3": "ALE",
-    "x": 3917,
-    "y": 3412
+    "x": 3919,
+    "y": 3411
   },
   {
     "name": "Edessa",
@@ -6920,8 +6920,8 @@
     "nativeScript": "",
     "irlParallel": "Mosul",
     "alpha3": "ALE",
-    "x": 3861,
-    "y": 3293
+    "x": 3859,
+    "y": 3294
   },
   {
     "name": "Hewlêr",
@@ -6944,8 +6944,8 @@
     "nativeScript": "",
     "irlParallel": "Najaf",
     "alpha3": "ALE",
-    "x": 3948,
-    "y": 3471
+    "x": 3950,
+    "y": 3470
   },
   {
     "name": "Singal",
@@ -6968,8 +6968,8 @@
     "nativeScript": "",
     "irlParallel": "Duhok",
     "alpha3": "ALE",
-    "x": 3854,
-    "y": 3272
+    "x": 3855,
+    "y": 3270
   },
   {
     "name": "Diwaniye",
@@ -7004,8 +7004,8 @@
     "nativeScript": "",
     "irlParallel": "Nasiriyah",
     "alpha3": "ALE",
-    "x": 3986,
-    "y": 3499
+    "x": 3987,
+    "y": 3497
   },
   {
     "name": "Kirmaşan",
@@ -7028,7 +7028,7 @@
     "nativeScript": "",
     "irlParallel": "Kut",
     "alpha3": "ALE",
-    "x": 3995,
+    "x": 3992,
     "y": 3444
   },
   {
@@ -7040,8 +7040,8 @@
     "nativeScript": "",
     "irlParallel": "Ramadi",
     "alpha3": "ALE",
-    "x": 3890,
-    "y": 3399
+    "x": 3892,
+    "y": 3397
   },
   {
     "name": "Aziziye",
@@ -7052,8 +7052,8 @@
     "nativeScript": "",
     "irlParallel": "Al-Aziziyah",
     "alpha3": "ALE",
-    "x": 3953,
-    "y": 3431
+    "x": 3954,
+    "y": 3430
   },
   {
     "name": "Reqa",
@@ -7064,8 +7064,8 @@
     "nativeScript": "",
     "irlParallel": "Ar Raqqah",
     "alpha3": "ALE",
-    "x": 3751,
-    "y": 3298
+    "x": 3753,
+    "y": 3296
   },
   {
     "name": "Khuramawa",
@@ -7088,7 +7088,7 @@
     "nativeScript": "",
     "irlParallel": "Samarra",
     "alpha3": "ALE",
-    "x": 3885,
+    "x": 3883,
     "y": 3359
   },
   {
@@ -7124,8 +7124,8 @@
     "nativeScript": "",
     "irlParallel": "Al Qa’im",
     "alpha3": "ALE",
-    "x": 3800,
-    "y": 3341
+    "x": 3802,
+    "y": 3339
   },
   {
     "name": "Ūmqêsir",
@@ -7136,8 +7136,8 @@
     "nativeScript": "",
     "irlParallel": "Umm Qasr",
     "alpha3": "ALE",
-    "x": 4007,
-    "y": 3534
+    "x": 4005,
+    "y": 3536
   },
   {
     "name": "Axiom",
@@ -7184,8 +7184,8 @@
     "nativeScript": "",
     "irlParallel": "Washington, DC",
     "alpha3": "ESU",
-    "x": 2059,
-    "y": 3236
+    "x": 2058,
+    "y": 3234
   },
   {
     "name": "Port of Muscovite",
@@ -7232,8 +7232,8 @@
     "nativeScript": "",
     "irlParallel": "Detroit",
     "alpha3": "ESU",
-    "x": 1911,
-    "y": 3100
+    "x": 1910,
+    "y": 3101
   },
   {
     "name": "Hempden",
@@ -7316,7 +7316,7 @@
     "nativeScript": "",
     "irlParallel": "Saint Paul",
     "alpha3": "ESU",
-    "x": 1716,
+    "x": 1718,
     "y": 2944
   },
   {
@@ -7329,7 +7329,7 @@
     "irlParallel": "St. Louis (East of River)",
     "alpha3": "ESU",
     "x": 1724,
-    "y": 3190
+    "y": 3193
   },
   {
     "name": "Pulzind",
@@ -7340,8 +7340,8 @@
     "nativeScript": "",
     "irlParallel": "Pittsburgh",
     "alpha3": "ESU",
-    "x": 1973,
-    "y": 3179
+    "x": 1972,
+    "y": 3177
   },
   {
     "name": "Fritown",
@@ -7376,8 +7376,8 @@
     "nativeScript": "",
     "irlParallel": "Louisville",
     "alpha3": "ESU",
-    "x": 1830,
-    "y": 3225
+    "x": 1828,
+    "y": 3223
   },
   {
     "name": "Cromsine",
@@ -7641,7 +7641,7 @@
     "irlParallel": "Saguenay",
     "alpha3": "ESU",
     "x": 2245,
-    "y": 2956
+    "y": 2954
   },
   {
     "name": "Moonstone",
@@ -7664,8 +7664,8 @@
     "nativeScript": "",
     "irlParallel": "Moline",
     "alpha3": "ESU",
-    "x": 1744,
-    "y": 3077
+    "x": 1747,
+    "y": 3075
   },
   {
     "name": "Nuna",
@@ -7845,7 +7845,7 @@
     "irlParallel": "Evansville",
     "alpha3": "ESU",
     "x": 1783,
-    "y": 3225
+    "y": 3223
   },
   {
     "name": "Ortygia",
@@ -7988,7 +7988,7 @@
     "nativeScript": "",
     "irlParallel": "La Crosse",
     "alpha3": "ESU",
-    "x": 1749,
+    "x": 1751,
     "y": 3000
   },
   {
@@ -8144,8 +8144,8 @@
     "nativeScript": "Οδρύσσα",
     "irlParallel": "Plovdiv",
     "alpha3": "AST",
-    "x": 3280,
-    "y": 3160
+    "x": 3281,
+    "y": 3159
   },
   {
     "name": "Odessos",
@@ -8277,7 +8277,7 @@
     "irlParallel": "Lome",
     "alpha3": "EIV",
     "x": 2507,
-    "y": 3860
+    "y": 3855
   },
   {
     "name": "Nīewebricg",
@@ -8300,8 +8300,8 @@
     "nativeScript": "",
     "irlParallel": "Monrovia",
     "alpha3": "EIV",
-    "x": 2370,
-    "y": 3804
+    "x": 2371,
+    "y": 3803
   },
   {
     "name": "Sweartstan",
@@ -9044,7 +9044,7 @@
     "nativeScript": "",
     "irlParallel": "Leicester",
     "alpha3": "ELV",
-    "x": 2831,
+    "x": 2832,
     "y": 2711
   },
   {
@@ -9309,7 +9309,7 @@
     "irlParallel": "Nanjing",
     "alpha3": "FUR",
     "x": 3331,
-    "y": 576
+    "y": 573
   },
   {
     "name": "Hanyang",
@@ -9465,7 +9465,7 @@
     "irlParallel": "Wuhu",
     "alpha3": "FUR",
     "x": 3354,
-    "y": 575
+    "y": 573
   },
   {
     "name": "Anxing",
@@ -9584,7 +9584,7 @@
     "nativeScript": "诸葛镇",
     "irlParallel": "Zhuzhou",
     "alpha3": "FUR",
-    "x": 3653,
+    "x": 3651,
     "y": 643
   },
   {
@@ -9812,8 +9812,8 @@
     "nativeScript": "靖夕",
     "irlParallel": "Jingzhou",
     "alpha3": "FUR",
-    "x": 3607,
-    "y": 699
+    "x": 3604,
+    "y": 698
   },
   {
     "name": "Cicheng",
@@ -9836,8 +9836,8 @@
     "nativeScript": "安易",
     "irlParallel": "Tongling",
     "alpha3": "FUR",
-    "x": 3391,
-    "y": 579
+    "x": 3393,
+    "y": 576
   },
   {
     "name": "Yongguan",
@@ -9860,7 +9860,7 @@
     "nativeScript": "檀宫",
     "irlParallel": "Xiangtan",
     "alpha3": "FUR",
-    "x": 3654,
+    "x": 3655,
     "y": 664
   },
   {
@@ -10220,8 +10220,8 @@
     "nativeScript": "",
     "irlParallel": "Turkestan",
     "alpha3": "GIA",
-    "x": 3607,
-    "y": 1776
+    "x": 3606,
+    "y": 1775
   },
   {
     "name": "Velikiy Roy",
@@ -10256,8 +10256,8 @@
     "nativeScript": "",
     "irlParallel": "Türkmenabat",
     "alpha3": "GIA",
-    "x": 3718,
-    "y": 1907
+    "x": 3717,
+    "y": 1906
   },
   {
     "name": "Leonidgrad",
@@ -10281,7 +10281,7 @@
     "irlParallel": "Daşoguz",
     "alpha3": "GIA",
     "x": 3623,
-    "y": 1949
+    "y": 1947
   },
   {
     "name": "Igorvsk",
@@ -10305,7 +10305,7 @@
     "irlParallel": "Nukus",
     "alpha3": "GIA",
     "x": 3603,
-    "y": 1946
+    "y": 1944
   },
   {
     "name": "Rubezhgrad",
@@ -10784,8 +10784,8 @@
     "nativeScript": "Nam Vang",
     "irlParallel": "Phnom Penh",
     "alpha3": "GAI",
-    "x": 4416,
-    "y": 1007
+    "x": 4415,
+    "y": 1009
   },
   {
     "name": "Ninhai",
@@ -10844,8 +10844,8 @@
     "nativeScript": "Cam Phanh",
     "irlParallel": "Vientiane",
     "alpha3": "GAI",
-    "x": 4223,
-    "y": 963
+    "x": 4218,
+    "y": 967
   },
   {
     "name": "Chợ Lớn",
@@ -11396,8 +11396,8 @@
     "nativeScript": "Bát Tầm Bôn",
     "irlParallel": "Battambang",
     "alpha3": "GAI",
-    "x": 4377,
-    "y": 1013
+    "x": 4376,
+    "y": 1011
   },
   {
     "name": "Quy Hóa",
@@ -11588,8 +11588,8 @@
     "nativeScript": "Nam Chưởng",
     "irlParallel": "Luang Prabang",
     "alpha3": "GAI",
-    "x": 4182,
-    "y": 970
+    "x": 4181,
+    "y": 971
   },
   {
     "name": "Mục Mã",
@@ -11661,7 +11661,7 @@
     "irlParallel": "Pursat",
     "alpha3": "GAI",
     "x": 4389,
-    "y": 1008
+    "y": 1009
   },
   {
     "name": "Cam-pông Cam",
@@ -11673,7 +11673,7 @@
     "irlParallel": "Kampong Cham",
     "alpha3": "GAI",
     "x": 4399,
-    "y": 998
+    "y": 996
   },
   {
     "name": "Chơ-ba Mon",
@@ -11696,8 +11696,8 @@
     "nativeScript": "Ý Dĩ",
     "irlParallel": "Kampong Chhnang",
     "alpha3": "GAI",
-    "x": 4394,
-    "y": 1002
+    "x": 4395,
+    "y": 1003
   },
   {
     "name": "Shanggang",
@@ -11781,7 +11781,7 @@
     "irlParallel": "Jinan",
     "alpha3": "GUA",
     "x": 3161,
-    "y": 634
+    "y": 632
   },
   {
     "name": "Jiaozhou",
@@ -11948,8 +11948,8 @@
     "nativeScript": "广陵",
     "irlParallel": "Yangzhou",
     "alpha3": "GUA",
-    "x": 3292,
-    "y": 575
+    "x": 3293,
+    "y": 574
   },
   {
     "name": "Haibo",
@@ -11984,8 +11984,8 @@
     "nativeScript": "凯锦",
     "irlParallel": "Kaifeng",
     "alpha3": "GUA",
-    "x": 3358,
-    "y": 682
+    "x": 3359,
+    "y": 680
   },
   {
     "name": "Nanyang",
@@ -12032,8 +12032,8 @@
     "nativeScript": "濮台",
     "irlParallel": "Binzhou",
     "alpha3": "GUA",
-    "x": 3133,
-    "y": 631
+    "x": 3134,
+    "y": 629
   },
   {
     "name": "Dongjin",
@@ -12045,7 +12045,7 @@
     "irlParallel": "Dongying",
     "alpha3": "GUA",
     "x": 3106,
-    "y": 630
+    "y": 628
   },
   {
     "name": "Pochang",
@@ -12057,7 +12057,7 @@
     "irlParallel": "Puyang",
     "alpha3": "GUA",
     "x": 3273,
-    "y": 664
+    "y": 663
   },
   {
     "name": "Anxiang",
@@ -12116,7 +12116,7 @@
     "nativeScript": "隧峰",
     "irlParallel": "Huangzhou",
     "alpha3": "GUA",
-    "x": 3502,
+    "x": 3500,
     "y": 633
   },
   {
@@ -12152,8 +12152,8 @@
     "nativeScript": "永平",
     "irlParallel": "Yuncheng",
     "alpha3": "GUA",
-    "x": 3416,
-    "y": 727
+    "x": 3414,
+    "y": 728
   },
   {
     "name": "Tushan",
@@ -12236,8 +12236,8 @@
     "nativeScript": "江口",
     "irlParallel": "Zhangjiakou",
     "alpha3": "GUA",
-    "x": 3073,
-    "y": 754
+    "x": 3072,
+    "y": 755
   },
   {
     "name": "Qingliu",
@@ -12464,8 +12464,8 @@
     "nativeScript": "",
     "irlParallel": "St. Louis (West of River)",
     "alpha3": "HOL",
-    "x": 1717,
-    "y": 3191
+    "x": 1716,
+    "y": 3189
   },
   {
     "name": "Tumbleweed",
@@ -12477,7 +12477,7 @@
     "irlParallel": "El Paso",
     "alpha3": "HOL",
     "x": 1257,
-    "y": 3305
+    "y": 3303
   },
   {
     "name": "McFarlane",
@@ -12536,7 +12536,7 @@
     "nativeScript": "",
     "irlParallel": "Barranquilla",
     "alpha3": "HOL",
-    "x": 1436,
+    "x": 1439,
     "y": 3720
   },
   {
@@ -12585,7 +12585,7 @@
     "irlParallel": "Kansas City (South of River)",
     "alpha3": "HOL",
     "x": 1622,
-    "y": 3130
+    "y": 3133
   },
   {
     "name": "Mempolis",
@@ -12596,8 +12596,8 @@
     "nativeScript": "",
     "irlParallel": "Memphis",
     "alpha3": "HOL",
-    "x": 1706,
-    "y": 3322
+    "x": 1704,
+    "y": 3321
   },
   {
     "name": "Kamassa",
@@ -12620,8 +12620,8 @@
     "nativeScript": "",
     "irlParallel": "Tulsa",
     "alpha3": "HOL",
-    "x": 1563,
-    "y": 3236
+    "x": 1564,
+    "y": 3235
   },
   {
     "name": "Duval dos Agostinianos",
@@ -12752,8 +12752,8 @@
     "nativeScript": "",
     "irlParallel": "Wichita",
     "alpha3": "HOL",
-    "x": 1534,
-    "y": 3166
+    "x": 1532,
+    "y": 3167
   },
   {
     "name": "Marakaya",
@@ -12836,7 +12836,7 @@
     "nativeScript": "",
     "irlParallel": "Baton Rouge",
     "alpha3": "HOL",
-    "x": 1667,
+    "x": 1666,
     "y": 3541
   },
   {
@@ -12872,7 +12872,7 @@
     "nativeScript": "",
     "irlParallel": "Columbus, GA",
     "alpha3": "HOL",
-    "x": 1835,
+    "x": 1833,
     "y": 3505
   },
   {
@@ -12884,8 +12884,8 @@
     "nativeScript": "",
     "irlParallel": "Laredo",
     "alpha3": "HOL",
-    "x": 1400,
-    "y": 3573
+    "x": 1401,
+    "y": 3572
   },
   {
     "name": "Puerta de Testudera",
@@ -13077,7 +13077,7 @@
     "irlParallel": "Brownsville, TX",
     "alpha3": "HOL",
     "x": 1456,
-    "y": 3673
+    "y": 3672
   },
   {
     "name": "Delano",
@@ -13341,7 +13341,7 @@
     "irlParallel": "Columbia, MO",
     "alpha3": "HOL",
     "x": 1672,
-    "y": 3179
+    "y": 3177
   },
   {
     "name": "Fort St. Louis",
@@ -13544,8 +13544,8 @@
     "nativeScript": "",
     "irlParallel": "Ciudad Guayana",
     "alpha3": "HOL",
-    "x": 1738,
-    "y": 3687
+    "x": 1737,
+    "y": 3685
   },
   {
     "name": "Blackwater",
@@ -13592,7 +13592,7 @@
     "nativeScript": "",
     "irlParallel": "Las Cruces",
     "alpha3": "HOL",
-    "x": 1252,
+    "x": 1254,
     "y": 3262
   },
   {
@@ -13688,8 +13688,8 @@
     "nativeScript": "",
     "irlParallel": "Jefferson City",
     "alpha3": "HOL",
-    "x": 1696,
-    "y": 3187
+    "x": 1695,
+    "y": 3188
   },
   {
     "name": "Carmeloma",
@@ -13712,7 +13712,7 @@
     "nativeScript": "",
     "irlParallel": "Cape Girardeau",
     "alpha3": "HOL",
-    "x": 1729,
+    "x": 1727,
     "y": 3229
   },
   {
@@ -13724,7 +13724,7 @@
     "nativeScript": "",
     "irlParallel": "Roswell",
     "alpha3": "HOL",
-    "x": 1335,
+    "x": 1337,
     "y": 3269
   },
   {
@@ -13868,8 +13868,8 @@
     "nativeScript": "",
     "irlParallel": "Edinburg, TX",
     "alpha3": "HOL",
-    "x": 1411,
-    "y": 3646
+    "x": 1413,
+    "y": 3644
   },
   {
     "name": "Bisao",
@@ -13892,7 +13892,7 @@
     "nativeScript": "",
     "irlParallel": "Muskogee",
     "alpha3": "HOL",
-    "x": 1570,
+    "x": 1568,
     "y": 3263
   },
   {
@@ -13952,7 +13952,7 @@
     "nativeScript": "",
     "irlParallel": "Dodge City",
     "alpha3": "HOL",
-    "x": 1468,
+    "x": 1470,
     "y": 3119
   },
   {
@@ -14036,7 +14036,7 @@
     "nativeScript": "",
     "irlParallel": "Greenville, MS",
     "alpha3": "HOL",
-    "x": 1670,
+    "x": 1668,
     "y": 3424
   },
   {
@@ -14348,8 +14348,8 @@
     "nativeScript": "",
     "irlParallel": "Arkhangelsk",
     "alpha3": "KAR",
-    "x": 2845,
-    "y": 2021
+    "x": 2847,
+    "y": 2023
   },
   {
     "name": "Kuittijärvi",
@@ -14372,7 +14372,7 @@
     "nativeScript": "",
     "irlParallel": "Vologda",
     "alpha3": "KAR",
-    "x": 3003,
+    "x": 3005,
     "y": 2072
   },
   {
@@ -14408,7 +14408,7 @@
     "nativeScript": "",
     "irlParallel": "Kostroma",
     "alpha3": "KAR",
-    "x": 3070,
+    "x": 3065,
     "y": 2066
   },
   {
@@ -14529,7 +14529,7 @@
     "irlParallel": "Kotlas",
     "alpha3": "KAR",
     "x": 2917,
-    "y": 2012
+    "y": 2013
   },
   {
     "name": "Narovsky",
@@ -14588,8 +14588,8 @@
     "nativeScript": "",
     "irlParallel": "Vesyegonsk",
     "alpha3": "KAR",
-    "x": 3010,
-    "y": 2127
+    "x": 3009,
+    "y": 2128
   },
   {
     "name": "Memphipolis",
@@ -14660,8 +14660,8 @@
     "nativeScript": "",
     "irlParallel": "Damietta",
     "alpha3": "KMT",
-    "x": 3579,
-    "y": 3398
+    "x": 3577,
+    "y": 3397
   },
   {
     "name": "Ramsapolis",
@@ -15105,7 +15105,7 @@
     "irlParallel": "Viedma",
     "alpha3": "ALE",
     "x": 2466,
-    "y": 5174
+    "y": 5173
   },
   {
     "name": "Amassajärvi",
@@ -15236,8 +15236,8 @@
     "nativeScript": "",
     "irlParallel": "Daugavpils",
     "alpha3": "LVO",
-    "x": 3026,
-    "y": 2296
+    "x": 3025,
+    "y": 2295
   },
   {
     "name": "Windau",
@@ -15836,8 +15836,8 @@
     "nativeScript": "桃源",
     "irlParallel": "Khabarovsk",
     "alpha3": "NCH",
-    "x": 2414,
-    "y": 883
+    "x": 2412,
+    "y": 882
   },
   {
     "name": "Shinanose",
@@ -16017,7 +16017,7 @@
     "irlParallel": "Liaoyang",
     "alpha3": "NCH",
     "x": 2898,
-    "y": 683
+    "y": 682
   },
   {
     "name": "Yoshihama",
@@ -16052,7 +16052,7 @@
     "nativeScript": "黒川",
     "irlParallel": "Heihe-Blagoveshchensk",
     "alpha3": "NCH",
-    "x": 2615,
+    "x": 2617,
     "y": 899
   },
   {
@@ -16304,8 +16304,8 @@
     "nativeScript": "三江浜",
     "irlParallel": "Jiamusi",
     "alpha3": "NCH",
-    "x": 2562,
-    "y": 820
+    "x": 2561,
+    "y": 819
   },
   {
     "name": "Sekiringaku",
@@ -16328,8 +16328,8 @@
     "nativeScript": "音川",
     "irlParallel": "Hoeryong",
     "alpha3": "NCH",
-    "x": 2671,
-    "y": 674
+    "x": 2670,
+    "y": 672
   },
   {
     "name": "Asamitsu",
@@ -16785,7 +16785,7 @@
     "irlParallel": "Panshan",
     "alpha3": "NCH",
     "x": 2940,
-    "y": 673
+    "y": 671
   },
   {
     "name": "Sakyū",
@@ -16857,7 +16857,7 @@
     "irlParallel": "Jagdaqi",
     "alpha3": "NCH",
     "x": 2672,
-    "y": 917
+    "y": 919
   },
   {
     "name": "Mitajiri",
@@ -16893,7 +16893,7 @@
     "irlParallel": "Fujin",
     "alpha3": "NCH",
     "x": 2526,
-    "y": 825
+    "y": 823
   },
   {
     "name": "Umetsuji",
@@ -16929,7 +16929,7 @@
     "irlParallel": "Songyuan",
     "alpha3": "NCH",
     "x": 2759,
-    "y": 743
+    "y": 741
   },
   {
     "name": "Kanamine",
@@ -16940,8 +16940,8 @@
     "nativeScript": "金嶺",
     "irlParallel": "Tieling",
     "alpha3": "NCH",
-    "x": 2827,
-    "y": 707
+    "x": 2828,
+    "y": 705
   },
   {
     "name": "Ikezumi",
@@ -16977,7 +16977,7 @@
     "irlParallel": "Kaiyuan, LN",
     "alpha3": "NCH",
     "x": 2816,
-    "y": 706
+    "y": 708
   },
   {
     "name": "Ryōto",
@@ -17433,7 +17433,7 @@
     "irlParallel": "Dalnerechensk",
     "alpha3": "NCH",
     "x": 2445,
-    "y": 811
+    "y": 812
   },
   {
     "name": "Iharu",
@@ -17600,7 +17600,7 @@
     "nativeScript": "",
     "irlParallel": "Rourkela",
     "alpha3": "ELV",
-    "x": 3989,
+    "x": 3990,
     "y": 4949
   },
   {
@@ -17877,7 +17877,7 @@
     "irlParallel": "Shache",
     "alpha3": "PER",
     "x": 3755,
-    "y": 1591
+    "y": 1589
   },
   {
     "name": "Pribalhashstroy",
@@ -17900,8 +17900,8 @@
     "nativeScript": "",
     "irlParallel": "Aral",
     "alpha3": "PER",
-    "x": 3633,
-    "y": 1473
+    "x": 3631,
+    "y": 1474
   },
   {
     "name": "Bayetovo",
@@ -18153,7 +18153,7 @@
     "irlParallel": "Ciudad Juarez",
     "alpha3": "PON",
     "x": 1251,
-    "y": 3303
+    "y": 3305
   },
   {
     "name": "Teusonne",
@@ -18176,8 +18176,8 @@
     "nativeScript": "",
     "irlParallel": "Albuquerque",
     "alpha3": "PON",
-    "x": 1293,
-    "y": 3162
+    "x": 1292,
+    "y": 3161
   },
   {
     "name": "Hellesheim",
@@ -18381,7 +18381,7 @@
     "irlParallel": "Merced, CA",
     "alpha3": "PON",
     "x": 1124,
-    "y": 2866
+    "y": 2864
   },
   {
     "name": "Elyredon",
@@ -18392,8 +18392,8 @@
     "nativeScript": "",
     "irlParallel": "Grand Junction",
     "alpha3": "PON",
-    "x": 1330,
-    "y": 2981
+    "x": 1329,
+    "y": 2982
   },
   {
     "name": "Volkstrom",
@@ -18464,7 +18464,7 @@
     "nativeScript": "",
     "irlParallel": "Lake Havasu City",
     "alpha3": "PON",
-    "x": 1110,
+    "x": 1108,
     "y": 3067
   },
   {
@@ -18668,8 +18668,8 @@
     "nativeScript": "",
     "irlParallel": "Tete",
     "alpha3": "REC",
-    "x": 3128,
-    "y": 4859
+    "x": 3126,
+    "y": 4860
   },
   {
     "name": "Dyr",
@@ -18812,7 +18812,7 @@
     "nativeScript": "Арзалма",
     "irlParallel": "Astana",
     "alpha3": "RUD",
-    "x": 3320,
+    "x": 3319,
     "y": 1669
   },
   {
@@ -18849,7 +18849,7 @@
     "irlParallel": "Nizhny Novgorod",
     "alpha3": "RUD",
     "x": 3108,
-    "y": 2070
+    "y": 2073
   },
   {
     "name": "Molotovska",
@@ -18872,8 +18872,8 @@
     "nativeScript": "Новоспатря",
     "irlParallel": "Novosibirsk",
     "alpha3": "RUD",
-    "x": 3142,
-    "y": 1467
+    "x": 3141,
+    "y": 1466
   },
   {
     "name": "Kuybyshev",
@@ -18884,8 +18884,8 @@
     "nativeScript": "Куйбышев",
     "irlParallel": "Samara",
     "alpha3": "RUD",
-    "x": 3239,
-    "y": 2025
+    "x": 3241,
+    "y": 2027
   },
   {
     "name": "Yar",
@@ -18897,7 +18897,7 @@
     "irlParallel": "Krasnoyarsk",
     "alpha3": "RUD",
     "x": 3037,
-    "y": 1313
+    "y": 1311
   },
   {
     "name": "Alebkin",
@@ -18945,7 +18945,7 @@
     "irlParallel": "Voronezh",
     "alpha3": "RUD",
     "x": 3318,
-    "y": 2186
+    "y": 2184
   },
   {
     "name": "Igyrtsk",
@@ -18956,8 +18956,8 @@
     "nativeScript": "Игыртск",
     "irlParallel": "Irkutsk",
     "alpha3": "RUD",
-    "x": 3038,
-    "y": 1078
+    "x": 3037,
+    "y": 1077
   },
   {
     "name": "Ufysk",
@@ -19016,8 +19016,8 @@
     "nativeScript": "Тунитск",
     "irlParallel": "Tomsk",
     "alpha3": "RUD",
-    "x": 3066,
-    "y": 1462
+    "x": 3065,
+    "y": 1461
   },
   {
     "name": "Slavagrad",
@@ -19029,7 +19029,7 @@
     "irlParallel": "Yaroslavl",
     "alpha3": "RUD",
     "x": 3066,
-    "y": 2100
+    "y": 2104
   },
   {
     "name": "Chakalov",
@@ -19040,7 +19040,7 @@
     "nativeScript": "Чакалов",
     "irlParallel": "Orenburg",
     "alpha3": "RUD",
-    "x": 3287,
+    "x": 3286,
     "y": 1958
   },
   {
@@ -19064,8 +19064,8 @@
     "nativeScript": "Жаратов",
     "irlParallel": "Saratov",
     "alpha3": "RUD",
-    "x": 3291,
-    "y": 2099
+    "x": 3289,
+    "y": 2100
   },
   {
     "name": "Zemlystal",
@@ -19100,8 +19100,8 @@
     "nativeScript": "Могеёв",
     "irlParallel": "Mogilev",
     "alpha3": "RUD",
-    "x": 3113,
-    "y": 2297
+    "x": 3112,
+    "y": 2298
   },
   {
     "name": "Alash-Qala",
@@ -19112,7 +19112,7 @@
     "nativeScript": "Алаш-Кала",
     "irlParallel": "Semey",
     "alpha3": "RUD",
-    "x": 3317,
+    "x": 3319,
     "y": 1513
   },
   {
@@ -19136,8 +19136,8 @@
     "nativeScript": "Александрия",
     "irlParallel": "Volgograd",
     "alpha3": "RUD",
-    "x": 3363,
-    "y": 2143
+    "x": 3362,
+    "y": 2144
   },
   {
     "name": "Visibinsk",
@@ -19173,7 +19173,7 @@
     "irlParallel": "Pavlodar",
     "alpha3": "RUD",
     "x": 3263,
-    "y": 1581
+    "y": 1583
   },
   {
     "name": "Magnitsk",
@@ -19184,8 +19184,8 @@
     "nativeScript": "Магнитск",
     "irlParallel": "Magnitogorsk",
     "alpha3": "RUD",
-    "x": 3255,
-    "y": 1895
+    "x": 3254,
+    "y": 1896
   },
   {
     "name": "Kamennaya",
@@ -19232,7 +19232,7 @@
     "nativeScript": "Кызыл-Перовск",
     "irlParallel": "Kyzylorda",
     "alpha3": "RUD",
-    "x": 3581,
+    "x": 3579,
     "y": 1787
   },
   {
@@ -19257,7 +19257,7 @@
     "irlParallel": "Ulyanovsk",
     "alpha3": "RUD",
     "x": 3194,
-    "y": 2031
+    "y": 2029
   },
   {
     "name": "Kamkatska",
@@ -19280,8 +19280,8 @@
     "nativeScript": "Говновка",
     "irlParallel": "Surgut",
     "alpha3": "RUD",
-    "x": 2962,
-    "y": 1626
+    "x": 2963,
+    "y": 1625
   },
   {
     "name": "Speskan",
@@ -19328,8 +19328,8 @@
     "nativeScript": "Курчаск",
     "irlParallel": "Kursk",
     "alpha3": "RUD",
-    "x": 3222,
-    "y": 2233
+    "x": 3221,
+    "y": 2232
   },
   {
     "name": "Snegorod",
@@ -19376,8 +19376,8 @@
     "nativeScript": "Шестсяеминск",
     "irlParallel": "Cheboksary",
     "alpha3": "RUD",
-    "x": 3144,
-    "y": 2024
+    "x": 3142,
+    "y": 2025
   },
   {
     "name": "Permskoye",
@@ -19400,7 +19400,7 @@
     "nativeScript": "Атоянск",
     "irlParallel": "Oral",
     "alpha3": "RUD",
-    "x": 3293,
+    "x": 3294,
     "y": 1996
   },
   {
@@ -19424,8 +19424,8 @@
     "nativeScript": "Сокол",
     "irlParallel": "Oryol",
     "alpha3": "RUD",
-    "x": 3174,
-    "y": 2227
+    "x": 3173,
+    "y": 2228
   },
   {
     "name": "Nikolaevsk",
@@ -19436,7 +19436,7 @@
     "nativeScript": "Николаевск",
     "irlParallel": "Kostanay",
     "alpha3": "RUD",
-    "x": 3263,
+    "x": 3261,
     "y": 1813
   },
   {
@@ -19460,7 +19460,7 @@
     "nativeScript": "Стыропол",
     "irlParallel": "Tolyatti",
     "alpha3": "RUD",
-    "x": 3226,
+    "x": 3224,
     "y": 2019
   },
   {
@@ -19496,8 +19496,8 @@
     "nativeScript": "Рассветин",
     "irlParallel": "Sterlitamak",
     "alpha3": "RUD",
-    "x": 3221,
-    "y": 1922
+    "x": 3220,
+    "y": 1923
   },
   {
     "name": "Buranachesk",
@@ -19532,8 +19532,8 @@
     "nativeScript": "Тухачевоск",
     "irlParallel": "Smolensk",
     "alpha3": "RUD",
-    "x": 3102,
-    "y": 2234
+    "x": 3101,
+    "y": 2235
   },
   {
     "name": "Dragunov",
@@ -19545,7 +19545,7 @@
     "irlParallel": "Petropavl",
     "alpha3": "RUD",
     "x": 3204,
-    "y": 1706
+    "y": 1704
   },
   {
     "name": "Rudnogorsk",
@@ -19604,7 +19604,7 @@
     "nativeScript": "Сиезда",
     "irlParallel": "Prokopyevsk",
     "alpha3": "RUD",
-    "x": 3171,
+    "x": 3172,
     "y": 1362
   },
   {
@@ -19664,8 +19664,8 @@
     "nativeScript": "Уцинск",
     "irlParallel": "Bratsk",
     "alpha3": "RUD",
-    "x": 2944,
-    "y": 1188
+    "x": 2943,
+    "y": 1186
   },
   {
     "name": "Kalarov",
@@ -19712,7 +19712,7 @@
     "nativeScript": "Огнечист",
     "irlParallel": "Neftekamsk",
     "alpha3": "RUD",
-    "x": 3146,
+    "x": 3144,
     "y": 1935
   },
   {
@@ -19737,7 +19737,7 @@
     "irlParallel": "Kurgan",
     "alpha3": "RUD",
     "x": 3183,
-    "y": 1776
+    "y": 1774
   },
   {
     "name": "Sibaleuz",
@@ -19796,8 +19796,8 @@
     "nativeScript": "Корыбущевский",
     "irlParallel": "Murom",
     "alpha3": "RUD",
-    "x": 3140,
-    "y": 2110
+    "x": 3141,
+    "y": 2108
   },
   {
     "name": "Zasratov",
@@ -19808,7 +19808,7 @@
     "nativeScript": "Засратов",
     "irlParallel": "Ishim",
     "alpha3": "RUD",
-    "x": 3145,
+    "x": 3143,
     "y": 1692
   },
   {
@@ -19821,7 +19821,7 @@
     "irlParallel": "Tobolsk",
     "alpha3": "RUD",
     "x": 3079,
-    "y": 1717
+    "y": 1719
   },
   {
     "name": "Sykaran",
@@ -19832,7 +19832,7 @@
     "nativeScript": "Сыкаран",
     "irlParallel": "Balakovo",
     "alpha3": "RUD",
-    "x": 3271,
+    "x": 3270,
     "y": 2066
   },
   {
@@ -19845,7 +19845,7 @@
     "irlParallel": "Salavat",
     "alpha3": "RUD",
     "x": 3235,
-    "y": 1927
+    "y": 1929
   },
   {
     "name": "Votka",
@@ -19904,8 +19904,8 @@
     "nativeScript": "Дмитриевск",
     "irlParallel": "Kamyshin",
     "alpha3": "RUD",
-    "x": 3327,
-    "y": 2118
+    "x": 3325,
+    "y": 2119
   },
   {
     "name": "Zamorsk",
@@ -19989,7 +19989,7 @@
     "irlParallel": "Kudymkar",
     "alpha3": "RUD",
     "x": 3020,
-    "y": 1913
+    "y": 1911
   },
   {
     "name": "Port Mercer",
@@ -20012,7 +20012,7 @@
     "nativeScript": "",
     "irlParallel": "Portland, OR",
     "alpha3": "SAL",
-    "x": 1320,
+    "x": 1317,
     "y": 2625
   },
   {
@@ -20048,8 +20048,8 @@
     "nativeScript": "",
     "irlParallel": "Salem, OR",
     "alpha3": "SAL",
-    "x": 1295,
-    "y": 2641
+    "x": 1294,
+    "y": 2639
   },
   {
     "name": "Hudson",
@@ -20084,8 +20084,8 @@
     "nativeScript": "",
     "irlParallel": "Yakima",
     "alpha3": "SAL",
-    "x": 1368,
-    "y": 2648
+    "x": 1370,
+    "y": 2649
   },
   {
     "name": "Utopia",
@@ -20132,8 +20132,8 @@
     "nativeScript": "",
     "irlParallel": "Longview, OR",
     "alpha3": "SAL",
-    "x": 1327,
-    "y": 2607
+    "x": 1325,
+    "y": 2606
   },
   {
     "name": "New Valentine",
@@ -20192,8 +20192,8 @@
     "nativeScript": "",
     "irlParallel": "Ontario, OR",
     "alpha3": "SAL",
-    "x": 1322,
-    "y": 2699
+    "x": 1320,
+    "y": 2700
   },
   {
     "name": "Falkenheim",
@@ -20229,7 +20229,7 @@
     "irlParallel": "Minneapolis",
     "alpha3": "SNT",
     "x": 1710,
-    "y": 2945
+    "y": 2943
   },
   {
     "name": "Freiheit",
@@ -20240,7 +20240,7 @@
     "nativeScript": "",
     "irlParallel": "Omaha",
     "alpha3": "SNT",
-    "x": 1618,
+    "x": 1617,
     "y": 3047
   },
   {
@@ -20252,8 +20252,8 @@
     "nativeScript": "",
     "irlParallel": "Kansas City (North of River)",
     "alpha3": "SNT",
-    "x": 1626,
-    "y": 3127
+    "x": 1625,
+    "y": 3126
   },
   {
     "name": "Wisaka",
@@ -20324,8 +20324,8 @@
     "nativeScript": "",
     "irlParallel": "Bismarck",
     "alpha3": "SNT",
-    "x": 1604,
-    "y": 2843
+    "x": 1606,
+    "y": 2844
   },
   {
     "name": "Moingona",
@@ -20348,7 +20348,7 @@
     "nativeScript": "",
     "irlParallel": "Davenport",
     "alpha3": "SNT",
-    "x": 1742,
+    "x": 1741,
     "y": 3072
   },
   {
@@ -20360,8 +20360,8 @@
     "nativeScript": "",
     "irlParallel": "Sioux City",
     "alpha3": "SNT",
-    "x": 1623,
-    "y": 2989
+    "x": 1625,
+    "y": 2987
   },
   {
     "name": "Ozaagi",
@@ -20372,8 +20372,8 @@
     "nativeScript": "",
     "irlParallel": "Rapid City",
     "alpha3": "SNT",
-    "x": 1532,
-    "y": 2907
+    "x": 1533,
+    "y": 2908
   },
   {
     "name": "New Brunswich",
@@ -20396,8 +20396,8 @@
     "nativeScript": "",
     "irlParallel": "St. Joseph",
     "alpha3": "SNT",
-    "x": 1624,
-    "y": 3098
+    "x": 1625,
+    "y": 3097
   },
   {
     "name": "Dhegiha",
@@ -20684,7 +20684,7 @@
     "nativeScript": "",
     "irlParallel": "Al Hudaydah",
     "alpha3": "SEH",
-    "x": 3738,
+    "x": 3740,
     "y": 4060
   },
   {
@@ -20733,7 +20733,7 @@
     "irlParallel": "Larkana",
     "alpha3": "SEH",
     "x": 3933,
-    "y": 4324
+    "y": 4325
   },
   {
     "name": "Wied il-Għajn",
@@ -20817,7 +20817,7 @@
     "irlParallel": "Dera Ismail Khan",
     "alpha3": "SEH",
     "x": 4007,
-    "y": 4355
+    "y": 4353
   },
   {
     "name": "Safar",
@@ -20853,7 +20853,7 @@
     "irlParallel": "Dadu",
     "alpha3": "SEH",
     "x": 3916,
-    "y": 4318
+    "y": 4320
   },
   {
     "name": "Baħrija",
@@ -20888,8 +20888,8 @@
     "nativeScript": "",
     "irlParallel": "Shikarpur",
     "alpha3": "SEH",
-    "x": 3946,
-    "y": 4326
+    "x": 3947,
+    "y": 4324
   },
   {
     "name": "Qiegħa",
@@ -21164,7 +21164,7 @@
     "nativeScript": "",
     "irlParallel": "Chongqing",
     "alpha3": "SGD",
-    "x": 3805,
+    "x": 3803,
     "y": 821
   },
   {
@@ -21848,8 +21848,8 @@
     "nativeScript": "",
     "irlParallel": "Adana",
     "alpha3": "SEL",
-    "x": 3643,
-    "y": 3263
+    "x": 3641,
+    "y": 3262
   },
   {
     "name": "Donuzlu",
@@ -21957,7 +21957,7 @@
     "irlParallel": "Aydın",
     "alpha3": "SEL",
     "x": 3418,
-    "y": 3287
+    "y": 3285
   },
   {
     "name": "Mokissos",
@@ -21980,8 +21980,8 @@
     "nativeScript": "",
     "irlParallel": "Çorum",
     "alpha3": "SEL",
-    "x": 3618,
-    "y": 3130
+    "x": 3620,
+    "y": 3131
   },
   {
     "name": "Lydahisar",
@@ -22244,8 +22244,8 @@
     "nativeScript": "津映",
     "irlParallel": "Dhaka, BD",
     "alpha3": "NCH",
-    "x": 4116,
-    "y": 5107
+    "x": 4117,
+    "y": 5106
   },
   {
     "name": "Shiwane",
@@ -22892,7 +22892,7 @@
     "nativeScript": "",
     "irlParallel": "Bucharest",
     "alpha3": "SLY",
-    "x": 3353,
+    "x": 3351,
     "y": 2514
   },
   {
@@ -23216,8 +23216,8 @@
     "nativeScript": "",
     "irlParallel": "Juba",
     "alpha3": "SHI",
-    "x": 3307,
-    "y": 4207
+    "x": 3305,
+    "y": 4205
   },
   {
     "name": "Kumbaya",
@@ -23288,7 +23288,7 @@
     "nativeScript": "",
     "irlParallel": "Kyiv",
     "alpha3": "SYL",
-    "x": 3219,
+    "x": 3221,
     "y": 2338
   },
   {
@@ -23397,7 +23397,7 @@
     "irlParallel": "Lviv",
     "alpha3": "SYL",
     "x": 3178,
-    "y": 2430
+    "y": 2428
   },
   {
     "name": "Ping",
@@ -23445,7 +23445,7 @@
     "irlParallel": "Cherkasy",
     "alpha3": "SYL",
     "x": 3262,
-    "y": 2340
+    "y": 2338
   },
   {
     "name": "Rant",
@@ -23469,7 +23469,7 @@
     "irlParallel": "Chernihiv",
     "alpha3": "SYL",
     "x": 3197,
-    "y": 2306
+    "y": 2307
   },
   {
     "name": "Ryba",
@@ -23552,7 +23552,7 @@
     "nativeScript": "",
     "irlParallel": "Nikopol",
     "alpha3": "SYL",
-    "x": 3337,
+    "x": 3335,
     "y": 2360
   },
   {
@@ -23565,7 +23565,7 @@
     "irlParallel": "Sloviansk",
     "alpha3": "SYL",
     "x": 3312,
-    "y": 2254
+    "y": 2257
   },
   {
     "name": "Gora",
@@ -23984,8 +23984,8 @@
     "nativeScript": "",
     "irlParallel": "Maroua",
     "alpha3": "VIC",
-    "x": 2793,
-    "y": 3931
+    "x": 2794,
+    "y": 3929
   },
   {
     "name": "Obangia",
@@ -23996,8 +23996,8 @@
     "nativeScript": "",
     "irlParallel": "Bangui",
     "alpha3": "VIC",
-    "x": 2896,
-    "y": 4114
+    "x": 2894,
+    "y": 4111
   },
   {
     "name": "Ndorena",
@@ -24056,7 +24056,7 @@
     "nativeScript": "",
     "irlParallel": "Milan",
     "alpha3": "VIC",
-    "x": 2982,
+    "x": 2980,
     "y": 2923
   },
   {
@@ -24776,8 +24776,8 @@
     "nativeScript": "",
     "irlParallel": "Kolkata",
     "alpha3": "ARV",
-    "x": 4046,
-    "y": 5057
+    "x": 4047,
+    "y": 5055
   },
   {
     "name": "Assansole",
@@ -24836,8 +24836,8 @@
     "nativeScript": "",
     "irlParallel": "Faridpur",
     "alpha3": "ARV",
-    "x": 4091,
-    "y": 5087
+    "x": 4090,
+    "y": 5086
   },
   {
     "name": "Zixza",

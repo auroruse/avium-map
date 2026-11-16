@@ -203,6 +203,22 @@ function timeLine(z: number, ms = icNow()): string {
 
 // --- Map ---
 
+// Leaflet rounds each tile level's offset to a whole pixel. At a whole zoom the offset is whole already; at a half step
+// every layer rounds its own, and layers cut at different zooms (borders at 5, rivers and relief at 6), or whose level
+// was made at a different moment, land up to 0.7px apart (measured). That was the hairline of bare ground down one side
+// of every coast and border at 5.5, 6.5 and 7.5. Left unrounded, every layer lands on the same spot.
+;(L.GridLayer as unknown as { include(o: object): void }).include({
+  _setZoomTransform(
+    this: { _map: L.Map & { _getNewPixelOrigin(c: L.LatLng, z: number): L.Point } },
+    level: { el: HTMLElement; origin: L.Point; zoom: number },
+    center: L.LatLng,
+    zoom: number
+  ) {
+    const scale = this._map.getZoomScale(zoom, level.zoom)
+    L.DomUtil.setTransform(level.el, level.origin.multiplyBy(scale).subtract(this._map._getNewPixelOrigin(center, zoom)), scale)
+  },
+})
+
 const contentBounds = L.latLngBounds(px(0, CONTENT), px(CONTENT, 0))
 
 const map = L.map('map', {
