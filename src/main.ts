@@ -382,8 +382,11 @@ new (L.Control.extend({
 // What the map shows, as one record: which of the three maps it is, and which
 // switches are on. A map can rule a switch out (Time Zones has no borders,
 // only Terrain has contour lines, only Time Zones has day and night) without touching it, so going back to a map
-// brings back exactly what was on before. Read during the first render, so it
-// has to be resolved before any of it runs.
+// brings back exactly what was on before. Borders are kept twice, once for
+// Terrain and once for the rest: Terrain starts with them off and the switch
+// still works there, and turning them on or off on one map leaves the other as
+// it was. Read during the first render, so it has to be resolved before any of
+// it runs.
 
 type MapMode = 'political' | 'terrain' | 'zones'
 const MAP_MODES: MapMode[] = ['political', 'terrain', 'zones']
@@ -393,6 +396,7 @@ interface Settings {
   relief: boolean
   daylight: boolean
   borders: boolean
+  terrainBorders: boolean
   rivers: boolean
   contours: boolean
   territories: boolean
@@ -402,14 +406,19 @@ interface Settings {
 }
 
 const SETTINGS_KEY = 'avium-settings'
+// Bumped when a default changes and saved entries should take it: 2 (16 Nov
+// 2026) turned contour lines off by default, and every entry before it had
+// saved the old default of on
+const SETTINGS_VERSION = 2
 
 const settings: Settings = {
   mode: 'political',
   relief: true,
   daylight: false,
   borders: true,
+  terrainBorders: false,
   rivers: true,
-  contours: true,
+  contours: false,
   territories: true,
   water: true,
   cities: true,
@@ -423,7 +432,9 @@ const settings: Settings = {
 // Night as Time Zones with it on, and one on Night Lights as the political map.
 try {
   const saved = JSON.parse(localStorage.getItem(SETTINGS_KEY) ?? '{}')
+  const old = !(typeof saved?.v === 'number' && saved.v >= SETTINGS_VERSION)
   for (const k of Object.keys(settings) as (keyof Settings)[]) {
+    if (old && k === 'contours') continue
     if (k !== 'mode' && typeof saved?.[k] === 'boolean') settings[k] = saved[k]
   }
   if (MAP_MODES.includes(saved?.mode)) settings.mode = saved.mode
@@ -448,7 +459,7 @@ try {
 
 function saveSettings() {
   try {
-    localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings))
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify({ ...settings, v: SETTINGS_VERSION }))
   } catch {
     // private mode or a full quota; the session still works, it just forgets
   }
@@ -470,8 +481,13 @@ const modeAllows = {
   stations: (_m: MapMode) => true,
 }
 
-function shows(k: keyof typeof modeAllows): boolean {
-  return settings[k] && modeAllows[k](settings.mode)
+// The setting a switch stands for on the current map: only Borders has two
+type Switch = keyof typeof modeAllows
+const settingKey = (k: Switch): keyof Settings =>
+  k === 'borders' && settings.mode === 'terrain' ? 'terrainBorders' : k
+
+function shows(k: Switch): boolean {
+  return (settings[settingKey(k)] as boolean) && modeAllows[k](settings.mode)
 }
 
 // --- Labels ---
@@ -4949,7 +4965,7 @@ function renderMapSheet() {
     const row = mapSheet.querySelector<HTMLElement>(`[data-row="${k}"]`)!
     const box = row.querySelector('input')!
     const allowed = modeAllows[k](settings.mode)
-    box.checked = settings[k]
+    box.checked = settings[settingKey(k)] as boolean
     box.disabled = !allowed
     row.classList.toggle('is-locked', !allowed)
   }
@@ -4981,7 +4997,7 @@ mapSheet.addEventListener('change', e => {
   }
   const k = box.dataset.set as keyof typeof modeAllows | undefined
   if (!k) return
-  settings[k] = box.checked
+  ;(settings[settingKey(k)] as boolean) = box.checked
   saveSettings()
   applySettings()
 })
