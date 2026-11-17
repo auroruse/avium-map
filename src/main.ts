@@ -16,7 +16,7 @@ import nationsTsv from './data/nations.tsv?raw'
 import areasData from './data/areas.json'
 import zonesData from './data/zones.json'
 import { icAt as icAtReal, icNow, rateNow, realAt } from './ictime'
-import { talopedia, type TalopediaEntry } from './data/talopedia'
+import { talopedia, talopediaUrl, type TalopediaEntry } from './data/talopedia'
 
 // --- Dev mode ---
 
@@ -2380,13 +2380,11 @@ function openCityPanel(c: City) {
         more: [['Per Capita', fmtUSD(c.gdpPerCapita) + fmtRank(pcRank), STAT_ICON.perCapita]],
       },
     ]) +
-    (wiki?.about
-      ? `<div class="cp-section">About</div>` +
+    (wiki
+      ? `<div class="cp-section cp-section-row">About` +
+        `<a class="cp-source" href="${talopediaUrl(displayName)}" target="_blank" rel="noopener noreferrer">Talopedia<span aria-hidden="true">›</span></a></div>` +
         `<div class="cp-about"><p class="cp-about-text">${esc(wiki.about)}</p>` +
         `<button class="cp-more" hidden>More</button></div>`
-      : '') +
-    (wiki
-      ? `<a class="cp-source" href="${wiki.url}" target="_blank" rel="noopener noreferrer">More on <span>the Talopedia</span></a>`
       : '') +
     detailsCard([
       detailRow('Nation', `${c.nation}${c.alpha3 ? ` <span class="cp-sub">(${c.alpha3})</span>` : ''}`, !!nat),
@@ -2398,10 +2396,10 @@ function openCityPanel(c: City) {
   closeSheetList()
   markNavOpen(null)
   cityPanel.querySelector('.cp-close')!.addEventListener('click', closeCityPanel)
+  wireAboutToggle()
   // flyToNation/goCity rather than the bare open*Panel: a link should land you
   // where the thing is, which is what the search results already do
   if (nat) cityPanel.querySelector('.cp-link')!.addEventListener('click', () => flyToNation(nat))
-  wireAboutToggle()
   hideSheet()
   openCityName = c.name
   focusedCity = c

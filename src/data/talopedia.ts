@@ -1,43 +1,51 @@
-// Talopedia pages for cities that have one. Keys are matched case- and
-// diacritic-insensitively against city names, so "Chukyo" finds "Chūkyō".
+// Talopedia articles for cities that have one. Keys are matched case- and
+// diacritic-insensitively against city names, so "Chukyo" would find "Chūkyō".
 //
-// `about` is the opening paragraph of the article's overview, pasted by hand.
-// It is optional: an entry with only a `url` renders the link and no blurb.
-// The text is escaped before display, so apostrophes and & are safe as-is.
+// The article's address is not stored: it is the city's name without its
+// diacritics, in lower case, words joined by hyphens, under TALOPEDIA
+// (talopediaUrl). That is how the Talopedia names every article, so a city is
+// added here by its name alone.
 //
-// URLs are stored bare: no /u/0/ (routes visitors through whichever Google
-// account they happen to have signed in first) and no ?ouid= (identifies the
-// account that copied the link, and means nothing to anyone else).
-// Every doc must be shared "Anyone with the link -> Viewer".
+// `about` is the opening paragraph of the article, pasted by hand as plain
+// text. It is escaped before display, so apostrophes and & are safe as-is.
+//
+// These pointed at the Google Docs the articles used to live in until 17 Nov
+// 2026. Four cities had a doc and have no article on the site yet (Chūkyō,
+// Mizuhara, Naginomiya, Takarazuka): they come back here when theirs is written.
+
+export const TALOPEDIA = 'https://auroruse.github.io/the-talopedia/'
 
 export interface TalopediaEntry {
-  url: string
-  about?: string
+  about: string
+}
+
+export function talopediaUrl(name: string): string {
+  const slug = name
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+  return TALOPEDIA + slug + '/'
 }
 
 export const talopedia: Record<string, TalopediaEntry> = {
+  'Auritania City': {
+    about: `Auritania City (Ciudad de Auritania, see-oo-DAHD deh ow-ree-TAH-nee-ah) is the capital and most populous city of Auritania, as well as the most populous city in Elysia. It is located in the Valley of Anahuac within the Anahuacan Plateau. The city has 16 boroughs or distritos, which are in turn divided into over 6,400 neighborhoods (colonias and barrios).`,
+  },
   Axiom: {
-    url: 'https://docs.google.com/document/d/1p_AVNsWL0smEmQcNor8lbsRD_HRvfb0sXpj1epf3oPU/edit',
     about: `Axiom, previously called Metro Regima, is the most populous city in Elysia. It is located at the northern end of Cygnus Bay on Regima Harbor. The city comprises 6 boroughs, each coextensive with its respective counties. It is the demographic and geographic center of the Northeast Megalopolis, and the Axiom Metropolitan area, the largest metropolitan area in Elysia by both population and urban area. Despite the Gestaltist reforms of the Unity State, Axiom continues to be a global centre of commerce, culture, technology, entertainment and media, scientific output, the arts, and fashion.`,
   },
-  Chukyo: {
-    url: 'https://docs.google.com/document/d/1dWmylepjgRPsRUh1EzwyPVHm8-ND7UZmTxdtmRkfX5k/edit',
+  Eretz: {
+    about: `Eretz is the capital and largest city of the Order of Shivon. It houses the Great Temple, a structure dating back thousands of years to the era of the First Hasmenionian Empire. According to Hasmonean tradition, this is the site where God instructed Zechariah to establish the Temple.`,
   },
-  Mizuhara: {
-    url: 'https://docs.google.com/document/d/18954-l9tH3rXZD2m5dzk9RM5nBrvsKSRCB2fr5YMB_A/edit',
-  },
-  Naginomiya: {
-    url: 'https://docs.google.com/document/d/1-OGkHVbZ6hOARyd4c7Q1LuRxJT9KLKX4NsWfl9Bw85U/edit',
+  Nexus: {
+    about: `Nexus is the capital city of the Elysian State of Unity. Located at the end of the Aquila Valley and along the Patawomeck river, Nexus stands as the Unity State's 4th-largest city in terms of population and GDP, with an urban population of 3,52 million as of 1935 and a GDP PPP of $414.95 billion, standing as an important hub of commerce and travel for the Elysian Eastern seaboard. It acts as the southern demographic and geographic center of the Northeast Megalopolis.`,
   },
   Pietari: {
-    url: 'https://docs.google.com/document/d/18AwkLg4Fk67j4VRFQnVjYUFNoXEQdLjA0vYUnpPZn-c/edit',
     about: `Pietari is the capital and most populous city of the United Socialist States of Karjania. It is located on the shore of the Laatokka and Inkeri Lakes in northern Evria, where it's one of the region's largest cities. Its population exceeds 5 million, it's also the economic and cultural center of Karjania. Pietari doesn't belong to any subdivisions, its main administrative body is the Pietari City Council. Pietari has 5 football stadiums, a university, the largest square in Karjania and is the location where the Karjanian Communist Congress is held. It's also one of the historical centres of the traditional Routanmaa region, the most populated region in Karjania.`,
   },
   Shinkeisei: {
-    url: 'https://docs.google.com/document/d/1t4Keh33LsXlkO_XV-ZZTi8puPdWctH1gO-PICYg6NqM/edit',
     about: `Shinkeisei is the capital of Nichirin and the second-most populous city in the world, with over 36 million residents across 94 wards. Situated at the head of Senpan Bay where the Sanzu, Kasuhara, and Hinode rivers converge, it serves as the seat of the Miyamoto Shogunate and headquarters of the Shogunate Navy. With a GDP exceeding $2.5 trillion, Shinkeisei is the world's largest metropolitan economy and home to 17 of Nichirin's 20 largest zaibatsu. Landmarks include the Palace of the Solar Halo, the Sōtenroku shrine district at the foot of Mount Sōten, and Zenbonsakura Station, the continent's most advanced railway terminal.`,
-  },
-  Takarazuka: {
-    url: 'https://docs.google.com/document/d/1-bQViyEqRaqKBjwBc8T6AdZ92H-LJLIKmXlo2kOhwqQ/edit',
   },
 }

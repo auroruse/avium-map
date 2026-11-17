@@ -397,11 +397,19 @@ def off_shore(col, land, has, pm):
     ground takes that ground's photograph instead, mirrored across where the two meet, as terrain.py lays its relief."""
     pl = np.load(os.path.join(WORK, "place.npz")); lat, lon = pl["lat"], pl["lon"]; ok = np.isfinite(lat)
     _, (iy, ix) = ndi.distance_transform_edt(~ok, return_indices=True); lat = lat[iy, ix]; lon = lon[iy, ix]; del iy, ix
-    lab = np.load(os.path.join(WORK, "real_lab.npy"), mmap_mode="r")
-    wet = np.asarray(lab[np.clip(((90 - lat) * 60).astype(int), 0, 10799), ((lon + 180) * 60).astype(int) % 21600]) == 0
-    sea = land & has & ~pm & (np.load(os.path.join(WORK, "ereal_adj.npy")) < 2.0) & wet.repeat(4, 0).repeat(4, 1); del wet, lat, lon
+    # real sea, and with it the islets a few cells across: at 60 arc-seconds one is a pixel or two of haze, and it is
+    # exactly what the grey was painted from
+    dry = ndi.binary_opening(np.load(os.path.join(WORK, "real_lab.npy")) != 0, iterations=3)
+    wet = ~dry[np.clip(((90 - lat) * 60).astype(int), 0, 10799), ((lon + 180) * 60).astype(int) % 21600]; del dry
+    # ...and ground the overlay puts nowhere at all, which prep() gave its nearest neighbour's colour: beside ground like
+    # this that neighbour is the same grey
+    sea = land & ~pm & ((has & (np.load(os.path.join(WORK, "ereal_adj.npy")) < 2.0) & wet.repeat(4, 0).repeat(4, 1)) | ~has); del wet, lat, lon
     isl = island_places(land, has, pm); own = np.zeros((OUT, OUT), bool); own[isl[0], isl[1]] = True
-    sea &= ~own; valid = land & ~pm & ~sea & (has | own); del own
+    sea &= ~own
+    # ...and the few px of real shore beside it, which the sampling blends toward the same paint: on Kienam's west arm they
+    # were a sliver of grey that passed for ground and was mirrored back in
+    sea |= ndi.binary_dilation(sea, iterations=3) & land & ~pm & ~own & (np.load(os.path.join(WORK, "ereal_adj.npy")) < 10.0)
+    valid = land & ~pm & ~sea & (has | own); del own
     dist, (iy, ix) = ndi.distance_transform_edt(~valid, return_indices=True)
     ys, xs = np.nonzero(sea & (dist > 4.0)); w = _ss((dist[ys, xs] - 4.0) / 6.0)[:, None]; del dist
     qy, qx = iy[ys, xs], ix[ys, xs]; del iy, ix

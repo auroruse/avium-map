@@ -534,17 +534,32 @@ body.hybridmap .label-sea span {
   background: none;
 }
 
-/* "More on Talopedia" — grey lead-in, the source itself as the link */
+/* The way to the article: a small link at the end of the About heading's own
+   line. It has been four other things, all inside or under the card, and each
+   one fought the card's "More" for the same corner (the user, 17 Nov 2026: "it
+   looks kinda ugly", "Both the more and the Talopedia links? Come on man.",
+   then "Just put a Talopedia link, smaller, next to about, and bring more
+   back"). On the heading it names where the blurb is from and leaves the card
+   as it was. */
+.cp-section-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
 .cp-source {
-  display: inline-block;
-  margin-top: 10px;
-  font-size: 12.5px;
-  color: rgba(255,255,255,0.5);
+  color: #0a84ff;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0;
   text-decoration: none;
 }
 
 .cp-source span {
-  color: #0a84ff;
+  margin-left: 3px;
+}
+
+.cp-source:hover {
   text-decoration: underline;
 }
 
@@ -2178,8 +2193,7 @@ body.hybridmap .label-sea span {
   overscroll-behavior: contain;
 }
 
-.cp-about + .cp-source,
-.cp-source + .cp-section {
+.cp-about + .cp-section {
   margin-top: 14px;
 }
 
