@@ -258,6 +258,18 @@ def land_window(r0, r1, c0, c1):
     YL, XL = np.meshgrid((np.arange(nr) + 0.5) / F - 0.5, (np.arange(nc) + 0.5) / F - 0.5, indexing="ij")
     up = lambda a, o=1: ndi.map_coordinates(a.astype(np.float32), [YL, XL], order=o, mode="nearest")
     Y = (YL + a0).ravel(); X = (XL + b0).ravel(); n = Y.size
+    # ground colour.paint_over laid from a piece of real ground elsewhere reads the photograph where that piece is from
+    moved = np.zeros(n, bool); join = None
+    if os.path.exists(os.path.join(WORK, "paint_from.npy")):
+        pf = mm("paint_from.npy"); oy = up(crop(pf[0]), 0); ox = up(crop(pf[1]), 0); moved = ((oy != 0) | (ox != 0)).ravel()
+        if moved.any():
+            # where two pieces meet, or a piece and the ground that was there, the photograph changes place between one px and
+            # the next: its fine band has no meaning across that line and is left out for a px or two either side
+            k_ = oy * 4096.0 + ox; join = np.zeros(k_.shape, bool)
+            join[1:] |= k_[1:] != k_[:-1]; join[:-1] |= k_[1:] != k_[:-1]; join[:, 1:] |= k_[:, 1:] != k_[:, :-1]; join[:, :-1] |= k_[:, 1:] != k_[:, :-1]
+            join = np.clip(g(ndi.binary_dilation(join, iterations=F).astype(np.float32), 0.75 * F) * 1.6, 0, 1); del k_
+            Y = Y + oy.ravel(); X = X + ox.ravel()
+        del oy, ox
     # every point's real place: through the warps, or the real island its ocean island was given
     regs = S["P"](*S["P"].unnudged(Y, X))
     isl = np.isfinite(irow)
@@ -283,13 +295,19 @@ def land_window(r0, r1, c0, c1):
         Xi = np.stack([g(Xw[..., k], s) + iso[..., k] - g(iso[..., k], s) for k in range(3)], -1); Xh = Xw + w[..., None] * (Xi - Xw)
     # colour
     s = 1.5 * F; B = np.stack([up(col[..., k]) for k in range(3)], -1); dryw = ok * (1 - _ss(wat / 0.4)); tr = np.clip(up(tr12), 0, 1) * dryw
+    # ground with no photograph of ground (colour.seam_mask) has no texture or fine relief worth reading at its place
+    # either, unless it was laid from a piece of real ground: that piece's photograph is its own
+    mv = moved.reshape(nr, nc)
+    if os.path.exists(os.path.join(WORK, "seam.npy")): dryw = dryw * (1 - _ss((g(up(crop(mm("seam.npy"))), 1.0 * F) - 0.15) / 0.5) * ~mv)
+    tr = np.where(mv, dryw, tr * (dryw > 0.02))
     GB = np.stack([g(B[..., k], s) for k in range(3)], -1); GX = np.stack([g(Xh[..., k], s) for k in range(3)], -1); hb = Xh - GX
+    if join is not None: hb = hb * (1 - join)[..., None]
     lum = lambda c: c @ np.array([0.30, 0.59, 0.11], np.float32)
     rel = np.clip(lum(hb) / np.maximum(lum(GX), 30.0), -0.22, 0.22) * dryw * ~C.snowlike(np.clip(GX, 0, 255))
     made = B * (1.0 + rel)[..., None]; colh = np.clip(made + tr[..., None] * (GB + hb - made), 0, 255)
     # relief
     Bh = up(np.where(land, H, level), 3); dco = up(ndi.distance_transform_edt(land).astype(np.float32))
-    te = _ss((dco - 0.8) / 2.5) * ok * (1 - _ss(g(mir, 1.5 * F) / 0.06)) * (1 - _ss((np.abs(g(Bh, s) - g(Z, s)) - 60.0) / 140.0)); te = g(te, 1.0 * F)
+    te = _ss((dco - 0.8) / 2.5) * ok * (1 - _ss(g(mir, 1.5 * F) / 0.06)) * (1 - _ss((np.abs(g(Bh, s) - g(Z, s)) - 60.0) / 140.0)); te = g(te * (dryw > 0.02), 1.0 * F)
     Zh = Bh + te * ((Z - g(Z, s)) - (Bh - g(Bh, s)))
     k = np.clip(1.0 + 1.25 * (shade_of(Zh, 7.0, 1750.0 / F) - FLAT), 0.5, 1.22)
     o = (slice((r0 - a0) * F, (r0 - a0 + r1 - r0) * F), slice((c0 - b0) * F, (c0 - b0 + c1 - c0) * F))

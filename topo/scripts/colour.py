@@ -332,7 +332,7 @@ def compose(land, has, H, pm):
 
 BLOCK = 40
 GRAIN = 6.0                      # px: what of a copied piece is finer than this is copied; its tone is not
-def paint_over(col, land, bad, pm, nosrc=None, tonal=False):
+def paint_over(col, land, bad, pm, nosrc=None, tonal=False, came=None):
     """Ground under ice that Avium would not keep takes real bare ground from beside it: piece by ragged piece, a place
     nearby where the same shape of ground lies bare is copied across, so what goes in is a piece of the photograph and
     not a smear of its nearest edge. Pieces that find no such place take the nearest bare pixel's colour. `nosrc`:
@@ -342,7 +342,11 @@ def paint_over(col, land, bad, pm, nosrc=None, tonal=False):
     round where it goes, carried in smoothly from every side. Copied whole, each piece brings its own tone with it, and
     where the ice is many pieces wide, as over the islands east of Dyche Bay, they stood side by side as a quilt of
     squares, dark tundra against pale rock (user, 17 Nov 2026: "Possible texture glitches?"). Kemet's shore, a strip one
-    piece wide that the user has passed, is still copied whole."""
+    piece wide that the user has passed, is still copied whole.
+
+    `came`: an int16 array (2, OUT, OUT) to receive, for every px painted from a piece, how far away (down, right) the
+    ground it was copied from lies. hybrid.py reads the 500 m photograph there, so painted ground is as sharp as the
+    photograph beside it and not this layer enlarged."""
     bad = ndi.binary_dilation(bad, iterations=2) & land & ~pm
     if not bad.any(): return 0
     good = land & ~pm & ~bad & ~snowlike(col)
@@ -374,7 +378,10 @@ def paint_over(col, land, bad, pm, nosrc=None, tonal=False):
         for dy, dx in offs:
             qy = py + dy; qx = px + dx
             if qy.min() < 0 or qx.min() < 0 or qy.max() >= OUT or qx.max() >= OUT: continue
-            if good[qy, qx].all(): col[py, px] = np.clip(np.round(tone[g] + grain[qy, qx]), 0, 255) if tonal else src[qy, qx]; n += 1; break
+            if good[qy, qx].all():
+                col[py, px] = np.clip(np.round(tone[g] + grain[qy, qx]), 0, 255) if tonal else src[qy, qx]; n += 1
+                if came is not None: came[0][py, px] = dy; came[1][py, px] = dx
+                break
         else:
             left[py, px] = True
             if tonal: col[py, px] = np.clip(np.round(tone[g]), 0, 255)
@@ -388,35 +395,28 @@ def paint_over(col, land, bad, pm, nosrc=None, tonal=False):
     tick("painted over: %d px, in %d pieces of real ground copied in and %d px from their nearest neighbour" % (len(ys), n, int(left.sum())))
     return len(ys)
 
-# ------------------------------------------------------------------ ground far out on real sea
-def off_shore(col, land, has, pm):
-    """Avium ground whose real place is real sea shows "the water painted over from the nearest land". Beside a real
-    coast that is the coast's own colour, and right. Far out it is whatever the nearest land happens to be, and off
-    Vietnam that is one hazy pixel of an islet, spread flat and grey over half an Avium island (the west arm of Kienam;
-    the islands that are wholly out there are islands.py's). Past a few px from ground that has a real photograph, such
-    ground takes that ground's photograph instead, mirrored across where the two meet, as terrain.py lays its relief."""
-    pl = np.load(os.path.join(WORK, "place.npz")); lat, lon = pl["lat"], pl["lon"]; ok = np.isfinite(lat)
-    _, (iy, ix) = ndi.distance_transform_edt(~ok, return_indices=True); lat = lat[iy, ix]; lon = lon[iy, ix]; del iy, ix
-    # real sea, and with it the islets a few cells across: at 60 arc-seconds one is a pixel or two of haze, and it is
-    # exactly what the grey was painted from
-    dry = ndi.binary_opening(np.load(os.path.join(WORK, "real_lab.npy")) != 0, iterations=3)
-    wet = ~dry[np.clip(((90 - lat) * 60).astype(int), 0, 10799), ((lon + 180) * 60).astype(int) % 21600]; del dry
-    # ...and ground the overlay puts nowhere at all, which prep() gave its nearest neighbour's colour: beside ground like
-    # this that neighbour is the same grey
-    sea = land & ~pm & ((has & (np.load(os.path.join(WORK, "ereal_adj.npy")) < 2.0) & wet.repeat(4, 0).repeat(4, 1)) | ~has); del wet, lat, lon
+# ------------------------------------------------------------------ ground with no photograph of ground
+def seam_mask(land, has, pm):
+    """Where the overlay presses apart pieces of Earth together (Borneo, Sulawesi and Java are one land in Cahaya), the
+    ground between them has no photograph of ground. Either its real place is real sea, which shows "the water painted
+    over from the nearest land": a smear of the coast, or far out whatever land is nearest, off Vietnam one hazy pixel of
+    an islet spread grey over half an island of Kienam. Or it is a real shore stretched many times over to fill the gap,
+    where the cells laid true to scale cannot stand in because they run off that shore. 2.5% of the land, in blotches
+    hundreds of km across (user, 17 Nov 2026: "Possible texture glitches?", then of Cahaya "Pretty rough patch").
+    -> the mask, also written to work/seam.npy for hybrid.py. paint_over(tonal=True) lays real ground on it: the tone
+    of the photographed ground round it and the grain of pieces of that ground."""
     isl = island_places(land, has, pm); own = np.zeros((OUT, OUT), bool); own[isl[0], isl[1]] = True
-    sea &= ~own
-    # ...and the few px of real shore beside it, which the sampling blends toward the same paint: on Kienam's west arm they
-    # were a sliver of grey that passed for ground and was mirrored back in
-    sea |= ndi.binary_dilation(sea, iterations=3) & land & ~pm & ~own & (np.load(os.path.join(WORK, "ereal_adj.npy")) < 10.0)
-    valid = land & ~pm & ~sea & (has | own); del own
-    dist, (iy, ix) = ndi.distance_transform_edt(~valid, return_indices=True)
-    ys, xs = np.nonzero(sea & (dist > 4.0)); w = _ss((dist[ys, xs] - 4.0) / 6.0)[:, None]; del dist
-    qy, qx = iy[ys, xs], ix[ys, xs]; del iy, ix
-    my = np.clip(2 * qy - ys, 0, OUT - 1); mx = np.clip(2 * qx - xs, 0, OUT - 1)
-    new = np.where(valid[my, mx][:, None], col[my, mx], col[qy, qx]).astype(np.float32)
-    col[ys, xs] = np.clip(np.round(col[ys, xs] + w * (new - col[ys, xs])), 0, 255)
-    tick("ground far out on real sea, given the photograph of the ground beside it: %d px" % len(ys))
+    E = np.load(os.path.join(WORK, "ereal_adj.npy"))
+    sea = land & ~pm & ~own & ((has & (E < 2.0)) | ~has)             # ...and ground the overlay puts nowhere at all
+    sea |= ndi.binary_dilation(sea, iterations=3) & land & ~pm & ~own & (E < 10.0); del E      # the shore blended toward the paint
+    ys, xs, _, _, _, w = cells(land, has)
+    pl = np.load(os.path.join(WORK, "place.npz")); ok = np.isfinite(pl["lat"])
+    w3 = ndi.gaussian_filter((_ss((pl["stretch"] - ISO_FROM) / (ISO_FULL - ISO_FROM)) * ok).astype(np.float32), 2.0)
+    wz = np.clip(ndi.zoom(w3, 4, order=1), 0, 1) * (land & has); del w3
+    smear = np.zeros((OUT, OUT), bool); smear[ys, xs] = wz[ys, xs] - w > 0.5; del wz
+    seam = sea | (smear & ~pm & ~own)
+    np.save(os.path.join(WORK, "seam.npy"), seam); tick("ground with no photograph of ground: %.2f%% of the land" % (100.0 * seam.sum() / (land & ~pm).sum()))
+    return seam
 
 # ------------------------------------------------------------------ Kemet's shore
 KEMET = (slice(6840, 7560), slice(6860, 7340))      # rows, cols (12000 grid): the Sea of Kemet's east shore, from the neck south
@@ -585,8 +585,9 @@ if __name__ == "__main__":
     if "--prep" in sys.argv: sys.exit(0)
     H = np.load(os.path.join(WORK, "height.npy")); pm = polar_mask()
     col, bad = compose(land, has, H, pm)
-    off_shore(col, land, has, pm)
-    paint_over(col, land, bad, pm, tonal=True)
+    came = np.zeros((2, OUT, OUT), np.int16)
+    paint_over(col, land, bad | seam_mask(land, has, pm), pm, tonal=True, came=came)
+    np.save(os.path.join(WORK, "paint_from.npy"), came); del came
     flank_colour(col, land, has, H, np.load(os.path.join(WORK, "ereal_adj.npy")))
     kemet_shore(col, land, np.load(os.path.join(WORK, "waterlevel_c.npy"), mmap_mode="r"), H, pm)
     pc = np.load(os.path.join(WORK, "polar_cache.npz"))
