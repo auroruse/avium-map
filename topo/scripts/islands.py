@@ -14,6 +14,13 @@ cities on them"):
 Each real island is laid on its Avium outline by the turn, mirror, scale and shift that make the two outlines agree
 best, at real heights. Avium land the real island does not cover takes the nearest real ground, falling away.
 ETOPO 2022 60s surface, so ice caps (Svalbard) are their surface. Polar ground is polar.py's and is left alone.
+
+An island the overlay does put on Earth, but on Earth's open sea, is the same case and was missed: it counted as
+having ground under it, stood dead flat at sea level and took the colour of "water painted over from the nearest
+land", which off Vietnam is one hazy pixel of Phu Quy spread over a hundred km (the Gonenite Islands' grey ones; user,
+17 Nov 2026: "Possible texture glitches?"). With `real` given (where the ground under the overlay is real land), an
+island less than half on real land is treated like the others. They are placed after the rest, so no island that had
+a real island before is given a different one.
 """
 import os, sys, csv
 import numpy as np
@@ -143,7 +150,7 @@ def _cities(lab, targets):
         if l in targets and donor.get(r["NAME"]) in DONORS: out.setdefault(int(l), []).append(donor[r["NAME"]])
     return out
 
-def build(h, land, has0, polar, KM, log=print, places=None):
+def build(h, land, has0, polar, KM, log=print, places=None, real=None):
     """h: land heights (12000 grid) to overwrite on the islands; has0: real elevation under the overlay, before any
     repair; polar: polar.py's ground. -> h, the mask of what was changed, and a report line per island.
     places: a list to receive (slice, mask, row, col) per island: where on the real 60s grid each of its px lies, so
@@ -151,13 +158,18 @@ def build(h, land, has0, polar, KM, log=print, places=None):
     lab, n = ndi.label(land); sz = np.bincount(lab.ravel())
     hs = np.bincount(lab.ravel(), weights=has0.ravel(), minlength=n + 1); ps = np.bincount(lab.ravel(), weights=polar.ravel(), minlength=n + 1)
     targets = [l for l in range(1, n + 1) if sz[l] < 2_000_000 and hs[l] / sz[l] < 0.5 and ps[l] / sz[l] < 0.2]
-    objs = ndi.find_objects(lab); cit = _cities(lab, set(targets))
-    cm = dict(zip(targets, ndi.center_of_mass(land, lab, targets)))
+    extra = []
+    if real is not None:
+        rl_ = np.bincount(lab.ravel(), weights=real.ravel(), minlength=n + 1)
+        extra = [l for l in range(1, n + 1) if sz[l] < 2_000_000 and hs[l] / sz[l] >= 0.5 and rl_[l] / sz[l] < 0.5 and ps[l] / sz[l] < 0.2]
+    objs = ndi.find_objects(lab); cit = _cities(lab, set(targets)); cit_all = {**cit, **_cities(lab, set(extra))} if extra else cit
+    cm = dict(zip(targets + extra, ndi.center_of_mass(land, lab, targets + extra)))
     flat = np.load(os.path.join(WORK, "fwd_lat.npy")); flon = np.load(os.path.join(WORK, "fwd_lon.npy"))
     ok = np.isfinite(flat); _, (fy, fx) = ndi.distance_transform_edt(~ok, return_indices=True); f = flat.shape[0] / land.shape[0]
     # which real place each island looks to: its city's donor, its archipelago's donor, or the overlay's nearest land
     plan = {}
-    for l in targets:
+    for l in targets + extra:
+        cit = cit if l in targets else cit_all                  # the islands there were before look only to each other
         if l in cit: plan[l] = ("city", cit[l][0], DONORS[cit[l][0]]); continue
         d, k = min((float(np.hypot(*np.subtract(cm[l], cm[c]))), c) for c in cit) if cit else (1e9, None)
         if d <= NEAR: plan[l] = ("group", cit[k][0], DONORS[cit[k][0]])
@@ -176,7 +188,8 @@ def build(h, land, has0, polar, KM, log=print, places=None):
             cache[key] = Rs
         return cache[key]
     # cities first, so each archipelago knows which of its islands are taken
-    for l in sorted(targets, key=lambda l: (plan[l][0] != "city", -sz[l])):
+    order = lambda ls: sorted(ls, key=lambda l: (plan[l][0] != "city", -sz[l]))
+    for l in order(targets) + order(extra):
         kind, who, centre = plan[l]; sl = objs[l - 1]
         pad = int(0.3 * max(sl[0].stop - sl[0].start, sl[1].stop - sl[1].start)) + 4
         sl = (slice(max(sl[0].start - pad, 0), min(sl[0].stop + pad, land.shape[0])), slice(max(sl[1].start - pad, 0), min(sl[1].stop + pad, land.shape[1])))
@@ -217,5 +230,5 @@ def build(h, land, has0, polar, KM, log=print, places=None):
         s, th, mir, _ = fit
         report.append((l, int(sz[l]), kind, who, "%.0f km2 real island at %.2f, %.2f; agreement %.2f, scale %.2f, turned %.0f%s, top %.0f m"
                        % (R.area, R.lat_lon[0], R.lat_lon[1], v, 1 / s, np.degrees(th) % 360, ", mirrored" if mir else "", float(z[t].max()))))
-    log("  islands with nothing under them given real ground: %d of %d (%d px)" % (sum(1 for r in report if "real island" in r[4]), len(targets), int(changed.sum())))
+    log("  islands with nothing under them given real ground: %d of %d (%d px)" % (sum(1 for r in report if "real island" in r[4]), len(targets) + len(extra), int(changed.sum())))
     return h, changed, report

@@ -3,6 +3,7 @@ import L from 'leaflet'
 import citiesData from './data/cities.json'
 import tileVersions from './data/tiles.json'
 import labelsData from './data/labels.json'
+import waterFitData from './data/water.json'
 // Vite fingerprints and emits it; the element lives in index.html so the column
 // has its header before any script runs.
 import bannerUrl from './assets/banner.png'
@@ -226,7 +227,9 @@ const map = L.map('map', {
   crs: L.CRS.Simple,
   minZoom: 2,
   maxZoom: MAX_ZOOM,
-  zoomSnap: 0.5,
+  // No snap: the zoom rests wherever the wheel leaves it (Smooth zoom, at the
+  // foot of this file). A click on + or - is still half a level.
+  zoomSnap: 0,
   zoomDelta: 0.5,
   center: px(CONTENT / 2, CONTENT / 2),
   zoom: 2,
@@ -238,6 +241,28 @@ const map = L.map('map', {
 })
 
 L.control.zoom({ position: 'topright' }).addTo(map)
+
+// The zoom is continuous (see Smooth zoom, at the foot of this file): it rests at
+// any fraction, not on half levels. What is drawn follows it as closely as is
+// worth working out. Sizes are solved from the zoom itself. Which names are on is
+// worked out per eighth of a level, the eighth at or below, which is the one whose
+// spacing is guaranteed to hold at any larger scale; at that grain a zoom in
+// brings names on a few at a time, where half levels brought them on in batches
+// (the user: "we don't have true smooth scrolling because labels and everything
+// still follow stages").
+const ZOOM_STEP = 0.125
+const stepZoom = (z: number) => Math.floor(z / ZOOM_STEP + 1e-6) * ZOOM_STEP
+const quarterStep = (z: number) => Math.round(z * 4) / 4
+
+// A marker that leaves its z-index alone. Leaflet stacks markers by how far down
+// the screen they are and rewrites every one's z-index each time it moves them,
+// which during a zoom is every frame: several hundred stacking changes for names
+// that never overlap in the first place. These take their order from the
+// stylesheet instead (area names under stations under cities).
+const FlatMarker = L.Marker.extend({ _updateZIndex() {} }) as unknown as new (
+  latlng: L.LatLngExpression,
+  options?: L.MarkerOptions
+) => L.Marker
 
 // How much of the map the sidebar hides. Zero on a phone, where the sheet
 // covers the bottom instead and the map is free to use its own centre.
@@ -537,13 +562,6 @@ const LABEL_SIZE = { major: 13, minor: 11, islet: 9 }
 const WRAP_CHARS = 12
 const WRAP_MAX = 3
 
-// The zoom a country name is drawn at its full tier size, and the floor of the
-// range over which it holds it. Above this it never grows — zooming into a
-// nation is asking for the cities under its name. Below it the name shrinks with
-// the map, because the tier size against a land mass half as wide reads as
-// oversized: the same 13px that sits right at user zoom 4 was shouting at 3.
-const SIZE_HOLD_Z = 4
-
 const MIN_SPAN = 45   // map px, so a one-city nation still earns a name eventually
 const FIT = 0.75      // the name spans this fraction of the area on screen
 const FS_MIN = 8.5    // legible: the floor a derived span produces, and the size a
@@ -563,12 +581,53 @@ const WATER = new Set(['ocean', 'sea'])
 // with it. Continents keep the old pair on purpose: nothing about them changed.
 const ADVANCE = {
   continent: 0.68 + 0.22, // system stack, 500
-  land: 0.52 + 0.02, // Roboto Condensed 700 — .label-nation, .label-colony
+  // Bold condensed capitals, measured over all 77 of these names: 0.52 in San
+  // Francisco Condensed and 0.53 in Roboto Condensed — .label-nation, .label-colony
+  land: 0.53 + 0.08,
   water: 0.655 + 0.15, // Inter 300 italic — .label-ocean, .label-sea
+  // Semibold italic in mixed case, measured over all 81 of these names: 0.51 in
+  // San Francisco, which a Mac draws them in, and 0.565 in Inter, which everything
+  // else does — the Satellite map's water (body.hybridmap .label-ocean, .label-sea)
+  waterSat: 0.565 + 0.08,
 }
+// The Satellite map sets its water as Apple Maps' satellite view does (looked at
+// zoom by zoom, 17 Nov 2026): small, italic, in upper and lower case, at a size
+// that says how big the water is and never at the width of it. On the drawn maps
+// a sea's name is how its extent is read; over a photograph the water is plain to
+// see and a name laid across all of it is in the way.
+const satWater = (def: LabelDef) => settings.mode === 'hybrid' && WATER.has(def.type)
+// Screen px. A name is never smaller than `min`; it grows with its water until
+// it reaches the cap its water has earned (satWaterCap); and it is not shown at
+// all until it fits inside its water at `min`, which is what brings the lakes in
+// one by one on the way down, as they come in there.
+//
+// `fill` is how much of its water's width a name may take. It was all of it, so
+// a name came on the moment it reached from shore to shore and stayed that way
+// while it grew: LAKE ARAKANA was 62px across a lake of 70 (the user, 17 Nov
+// 2026: "why are these smaller features so big and overflowing?"). Apple's are
+// nowhere near their shores: Ligurian Sea is 46px in a sea of 300.
+const SAT_WATER = { min: 9.5, fill: 0.6 }
+// Where each of these names sits and how wide a box of its own shape is water
+// there, [x, y, width] in px of the drawing, measured against the land by
+// topo/scripts/waternames.py. The hand-placed point and span in labels.json are
+// for a name spread across its sea; set small, a name went on the moment it was
+// half the width of that span, which for sixty of the eighty-one put it across
+// the shore (LAKE RAZYRV three quarters on land when it first appeared; the user:
+// "Did you align all water labels correctly within their bodies and check at
+// every zoom?"). With these no name has more than a tenth of itself on land at
+// any zoom it is shown: `waternames.py check` prints the whole table.
+const WATER_FIT = waterFitData as unknown as Record<string, [number, number, number]>
+// An ocean and the largest seas at 14px, a middling sea at 11.5 to 12.5 and a
+// lake or a bay at 10.5: a pixel per doubling of the water's width. Measured off
+// Apple's map the day the city names were: North Atlantic Ocean 12.5px, North Sea
+// and Mediterranean Sea 13.5 to 14, Ligurian Sea 11. It ran to 17 ("Ours seems
+// too bulky?").
+const satWaterCap = (span: number) => Math.min(14, Math.max(10.5, 8.5 + Math.log2(span / 20)))
 const advanceOf = (def: LabelDef) =>
   WATER.has(def.type)
-    ? ADVANCE.water
+    ? satWater(def)
+      ? ADVANCE.waterSat
+      : ADVANCE.water
     : def.type === 'continent'
       ? ADVANCE.continent
       : ADVANCE.land
@@ -617,6 +676,10 @@ const scaleAt = (z: number) => (2 ** z * U) / TILE_GRID
 // A hand-placed coord always wins; otherwise territories fall back to the
 // centre of their cities, which is why no nation needs placing by hand.
 function labelPos(def: LabelDef): [number, number] | null {
+  // The Satellite map's water sits where it was measured to fit. A hand placement
+  // still moves the name on the drawn maps; this one follows by rerunning the script.
+  const fit = satWater(def) ? WATER_FIT[def.text] : undefined
+  if (fit) return [fit[0], fit[1]]
   if (def.x != null && def.y != null) return [def.x, def.y]
   const a = anchors().get(norm(def.text))
   return a ? [a.x, a.y] : null
@@ -710,13 +773,32 @@ function sizeZoom(def: LabelDef, z: number): number {
 // Hyphens are break points as well as spaces, which is the whole reason
 // HOCHBRUNN-AM-SAHARAMEER can be dealt with at all: as one token it is 23
 // characters of unbreakable name laid across a bay.
+//
+// The Satellite map's water is the exception, and breaks as Apple Maps breaks a
+// sea: lines of nine characters at most, which in practice is a word to a line
+// (South / Atlantic / Ocean) with a short word kept on the line before it (Gulf
+// of / Guinea). Balanced over two lines by length, GREAT SPATRYAN BIGHT came out
+// as Great over Spatryan Bight (the user: "some spacing problems with the new
+// water, eh?"). Which rule a name was broken by is part of its cache key, and
+// applySettings redraws the water names when the map changes between the two.
+const SAT_WRAP_CHARS = 9
 const wrapCache = new Map<string, string[]>()
 function labelLines(def: LabelDef): string[] {
-  let lines = wrapCache.get(def.text)
+  const sat = satWater(def)
+  const key = (sat ? 'sat\t' : '') + def.text
+  let lines = wrapCache.get(key)
   if (lines) return lines
   const tokens = def.text.split(/(?<=-)|\s+/).filter(Boolean)
   const n = Math.min(WRAP_MAX, Math.ceil(def.text.length / WRAP_CHARS))
-  if (tokens.length < 2 || n < 2) {
+  if (sat) {
+    lines = ['']
+    for (const t of tokens) {
+      const cur = lines[lines.length - 1]
+      const joined = cur + (cur && !cur.endsWith('-') ? ' ' : '') + t
+      if (cur && joined.length > SAT_WRAP_CHARS && lines.length < WRAP_MAX) lines.push(t)
+      else lines[lines.length - 1] = joined
+    }
+  } else if (tokens.length < 2 || n < 2) {
     lines = [def.text]
   } else {
     // Aim for equal lines rather than filling each to the brim, or the last one
@@ -731,7 +813,7 @@ function labelLines(def: LabelDef): string[] {
     }
     lines = lines.map(l => l.trim()).filter(Boolean)
   }
-  wrapCache.set(def.text, lines)
+  wrapCache.set(key, lines)
   return lines
 }
 
@@ -739,12 +821,53 @@ function labelLines(def: LabelDef): string[] {
 const labelWidest = (def: LabelDef) =>
   labelLines(def).reduce((m, l) => Math.max(m, l.length), 0)
 
+// A country's name as Apple Maps sets one (looked at zoom by zoom over southern
+// Africa and the Balkans, 17 Nov 2026; the user: "sizes are way too big unless you
+// also adjust nation names to use Apple Maps behavior"). It is small bold
+// capitals, smaller than the name of a city: 8px for the least of them and 10.5px
+// for the largest where they first appear, a pixel or so more by the time they
+// go. It never shrinks with the map; a country too small on screen to hold its
+// name has no name yet (landFits), and where two names would touch, the smaller
+// country's waits (landCrowded).
+//
+// From the continent view inward it grows, as the city names do. Measured the
+// same day off Apple's map over Europe at every zoom: GERMANY is 9.5px at
+// Apple's zoom 4, 11.5 at 5, 13.5 at 6 and 15 at 7, BELGIUM 8, 9, 12 and 12, so
+// a country's name stays a little under its capital's all the way in. Apple's 4
+// is 4.45 here.
+//
+// The size in labels.json is still one of the three tiers (13, 11, 9) or a
+// hand-set value between them, and this is what a tier comes out at on screen.
+const LAND = new Set(['nation', 'colony'])
+const LAND_GROW = 1.5 // px per zoom level
+const LAND_GROW_FROM = 4.45
+const LAND_GROW_SPAN = 3.5 // levels it keeps growing for
+const landSize = (size: number, z: number, minZoom: number) =>
+  8.5 + (size - 9) * 0.5 + LAND_GROW * Math.min(LAND_GROW_SPAN, Math.max(0, z - Math.max(minZoom, LAND_GROW_FROM)))
+// How far past the spread of its cities a name may run. The spread is the middle
+// four fifths of them, which is narrower than the land they stand on.
+const LAND_FIT = 1.6
+
 function areaFontSize(def: LabelDef, z: number): number {
-  if (def.size != null) return def.size * Math.min(1, scaleAt(z) / scaleAt(SIZE_HOLD_Z))
+  if (def.size != null) return landSize(def.size, z, def.minZoom)
+  if (satWater(def)) {
+    const span = areaSpan(def)
+    // The width of water it has; a name the script has not seen falls back on its span
+    const room = WATER_FIT[def.text]?.[2] ?? span * FIT
+    const fit = (SAT_WATER.fill * room * scaleAt(z)) / (labelWidest(def) * advanceOf(def))
+    return fit < SAT_WATER.min ? 0 : Math.min(fit, satWaterCap(span))
+  }
   return (areaSpan(def) * scaleAt(sizeZoom(def, z)) * FIT) / (labelWidest(def) * advanceOf(def))
 }
 
+// A country's name stays for good once it has appeared. Apple Maps drops a
+// country's name on the way in because the cities under it spread into real
+// built-up ground that takes over the view; there is no such ground here, so
+// past its band a country would just have no name (the user, 17 Nov 2026: "make
+// nations names not disappear"). Its maxZoom in labels.json is now only the zoom
+// by which the name is on whether or not its land can hold it (landFits).
 function inBand(def: LabelDef, z: number): boolean {
+  if (def.type === 'nation' || def.type === 'colony') return z >= def.minZoom
   return z >= def.minZoom && z <= (def.maxZoom ?? Infinity)
 }
 
@@ -761,10 +884,48 @@ function labelBox(def: LabelDef, z: number): Box | null {
   return { x: pos[0] * s - w / 2, y: pos[1] * s - h / 2, w, h }
 }
 
+// Whether a country is big enough on screen to carry its name. From the zoom its
+// band used to end at it carries it regardless: an island colony of one city
+// never grows into a name.
+function landFits(def: LabelDef, z: number): boolean {
+  if (z >= (def.maxZoom ?? MAX_ZOOM)) return true
+  const span = anchors().get(norm(def.text))?.span ?? fallbackSpan(def)
+  return labelWidest(def) * areaFontSize(def, z) * advanceOf(def) <= LAND_FIT * span * scaleAt(z)
+}
+
+// The country names that give way at a zoom: every name that fits claims its
+// box, the widest country first, and one whose box is already spoken for waits
+// for the next zoom. Keyed and cleared like the sea cache below.
+const landCrowdCache = new Map<number, Set<LabelDef>>()
+
+function landCrowded(z: number): Set<LabelDef> {
+  const cached = landCrowdCache.get(z)
+  if (cached) return cached
+  const set = new Set<LabelDef>()
+  const spanOf = (d: LabelDef) => anchors().get(norm(d.text))?.span ?? 0
+  const taken: Box[] = []
+  const lands = labelDefs
+    .filter(d => LAND.has(d.type) && d.size != null && inBand(d, z) && landFits(d, z))
+    .sort((a, b) => spanOf(b) - spanOf(a))
+  for (const d of lands) {
+    const b = labelBox(d, z)
+    if (!b) continue
+    if (taken.some(o => boxesOverlap(b, o))) set.add(d)
+    else taken.push(b)
+  }
+  landCrowdCache.set(z, set)
+  return set
+}
+
+const landShown = (def: LabelDef, z: number) =>
+  inBand(def, z) && (def.size == null || (landFits(def, z) && !landCrowded(z).has(def)))
+
 // A nation name sitting in the same water as a sea name reads as one jumble, and
 // the nation is the more specific claim on that spot, so it takes it. The sea
-// name is not lost — the nation band ends at z5, and the sea comes back on its
-// own the moment it does.
+// name is not lost. A country's name used to end at z5 and the sea came back
+// then; now that it stays, past that zoom it only turns away a sea name set near
+// its own size. On the drawn maps a sea's name keeps growing with the zoom, and
+// by then it is lettering a small name can sit on, as a city's does.
 //
 // Keyed on zoom because both boxes move with it, and cleared alongside the
 // placement cache, since a drag or a span edit changes the geometry.
@@ -775,18 +936,20 @@ function suppressedSeas(z: number): Set<LabelDef> {
   if (cached) return cached
 
   const set = new Set<LabelDef>()
-  const claims: Box[] = []
+  // `reach` is the largest sea name a claim still turns away
+  const claims: { box: Box; reach: number }[] = []
   for (const d of labelDefs) {
-    if (d.type !== 'nation' && d.type !== 'colony') continue
-    if (!inBand(d, z)) continue
+    if (!LAND.has(d.type) || !landShown(d, z)) continue
     const b = labelBox(d, z)
-    if (b) claims.push(b)
+    if (b) claims.push({ box: b, reach: z > (d.maxZoom ?? Infinity) ? areaFontSize(d, z) * WATER_BLOCK : Infinity })
   }
   if (claims.length) {
     for (const d of labelDefs) {
       if (d.type !== 'sea') continue
       const b = labelBox(d, z)
-      if (b && claims.some(o => boxesOverlap(b, o))) set.add(d)
+      if (!b) continue
+      const fs = areaFontSize(d, z)
+      if (claims.some(o => fs <= o.reach && boxesOverlap(b, o.box))) set.add(d)
     }
   }
   seaSuppressCache.set(z, set)
@@ -805,9 +968,24 @@ function labelShown(def: LabelDef, z: number): boolean {
   // Territories; ocean and sea answer to Bodies of Water.
   if (!shows(WATER.has(def.type) ? 'water' : 'territories')) return false
   if (!inBand(def, z)) return false
+  // A country's name waits until its land can hold it and no larger name is there
+  if (LAND.has(def.type) && !landShown(def, z)) return false
+  // The Satellite map's water waits until it has the room
+  if (satWater(def) && !areaFontSize(def, z)) return false
   if (def.type === 'sea' && suppressedSeas(z).has(def)) return false
   return true
 }
+
+// Water names are kept in capitals in labels.json and drawn in capitals on every
+// map but one. They go into the page in upper and lower case, which the
+// stylesheet puts back into capitals wherever it is not the Satellite map.
+const SMALL_WORDS = new Set(['of', 'the', 'and'])
+const titleCase = (s: string) =>
+  s
+    .toLowerCase()
+    .replace(/(^|[\s-])(\p{L}+)/gu, (m, sep: string, w: string, i: number) =>
+      i > 0 && SMALL_WORDS.has(w) ? m : sep + w[0].toUpperCase() + w.slice(1)
+    )
 
 function makeLabelMarker(def: LabelDef, pos: [number, number]): L.Marker {
   const handles = DEV
@@ -817,18 +995,17 @@ function makeLabelMarker(def: LabelDef, pos: [number, number]): L.Marker {
   // oceans and seas have no entry there, so they stay inert rather than
   // offering a click that does nothing. Dev keeps the label for editing.
   const nation = DEV ? undefined : nationByName.get(norm(def.text))
-  const m = L.marker(px(pos[0], pos[1]), {
+  const m = new FlatMarker(px(pos[0], pos[1]), {
     icon: L.divIcon({
       className: `map-label label-${def.type}` + (DEV ? ' dev-label' : nation ? ' label-link' : ''),
-      html: `<span>${labelLines(def).join('<br>')}${handles}</span>`,
+      html: `<span>${(WATER.has(def.type) ? labelLines(def).map(titleCase) : labelLines(def)).join('<br>')}${handles}</span>`,
       iconSize: [0, 0],
       iconAnchor: [0, 0],
     }),
     interactive: DEV || !!nation,
     draggable: DEV,
-    // Under the city markers: a city dot sitting on a name is the smaller
-    // target and the more specific answer, so it wins the click
-    zIndexOffset: -1000,
+    // Under the city markers (.map-label's z-index): a city dot sitting on a name
+    // is the smaller target and the more specific answer, so it wins the click
   })
   if (nation) m.on('click', () => openNationPanel(nation))
   return m
@@ -891,7 +1068,8 @@ function wireLabelEdit(def: LabelDef, m: L.Marker) {
         const fs = Math.max(0, reach(ev) - slack) / perFs
         // A country is sized in px directly; everything else still resolves back
         // to the span that produces that size at this zoom
-        if (sizedLabel(def)) def.size = fs
+        // back through landSize, at the zoom the name first appears
+        if (sizedLabel(def)) def.size = 9 + (fs - 8.5) * 2
         else {
             def.span = (fs * labelWidest(def) * advanceOf(def)) / (scaleAt(sizeZoom(def, map.getZoom())) * FIT)
         }
@@ -934,14 +1112,22 @@ function refreshLabel(def: LabelDef) {
   updateCities()
 }
 
+// Called every frame of a zoom, so it writes to the page only what has changed:
+// most names hold one size across most of a zoom, and a write is what costs.
+const labelDrawn = new WeakMap<HTMLElement, string>()
 function updateLabels() {
   const z = map.getZoom()
+  const zs = stepZoom(z)
   for (const [def, marker] of labelMarkers) {
     const el = marker.getElement()
     if (!el) continue
-    const fs = areaFontSize(def, z)
-    el.style.fontSize = fs.toFixed(1) + 'px'
-    el.classList.toggle('label-on', labelShown(def, z))
+    const fs = areaFontSize(def, z).toFixed(1)
+    const on = labelShown(def, zs)
+    const state = fs + (on ? '+' : '-')
+    if (labelDrawn.get(el) === state) continue
+    labelDrawn.set(el, state)
+    el.style.fontSize = fs + 'px'
+    el.classList.toggle('label-on', on)
   }
 }
 
@@ -1146,48 +1332,149 @@ function markerGeom(tier: CityTier): { d: number; rim: number; ring: number } {
   return { d, rim, ring }
 }
 
-function cityMarkerHtml(g: { d: number; rim: number; ring: number }, ink: string): string {
-  return (
-    `<i class="city-dot" style="--d:${g.d}px;--rim:${g.rim}px;` +
-    `--ring:${g.ring.toFixed(2)}px;--ink:${ink}"></i>`
-  )
+function cityMarkerStyle(g: { d: number; rim: number; ring: number }, ink: string): string {
+  return `--d:${g.d}px;--rim:${g.rim}px;--ring:${g.ring.toFixed(2)}px;--ink:${ink}`
 }
 
-// The ladder, read top down. An index into it is a city's rank, so this is also
-// the placement priority order — the two used to be separate functions holding
-// the same seven numbers with nothing keeping them honest.
+function cityMarkerHtml(g: { d: number; rim: number; ring: number }, ink: string): string {
+  return `<i class="city-dot" style="${cityMarkerStyle(g, ink)}"></i>`
+}
+
+// --- City names: Apple Maps' rule ---
 //
-// The bands follow the distribution rather than round figures. The old bottom
-// band held 738 cities, 43% of the map, across a 625x population range and drew
-// them all identically; the old top band ran 5M to 41.8M, so Ganjau looked like
-// any other large city. Both ends are split here, and the 750k band is gone: it
-// held 90 cities across 1.33x and sat 0.3px from its neighbours either side.
+// Measured off Apple Maps itself on 17 Nov 2026 ("Zoom into Europe with Apple
+// Maps literally level by level and see how they distribute cities. Get this
+// right."): its satellite map over Europe captured at every half zoom from 3 to
+// 10, every name on each capture read off with its position, its letter height
+// and its stroke, and the same words rendered at known sizes and weights to
+// calibrate. What Apple does:
 //
-// Radii interpolate into the existing range rather than growing out of it. A
-// bigger dot reserves more of the placement grid, and the whole eight-band
-// ladder costs at most 8 placed labels at any zoom, against 28 for a version
-// that simply scaled everything up.
-const CITY_TIERS: (CityTier & { minPop: number })[] = [
-  { minPop: 15_000_000, radius: 4.641, core: true, fontSize: 14.4, weight: 600 },
-  { minPop:  5_000_000, radius: 4.095, core: true, fontSize: 13.2, weight: 600 },
-  { minPop:  2_000_000, radius: 3.549, core: true, fontSize: 12,   weight: 500 },
-  { minPop:  1_000_000, radius: 3.003, core: true, fontSize: 11.2, weight: 500 },
-  { minPop:    500_000, radius: 2.3,   fontSize: 10 },
-  { minPop:    250_000, radius: 2.1,   fontSize: 9.4 },
-  { minPop:    100_000, radius: 1.85,  fontSize: 8.8 },
-  { minPop:          0, radius: 1.6,   fontSize: 8.2 },
+//   classes  A city's importance decides the zoom its name is switched on. Only
+//            world capitals and megacities exist at the world and continent
+//            views (eight names in all of Europe at Apple's zoom 3 and 3.5);
+//            cities of about a million join at 4, regional centres of 150k or
+//            so at 5, towns of 50k at 6, small towns at 7.
+//   room     Within what is switched on, the most important name is placed
+//            first and a name that would touch one already there waits. There is
+//            no even spacing: Rome and Naples stand 30px apart and both are
+//            named, and empty country stays empty.
+//   growth   Every name enters at 10.5px in a medium weight and grows about
+//            1.5px a zoom level from the level its class came on, thickening as
+//            it goes, to 17.5px bold for Paris four levels in. So at any zoom
+//            the long-established cities are the large ones, and at the world
+//            view everything is one size.
+//
+// The result on Apple's map is a name per 19,000px of land at zoom 3, 37,000 at
+// 3.5, 11,000 at 4 and between 6,000 and 8,000 from 5 inward. Over Evria, with
+// Apple's zoom taken as ours less 0.45 (the same share of the world on screen),
+// this rule gives 22,000, 30,000, 15,000 and 6,000 to 7,600, until user zoom 9
+// or so, where this world runs out of cities to add.
+//
+// What it replaced, in order: a population floor per zoom with every name that
+// fitted drawn at up to 15px bold ("Stuff gets cluttered so fast!", "the city
+// names are too damn massive!"); one distance asked of every city, which named
+// Lyonara two zooms ahead of Lutèce ("It just looks weird"); a distance by
+// importance that held 27 names on a screen at every zoom, all one size, an even
+// grid with no hierarchy that was too many at the world view and too few close
+// in ("notice how Apple isn't trying to cram every possible city in???").
+const CAPITAL_WEIGHT = 10
+const cityScore = (c: City) => c.population * (isCapital(c) ? CAPITAL_WEIGHT : 1)
+const citiesByPriority = [...cities].sort((a, b) => cityScore(b) - cityScore(a) || b.gdp - a.gdp)
+
+// Bands of weighted population. An index is a rank: placement goes band by band,
+// and FALLBACK_RANK is counted in them.
+const SCORE_BANDS = [15_000_000, 5_000_000, 2_000_000, 1_000_000, 500_000, 250_000, 100_000, 0]
+function tierRank(score: number): number {
+  for (let i = 0; i < SCORE_BANDS.length; i++) if (score >= SCORE_BANDS[i]) return i
+  return SCORE_BANDS.length - 1
+}
+
+// Weighted population against the zoom a name is switched on at, read between
+// the rows on a log scale so that names arrive one by one as the map is zoomed
+// and never as a batch. Apple's levels are ours plus 0.45: its 3, 4, 5, 6 and 7
+// are 3.45, 4.45, 5.45, 6.45 and 7.45 here. The first two rows thin the world
+// class out below Apple's zoom 3, where its web map stops and ours goes on to
+// the whole world on one screen; the gap between the second and third is
+// Apple's 3.5, which adds nothing to 3.
+const NAME_ON: [number, number][] = [
+  [100_000_000, 2.5],
+  [10_000_000, 3.45],
+  [9_900_000, 4.1],
+  [1_000_000, 4.45],
+  [600_000, 5],
+  [150_000, 5.45],
+  [100_000, 6],
+  [50_000, 6.45],
+  [30_000, 7],
+  [15_000, 7.2],
 ]
 
-// Bigger tiers always beat smaller ones for space; GDP breaks ties within a tier.
-// The fallback covers a missing or unparsable population, which would otherwise
-// index the table with -1.
-function tierRank(pop: number): number {
-  for (let i = 0; i < CITY_TIERS.length; i++) if (pop >= CITY_TIERS[i].minPop) return i
-  return CITY_TIERS.length - 1
+function nameOnZoom(score: number): number {
+  if (score >= NAME_ON[0][0]) return NAME_ON[0][1]
+  for (let i = 1; i < NAME_ON.length; i++) {
+    if (score < NAME_ON[i][0]) continue
+    const [s0, z0] = NAME_ON[i - 1], [s1, z1] = NAME_ON[i]
+    return z0 + ((z1 - z0) * Math.log(s0 / score)) / Math.log(s0 / s1)
+  }
+  return NAME_ON[NAME_ON.length - 1][1]
 }
 
-function cityTier(pop: number): CityTier {
-  return CITY_TIERS[tierRank(pop)]
+// A name's size at a zoom. It grows from the zoom its class came on; the world
+// class, which is on from the start, grows from Apple's zoom 3 or a little
+// after, the greatest capitals first (London is 12px at Apple's 4, 14 at 5, 15.5
+// at 6 and 17.5 at 7; Munich, which arrives at 4, is 12, 13.5 and 14.5).
+const NAME_FS = 10.5
+const NAME_FS_MAX = 17.5
+const NAME_GROW = 1.5 // px per zoom level
+const GROW_WORLD = 3.8 // where a score of 10M starts to grow
+const GROW_TOP = 3.2 // and one of 100M or more
+
+function nameGrowZoom(score: number): number {
+  return score >= 10_000_000
+    ? Math.max(GROW_TOP, GROW_WORLD - (GROW_WORLD - GROW_TOP) * Math.log10(score / 10_000_000))
+    : nameOnZoom(score)
+}
+
+function nameSizeAt(growZoom: number, z: number): number {
+  // In half pixels, so a name is restyled three times a zoom level rather than
+  // on every step of one
+  return Math.min(NAME_FS_MAX, Math.round((NAME_FS + NAME_GROW * Math.max(0, z - growZoom)) * 2) / 2)
+}
+
+// The zooms a city's name comes on at and starts growing from. Worked out once,
+// and again if a city is moved or edited.
+let cityZoomCache: Map<City, { on: number; grow: number }> | null = null
+function cityZooms(): Map<City, { on: number; grow: number }> {
+  if (cityZoomCache) return cityZoomCache
+  cityZoomCache = new Map()
+  for (const c of cities) {
+    const score = Math.max(1, cityScore(c))
+    cityZoomCache.set(c, { on: nameOnZoom(score), grow: nameGrowZoom(score) })
+  }
+  return cityZoomCache
+}
+
+// What a city is drawn with at a zoom: the name's size, a weight that follows it
+// (medium at 10.5px, semibold by 13, bold from 15, as measured), and a dot that
+// follows it too, 4px across to 6, which is Apple's 4.5 to 6.5. A city of 2M or
+// more keeps its white centre at every size. One object per distinct style, so
+// two cities drawn alike share it.
+const styleCache = new Map<string, CityTier>()
+function cityStyle(c: City, z: number): CityTier {
+  const fontSize = nameSizeAt(cityZooms().get(c)!.grow, z)
+  const core = c.population >= 2_000_000
+  const key = `${fontSize}|${core ? 1 : 0}`
+  let style = styleCache.get(key)
+  if (!style) {
+    style = {
+      radius: Math.min(2.2, Math.max(core ? 1.85 : 1.55, 1.55 + 0.13 * (fontSize - NAME_FS))),
+      core,
+      fontSize,
+      weight: Math.min(700, Math.round((500 + 45 * (fontSize - NAME_FS)) / 10) * 10),
+    }
+    styleCache.set(key, style)
+  }
+  return style
 }
 
 // How much bigger than the biggest city label a water name may be and still
@@ -1199,36 +1486,15 @@ const WATER_BLOCK = 2.5
 // to try before they are dropped from the map; the ones below do not.
 const FALLBACK_RANK = 3
 
-const citiesByPriority = [...cities].sort(
-  (a, b) => tierRank(a.population) - tierRank(b.population) || b.gdp - a.gdp
-)
+// Clear air kept around every name, on each side, on top of the box it is
+// measured in. Apple's closest pairs of names stand about 21px apart centre to
+// centre, one above the other.
+const NAME_PAD = 2
 
-// Eligibility ladder: the floor drops one or two CITY_TIERS bands per zoom until
-// the whole map is on by user zoom 6. One user zoom-in is one 0.5 internal step
-// from the initial z2 view, so this is indexed by (z - 2.5) * 2.
-//
-//   uz1 5M+   uz2 1M+   uz3 500k+   uz4 250k+   uz5 100k+   uz6 everything
-//
-// Eight bands into six steps needs two doublings, and where they go is not
-// arbitrary: the pairs are the two smallest adjacent ones, which is what keeps
-// the largest single step to 458 markers. Doubling anywhere else pushes it to
-// 474 or 771, and the old ladder — everything from 1M down arriving at once —
-// handed the renderer 1325 in one zoom, which is where the jank was.
-//
-// The other thing this buys is that pinning stops inverting rank. A level seeds
-// itself from the level below and processes those cities first, so when the
-// bottom half of the map became eligible in a single step, a 250k city that
-// happened to place was handed space ahead of a 5M city that had not: at user
-// zoom 5, 829 cities outranked by something smaller. Adding bands from the top
-// down keeps the pinned set strictly higher-tier than whatever is arriving, so
-// the two orders agree by construction.
-const ZOOM_BANDS = [1, 3, 4, 5, 6, 7] // index into CITY_TIERS, one per user zoom from 1
-
-function minPop(z: number): number {
-  if (z < 2.5) return Infinity
-  const step = Math.min(Math.round((z - 2.5) * 2), ZOOM_BANDS.length - 1)
-  return CITY_TIERS[ZOOM_BANDS[step]].minPop
-}
+// A city with nowhere to put its name holds back the lesser cities this close to
+// it, so nothing is named ahead of a more important neighbour ("Lyonara shows up
+// before Lutece").
+const NAME_WAIT = 70
 
 type Box = { x: number; y: number; w: number; h: number; water?: boolean }
 
@@ -1245,7 +1511,8 @@ function visROf(tier: CityTier): number {
 // a bolder label would otherwise be handed less room than it takes and print
 // over its neighbour.
 function advanceFor(weight = 400): number {
-  return weight >= 600 ? 0.645 : weight >= 500 ? 0.632 : 0.62
+  // A line through the three measured weights, 400, 500 and 600
+  return 0.62 + Math.max(0, weight - 400) * 0.000133
 }
 
 // View-independent screen position of a city at a zoom level (translation-free,
@@ -1267,7 +1534,7 @@ interface Placement {
 // priority-ordered, and space decides. `pinned` cities (survivors of the
 // previous half-zoom) place first, so zooming in only ever adds cities.
 function computePlacement(z: number, pinned: Placement[]): Placement[] {
-  const threshold = minPop(z)
+  const comesOn = cityZooms()
   // Which corner each survivor used last time. A greedy pass is not stable under
   // new candidates: futureCost weighs every marker still to come, so one more
   // band changes the arithmetic for cities placed long before it and they flip
@@ -1284,29 +1551,13 @@ function computePlacement(z: number, pinned: Placement[]): Placement[] {
   const order = [
     ...pinned.map(p => p.c),
     ...citiesByPriority.filter(
-      c => !held.has(c) && c.x != null && c.y != null && c.population >= threshold
+      c => !held.has(c) && (comesOn.get(c)?.on ?? Infinity) <= z + 1e-9
     ),
-  ].sort((a, b) => tierRank(a.population) - tierRank(b.population))
-
-  // Global marker/text scale (tier ratios intact): 0.8× from user zoom 3, where
-  // the map is down to 1M+ and has room for full-size markers, even smaller
-  // before then. Deliberately no longer the same step as the all-cities zoom,
-  // which is now uz4.
-  const k = z >= 3.5 ? 0.8 : 0.65
+  ].sort((a, b) => tierRank(cityScore(a)) - tierRank(cityScore(b)))
 
   const items = order.map(c => {
-    const base = cityTier(c.population)
-    // Snapped to half a pixel, not a whole one. Rounding to integers is what
-    // flattened eight bands into three — 13 and 12 both come out of the 0.8
-    // scale at 10 — but leaving it fractional costs crispness, because a stem
-    // that lands between pixels cannot be hinted onto the grid. Half a CSS pixel
-    // is exactly one device pixel at 2x, so these land on it.
-    const tier = {
-      ...base,
-      radius: base.radius * k,
-      fontSize: Math.round(base.fontSize * k * 2) / 2,
-    }
-    return { c, tier, visR: visROf(tier), pt: ptAt(c, z), rank: tierRank(c.population) }
+    const tier = cityStyle(c, z)
+    return { c, tier, visR: visROf(tier), pt: ptAt(c, z), rank: tierRank(cityScore(c)) }
   })
 
   // Spatial indexes: same answers as scanning every box, minus the O(n²).
@@ -1395,7 +1646,7 @@ function computePlacement(z: number, pinned: Placement[]): Placement[] {
   // A lake name set at city size is a different thing and still turns names
   // away, so the cut is where the water name stops being comparable to the
   // largest city label at this zoom rather than at a fixed size.
-  const cityFsMax = CITY_TIERS[0].fontSize * k
+  const cityFsMax = nameSizeAt(GROW_TOP, z)
   for (const def of labelDefs) {
     if (!labelShown(def, z)) continue
     const b = labelBox(def, z)
@@ -1406,6 +1657,8 @@ function computePlacement(z: number, pinned: Placement[]): Placement[] {
   }
 
   const placed: Placement[] = []
+  // Cities whose marker is on the map and whose name found no room
+  const waiting: { x: number; y: number }[] = []
 
   // How many upcoming markers a label box would bury (each buried one = hidden city)
   function futureCost(box: Box, from: number): number {
@@ -1469,6 +1722,12 @@ function computePlacement(z: number, pinned: Placement[]): Placement[] {
       continue
     }
 
+    // A name already on the map is never held back, only a new arrival
+    if (!held.has(c) && waiting.some(p => Math.hypot(p.x - pt.x, p.y - pt.y) < NAME_WAIT)) {
+      addBox(dotBox)
+      continue
+    }
+
     const charW = tier.fontSize * advanceFor(tier.weight)
     const w = c.name.length * charW + 4
     const h = tier.fontSize + 4
@@ -1494,30 +1753,41 @@ function computePlacement(z: number, pinned: Placement[]): Placement[] {
       { dir: 'right', off: [gapX, gapY], box: { x: pt.x + gapX, y: pt.y + gapY - h / 2, w, h } },
       { dir: 'left',  off: [-gapX, -gapY], box: { x: pt.x - gapX - w, y: pt.y - gapY - h / 2, w, h } },
     ]
+    for (const cd of corners) {
+      cd.box = { x: cd.box.x - NAME_PAD, y: cd.box.y - NAME_PAD, w: w + 2 * NAME_PAD, h: h + 2 * NAME_PAD }
+    }
 
     // A survivor keeps the corner it already had, so its name does not walk
     // around the dot from one zoom to the next — but only while that corner is
     // free and costs nothing. A held corner that has come to sit on a smaller
     // city takes that city off the map, and a name moving is cheaper than a
     // neighbour disappearing.
+    const blocked = corners.map(cd => collides(cd.box))
+    // Top-right or bottom-left, and nothing else while either is free (the user,
+    // 17 Nov 2026: "only at top right or bottom left unless absolutely necessary
+    // (or else they'd be invisible)"). The other two corners used to compete on
+    // cost with the defaults, so a name went bottom-right whenever that buried one
+    // marker fewer, and a survivor then held it there at every zoom after.
+    const defaultFree = !blocked[0] || !blocked[1]
     const keep = held.get(c)
-    if (keep !== undefined && !collides(corners[keep].box) && !futureCost(corners[keep].box, i + 1)) {
+    if (
+      keep !== undefined && (keep < 2 || !defaultFree) &&
+      !blocked[keep] && !futureCost(corners[keep].box, i + 1)
+    ) {
       addBox(dotBox)
       addBox(corners[keep].box)
       placed.push({ c, tier, dir: corners[keep].dir, off: corners[keep].off, corner: keep })
       continue
     }
 
-    // Every free corner is a candidate, and the one that buries the fewest
-    // upcoming markers wins; the order above breaks ties, so a name still
-    // prefers top-right and still falls back to bottom-left. The fallback pair
-    // used to be reachable only when both defaults were blocked outright, which
-    // meant a long name with one free corner took it however many cities it
-    // covered: Cap de Bonne-Espérance runs 22 characters and its top-right lands
-    // on Vourcestre, with empty water off its bottom-left the whole time.
+    // Between the two defaults, the one that buries the fewest upcoming markers
+    // wins, and the order above breaks ties, so a name prefers top-right and
+    // falls back to bottom-left. The other pair is reached only when both
+    // defaults are blocked outright, which for a city from 1M up is the
+    // difference between a name in an odd corner and no name at all.
     const free = corners
       .map((cd, idx) => ({ ...cd, idx }))
-      .filter(cd => (cd.idx < 2 || rank <= FALLBACK_RANK) && !collides(cd.box))
+      .filter(cd => !blocked[cd.idx] && (cd.idx < 2 || (!defaultFree && rank <= FALLBACK_RANK)))
 
     let hit: (typeof free)[number] | null = null
     let bestCost = Infinity
@@ -1545,6 +1815,7 @@ function computePlacement(z: number, pinned: Placement[]): Placement[] {
       placed.push({ c, tier, dir: hit.dir, off: hit.off, corner: hit.idx })
     } else {
       addBox(dotBox)
+      waiting.push(pt)
     }
   }
 
@@ -1557,8 +1828,8 @@ function computePlacement(z: number, pinned: Placement[]): Placement[] {
 // off past that. The placer is the only thing that knows which, so it is asked
 // rather than second-guessed from the population.
 function zoomForCity(c: City, from: number): number {
-  for (let z = Math.max(from, 4); z <= MAX_ZOOM; z += 0.5) {
-    if (placementsAt(z).some(p => p.c === c)) return z
+  for (let z = stepZoom(Math.max(from, 4)); z <= MAX_ZOOM; z += ZOOM_STEP) {
+    if (placementsAt(z).some(p => p.c === c)) return Math.max(from, z)
   }
   return MAX_ZOOM
 }
@@ -1580,11 +1851,12 @@ function clearFocus() {
 const placementCache = new Map<number, Placement[]>()
 
 function placementsAt(z: number): Placement[] {
+  z = stepZoom(z)
   const cached = placementCache.get(z)
   if (cached) return cached
   // The whole placement, not just the city: the corner each one settled on is
   // what the next level reuses to keep it where it is
-  const pinned = z <= 2.5 ? [] : placementsAt(z - 0.5)
+  const pinned = z <= 2.5 ? [] : placementsAt(z - ZOOM_STEP)
   const result = computePlacement(z, pinned)
   placementCache.set(z, result)
   return result
@@ -1595,30 +1867,72 @@ function invalidatePlacements() {
   // Which seas a nation name covers is geometry too, so it goes stale for the
   // same reasons: a drag, a rename, a span edit, a type change
   seaSuppressCache.clear()
+  landCrowdCache.clear()
+  cityZoomCache = null
+  warmPlacements()
+}
+
+// Every zoom level's placement, worked out one level at a time while the page is
+// idle. Each is a greedy pass over up to 1,700 cities, and left to the moment it
+// is first needed that pass lands in the middle of the zoom that asked for it.
+let warmRun = 0
+function warmPlacements() {
+  const run = ++warmRun
+  // Safari has no requestIdleCallback
+  const idle = (window as { requestIdleCallback?: Window['requestIdleCallback'] }).requestIdleCallback
+  const later = (f: () => void) => (idle ? idle.call(window, f, { timeout: 1500 }) : window.setTimeout(f, 200))
+  let z = 2.5
+  const step = () => {
+    if (run !== warmRun || !settings.cities) return
+    while (z <= MAX_ZOOM && placementCache.has(z)) z += ZOOM_STEP
+    if (z > MAX_ZOOM) return
+    placementsAt(z)
+    later(step)
+  }
+  window.setTimeout(() => later(step), 400)
 }
 
 // Dot and label in one DOM element: no Leaflet tooltip machinery, whose
 // per-label layout passes were the main zoom cost
 function cityIcon(p: Placement, fade: boolean): L.DivIcon {
-  const { c, tier, dir, off } = p
+  const { c, tier } = p
   // The element is the halo, exactly — no margin, because nothing clips it now
   const g = markerGeom(tier)
   const S = g.d
   const ink = isCapital(c) ? CAPITAL_INK : CITY_INK
   const svg = cityMarkerHtml(g, ink)
+  const focus = c === focusedCity ? ' city-icon-focus' : ''
+  return L.divIcon({
+    className: (fade ? 'city-icon' : 'city-icon city-icon-still') + focus,
+    html: svg + `<span class="city-label" style="${cityLabelStyle(p, S)}">${c.name}</span>`,
+    iconSize: [S, S],
+    iconAnchor: [S / 2, S / 2],
+  })
+}
+
+function cityLabelStyle(p: Placement, S: number): string {
+  const { tier, dir, off } = p
   // dir picks the side, off[1] the vertical, signed — a fallback corner puts the
   // name above on the left or below on the right, which the two defaults never do
   const side = dir === 'right' ? 'left' : 'right'
   const pos = `${side}:${S / 2 + Math.abs(off[0])}px;top:${S / 2 + off[1]}px`
-  const type =
-    `font-size:${tier.fontSize.toFixed(2)}px` + (tier.weight ? `;font-weight:${tier.weight}` : '')
-  const focus = c === focusedCity ? ' city-icon-focus' : ''
-  return L.divIcon({
-    className: (fade ? 'city-icon' : 'city-icon city-icon-still') + focus,
-    html: svg + `<span class="city-label" style="${pos};${type}">${c.name}</span>`,
-    iconSize: [S, S],
-    iconAnchor: [S / 2, S / 2],
-  })
+  return pos + `;font-size:${tier.fontSize.toFixed(2)}px` + (tier.weight ? `;font-weight:${tier.weight}` : '')
+}
+
+// A marker already on the map, redrawn where it stands. A name grows half a
+// pixel at a time as the map is zoomed, a third of the names on screen at each
+// step of a zoom, and taking each of those markers off the map and putting a
+// new one on was the cost: this is five style writes to the element it has.
+function restyleCity(el: HTMLElement, p: Placement) {
+  const g = markerGeom(p.tier)
+  const S = g.d
+  el.style.width = el.style.height = `${S}px`
+  el.style.marginLeft = el.style.marginTop = `${-S / 2}px`
+  const dot = el.firstElementChild as HTMLElement | null
+  const label = el.lastElementChild as HTMLElement | null
+  if (dot) dot.style.cssText = cityMarkerStyle(g, isCapital(p.c) ? CAPITAL_INK : CITY_INK)
+  if (label) label.style.cssText = cityLabelStyle(p, S)
+  el.classList.toggle('city-icon-focus', p.c === focusedCity)
 }
 
 // Above this many additions and removals in one pass, the marker pane is
@@ -1665,29 +1979,56 @@ function placementKey(p: Placement): string {
   )
 }
 
-function updateCities() {
-  const z = map.getZoom()
+// What the last cull kept: the set it was cut from and the rectangle it was cut
+// to, in map px. A pan that stays inside that rectangle changes nothing, and it
+// is cut CULL_SLACK screen px wide of the view so that most frames of a pan, and
+// every frame of a zoom in, do.
+const NO_CITIES: Placement[] = []
+const CULL_SLACK = 120
+const reachOf = new WeakMap<Placement[], number>()
+let culledAll: Placement[] | null = null
+let culledBox = { x0: 0, y0: 0, x1: 0, y1: 0 }
+
+// `panOnly` is the call a moving map makes every frame: nothing about the cities
+// has changed, only where the view is, so it may stop at the rectangle test.
+// Every other caller has changed something (the focus, a setting, the zoom) and
+// gets the whole pass.
+function updateCities(panOnly = false) {
+  const zr = map.getZoom()
+  const z = stepZoom(zr)
   // Empty falls through the same diff as any other change, so both toggles tear
   // the markers down without a separate path.
   const hidden = !settings.cities || z < 2.5
-  const all = hidden ? [] : placementsAt(z)
+  const all = hidden ? NO_CITIES : placementsAt(z)
 
   // Viewport cull: placement is still computed map-wide (so what renders is
   // identical), but only markers near the view get DOM nodes. Pad covers the
   // longest label reach so nothing partially visible is ever missing.
-  let reach = 64
-  for (const p of all) {
-    const r = p.c.name.length * p.tier.fontSize * advanceFor(p.tier.weight) + 48
-    if (r > reach) reach = r
+  let reach = reachOf.get(all)
+  if (reach == null) {
+    reach = 64
+    for (const p of all) {
+      const r = p.c.name.length * p.tier.fontSize * advanceFor(p.tier.weight) + 48
+      if (r > reach) reach = r
+    }
+    reachOf.set(all, reach)
   }
+  const s = scaleAt(zr)
   const pb = map.getPixelBounds()
-  const minX = pb.min!.x - reach, maxX = pb.max!.x + reach
-  const minY = pb.min!.y - reach, maxY = pb.max!.y + reach
+  const x0 = (pb.min!.x - reach) / s, x1 = (pb.max!.x + reach) / s
+  const y0 = (pb.min!.y - reach) / s, y1 = (pb.max!.y + reach) / s
+  if (
+    panOnly && all === culledAll &&
+    x0 >= culledBox.x0 && y0 >= culledBox.y0 && x1 <= culledBox.x1 && y1 <= culledBox.y1
+  ) return
+  const slack = CULL_SLACK / s
+  culledAll = all
+  culledBox = { x0: x0 - slack, y0: y0 - slack, x1: x1 + slack, y1: y1 + slack }
 
   const placements: Placement[] = []
   for (const p of all) {
-    const pt = ptAt(p.c, z)
-    if (pt.x >= minX && pt.x <= maxX && pt.y >= minY && pt.y <= maxY) placements.push(p)
+    const cx = p.c.x!, cy = p.c.y!
+    if (cx >= culledBox.x0 && cx <= culledBox.x1 && cy >= culledBox.y0 && cy <= culledBox.y1) placements.push(p)
   }
 
   const want = new Map(placements.map(p => [p.c, p]))
@@ -1724,13 +2065,19 @@ function updateCities() {
     for (const p of build) {
       const key = placementKey(p)
       const existing = shownCities.get(p.c)
+      const el = existing?.marker.getElement()
+      if (existing && el) {
+        restyleCity(el, p)
+        existing.key = key
+        continue
+      }
       if (existing) cityLayer.removeLayer(existing.marker)
 
       // The fade is a nicety for a few markers arriving. A thousand of them at
       // once is a thousand concurrent animations, which is the cost it was
       // meant to soften.
       const fade = !batched && isNewSet && !prevPlaced.has(p.c)
-      const marker = L.marker(px(p.c.x!, p.c.y!), { icon: cityIcon(p, fade) })
+      const marker = new FlatMarker(px(p.c.x!, p.c.y!), { icon: cityIcon(p, fade) })
       marker.on('click', () => openCityPanel(p.c))
       cityLayer.addLayer(marker)
       shownCities.set(p.c, { marker, key })
@@ -2292,7 +2639,7 @@ map.on('move', () => {
   if (moveRaf || coverPanning) return
   moveRaf = requestAnimationFrame(() => {
     moveRaf = 0
-    if (!(map as any)._animatingZoom) updateCities()
+    if (!(map as any)._animatingZoom) updateCities(true)
   })
 })
 map.on('moveend', () => {
@@ -3351,6 +3698,7 @@ bsItems.addEventListener('click', e => {
 // Every switch and mode tile lands here, and so does the first render. Enforced
 // as a state rather than applied as a transition, so a reload lands where the
 // click did.
+let waterBrokenForSat = settings.mode === 'hybrid'
 function applySettings() {
   const m = settings.mode
   const relief = shows('relief')
@@ -3378,6 +3726,12 @@ function applySettings() {
   put(zonesLayer, m === 'zones')
   if (m !== 'zones') zoneGlow.remove()
   put(daylightLayer, shows('daylight'))
+  // The Satellite map breaks its water names differently (labelLines), and the
+  // lines are written into the marker when it is made
+  if ((m === 'hybrid') !== waterBrokenForSat) {
+    waterBrokenForSat = m === 'hybrid'
+    for (const d of labelDefs) if (WATER.has(d.type) && labelMarkers.has(d)) mountLabel(d)
+  }
   // Names reserve space in the placement grid, so hiding them hands it back
   invalidatePlacements()
   updateLabels()
@@ -3404,7 +3758,7 @@ function syncHash() {
     h = 'nation=' + encodeURIComponent(openNationName)
   } else {
     const [cx, cy] = toPx(map.getCenter())
-    h = `${map.getZoom()}/${cx}/${cy}`
+    h = `${+map.getZoom().toFixed(2)}/${cx}/${cy}`
   }
   history.replaceState(null, '', '#' + h)
 }
@@ -3927,14 +4281,14 @@ const STATION_MIN_ZOOM = Math.min(
 // atom's strokes land at a third of a pixel and vanish, which is why the icon
 // looked empty. 11px is the point where the nucleus and both orbits resolve.
 // This is the knob if it wants to be bigger or smaller.
-const STATION_TIER = cityTier(500_000)
-const STATION_SCALE = 0.8
+const STATION_TIER: CityTier = { radius: 1.4, fontSize: 9.5, weight: 550 }
+const STATION_SCALE = 1
 const STATION_FS = Math.round(STATION_TIER.fontSize * STATION_SCALE)
 const STATION_D = 11
 // Wraps past this. The CSS keeps nowrap and renders the breaks this decides, so
 // the collision box and the drawn text can never disagree about the line count.
-const STATION_MAX_W = 62
-const STATION_CHAR = 0.62 // the advance a city label measures with at weight 400, which is what these are
+const STATION_MAX_W = 78
+const STATION_CHAR = 0.66 // the advance a city label measures with at weight 700, which is what these are
 
 const stationLayer = L.layerGroup().addTo(map)
 
@@ -4014,7 +4368,7 @@ function updateStations() {
     const hit = cands.find(c => !taken.some(t => boxesOverlap(c.box, t))) ?? cands[0]
     taken.push(hit.box)
 
-    const m = L.marker(px(station.x, station.y), {
+    const m = new FlatMarker(px(station.x, station.y), {
       icon: stationIcon(station, hit.dir),
       draggable: DEV,
     }).addTo(stationLayer)
@@ -4946,8 +5300,26 @@ let borderLines: L.Polyline | null = null
 // line with no casing, a pixel wide from the whole world down to a country, and
 // only a little heavier closer in (1.5px where a city fills the screen). This map
 // stops about where that reaches 1.5.
-const BORDER_LINE = '#38203a'
-const borderWeight = (z: number) => (z <= 5.5 ? 1 : 1 + ((z - 5.5) / 2.5) * 0.6)
+//
+// Zoomed out it goes under Apple's pixel. This world is a quarter the size of
+// that one and has as many borders, so at the widest views a country is a dozen
+// pixels across and a full pixel round each of them is most of what there is to
+// see (the user, of the first version: "why are the borders still so thick zoomed
+// out"). From user zoom 2 outward the line is 0.6px and a little fainter, and it
+// reaches the pixel at zoom 7.
+//
+// The colour is not Apple's. Theirs is a dark plum, which this map carried until
+// 17 Nov 2026; their ground is pale and ours is deep forest green, on which that
+// line all but disappeared (the user: "You also cannot be using the same border
+// colors as Apple. They have a lighter satellite map"). Six were drawn over the
+// real ground, plum to white. A light orchid was tried first for keeping some of
+// the plum ("wildly out of place for a professional Apple Maps-like app"); this is
+// plain white let down, which is what the other satellite maps with dark ground
+// draw a border in.
+const BORDER_LINE = '#ffffff'
+const borderWeight = (z: number) =>
+  z <= 3 ? 0.6 : z <= 5.5 ? 0.6 + ((z - 3) / 2.5) * 0.4 : 1 + ((z - 5.5) / 2.5) * 0.6
+const borderOpacity = (z: number) => (z <= 3 ? 0.55 : z >= 5.5 ? 0.7 : 0.55 + ((z - 3) / 2.5) * 0.15)
 // The trace runs along pixel edges (scripts/borderlines.mjs), so a border arrives
 // as unit steps and square corners, and at the deepest zooms each of those is
 // sixteen screen pixels of staircase. Every corner is cut back by up to `r` px of
@@ -4981,6 +5353,12 @@ function roundCorners(l: number[], r: number): number[] {
 }
 let borderLinesOn = false
 let borderLinesLoading = false
+function syncBorderLines() {
+  if (!borderLines) return
+  const z = map.getZoom()
+  borderLines.setStyle({ weight: borderWeight(z), opacity: borderOpacity(z) })
+}
+map.on('zoomend', syncBorderLines)
 function showBorderLines(on: boolean) {
   borderLinesOn = on
   if (borderLines) {
@@ -5005,14 +5383,13 @@ function showBorderLines(on: boolean) {
       renderer: L.svg({ pane: 'borderlines' }),
       color: BORDER_LINE,
       weight: borderWeight(map.getZoom()),
-      opacity: 0.9,
+      opacity: borderOpacity(map.getZoom()),
       lineJoin: 'round',
       lineCap: 'round',
       // the default drops points closer than a pixel, which puts the corners back
       smoothFactor: 0.3,
       interactive: false,
     })
-    map.on('zoomend', () => borderLines!.setStyle({ weight: borderWeight(map.getZoom()) }))
     // Whatever the map is by the time the lines arrive, not what it was when they were asked for
     if (borderLinesOn) borderLines.addTo(map)
   })
@@ -5300,5 +5677,159 @@ setInterval(() => {
   syncIrpDate(ms)
   if (map.hasLayer(daylightLayer)) drawDaylight(ms)
 }, 1000)
+
+// --- Smooth zoom ---
+//
+// The wheel and the trackpad zoom the map continuously, the way Apple Maps does,
+// where Leaflet's own handler waits, picks a step and plays a quarter-second
+// animation to it, then another. Each frame the zoom moves a fraction of the way
+// to where the wheel has asked for, about the point under the cursor, through
+// the same call a two-finger pinch on a phone makes, and it stops where the
+// wheel leaves it: there are no levels to land on.
+{
+  const m = map as unknown as {
+    _stop(): void
+    _moveStart(zoomChanged: boolean, noMoveStart: boolean): void
+    _move(center: L.LatLng, zoom: number, data?: { pinch: boolean }): void
+    _moveEnd(zoomChanged: boolean): void
+    _limitCenter(c: L.LatLng, z: number, b?: L.LatLngBoundsExpression): L.LatLng
+    _animatingZoom?: boolean
+  }
+  map.scrollWheelZoom.disable()
+
+  const RATE = 1 / 220 // zoom levels per px of wheel
+  const PINCH_RATE = 1 / 60 // a trackpad pinch arrives as small ctrl+wheel deltas
+  const NOTCH = 0.5 // the least one click of a notched mouse wheel moves the zoom
+  const TAU = 55 // ms; how quickly the zoom closes on its target
+  const IDLE = 110 // ms without a wheel event before the gesture is over
+
+  let live = false
+  let raf = 0
+  let goal = 0 // where the wheel has asked for
+  let lastWheel = 0
+  let lastT = 0
+  let mouse: L.Point | null = null
+  let anchor: L.LatLng = map.getCenter()
+  // What this loop last left the map at. If either has changed by the next frame,
+  // something else moved it (a zoom button, a jump to a city) and owns the view.
+  let leftZoom = 0
+  let leftCenter: L.LatLng = map.getCenter()
+  let drawnQuarter = 0
+
+  const clampZoom = (z: number) => Math.min(map.getMaxZoom(), Math.max(map.getMinZoom(), z))
+
+  // The centre that keeps the anchor under the cursor at a zoom
+  const centreAt = (z: number) => {
+    const off = mouse!.subtract(map.getSize().divideBy(2))
+    const c = map.unproject(map.project(anchor, z).subtract(off), z)
+    return m._limitCenter(c, z, map.options.maxBounds)
+  }
+
+  const stop = () => {
+    live = false
+    cancelAnimationFrame(raf)
+    raf = 0
+    mapEl.classList.remove('zoom-live')
+  }
+
+  // The drawn lines are redone each quarter of a level on the way. The vector
+  // layers are drawn for one zoom and stretched between redraws, and cover only
+  // a little more than the view, which a long zoom out would run past.
+  const redraw = (z: number) => {
+    const q = quarterStep(z)
+    if (q === drawnQuarter) return
+    drawnQuarter = q
+    syncBorderLines()
+    // What a renderer does when a zoom ends: every path projected again, then
+    // the drawing laid out afresh round the view as it now is
+    map.eachLayer(l => {
+      if (!(l instanceof L.Renderer)) return
+      const r = l as unknown as { _onZoomEnd(): void; _update(): void }
+      r._onZoomEnd()
+      r._update()
+    })
+  }
+
+  const frame = (t: number) => {
+    raf = 0
+    if (!live) return
+    if (map.getZoom() !== leftZoom || !map.getCenter().equals(leftCenter)) {
+      stop()
+      return
+    }
+    const dt = Math.min(50, Math.max(0, t - lastT))
+    lastT = t
+    let z = map.getZoom()
+    z += (goal - z) * (1 - Math.exp(-dt / TAU))
+    const done = performance.now() - lastWheel > IDLE && Math.abs(goal - z) < 0.003
+    if (done) z = goal
+    // Marked as a pinch on every frame but the ones that cross a quarter level,
+    // which is what tells the tile layers to stretch what they have and leave
+    // their grids alone; on a crossing, and at the end, they take stock and fetch.
+    m._move(centreAt(z), z, done || quarterStep(z) !== drawnQuarter ? undefined : { pinch: true })
+    leftZoom = map.getZoom()
+    leftCenter = map.getCenter()
+    if (done) {
+      stop()
+      m._moveEnd(true)
+      return
+    }
+    // Area names take their size from the zoom itself, every frame; the cities
+    // follow through the map's own move handler
+    updateLabels()
+    redraw(z)
+    raf = requestAnimationFrame(frame)
+  }
+
+  mapEl.addEventListener(
+    'wheel',
+    e => {
+      e.preventDefault()
+      // One of Leaflet's own zoom animations is running; it finishes in a quarter second
+      if (m._animatingZoom) return
+      const dy = e.deltaY * (e.deltaMode === 1 ? 20 : e.deltaMode === 2 ? 60 : 1)
+      if (!dy) return
+      if (!live) {
+        m._stop()
+        goal = map.getZoom()
+        drawnQuarter = quarterStep(goal)
+        mouse = null
+        live = true
+        lastT = performance.now()
+        mapEl.classList.add('zoom-live')
+        m._moveStart(true, false)
+        leftZoom = map.getZoom()
+        leftCenter = map.getCenter()
+      }
+      const at = map.mouseEventToContainerPoint(e)
+      if (!mouse || !at.equals(mouse)) {
+        mouse = at
+        anchor = map.containerPointToLatLng(at)
+      }
+      let by = -dy * (e.ctrlKey ? PINCH_RATE : RATE)
+      // A notched mouse wheel, as far as it can be told from a trackpad: lines or
+      // pages rather than pixels, or Chrome and Safari's 4.000244 per notch on a
+      // Mac. A slow click of one is a few px, which would barely move the map.
+      const notch = e.deltaMode !== 0 || (!e.ctrlKey && Math.abs(e.deltaY) >= 4 && Math.abs(e.deltaY % 4.000244140625) < 1e-4)
+      if (notch && Math.abs(by) < NOTCH) by = Math.sign(by) * NOTCH
+      goal = clampZoom(goal + by)
+      lastWheel = performance.now()
+      if (!raf) raf = requestAnimationFrame(frame)
+    },
+    { passive: false }
+  )
+
+  // A press on the map while it is still easing: stop where it is, so the drag
+  // that follows starts from a map that is standing still
+  mapEl.addEventListener(
+    'pointerdown',
+    () => {
+      if (!live) return
+      stop()
+      m._moveEnd(true)
+    },
+    true
+  )
+}
 
 applySettings()

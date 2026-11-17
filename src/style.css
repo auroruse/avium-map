@@ -11,6 +11,7 @@ html, body {
 }
 
 #map {
+  --name-edge: 2.4px rgba(18, 24, 20, 0.7);
   width: 100%;
   height: 100%;
   /* The sea, matching OCEAN in scripts/tile.mjs — see the note there */
@@ -33,16 +34,16 @@ html, body {
 /* Text labels */
 .map-label {
   white-space: nowrap;
-  /* Three layers, and the 1px one is the point. A blurred shadow is only about
-     half opaque at the glyph edge itself, which is fine over water and useless
-     over the white coastline the base map now draws — white letters on white
-     ground separated by a grey smear. The tight inner ring puts near-solid dark
-     against the letterform whatever is behind it; the wider two do the softer
-     separation they always did. */
-  text-shadow:
-    0 0 1px rgba(0,0,0,0.95),
-    0 0 2px rgba(0,0,0,0.9),
-    0 0 4px rgba(0,0,0,0.6);
+  /* The edge every name on the map carries, as Apple Maps draws it: one even
+     dark outline a little over a pixel wide, hard against the letterform and painted
+     under the fill so the letters keep their full weight, with no glow round it.
+     It replaced three stacked blurs (17 Nov 2026), which were only about half
+     opaque at the glyph edge and left small white names grey at the rim over pale
+     ground; an outline is also one pass to paint where the blurs were three. Half
+     the stroke width shows, the other half is under the fill. */
+  -webkit-text-stroke: var(--name-edge);
+  paint-order: stroke fill;
+  text-shadow: none;
   pointer-events: none !important;
   font-family: 'SF Pro Display', 'SF UI Display', -apple-system, 'Inter', system-ui, sans-serif;
   /* Same curve and duration as .city-icon's city-fade, so a label and a city
@@ -104,16 +105,26 @@ html, body {
   --track: 0.22em;
 }
 
-/* Roboto Condensed is what an atlas country is set in, and it is what the
-   reference uses. Condensed matters twice over: it is the look, and it is narrow,
-   so a name fits a small territory at a larger size.
-   Colonies are set exactly as nations now — the size tier and where the name sits
-   say which is which, and the italic was doing neither of those jobs. */
+/* A country as Apple Maps sets one: bold condensed capitals, spaced, and smaller
+   than a city's name; an off-white fill inside a brown edge where a city is white
+   inside grey, which is what tells the two apart now that size no longer does.
+   Apple's face is San Francisco Condensed Bold. On a Mac the two system names
+   below reach it through font-stretch (neither name means anything anywhere
+   else, so nothing else takes them); everywhere else it is Roboto Condensed,
+   which is within a hundredth of an em of the same width. A regular-width face
+   was tried here on 17 Nov 2026 and was wrong (the user: "The face you're using
+   is the wrong one. It's not condensed"). The faces and --track are ADVANCE.land
+   in main.ts.
+   Colonies are set exactly as nations — the size tier and where the name sits
+   say which is which. */
 .label-nation,
 .label-colony {
-  font-family: 'Roboto Condensed', 'Arial Narrow', 'SF Pro Display', system-ui, sans-serif;
-  color: #fff;
+  font-family: BlinkMacSystemFont, -apple-system, 'Roboto Condensed', 'Arial Narrow', sans-serif;
+  font-stretch: 75%;
+  color: #f6efe6;
   font-weight: 700;
+  --track: 0.08em;
+  -webkit-text-stroke: 2.4px rgba(52, 36, 30, 0.75);
 }
 
 
@@ -132,7 +143,9 @@ html, body {
   /* The three-layer ring on .map-label is for white capitals crossing the white
      coastline. Water never crosses it — it sits on open sea and nothing else is
      printed there — and at 300 weight that near-solid 1px ring closed over the
-     thin strokes and turned the name grey. One soft shadow for depth instead. */
+     thin strokes and turned the name grey. One soft shadow for depth instead,
+     and none of the outline the land names now carry, for the same reason. */
+  -webkit-text-stroke: 0;
   text-shadow: 0 1px 2px rgba(0,0,0,0.45);
 }
 
@@ -142,6 +155,35 @@ html, body {
 
 .label-sea {
   color: #aec6e0;
+}
+
+/* The Satellite map's water, as Apple Maps' satellite view sets it: small, italic,
+   upper and lower case, a pale blue that reads as water over deep sea and over a
+   reef alike. The page carries these names in upper and lower case (titleCase in
+   main.ts) and .map-label capitalises them everywhere else. Heavier than the
+   drawn maps' 300, which at ten pixels over a photograph is a thread; and a
+   tight dark-blue edge under a softer one, because a lake's name runs out over
+   pale desert. --track and the face are ADVANCE.waterSat in main.ts. */
+body.hybridmap .label-ocean,
+body.hybridmap .label-sea {
+  /* San Francisco on a Mac, as Apple sets it; Inter everywhere else. Neither of
+     the first two names means anything off a Mac. */
+  font-family: BlinkMacSystemFont, -apple-system, 'Inter', system-ui, sans-serif;
+  text-transform: none;
+  font-weight: 600;
+  --track: 0.08em;
+  color: #bcd6f4;
+  /* One crisp dark edge, as Apple's has. Three layers of shadow did the same job
+     and made every letter read a weight heavier than it is. */
+  -webkit-text-stroke: 2.2px rgba(8, 24, 48, 0.85);
+  paint-order: stroke fill;
+  text-shadow: none;
+}
+
+/* A word to a line, set a little looser than the two-line names of the drawn maps */
+body.hybridmap .label-ocean span,
+body.hybridmap .label-sea span {
+  line-height: 1.22;
 }
 
 /* A territory name that opens its nation panel. .map-label kills pointer events
@@ -201,17 +243,16 @@ html, body {
   border: none !important;
   box-shadow: none !important;
   color: #fff !important;
-  font-family: 'SF Pro Rounded', 'SF Pro Text', 'SF UI Text', -apple-system, 'Inter', system-ui, sans-serif !important;
+  font-family: 'SF Pro Rounded', 'SF Pro Text', 'SF UI Text', BlinkMacSystemFont, -apple-system, 'Inter', system-ui, sans-serif !important;
   /* Fallback only. The real size and weight are set inline per band, and an
      !important here would beat them. */
   font-size: 11px;
   font-weight: 400;
-  /* See .map-label — the 1px ring is what keeps a name readable where it crosses
-     the white coastline stroke. */
-  text-shadow:
-    0 0 1px rgba(0,0,0,0.95),
-    0 0 2px rgba(0,0,0,0.9),
-    0 0 4px rgba(0,0,0,0.6);
+  /* See .map-label: the outline is what keeps a name readable whatever ground it
+     crosses */
+  -webkit-text-stroke: var(--name-edge);
+  paint-order: stroke fill;
+  text-shadow: none;
   padding: 0 !important;
   margin: 0 !important;
   white-space: nowrap;
@@ -239,6 +280,22 @@ html, body {
    12s zoom-and-pan run, and half the pan frames missed. As a layer, raster
    fell to 0.5s and no pan frame missed. */
 .leaflet-marker-pane {
+  will-change: transform;
+}
+
+/* These three kinds of marker leave their z-index to this (FlatMarker in
+   main.ts): area names under stations under cities, so a city dot sitting on a
+   name is on top and takes the click. */
+.map-label { z-index: 1; }
+.station-icon { z-index: 2; }
+.city-icon { z-index: 3; }
+
+/* While the wheel is zooming the map (Smooth zoom in main.ts) the tile levels and
+   the drawn lines are stretched a little every frame. Told to expect it, the
+   browser keeps each as the picture it already has and scales that, where it
+   would otherwise draw the borders again at every new size. */
+.zoom-live .leaflet-tile-container,
+.zoom-live svg.leaflet-zoom-animated {
   will-change: transform;
 }
 
@@ -1704,17 +1761,16 @@ html, body {
   /* Same family, size and weight as a city name at the small-marker tier, so a
      station sits in the same visual register as everything around it. Only the
      colour separates them. Keep in step with STATION_FS in main.ts. */
-  font-family: 'SF Pro Rounded', 'SF Pro Text', 'SF UI Text', -apple-system, 'Inter', system-ui, sans-serif;
-  font-size: 8px;
+  font-family: 'SF Pro Rounded', 'SF Pro Text', 'SF UI Text', BlinkMacSystemFont, -apple-system, 'Inter', system-ui, sans-serif;
+  font-size: 10px;
   font-weight: 700;
   line-height: 1.25;
   color: #c3cbf5;
   white-space: nowrap;
-  /* Same three-layer halo the city and territory names use */
-  text-shadow:
-    0 0 1px rgba(0,0,0,0.95),
-    0 0 2px rgba(0,0,0,0.9),
-    0 0 4px rgba(0,0,0,0.6);
+  /* Same outline the city and territory names use */
+  -webkit-text-stroke: var(--name-edge);
+  paint-order: stroke fill;
+  text-shadow: none;
 }
 
 /* Placer tabs */

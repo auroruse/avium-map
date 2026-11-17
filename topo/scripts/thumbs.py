@@ -48,8 +48,8 @@ for l in json.load(open(os.path.join(MAP, "src", "data", "borderlines.json"))):
     p = np.array(l, np.float64).reshape(-1, 2) * 2; s = np.r_[0, np.cumsum(np.hypot(np.diff(p[:, 0]), np.diff(p[:, 1])))]
     t = np.arange(0, s[-1] + 0.5, 0.5); xs = np.round(np.interp(t, s, p[:, 0]) - gx).astype(int); ys = np.round(np.interp(t, s, p[:, 1]) - gy).astype(int)
     ok = (xs >= 0) & (xs < m.shape[1]) & (ys >= 0) & (ys < m.shape[0]); m[ys[ok], xs[ok]] = False
-a = np.clip(K + 0.5 - ndi.distance_transform_edt(m), 0, 1)[..., None] * 0.9
-t = shrink(img * (1 - a) + np.array([56, 32, 58], np.float32) * a, 2 * K, 2 * X0 - gx, 2 * Y0 - gy)
+a = np.clip(K + 0.5 - ndi.distance_transform_edt(m), 0, 1)[..., None] * 0.65
+t = shrink(img * (1 - a) + np.array([255, 255, 255], np.float32) * a, 2 * K, 2 * X0 - gx, 2 * Y0 - gy)
 write_png(os.path.join(MAP, "src", "assets", "map-modes", "hybrid.png"), np.clip(np.round(t), 0, 255).astype(np.uint8))
 z = read_png(os.path.join(LAYERS, "zones.png"))
 t = shrink(over(np.zeros(z.shape[:2] + (3,), np.uint8), z), K, X0, Y0)

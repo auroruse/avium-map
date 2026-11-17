@@ -46,7 +46,7 @@ tick("polar continents")
 import islands
 pm = np.zeros((OUT, OUT), bool)
 for rs, cs, P, _, _ in pol: pm[rs, cs] |= P
-h, _, irep = islands.build(h, land, np.load(os.path.join(WORK, "ehas_adj.npy")), pm, KM); del pm, irep
+h, _, irep = islands.build(h, land, np.load(os.path.join(WORK, "ehas_adj.npy")), pm, KM, real=np.load(os.path.join(WORK, "ehas_adj.npy")) & (np.load(os.path.join(WORK, "ereal_adj.npy")) >= 2.0)); del pm, irep
 # Eivorie has its own ground, made from the Eivorian map (eivorie.py); its rivers are fictional and drawn
 tick("islands")
 import eivorie
