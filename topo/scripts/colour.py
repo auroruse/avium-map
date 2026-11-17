@@ -524,6 +524,13 @@ def tartarus(col, land, H, rs, cs, P, rng):
     row = (180.0 - cl) * 60 - 0.5; cc = ((lon + 180.0) * 60 - 0.5) % 21600; del cl, lon
     ice = np.stack([polar._place(ndi.map_coordinates(bm[..., c], [row, cc], order=1, mode="nearest").astype(np.float32),
                                  sh, f, KM * f, bool(mir), s, th, dy, dx, ny, nx, 1, float(ICE[c])) for c in range(3)], -1)
+    # Where Tartarus's coast runs out past Antarctica's the imagery is no longer ice but "the water painted over from the
+    # nearest land": every dark rock on the real shore drawn out to sea in a stripe, a curtain of them along Tartarus's
+    # north coast (user, 17 Nov 2026: "Tartarus?"). That ground is the ice sheet's seaward edge and is drawn as its ice.
+    off = polar._place(ndi.map_coordinates((np.load(os.path.join(WORK, "real_lab.npy")) == 0).astype(np.float32), [row, cc], order=1, mode="nearest"),
+                       sh, f, KM * f, bool(mir), s, th, dy, dx, ny, nx, 1, 0.0)
+    # ...with the few px of real shore beside it, which are the dark the stripes were drawn from
+    off = _ss((ndi.gaussian_filter(ndi.maximum_filter(off, 9), 1.5) - 0.3) / 0.4)[..., None]
     del row, cc, bm
     cy, cx = polar.RIFT[0] - rs.start, polar.RIFT[1] - cs.start; yy, xx = np.mgrid[:sh[0], :sh[1]].astype(np.float32)
     rw = np.hypot(yy - cy, xx - cx) * (1.0 + 0.2 * n1 + 0.06 * n2); del yy, xx
@@ -535,6 +542,7 @@ def tartarus(col, land, H, rs, cs, P, rng):
     red = _ss((1500.0 - rw) / 500.0) * np.exp(-dco / (22.0 * (0.6 + 0.8 * _ss(n2 + 0.5)))) * _ss((450.0 - z) / 350.0)
     ground += (0.7 * red)[..., None] * (np.array([128, 62, 44], np.float32) - ground)
     white = ICE[None, None] * np.clip(k, 0.75, 1.03)[..., None]
+    ice = ice + off * (white - ice); del off
     warm = _ss((1500.0 - rw) / 350.0)[..., None]                                 # past the warm ground it is Antarctica's own ice again
     out = ice + warm * ((ground + snow[..., None] * (white - ground)) - ice)
     c_ = col[rs, cs]; c_[P] = np.clip(out[P], 0, 255)
