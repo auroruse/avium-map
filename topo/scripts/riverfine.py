@@ -12,7 +12,7 @@ from scipy import ndimage as ndi
 t0 = time.time(); M = 12000
 SCALE, WMIN, WMAX = 0.33, 0.6, 1.5         # full width here per px of full width on the rivers layer, and its limits (px, 12000 grid)
 STEP = 0.25                                # px between the samples a line is laid down in
-COLOUR = (44, 92, 128)
+COLOUR = (40, 88, 124)
 
 big = read_png(os.path.join(WORK, "rivers12000.png"))[..., 3] > 127
 R = ndi.distance_transform_edt(big).astype(np.float32)                    # at a river's middle: half its drawn width, near enough

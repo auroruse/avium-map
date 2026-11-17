@@ -1,7 +1,9 @@
 # topo — the ground under Avium
 
-Builds the ground layers (shaded relief for the Political map, the Hybrid map's ground, and the
-elevation tints the check sheets are drawn on), the contour lines and the rivers layers from real elevation.
+Builds the ground layers (shaded relief for the Political map, shaded and unshaded elevation tints for the
+Terrain map, the Satellite map's ground), the contour lines and the rivers layers from real elevation and, for
+the Satellite map, real imagery. The Satellite map was called Hybrid until 17 Nov 2026 and still is in the code,
+the file names and most of what follows.
 
 `layers/pangaea.PNG` is a present-day political map bent into Pangaea, and Avium's coast was traced
 over it. So every pixel of Avium land is a piece of the real Earth that has been moved. This folder
@@ -25,6 +27,7 @@ Source data goes in `topo/data/` (gitignored), each set in its own folder:
 | `ne_places/` | `ne_10m_populated_places` | Natural Earth 1:10m |
 | `ne_rivers/` | `ne_10m_rivers_lake_centerlines` | Natural Earth 1:10m |
 | `ne_lakes/` | `ne_10m_lakes` | Natural Earth 1:10m |
+| `bluemarble/` | `world.2004MM.3x21600x10800.jpg`, twelve months (271 MB); and at 500 m, `world.200407.3x21600x21600.<A-D>1.jpg` and `world.200401.3x21600x21600.<A-D>2.jpg` (354 MB): July for the northern tiles, January for the southern | NASA Blue Marble Next Generation, base: `assets.science.nasa.gov/content/dam/science/esd/eo/images/bmng/bmng-base/<month>/` |
 
 Then, in order. Each step reads the last one's output from `topo/work/` (gitignored).
 
@@ -34,7 +37,7 @@ Then, in order. Each step reads the last one's output from `topo/work/` (gitigno
 | 2 | `ne_raster.py`, `dem60.py` | Real countries as a grid; elevation at 60 arc-seconds with lakes levelled |
 | 3 | `units.py`, `junctions.py`, `dots.py --detect` | Regions, their border samples, the points where three countries meet, the overlay's city dots |
 | 4 | `run_fit.sh` | The georeference: one warp per region (`fit.py`), then carried through the cities (`donors.py`, `postfit.py`) and welded along shared borders (`seams.py`, `weld.py`) |
-| 5 | `build.sh` | Elevation through the warps, rivers calibrated on their cities, Avium terrain and sea floor, rivers traced in the valleys, their beds settled, and the drawings in `layers/` |
+| 5 | `build.sh` | Elevation through the warps, rivers calibrated on their cities, Avium terrain and sea floor, rivers traced in the valleys, their beds settled, the land's colour from space (`place.py`, `colour.py`), and the drawings in `layers/` |
 | 6 | `install_rivers.py`, `thumbs.py`, then `npm run tile` | The rivers layer goes in place; the map tiles what changed |
 
 `labels.txt` says which country each overlay blob is. It was read by eye and belongs to one
@@ -105,6 +108,70 @@ areas; that was chosen over streaks.
     straits or a broad mouth join a sea to the ocean changes nothing. Mountains round a narrow sea deepen it.
   - *Islands.* A small island is a volcano: almost no shelf, a flank straight down to the deep floor, and a shared
     ridge under a chain or cluster. Only a large island carries a shelf, in proportion to its size.
+- **The Hybrid map's ground** (`place.py`, `colour.py`, then `hybrid.py` with `satgrade.py` and `seacolour.py`).
+  The terrain map in the colours the ground has from space: the satellite layer under the relief map's hillshade.
+  - *The satellite layer* (`colour.py` -> `work/colour.npy`). NASA Blue Marble carried through the same warps, relaxation
+    and river calibration as the elevation, so every pixel of land has the colour of the real place its ground came from,
+    each in its own midsummer month, and forest stands on the same ranges the relief shows.
+  - *Climate.* The imagery brings Earth's with it: the Canadian Arctic's ice caps stand at 21-24 N on Avium. Snow and ice
+    that last the real summer stay only above Avium's permanent snow line (`permanent()`); below it a pixel shows the
+    month near midsummer in which the country round it lies barest, and ice that is never bare is painted over with
+    pieces of real bare ground copied from beside it. Avium's rules choose which real pixel shows, never what one looks like.
+  - *Stretch.* The overlay stretches ground up to threefold (Guandong, parts of Nichirin). `place.py` works out where
+    each pixel's ground is on Earth and how stretched; where that passes 1.7 the fine detail is taken from the imagery
+    unstretched, in ragged cells about 110 km across each laid true to scale, over the broad colour the warp gives.
+    Below that the colour follows the warp exactly, because the relief does and the two have to agree.
+  - *Ground Avium made.* Ocean islands take the imagery of the real island laid on them. Coasts brought down to an
+    Avium-made sea (`flank.py`: Tibet and the Tarim on the Himalayan Sea) take the colour land round them has at their new
+    height and green toward the sea. Tartarus takes Antarctica's imagery through the fit its ice surface was laid by, with
+    the Rift's warm ground bare. Hyperborea is its ice sheet inside the Northern Wall and black basalt and tundra
+    outside it.
+  - *On the map* (`hybrid.py`). The layer goes down unsmoothed, lifted a little (`satgrade.grade`), under the
+    hillshade. Lakes the imagery has and Avium does not are painted out first (`satgrade.stray_water`).
+  - *At 24000 px* (`hybrid.py` -> `layers/hybrid.png`). The map opens two levels past the 12000 px drawings, and on a
+    screen of double density a map pixel was three and four screen pixels across under sharp names and lines (the
+    user: "Apple Maps overlaid on a PS2 game"). Everything the 12000 build is made of stops near 1.8 km. So this
+    drawing is twice the grid, and what is finer than the 12000 build is real: Blue Marble at 500 m and ETOPO at 30
+    arc-seconds, each read at the real place every point's ground comes from (the same warps, relaxation, cross-fade
+    and river calibration; stretched ground from the same true-to-scale cells). Nothing is decided twice: the
+    satellite layer and `height.npy` stand for everything broader than a pixel and a half of theirs, so the month a
+    place shows, the ice Avium does not keep, the made ground and the grade are as they were. Where the layer shows
+    the midsummer photograph as it is, the fine band is the photograph's; where the layer was made, only the
+    photograph's texture goes on it, as light and dark. Fine relief stays off shores, off ground Avium moved, and
+    off ground whose real place lies below sea level (the Jordan rift, the Mesopotamian marshes): that ground is laid
+    from across the nearest real shore, its place jumps, and fine relief across a jump is a ruled crease. The land's
+    edge is `land12k`'s smoothed and drawn at this size (the mask is 6000 px doubled and steps in twos), with 2 px
+    islets and lakes kept. The ocean islands read the real island laid on them; the polar continents have nothing
+    finer behind them and are the 12000 build enlarged. The sea is asked of `seacolour.py` at this size.
+    `work/fine/` holds its caches (some 20 GB, mostly the eight mosaics as plain arrays); `hybrid.py --window r0 r1 c0
+    c1 out.png` draws one window for a look. 48000 px was sampled too and is sharper again; it was passed over for the
+    weight of its tiles (some 300 MB against 100).
+  - *The sea* (`seacolour.py`). The old shaded sea, as varied as the land. Depth sets the tone, off a smoothed depth (the
+    sea floor has a flat shelf a few metres deep along every shore, which coloured as it stands is a pale band round every
+    coast) and under a softer light than the land's (lit as sharply, a trench wall is a ruled edge). Temperature sets
+    the hue: slate in the Hyperborean Ocean and under the katabatic corridor, bluer with teal shoals round the
+    meteorological equator, cold again off Tartarus. Faint plankton in the open Hyperborean water; ice adrift off both
+    polar coasts, drawn out like smoke in the eddies and gone a few hundred km out (none in the Rift's warm water);
+    reefs and banks where warm water is shallow, in stretches (the east of the Sahara Sea above all). The red water of
+    the Tartarean Rift, with its plume north, is laid over it (`work/sea_tint.npy`, `tartarus.md`). `seacolour.aux()`
+    caches the map-wide distances these need in `work/sea_*.npy`; delete them after the coast changes. Silt plumes off
+    the big rivers' mouths were built and taken out again at the user's word.
+  - *Kemet's "Nile"* (`colour.py`, `kemet_shore()`). The real Nile cannot exist here: Aswan, Khartoum and Lake Victoria
+    lie under Avium's sea, and only Cairo to Luxor is land, a strip on the Sea of Kemet's east shore. The user's call:
+    the lower valley's green lines up with that shore, and the delta is its own branch. The imagery's ribbon ran some
+    17 km inland with a river's bends; it is taken off and its own colours laid as a band along the water. The delta
+    keeps its green and its two branches on the rivers layer, which are a river of their own.
+  - *Hyperborea's ice* (`colour.py`, `hyperborea()`), read off the ground's shape: blue in its hollows, a few melt
+    ponds and a faint stain of algae in a belt behind the Wall, rock through the ice where it is steep, outlet glaciers
+    down the valley floors to the fjords.
+  - *Taken back, each on the user's word after seeing it.* Snow drawn from noise; a northern winter (right where the
+    real place has a snowy month, wrong over northern Nichirin, where it has none); the imagery with no hillshade (a
+    photograph with a photograph's faults and no terrain: "This was a bad idea"); and climate ramps blended from the
+    imagery over 30-200 km (pastel blobs that ignored the mountains: "blended quite terribly"). Set anything made beside
+    the real thing at the same scale before showing it.
+  - `colour.py` keeps its slow halves in `work/` (`bm_MM.npy`, `warp_MM.npy`, `colour_real_MM.npy`, about 19 GB); delete
+    them to start again. `--prep` stops after the months. Tartarus and its water are drawn from a generator state that is
+    replayed so they stay as the user passed them: do not reorder those draws.
 - **Ocean islands** (`islands.py`). Most of Avium's ocean islands sit on open sea on the overlay and sampled nothing, so
   they stood flat at the placeholder height. Each takes a real island's ground: an island with a city takes the island
   its city's stat donor stands on (Ranpua is Hilo, so Hawaii); one without a city near an island with one takes the best
@@ -139,7 +206,7 @@ areas; that was chosen over streaks.
   troughs, two more rings on land, all inward-facing scarps that show through the ice), hydrothermal vent cones
   on its floor and broad fractures running out from it. Ranges are cut by a drainage flooded in from the sea, as
   in `flank.py`. Ice surfaces carry streams that branch back from where the ice leaves, flow lines along them,
-  dune grain across the slope and flat patches over subglacial lakes. No white and no ice tint (tried and removed at the user's word). The two continents get a palette of their own on the Hybrid map instead (`render.py`, `POLAR`): at every height the main ramp's CIELAB lightness less 10, in slate, blue-grey and violet-grey, so they do not read as farmland and steppe. Neither
+  dune grain across the slope and flat patches over subglacial lakes. No white and no ice tint (tried and removed at the user's word). The two continents get a palette of their own on the Terrain map instead (`render.py`, `POLAR`): at every height the main ramp's CIELAB lightness less 10, in slate, blue-grey and violet-grey, so they do not read as farmland and steppe. Neither
   continent's drawing gives the Tartarean gateways a water passage, and Tartarus's coast does not meet itself
   across the 180th meridian (62.7°S on the right edge, 83.5°S on the bottom one).
 - **Eivorie** (`eivorie.py`). Its own ground, made from the Eivorian map (`data/eivorie/eivorie_map.png`, laid on the

@@ -47,6 +47,7 @@ print("after: median %.2f px | within 1.5px: %d of %d | within 3px: %d" % (np.me
 # the same field, backwards, on the elevation grid
 g = np.arange(4, 6000, 8.0); GX, GY = np.meshgrid(g, g)
 G0 = np.stack([GX.ravel(), GY.ravel()], 1); F = (field(G0) - G0).reshape(750, 750, 2).astype(np.float32)
+np.save(os.path.join(WORK, "nudge_field.npy"), F)                  # colour.py carries the imagery through the same shift
 print("field: max shift %.1f px, area moved by more than 1px: %.1f%% of the map" % (np.hypot(F[..., 0], F[..., 1]).max(), 100 * (np.hypot(F[..., 0], F[..., 1]) > 1).mean()))
 E = np.load(os.path.join(WORK, "ereal.npy")); has = np.load(os.path.join(WORK, "ehas.npy"))
 Eo = np.empty_like(E); Ho = np.empty_like(has)

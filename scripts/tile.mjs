@@ -44,7 +44,7 @@ const OCEAN = { r: 62, g: 78, b: 111, alpha: 255 }
 const CLEAR = { r: 0, g: 0, b: 0, alpha: 0 }
 // The Hybrid map's sea at the same depth OCEAN stands for, from HSEA in
 // topo/scripts/render.py; body.hybridmap #map in style.css is the same value
-const HYBRID_OCEAN = { r: 21, g: 50, b: 88, alpha: 255 }
+const HYBRID_OCEAN = { r: 15, g: 40, b: 76, alpha: 255 }
 
 // The base map is drawn with a pure white coastline, and white is the one value
 // it cannot afford to spend there. It outranks the city labels and the markers'
@@ -81,8 +81,12 @@ const LAYERS = {
   // photographic as far as a codec is concerned: as PNG the two opaque layers
   // would be several times the size of everything else here put together.
   relief: { skipBlanks: -1, background: OCEAN, format: 'webp' },
-  // the terrain's land over a deep blue sea with no line at the coast, for the Hybrid map
+  terrain: { skipBlanks: -1, background: OCEAN, format: 'webp' },
+  // the terrain's land over a deep blue sea with no line at the coast, for the Hybrid map;
+  // topo/scripts/hybrid.py writes it at 24000px, so it tiles two levels deeper than the drawings
   hybrid: { skipBlanks: -1, background: HYBRID_OCEAN, format: 'webp' },
+  // the terrain's colours unshaded, for the Terrain map with Relief off
+  tint: { skipBlanks: -1, background: OCEAN, format: 'webp' },
   contours: { skipBlanks: 0, background: CLEAR, format: 'webp' },
 }
 
@@ -343,7 +347,8 @@ for (const [name, opts] of Object.entries(todo)) {
     img = inkCoastline(data, kind, info, whiteN, COAST_PX)
     await writeMono(data, kind, info)
   } else {
-    img = sharp(input)
+    // hybrid.png is 24000px a side, past sharp's default ceiling on input pixels
+    img = sharp(input, { limitInputPixels: false })
   }
 
   if (opts.background) {

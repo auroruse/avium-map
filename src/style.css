@@ -2933,7 +2933,14 @@ body.clockmap #map {
 }
 /* The Hybrid map's sea, matching HYBRID_OCEAN in scripts/tile.mjs */
 body.hybridmap #map {
-  background: #153258;
+  background: #0f284c;
+}
+/* The Hybrid ground is a photograph, and past its own resolution a photograph is
+   smoothed, as every satellite map does: shown as hard squares (.leaflet-tile,
+   above, which is right for the drawn maps) it is a mosaic. The fine rivers and
+   the contours over it go the same way. */
+body.hybridmap .leaflet-tile {
+  image-rendering: auto;
 }
 
 /* The city's own time, live, in a pill at the end of the coordinates line */
@@ -3049,7 +3056,7 @@ body.hybridmap #map {
 
 .ms-modes {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
   margin-bottom: 14px;
 }

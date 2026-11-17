@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<image xmlns="http://www.vips.ecs.soton.ac.uk//dzsave" date="2026-11-16T23:19:42.904954+02" version="8.15.3">
+<image xmlns="http://www.vips.ecs.soton.ac.uk//dzsave" date="2026-11-17T15:50:56.901876+02" version="8.15.3">
   <properties>
     <property>
       <name>width</name>
@@ -11,7 +11,7 @@
     </property>
     <property>
       <name>bands</name>
-      <value type="gint">4</value>
+      <value type="gint">3</value>
     </property>
     <property>
       <name>xoffset</name>

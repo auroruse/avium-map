@@ -1,5 +1,6 @@
-"""height.npy -> the drawings the map tiles: layers/relief.png, terrain.png, hybrid.png, tint.png, contours.png (12000px).
-Name some of them (render.py hybrid) to write only those; with no names it writes all five."""
+"""height.npy -> the drawings the map tiles: layers/relief.png, terrain.png, tint.png, contours.png (12000px).
+Name some of them (render.py relief) to write only those; with no names it writes all four. The Satellite map's
+ground, layers/hybrid.png, is hybrid.py's."""
 import sys, time; sys.path.insert(0, __import__("os").path.dirname(__file__))
 from common import *
 from scipy import ndimage as ndi
@@ -53,8 +54,7 @@ def finish(rgb, path, ink=True):
 sea_rgb = ramp(H, SEA) * k[..., None]
 rgb = np.where(land[..., None], LAND[None, None] * k[..., None], sea_rgb)
 finish(rgb, os.path.join(LAYERS, "relief.png"))
-# ---- terrain: elevation tints. No map shows this one since the Terrain map went (16 Nov 2026); the check sheets
-# (look.py, overview.py, spotlook.py) are drawn on it, and the Hybrid ground is its land
+# ---- terrain: elevation tints, for the Terrain map; the check sheets (look.py, overview.py, spotlook.py) are drawn on it too
 TINT = [(0, (116, 148, 122)), (150, (138, 162, 124)), (400, (170, 176, 128)), (800, (196, 180, 128)), (1400, (192, 158, 118)),
         (2200, (170, 132, 108)), (3200, (150, 124, 118)), (4200, (190, 182, 186)), (5200, (232, 232, 238)), (9000, (250, 250, 252))]
 # Hyperborea and Tartarus in a palette of their own, so their coasts and heights do not read as farmland and steppe
@@ -72,16 +72,10 @@ def landtint(shade):
 rgb = np.where(land[..., None], landtint(True), sea_rgb)
 del sea_rgb
 finish(rgb, os.path.join(LAYERS, "terrain.png"))
-# ---- hybrid: the terrain's land over a deep blue sea, for the Hybrid map. No line is inked at the coast: this sea is
-# dark and blue enough against any land beside it to make the shore by itself, where the slate sea above is not. The
-# shore is eased over a pixel instead, since land12k is a 6000 px mask and its edge would otherwise step in twos.
-if want("hybrid"):
-    HSEA = [(-9000, (10, 28, 58)), (-5000, (17, 42, 78)), (-3000, (24, 56, 96)), (-1200, (32, 72, 112)), (-200, (44, 92, 128)), (0, (58, 110, 140))]
-    rgb = np.where(land[..., None], landtint(True), ramp(H, HSEA) * k[..., None])
-    shore = ndi.binary_dilation(land, iterations=1) & ~ndi.binary_erosion(land, iterations=1)
-    for c in range(3): rgb[..., c][shore] = ndi.gaussian_filter(rgb[..., c], 0.7)[shore]
-    del shore
-    finish(rgb, os.path.join(LAYERS, "hybrid.png"), ink=False)
+# ---- tint: the terrain's colours with no shading, for the Terrain map with Relief switched off
+rgb = np.where(land[..., None], landtint(False), ramp(H, SEA))
+finish(rgb, os.path.join(LAYERS, "tint.png"))
+# ---- the Satellite map's ground is hybrid.py's: the same hillshade over the satellite layer, drawn at 24000 px
 del rgb, k
 
 if not want("contours"): sys.exit(0)

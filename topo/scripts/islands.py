@@ -143,9 +143,11 @@ def _cities(lab, targets):
         if l in targets and donor.get(r["NAME"]) in DONORS: out.setdefault(int(l), []).append(donor[r["NAME"]])
     return out
 
-def build(h, land, has0, polar, KM, log=print):
+def build(h, land, has0, polar, KM, log=print, places=None):
     """h: land heights (12000 grid) to overwrite on the islands; has0: real elevation under the overlay, before any
-    repair; polar: polar.py's ground. -> h, and the mask of what was changed"""
+    repair; polar: polar.py's ground. -> h, the mask of what was changed, and a report line per island.
+    places: a list to receive (slice, mask, row, col) per island: where on the real 60s grid each of its px lies, so
+    colour.py can take the same island's imagery"""
     lab, n = ndi.label(land); sz = np.bincount(lab.ravel())
     hs = np.bincount(lab.ravel(), weights=has0.ravel(), minlength=n + 1); ps = np.bincount(lab.ravel(), weights=polar.ravel(), minlength=n + 1)
     targets = [l for l in range(1, n + 1) if sz[l] < 2_000_000 and hs[l] / sz[l] < 0.5 and ps[l] / sz[l] < 0.2]
@@ -210,6 +212,8 @@ def build(h, land, has0, polar, KM, log=print):
         z = np.where(g, z, np.maximum(z[iy, ix], 0) * np.exp(-d * KM / 12.0))
         z = np.maximum(z, 2.0)
         hc = h[sl]; hc[t] = z[t]; changed[sl] |= t
+        if places is not None:
+            iy, ix = R.idx(*_coords(P, *fit)); places.append((sl, t, (iy + R.win[0]).reshape(t.shape)[t], (ix + R.win[1]).reshape(t.shape)[t]))
         s, th, mir, _ = fit
         report.append((l, int(sz[l]), kind, who, "%.0f km2 real island at %.2f, %.2f; agreement %.2f, scale %.2f, turned %.0f%s, top %.0f m"
                        % (R.area, R.lat_lon[0], R.lat_lon[1], v, 1 / s, np.degrees(th) % 360, ", mirrored" if mir else "", float(z[t].max()))))

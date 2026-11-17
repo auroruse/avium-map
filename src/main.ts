@@ -9,6 +9,7 @@ import bannerUrl from './assets/banner.png'
 import politicalThumb from './assets/map-modes/political.png'
 import zonesThumb from './assets/map-modes/zones.png'
 import hybridThumb from './assets/map-modes/hybrid.png'
+import terrainThumb from './assets/map-modes/terrain.png'
 import stationsData from './data/stations.json'
 import nationsTsv from './data/nations.tsv?raw'
 import areasData from './data/areas.json'
@@ -388,14 +389,18 @@ new (L.Control.extend({
 // it was. Read during the first render, so it has to be resolved before any of
 // it runs.
 
-type MapMode = 'hybrid' | 'political' | 'zones'
-const MAP_MODES: MapMode[] = ['hybrid', 'political', 'zones']
+// 'hybrid' is the map the sheet calls Satellite: the name changed (17 Nov 2026),
+// and the id stayed so that saved settings, the tiles and the stylesheet did not
+// all have to move with it
+type MapMode = 'hybrid' | 'political' | 'terrain' | 'zones'
+const MAP_MODES: MapMode[] = ['hybrid', 'political', 'terrain', 'zones']
 
 interface Settings {
   mode: MapMode
   relief: boolean
   daylight: boolean
   borders: boolean
+  terrainBorders: boolean
   hybridBorders: boolean
   rivers: boolean
   contours: boolean
@@ -409,7 +414,7 @@ const SETTINGS_KEY = 'avium-settings'
 // Bumped when a default changes and saved entries should take it: 2 (16 Nov
 // 2026) turned contour lines off by default, and every entry before it had
 // saved the old default of on; 3 (16 Nov 2026) made Hybrid the default map and
-// dropped Terrain
+// dropped Terrain, which came back the next day with nothing to bump for
 const SETTINGS_VERSION = 3
 
 const settings: Settings = {
@@ -417,6 +422,7 @@ const settings: Settings = {
   relief: true,
   daylight: false,
   borders: true,
+  terrainBorders: false,
   hybridBorders: true,
   rivers: true,
   contours: false,
@@ -471,23 +477,23 @@ function saveSettings() {
 // What each map leaves room for. Time Zones is the map as a backdrop for the
 // clocks: its colours cover every pixel, so the ground and the lines go, and
 // the names stay because they carry each nation's clock. Day and night belongs
-// to the clocks, contour lines to Hybrid's ground.
+// to the clocks, contour lines to the two maps of the ground itself.
 const modeAllows = {
-  relief: (m: MapMode) => m === 'political',
+  relief: (m: MapMode) => m === 'political' || m === 'terrain',
   daylight: (m: MapMode) => m === 'zones',
   borders: (m: MapMode) => m !== 'zones',
   rivers: (m: MapMode) => m !== 'zones',
-  contours: (m: MapMode) => m === 'hybrid',
+  contours: (m: MapMode) => m === 'terrain' || m === 'hybrid',
   territories: (_m: MapMode) => true,
   water: (_m: MapMode) => true,
   cities: (_m: MapMode) => true,
   stations: (_m: MapMode) => true,
 }
 
-// The setting a switch stands for on the current map: only Borders has two
+// The setting a switch stands for on the current map: only Borders has more than one
 type Switch = keyof typeof modeAllows
 const settingKey = (k: Switch): keyof Settings =>
-  k !== 'borders' ? k : settings.mode === 'hybrid' ? 'hybridBorders' : k
+  k !== 'borders' ? k : settings.mode === 'terrain' ? 'terrainBorders' : settings.mode === 'hybrid' ? 'hybridBorders' : k
 
 function shows(k: Switch): boolean {
   return (settings[settingKey(k)] as boolean) && modeAllows[k](settings.mode)
@@ -3356,13 +3362,16 @@ function applySettings() {
   // Time Zones needs no ground under it
   put(baseLayer, m === 'political' && !relief)
   put(reliefLayer, m === 'political' && relief)
+  put(terrainLayer, m === 'terrain' && relief)
+  put(tintLayer, m === 'terrain' && !relief)
   put(hybridLayer, m === 'hybrid')
   // Hybrid draws its borders as lines over the ground and leaves the fills off
   put(bordersLayer, shows('borders') && m !== 'hybrid')
   showBorderLines(shows('borders') && m === 'hybrid')
   // The fills are opaque, so over the shaded ground they are let down far
-  // enough for the hills to read through
-  bordersLayer.setOpacity(relief ? 0.75 : 1)
+  // enough for the hills to read through: a little on the political map, most
+  // of the way on the terrain, where they are only a tint
+  bordersLayer.setOpacity(m === 'terrain' ? 0.22 : relief ? 0.75 : 1)
   put(contoursLayer, shows('contours'))
   put(riversLayer, shows('rivers') && m !== 'hybrid')
   put(riversFineLayer, shows('rivers') && m === 'hybrid')
@@ -4909,11 +4918,17 @@ function drawDaylight(ms: number) {
 daylightLayer.on('add', () => drawDaylight(icNow()))
 
 // The ground: the same land and sea as the base, modelled by the terrain under
-// them (relief). Built by topo/ from real elevation carried through the
-// Pangaea overlay; see topo/README.md.
+// them (relief) or coloured by height as well (terrain), and the terrain's
+// colours unshaded (tint) for when Relief is off. Built by topo/ from real
+// elevation carried through the Pangaea overlay; see topo/README.md.
 const reliefLayer = tiledLayer('relief', 'tilePane', { ext: 'webp', maxNative: 6 })
-// The terrain's land again over a deep blue sea, with no line inked at the coast
-const hybridLayer = tiledLayer('hybrid', 'tilePane', { ext: 'webp', maxNative: 6 })
+const terrainLayer = tiledLayer('terrain', 'tilePane', { ext: 'webp', maxNative: 6 })
+const tintLayer = tiledLayer('tint', 'tilePane', { ext: 'webp', maxNative: 6 })
+// The terrain in the colours the ground has from space (real imagery through the warps under the relief map's
+// hillshade; topo/scripts/colour.py, render.py) over a sea tinted by its depth and its cold
+// (seacolour.py), with no line inked at the coast. Drawn at 24000px (topo/scripts/hybrid.py), a level finer
+// again than the relief: this is the map people zoom into to look at the ground
+const hybridLayer = tiledLayer('hybrid', 'tilePane', { ext: 'webp', maxNative: 7 })
 // The rivers at something near their real width, in the colour of that sea's shallows: the rivers layer draws
 // them several kilometres wide, which over this ground outweighs the borders
 const riversFineLayer = tiledLayer('rivers-fine', 'overlayPane', { maxNative: 6, zIndex: 3 })
@@ -4927,6 +4942,43 @@ map.createPane('borderlines')
 map.getPane('borderlines')!.style.zIndex = '440' // over the rivers, under the zones and the markers
 map.getPane('borderlines')!.style.pointerEvents = 'none'
 let borderLines: L.Polyline | null = null
+// Apple Maps' satellite view, measured zoom by zoom (17 Nov 2026): one dark plum
+// line with no casing, a pixel wide from the whole world down to a country, and
+// only a little heavier closer in (1.5px where a city fills the screen). This map
+// stops about where that reaches 1.5.
+const BORDER_LINE = '#38203a'
+const borderWeight = (z: number) => (z <= 5.5 ? 1 : 1 + ((z - 5.5) / 2.5) * 0.6)
+// The trace runs along pixel edges (scripts/borderlines.mjs), so a border arrives
+// as unit steps and square corners, and at the deepest zooms each of those is
+// sixteen screen pixels of staircase. Every corner is cut back by up to `r` px of
+// the drawing along each of its two sides, twice, which turns a staircase into
+// its diagonal and a drawn corner into a tight curve; no point moves further than
+// that, so a line still runs down the middle of the river it follows.
+function roundCorners(l: number[], r: number): number[] {
+  const n = l.length / 2
+  if (n < 3) return l
+  const closed = l[0] === l[2 * n - 2] && l[1] === l[2 * n - 1]
+  const out: number[] = []
+  const cut = (ax: number, ay: number, bx: number, by: number) => {
+    // from b toward a, by r or a third of the side, whichever is less
+    const d = Math.hypot(ax - bx, ay - by)
+    const t = d > 0 ? Math.min(r, d / 3) / d : 0
+    out.push(bx + (ax - bx) * t, by + (ay - by) * t)
+  }
+  const m = closed ? n - 1 : n
+  for (let i = 0; i < m; i++) {
+    if (!closed && (i === 0 || i === n - 1)) {
+      out.push(l[2 * i], l[2 * i + 1])
+      continue
+    }
+    const a = (i - 1 + m) % m
+    const c = (i + 1) % m
+    cut(l[2 * a], l[2 * a + 1], l[2 * i], l[2 * i + 1])
+    cut(l[2 * c], l[2 * c + 1], l[2 * i], l[2 * i + 1])
+  }
+  if (closed) out.push(out[0], out[1])
+  return out
+}
 let borderLinesOn = false
 let borderLinesLoading = false
 function showBorderLines(on: boolean) {
@@ -4939,19 +4991,28 @@ function showBorderLines(on: boolean) {
   if (!on || borderLinesLoading) return
   borderLinesLoading = true
   import('./data/borderlines.json').then(m => {
-    const lines = (m.default as number[][]).map(l => {
+    const lines = (m.default as number[][]).map(raw => {
+      const l = roundCorners(roundCorners(raw, 1.5), 0.75)
       const pts: L.LatLngExpression[] = []
       for (let i = 0; i < l.length; i += 2) pts.push(px(l[i], l[i + 1]))
       return pts
     })
+    // A light line in a dark casing was tried first, on the reasoning that no one
+    // colour stands out against a photograph: it read as a road, and three pixels
+    // of it outweighed the ground it ran over (the user: "way too thick").
     borderLines = L.polyline(lines, {
       pane: 'borderlines',
       renderer: L.svg({ pane: 'borderlines' }),
-      color: '#34163e',
+      color: BORDER_LINE,
+      weight: borderWeight(map.getZoom()),
       opacity: 0.9,
-      weight: 1.5,
+      lineJoin: 'round',
+      lineCap: 'round',
+      // the default drops points closer than a pixel, which puts the corners back
+      smoothFactor: 0.3,
       interactive: false,
     })
+    map.on('zoomend', () => borderLines!.setStyle({ weight: borderWeight(map.getZoom()) }))
     // Whatever the map is by the time the lines arrive, not what it was when they were asked for
     if (borderLinesOn) borderLines.addTo(map)
   })
@@ -4959,13 +5020,14 @@ function showBorderLines(on: boolean) {
 
 // --- Map sheet ---
 //
-// Apple Maps' map card: the three maps as picture tiles, and under them the
+// Apple Maps' map card: the four maps as picture tiles, and under them the
 // switches in groups. A switch the current map has no room for goes grey but
 // keeps its setting, so the map it belongs to comes back as it was left.
 
 const MODE_TILES: [MapMode, string, string][] = [
-  ['hybrid', 'Hybrid', hybridThumb],
+  ['hybrid', 'Satellite', hybridThumb],
   ['political', 'Political', politicalThumb],
+  ['terrain', 'Terrain', terrainThumb],
   ['zones', 'Time Zones', zonesThumb],
 ]
 

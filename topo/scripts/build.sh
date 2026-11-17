@@ -11,7 +11,12 @@ ${=PY} scripts/nudge.py | tail -3
 ${=PY} scripts/terrain.py
 ${=PY} scripts/riverlayer.py
 ${=PY} scripts/carve.py
+${=PY} scripts/place.py
+${=PY} scripts/colour.py
+rm -f work/sea_off.npy work/sea_polar.npy
 ${=PY} scripts/render.py
+rm -f work/fine/col.npy work/fine/trust.npy work/fine/soft.npy work/fine/ks.npy work/fine/isl_row.npy work/fine/isl_col.npy work/fine/cells.npz
+${=PY} scripts/hybrid.py
 ${=PY} scripts/install_rivers.py
 ${=PY} scripts/riverfine.py
 ${=PY} scripts/thumbs.py
