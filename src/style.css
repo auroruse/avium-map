@@ -452,6 +452,8 @@ body.hybridmap .label-sea span {
   display: flex;
   align-items: center;
   justify-content: center;
+  /* Above a nation's flag band, which comes after it and is positioned too */
+  z-index: 1;
 }
 
 .cp-close:hover {
@@ -471,12 +473,12 @@ body.hybridmap .label-sea span {
    panel's right edge and gone before it reaches the text, so the name is read
    against the panel and not against the flag. The band bleeds to the panel's
    top and sides like a banner, and like a banner it opens the whole image when
-   clicked. The close button is a later sibling, so it sits on top and keeps its
-   own click. */
+   clicked. The close button is lifted above it and keeps its own click. It runs down to where the divider under the name block would be,
+   and its own bottom edge stands in for that line. */
 .cp-wash {
   position: relative;
   margin: -18px -18px 0;
-  padding: 18px 18px 0;
+  padding: 18px 18px 14px;
   overflow: hidden;
   cursor: zoom-in;
 }
@@ -486,17 +488,18 @@ body.hybridmap .label-sea span {
   position: absolute;
   top: 0;
   right: 0;
-  bottom: -14px;
+  bottom: 0;
   width: 62%;
   background: var(--flag) center / cover;
   opacity: 0.62;
-  -webkit-mask-image: linear-gradient(to left, #000 0%, rgba(0,0,0,0.55) 38%, transparent 100%),
-    linear-gradient(to bottom, #000 55%, transparent 100%);
-  -webkit-mask-composite: source-in;
-  mask-image: linear-gradient(to left, #000 0%, rgba(0,0,0,0.55) 38%, transparent 100%),
-    linear-gradient(to bottom, #000 55%, transparent 100%);
-  mask-composite: intersect;
+  -webkit-mask-image: linear-gradient(to left, #000 0%, rgba(0,0,0,0.55) 38%, transparent 100%);
+  mask-image: linear-gradient(to left, #000 0%, rgba(0,0,0,0.55) 38%, transparent 100%);
   transition: opacity 0.15s;
+}
+
+.cp-wash + .cp-strip {
+  margin-top: 0;
+  border-top: none;
 }
 
 .cp-wash:hover::before {
@@ -1387,7 +1390,6 @@ body.hybridmap .label-sea span {
   font-weight: 600;
   white-space: nowrap;
 }
-/* The name gives way to the photo marker, never the other way round */
 .bs-ctext {
   min-width: 0;
   overflow: hidden;
@@ -1396,6 +1398,39 @@ body.hybridmap .label-sea span {
 .bs-photo {
   flex: none;
   color: #8b9096;
+}
+
+/* A city with a photograph wears it as the row's ground: whole at the right
+   edge and gone before it reaches the name, the way a nation's flag sits behind
+   its title. */
+#bs-items li.bs-pic {
+  position: relative;
+  overflow: hidden;
+}
+#bs-items li.bs-pic::before {
+  content: '';
+  position: absolute;
+  /* A pixel short top and bottom, so photographs on neighbouring rows stay two
+     pictures and do not run into one band */
+  inset: 1px 0 1px 28%;
+  border-radius: 0 7px 7px 0;
+  background: var(--pic) center / cover;
+  opacity: 0.6;
+  -webkit-mask-image: linear-gradient(to left, #000 0%, rgba(0,0,0,0.6) 45%, transparent 100%);
+  mask-image: linear-gradient(to left, #000 0%, rgba(0,0,0,0.6) 45%, transparent 100%);
+  transition: opacity 0.15s;
+}
+#bs-items li.bs-pic:hover::before,
+#bs-items li.bs-pic.sel::before {
+  opacity: 0.82;
+}
+#bs-items li.bs-pic > * {
+  position: relative;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.75);
+}
+/* The figure sits on the photograph at its brightest */
+#bs-items li.bs-pic .bs-cstat {
+  color: #fff;
 }
 #bs-sort-btn .bs-photo { color: inherit; }
 
@@ -2466,7 +2501,7 @@ body.hybridmap .label-sea span {
 
   .cp-wash {
     margin: -20px -20px 0;
-    padding: 20px 20px 0;
+    padding: 20px 20px 14px;
   }
 
   /* Everything that floats over the map centres on the map, not the window.

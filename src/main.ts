@@ -2160,6 +2160,21 @@ for (const [path, url] of Object.entries(
   thumbs.set(cityImageKey(path), url)
 }
 
+// The smallest set, for Explore's cards and the rows of the city list
+const cards = new Map<string, string>()
+for (const [path, url] of Object.entries(
+  import.meta.glob('./assets/city-cards/*.jpg', {
+    eager: true,
+    query: '?url',
+    import: 'default',
+  }) as Record<string, string>
+)) {
+  cards.set(cityImageKey(path), url)
+}
+// The 480px crop where the build has made one, else the panel's, else the photo
+const cardUrl = (c: City) =>
+  byCityName(cards, c.name) ?? byCityName(thumbs, c.name) ?? byCityName(banners, c.name) ?? ''
+
 photoSet = new Set(cities.filter(c => byCityName(banners, c.name)))
 
 const talopediaByCity = new Map<string, TalopediaEntry>()
@@ -3390,7 +3405,7 @@ let listMode: 'cities' | 'nations' = 'cities'
 let sortField: SortField = 'name'
 let sortAsc = true
 
-// About 30 of 1,800 cities have a photograph, so a marker on the row alone leaves
+// Few of the 1,800 cities have a photograph, so the picture on a row alone leaves
 // them scattered a page apart. The filter narrows Cities to just those, keeping
 // whatever sort is in force; it lives in the sort menu because that is where the
 // list's other ways of being cut already are.
@@ -3432,9 +3447,14 @@ function renderMoreRows() {
   for (let i = renderedCount; i < end; i++) {
     const c = listRows[i]
     const li = document.createElement('li')
+    // A city with a photograph wears it behind its row
+    if (hasPhoto(c)) {
+      li.className = 'bs-pic'
+      li.style.setProperty('--pic', `url('${cardUrl(c)}')`)
+    }
     li.innerHTML =
       `<span class="bs-rank">${rm ? rm.get(c) : ''}</span>` +
-      `<span class="bs-cinfo"><span class="bs-cname"><span class="bs-ctext">${c.name}</span>${hasPhoto(c) ? PHOTO_ICON : ''}</span>` +
+      `<span class="bs-cinfo"><span class="bs-cname"><span class="bs-ctext">${c.name}</span></span>` +
       `<span class="bs-cnation">${c.nation}</span></span>` +
       `<span class="bs-cstat">${statText(c)}</span>`
     li.addEventListener('click', () => goCity(c))
@@ -4787,20 +4807,6 @@ const TIP = 7 // the pointer under it, whose tip is the city
 
 let touring = false
 let tourIdx = 0
-
-const cards = new Map<string, string>()
-for (const [path, url] of Object.entries(
-  import.meta.glob('./assets/city-cards/*.jpg', {
-    eager: true,
-    query: '?url',
-    import: 'default',
-  }) as Record<string, string>
-)) {
-  cards.set(cityImageKey(path), url)
-}
-// The 480px crop where the build has made one, else the panel's, else the photo
-const cardUrl = (c: City) =>
-  byCityName(cards, c.name) ?? byCityName(thumbs, c.name) ?? byCityName(banners, c.name) ?? ''
 
 map.createPane('explore-cards')
 map.getPane('explore-cards')!.style.zIndex = '620' // over the dimmed markers at 600
