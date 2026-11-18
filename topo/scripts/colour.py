@@ -26,6 +26,9 @@ The overlay stretches ground up to threefold in places (Guandong, parts of Nichi
 streaks where it only softens elevation. There the fine detail is taken from the imagery unstretched, in cells a few
 tens of km across each laid true to scale (place.py says where and how much), over the broad colour the warp gives.
 
+The real Earth's cities and towns come with the photographs and stand where no Avium city does; the country round them
+is laid over them (urban.py, urban_mask).
+
 What Avium made itself has no place on Earth:
 - the ocean islands take the imagery of the real island islands.py laid on them;
 - ground flank.py brought down to an Avium-made sea takes the colour land round it has at its new height (flank_colour);
@@ -47,13 +50,16 @@ def _ss(x): x = np.clip(x, 0, 1); return x * x * (3 - 2 * x)
 
 MONTHS = ["%02d" % m for m in range(1, 13)]
 
+def water_of(img):
+    """what of a month's mosaic is water: outside every country, or as dark or as blue as the imagery paints water"""
+    sm = img.astype(np.int16).sum(-1); b = img[..., 2].astype(np.int16)
+    return (np.load(os.path.join(WORK, "real_lab.npy")) == 0) | (sm < 48) | ((b * 20 > img[..., 1].astype(np.int16) * 23) & (b * 2 > img[..., 0].astype(np.int16) * 3) & (img[..., 0] < 40))
+
 def month_bm(mm):
     """One month's mosaic with all water painted over from the land beside it"""
     with rasterio.open(os.path.join(BM, "world.2004%s.3x21600x10800.jpg" % mm)) as ds: img = np.moveaxis(ds.read(), 0, -1).copy()
     # water: outside every country, a lake, or as dark as the imagery paints water (small lakes, wide rivers)
-    sm = img.astype(np.int16).sum(-1); b = img[..., 2].astype(np.int16)
-    water = (np.load(os.path.join(WORK, "real_lab.npy")) == 0) | (sm < 48) | ((b * 20 > img[..., 1].astype(np.int16) * 23) & (b * 2 > img[..., 0].astype(np.int16) * 3) & (img[..., 0] < 40))
-    del sm, b
+    water = water_of(img)
     _, (iy, ix) = ndi.distance_transform_edt(water, return_indices=True)
     for c in range(3):
         fill = img[..., c][iy, ix].astype(np.float32); soft = ndi.gaussian_filter(fill, 3.0)     # nearest-land fill streaks
@@ -332,7 +338,7 @@ def compose(land, has, H, pm):
 
 BLOCK = 40
 GRAIN = 6.0                      # px: what of a copied piece is finer than this is copied; its tone is not
-def paint_over(col, land, bad, pm, nosrc=None, tonal=False, came=None):
+def paint_over(col, land, bad, pm, nosrc=None, tonal=False, came=None, grow=2, tones=(8.0, 24.0, 80.0)):
     """Ground under ice that Avium would not keep takes real bare ground from beside it: piece by ragged piece, a place
     nearby where the same shape of ground lies bare is copied across, so what goes in is a piece of the photograph and
     not a smear of its nearest edge. Pieces that find no such place take the nearest bare pixel's colour. `nosrc`:
@@ -346,8 +352,12 @@ def paint_over(col, land, bad, pm, nosrc=None, tonal=False, came=None):
 
     `came`: an int16 array (2, OUT, OUT) to receive, for every px painted from a piece, how far away (down, right) the
     ground it was copied from lies. hybrid.py reads the 500 m photograph there, so painted ground is as sharp as the
-    photograph beside it and not this layer enlarged."""
-    bad = ndi.binary_dilation(bad, iterations=2) & land & ~pm
+    photograph beside it and not this layer enlarged.
+
+    `grow`: px the ground to paint is widened by. `tones`: the widths (px / 4) the tone is carried in over, nearest first.
+    Towns are small and thick on the ground: widened by 2 and toned from 60 km off, a quarter of Guandong was repainted
+    and went soft."""
+    bad = ndi.binary_dilation(bad, iterations=grow) & land & ~pm
     if not bad.any(): return 0
     good = land & ~pm & ~bad & ~snowlike(col)
     if nosrc is not None: good &= ~nosrc
@@ -362,10 +372,10 @@ def paint_over(col, land, bad, pm, nosrc=None, tonal=False, came=None):
         for k in range(3):
             v = src[..., k].astype(np.float32); grain[..., k] = np.clip(np.round(v - ndi.gaussian_filter(v * gw, GRAIN) / nb), -127, 127) * good
             c4 = (v * gw).reshape(OUT // 4, 4, OUT // 4, 4).mean((1, 3)); out = None; del v
-            for sg in (8.0, 24.0, 80.0):
+            for sg in tones:
                 wg = ndi.gaussian_filter(w4, sg); cg = ndi.gaussian_filter(c4, sg) / np.maximum(wg, 1e-6); ok = _ss((wg - 0.01) / 0.08)
                 out = cg if out is None else out * okp + cg * (1 - okp)
-                okp = ok if sg == 8.0 else np.maximum(okp, ok)
+                okp = ok if sg == tones[0] else np.maximum(okp, ok)
             tone[:, k] = ndi.map_coordinates(out, [cy, cx], order=1, mode="nearest")
         del gw, nb, w4, c4, cy, cx, out
     offs = np.array([(dy, dx) for dy in range(-420, 421, 10) for dx in range(-420, 421, 10) if (dy or dx)])
@@ -417,6 +427,52 @@ def seam_mask(land, has, pm):
     seam = sea | (smear & ~pm & ~own)
     np.save(os.path.join(WORK, "seam.npy"), seam); tick("ground with no photograph of ground: %.2f%% of the land" % (100.0 * seam.sum() / (land & ~pm).sum()))
     return seam
+
+# ------------------------------------------------------------------ another continent's shore
+ELYSIA = (slice(6100, 6984), slice(3852, 4752))     # rows, cols (12000 grid): Elysium's east coast, Port of Muscovite to Cromwell Beach
+NEXUS = (6468, 4116)                                # a point of Elysium's mainland
+def stray_mask(land):
+    """The overlay closes the Atlantic, and Elysium's east coast runs a little past the real American shore onto what the
+    overlay has as north-west Africa: its capes from Axiom to Cromwell Beach, and the islets off them, wore the Sahara's
+    sand against green country (user, 18 Nov 2026: "the sahara fragments on the Elysian coast"). -> that ground: the
+    mainland's and its near islets' share of the African regions, as far in as the two are cross-faded.
+    paint_over(tonal=True) lays Elysium's own country over it."""
+    own = np.load(os.path.join(WORK, "own.npy")); pl = np.load(os.path.join(WORK, "place.npz")); lon = pl["lon"]
+    rs, cs = ELYSIA; r3 = slice(rs.start // 4 - 8, rs.stop // 4 + 8); c3 = slice(cs.start // 4 - 8, cs.stop // 4 + 8); o = own[r3, c3]; lo = lon[r3, c3]
+    afr = np.zeros(o.shape, bool)
+    for b in np.unique(o[o > 0]):
+        q = (o == b) & np.isfinite(lo)
+        if q.any() and np.median(lo[q]) > -30.0: afr |= o == b                # east of the mid-Atlantic: the Old World's side
+    w = np.clip(1 - ndi.distance_transform_edt(~afr) / D, 0, 1).astype(np.float32)
+    w = ndi.zoom(w, 4, order=1)[32:-32, 32:-32] > 0.12
+    L = land[rs, cs]; lab, n = ndi.label(L); main = lab == lab[NEXUS[0] - rs.start, NEXUS[1] - cs.start]
+    size = np.bincount(lab.ravel()); near = ndi.distance_transform_edt(~main) < 260
+    edge = np.unique(np.concatenate([lab[0], lab[-1], lab[:, 0], lab[:, -1]]))                # land the window only holds a corner of
+    islet = L & ~main & (size[lab] < 2500) & near & np.isin(lab, np.unique(lab[w & L])) & ~np.isin(lab, edge)
+    m = np.zeros(land.shape, bool); m[rs, cs] = (main & w) | islet
+    return m
+
+# ------------------------------------------------------------------ the real Earth's cities
+def urban_mask(land, has):
+    """Avium ground whose photograph is of a real city or town (urban.py): Tokyo's grey-tan patch lay beside Lake Baishin
+    like a second lake, and every town of the North China Plain dotted Guandong (user, 18 Nov 2026: "urban blotches
+    everywhere that we shouldn't have"). The real mask is carried to the map as a month's photograph is, so it lies
+    exactly where the photographs put those towns. -> the mask, kept in work/urban.npy. paint_over(tonal=True) lays the
+    country round them over it."""
+    f = os.path.join(WORK, "urban.npy")
+    if os.path.exists(f): return np.load(f)
+    fr = os.path.join(WORK, "urban_real.npy")
+    if os.path.exists(fr): u = np.load(fr)
+    else: import urban; u = urban.build()
+    tmp = [os.path.join(WORK, n % "UU") for n in ("bm_%s.npy", "warp_%s.npy", "colour_real_%s.npy")]
+    for t in tmp:
+        if os.path.exists(t): os.remove(t)
+    np.save(tmp[0], np.repeat((u * np.uint8(255))[..., None], 3, -1)); del u
+    prep(["UU"], land, has)
+    m = (np.load(tmp[2])[..., 0] > 102) & land
+    for t in tmp: os.remove(t)
+    np.save(f, m); tick("real cities and towns: %.2f%% of the land" % (100.0 * m.sum() / land.sum()))
+    return m
 
 # ------------------------------------------------------------------ Kemet's shore
 KEMET = (slice(6840, 7560), slice(6860, 7340))      # rows, cols (12000 grid): the Sea of Kemet's east shore, from the neck south
@@ -594,7 +650,9 @@ if __name__ == "__main__":
     H = np.load(os.path.join(WORK, "height.npy")); pm = polar_mask()
     col, bad = compose(land, has, H, pm)
     came = np.zeros((2, OUT, OUT), np.int16)
-    paint_over(col, land, bad | seam_mask(land, has, pm), pm, tonal=True, came=came)
+    seam = seam_mask(land, has, pm)
+    paint_over(col, land, urban_mask(land, has) & ~seam & ~bad, pm, nosrc=seam | bad, tonal=True, came=came, grow=1, tones=(2.0, 8.0, 24.0, 80.0))
+    paint_over(col, land, bad | seam | stray_mask(land), pm, tonal=True, came=came); del seam
     np.save(os.path.join(WORK, "paint_from.npy"), came); del came
     flank_colour(col, land, has, H, np.load(os.path.join(WORK, "ereal_adj.npy")))
     kemet_shore(col, land, np.load(os.path.join(WORK, "waterlevel_c.npy"), mmap_mode="r"), H, pm)

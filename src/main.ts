@@ -16,7 +16,7 @@ import nationsTsv from './data/nations.tsv?raw'
 import areasData from './data/areas.json'
 import zonesData from './data/zones.json'
 import { icAt as icAtReal, icNow, rateNow, realAt } from './ictime'
-import { talopedia, talopediaUrl, type TalopediaEntry } from './data/talopedia'
+import { talopedia, talopediaSlug, talopediaUrl, type TalopediaEntry } from './data/talopedia'
 
 // --- Dev mode ---
 
@@ -2176,6 +2176,28 @@ function byCityName<T>(m: Map<string, T>, name: string): T | undefined {
   return m.get(norm(name)) ?? m.get(norm(name.replace(/,\s*[A-Z]{2,4}$/, '')))
 }
 
+// Flags (src/assets/flags/<nation>.png, written by scripts/flags.mjs from the
+// Talopedia's), keyed by the nation's name as a slug.
+const flags = new Map<string, string>()
+for (const [path, url] of Object.entries(
+  import.meta.glob('./assets/flags/*.png', { eager: true, query: '?url', import: 'default' }) as Record<string, string>
+)) {
+  flags.set(path.slice(path.lastIndexOf('/') + 1, -4), url)
+}
+
+// A nation's own flag, or its overlord's when it has none: twelve colonies fly
+// nothing of their own (user, 18 Nov 2026: "can use overlord's flag"). The
+// overlord is the first nation in nations.tsv with the colony's code, which is
+// how the sheet is laid out: Elvester, then Noradia, Thule and New Celyddon
+// under ELV. `of` is whose flag it is, for the image's label.
+function flagFor(n: Nation): { url: string; of: string } | null {
+  const own = flags.get(talopediaSlug(n.name))
+  if (own) return { url: own, of: n.name }
+  const lord = n.alpha3 ? nations.find(m => m.alpha3 === n.alpha3) : undefined
+  const theirs = lord && lord !== n ? flags.get(talopediaSlug(lord.name)) : undefined
+  return theirs ? { url: theirs, of: lord!.name } : null
+}
+
 function loadBanner(name: string) {
   const holder = cityPanel.querySelector('.cp-banner') as HTMLElement
   const img = holder.querySelector('img') as HTMLImageElement
@@ -2471,11 +2493,18 @@ function openNationPanel(n: Nation) {
   const cap = n.capital
     ? cities.find(c => norm(c.name) === norm(n.capital) && norm(c.nation) === norm(n.name))
     : undefined
+  // The flag stands as a card left of the name and the official name
+  const flag = flagFor(n)
+  const title =
+    `<div class="cp-name">${n.name}</div>` +
+    (n.official ? `<div class="cp-native">${n.official}${n.alpha3 ? ` <span class="cp-sub">(${n.alpha3})</span>` : ''}</div>` : '')
   cityPanel.innerHTML =
     `<div class="cp-banner"><img alt=""></div>` +
     `<button class="cp-close" aria-label="Close">✕</button>` +
-    `<div class="cp-name">${n.name}</div>` +
-    (n.official ? `<div class="cp-native">${n.official}${n.alpha3 ? ` <span class="cp-sub">(${n.alpha3})</span>` : ''}</div>` : '') +
+    (flag
+      ? `<div class="cp-title"><img class="cp-flag" src="${flag.url}" alt="Flag of ${esc(flag.of)}" title="Flag of ${esc(flag.of)}">` +
+        `<div class="cp-title-text">${title}</div></div>`
+      : title) +
     statStrip([
       {
         label: 'Population',

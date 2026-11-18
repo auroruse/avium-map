@@ -20,6 +20,7 @@ ground Avium made, the grade. Only what is finer than that is new, and it is rea
   jumps there and fine relief across a jump is a ruled crease: there the 12000 surface stands as it is.
 - the ocean islands read the real island islands.py laid on them; the polar continents have nothing finer and are
   the 12000 build enlarged.
+- land given up: hybrid_cuts.txt lists land this map alone shows as sea.
 - the land's edge: land12k is a 6000 px mask doubled and steps in twos. Its smoothed edge is drawn at this size, with
   the smallest islets and lakes kept.
 - the sea is seacolour.py's, asked at this size; it is a function of place, so nothing in it changes but its grain.
@@ -50,8 +51,18 @@ def prepare():
     smoothed), ks.npy (the sea floor's light), isl_row/isl_col.npy (the ocean islands' real places), south.npy"""
     import satgrade, polar, colour as C
     os.makedirs(FINE, exist_ok=True)
-    if all(os.path.exists(os.path.join(FINE, n)) for n in ("col.npy", "trust.npy", "soft.npy", "ks.npy", "isl_row.npy", "isl_col.npy")): return
-    land = np.load(os.path.join(WORK, "land12k.npy")); pc = np.load(os.path.join(WORK, "polar_cache.npz")); made = np.zeros(land.shape, bool)
+    if all(os.path.exists(os.path.join(FINE, n)) for n in ("col.npy", "trust.npy", "soft.npy", "ks.npy", "isl_row.npy", "isl_col.npy", "landc.npy", "heightc.npy")): return
+    # the land and the surface as this map draws them: the 12000 build's, less the land given up (hybrid_cuts.txt), which
+    # becomes sea as deep as the sea beside it
+    land = np.load(os.path.join(WORK, "land12k.npy")); H = np.load(os.path.join(WORK, "height.npy")); cut = np.zeros(land.shape, bool)
+    for ln in open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "hybrid_cuts.txt")):
+        if ln.strip() and not ln.startswith("#"): r, a, b = map(int, ln.split()); cut[r, a:b] = True
+    cut &= land
+    if cut.any():
+        ys, xs = np.nonzero(cut); sl = (slice(max(ys.min() - 60, 0), ys.max() + 61), slice(max(xs.min() - 60, 0), xs.max() + 61))
+        _, (jy, jx) = ndi.distance_transform_edt(land[sl], return_indices=True); Hs = H[sl]; cs = cut[sl]; Hs[cs] = Hs[jy[cs], jx[cs]]; land[cut] = False
+    np.save(os.path.join(FINE, "landc.npy"), land); np.save(os.path.join(FINE, "heightc.npy"), H); tick("land given up: %d px" % int(cut.sum())); del cut
+    pc = np.load(os.path.join(WORK, "polar_cache.npz")); made = np.zeros(land.shape, bool)
     for i, (_, rs, cs, _) in enumerate(polar.REGIONS): made[rs, cs] |= pc["P%d" % i]
     # the ocean islands' places, and which of Earth's summers each pixel shows (as colour.compose has it)
     has = np.load(os.path.join(WORK, "ehas_adj.npy")); iy, ix, ir, ic = C.island_places(land, has, made); del has
@@ -76,7 +87,7 @@ def prepare():
     lost = land & ~ndi.binary_dilation(soft > 0.5, iterations=2); soft = np.maximum(soft, g(lost.astype(np.float32), 0.6) * 1.25)
     lost = ~land & ~ndi.binary_dilation(soft < 0.5, iterations=2); soft = np.minimum(soft, 1 - g(lost.astype(np.float32), 0.6) * 1.25)
     np.save(os.path.join(FINE, "soft.npy"), np.round(np.clip(soft, 0, 1) * 255).astype(np.uint8)); del soft, Lb, lost
-    H = np.load(os.path.join(WORK, "height.npy")).astype(np.float32)
+    H = H.astype(np.float32)
     ks = np.clip(1.0 + 0.75 * (shade_of(g(np.where(land, 0, H), 4.0), 5.0, 1750.0) - FLAT), 0.6, 1.18)     # as render.py had it
     np.save(os.path.join(FINE, "ks.npy"), ks.astype(np.float16)); tick("edge and sea floor light")
 
@@ -249,17 +260,17 @@ def land_window(r0, r1, c0, c1):
     What it is made of and why is at the top of this file."""
     S = state(); C = S["C"]
     a0, a1, b0, b1 = max(r0 - M, 0), min(r1 + M, OUT), max(c0 - M, 0), min(c1 + M, OUT)
-    land = np.asarray(mm("land12k.npy")[a0:a1, b0:b1])
+    land = np.asarray(fm("landc.npy")[a0:a1, b0:b1])
     if not land.any(): return None
     crop = lambda a: np.asarray(a[a0:a1, b0:b1])
-    H = crop(mm("height.npy")).astype(np.float32); level = crop(mm("waterlevel_c.npy")).astype(np.float32); has = crop(mm("ehas_adj.npy"))
+    H = crop(fm("heightc.npy")).astype(np.float32); level = crop(mm("waterlevel_c.npy")).astype(np.float32); has = crop(mm("ehas_adj.npy"))
     col = crop(fm("col.npy")); tr12 = crop(fm("trust.npy")).astype(np.float32) / 255.0; irow = crop(fm("isl_row.npy")); icol = crop(fm("isl_col.npy"))
     nr, nc = (a1 - a0) * F, (b1 - b0) * F
     YL, XL = np.meshgrid((np.arange(nr) + 0.5) / F - 0.5, (np.arange(nc) + 0.5) / F - 0.5, indexing="ij")
     up = lambda a, o=1: ndi.map_coordinates(a.astype(np.float32), [YL, XL], order=o, mode="nearest")
     Y = (YL + a0).ravel(); X = (XL + b0).ravel(); n = Y.size
     # ground colour.paint_over laid from a piece of real ground elsewhere reads the photograph where that piece is from
-    moved = np.zeros(n, bool); join = None
+    moved = np.zeros(n, bool); join = None; Y0, X0 = Y, X
     if os.path.exists(os.path.join(WORK, "paint_from.npy")):
         pf = mm("paint_from.npy"); oy = up(crop(pf[0]), 0); ox = up(crop(pf[1]), 0); moved = ((oy != 0) | (ox != 0)).ravel()
         if moved.any():
@@ -285,6 +296,13 @@ def land_window(r0, r1, c0, c1):
         if not len(idx): continue
         c3, w_ = bm500(row, cl); Xw[idx] += wt[:, None] * c3; wat[idx] += wt * w_; Z[idx] += wt * etopo30(row, cl); ws[idx] += wt; mir[idx] += wt * sea
     ok = ws > 1e-4; Xw[ok] /= ws[ok][:, None]; wat[ok] /= ws[ok]; Z[ok] /= ws[ok]; mir[ok] /= ws[ok]
+    # a real city painted out (colour.urban_mask) stands on real ground: the photograph is the piece's, the fine relief its own
+    if moved.any() and os.path.exists(os.path.join(WORK, "urban.npy")):
+        ub = np.nonzero(moved & (up(ndi.binary_dilation(crop(mm("urban.npy")), iterations=3), 0) > 0.5).ravel())[0]
+        if len(ub):
+            Zu = np.zeros(len(ub), np.float32); wu = np.zeros(len(ub), np.float32)
+            for idx, wt, row, cl, _ in S["P"](*S["P"].unnudged(Y0[ub], X0[ub])): Zu[idx] += wt * etopo30(row, cl); wu[idx] += wt
+            oku = wu > 1e-4; Z[ub[oku]] = Zu[oku] / wu[oku]; del Zu, wu
     Xw = Xw.reshape(nr, nc, 3); wat = wat.reshape(nr, nc); Z = Z.reshape(nr, nc); ok = ok.reshape(nr, nc); mir = mir.reshape(nr, nc)
     # stretched ground: fine detail from cells laid true to scale, over the warp's broad colour
     w, p1, p2, mix = S["cells"](Y, X); w = w.reshape(nr, nc) * np.clip(up(land & has), 0, 1) * ok; Xh = Xw
@@ -325,7 +343,7 @@ def sea_window(r0, r1, c0, c1):
     """-> the sea's colour, shaded, float32, at F; its ice and shoals; and the land's share of every px (the smoothed edge)"""
     import seacolour
     PAD = 30; a0, a1, b0, b1 = max(r0 - PAD, 0), min(r1 + PAD, OUT), max(c0 - PAD, 0), min(c1 + PAD, OUT); crop = lambda a: np.asarray(a[a0:a1, b0:b1])
-    L = crop(mm("land12k.npy")); H = crop(mm("height.npy")).astype(np.float32); wt = (~L).astype(np.float32)
+    L = crop(fm("landc.npy")); H = crop(fm("heightc.npy")).astype(np.float32); wt = (~L).astype(np.float32)
     ds = g(np.where(L, 0, -H) * wt, 6.0) / np.maximum(g(wt, 6.0), 1e-3)
     YL, XL = np.meshgrid((np.arange((r1 - r0) * F) + 0.5) / F - 0.5 + r0 - a0, (np.arange((c1 - c0) * F) + 0.5) / F - 0.5 + c0 - b0, indexing="ij")
     up = lambda a, o=1: ndi.map_coordinates(a.astype(np.float32), [YL, XL], order=o, mode="nearest")
@@ -354,7 +372,7 @@ if __name__ == "__main__":
         write_png(sys.argv[i + 5], np.clip(rgb + 0.5, 0, 255).astype(np.uint8)); sys.exit(0)
     prepare(); tiles(); Cells()
     import seacolour, polar
-    land = np.load(os.path.join(WORK, "land12k.npy")); pc = np.load(os.path.join(WORK, "polar_cache.npz")); made = np.zeros(land.shape, bool)
+    land = np.load(os.path.join(FINE, "landc.npy")); pc = np.load(os.path.join(WORK, "polar_cache.npz")); made = np.zeros(land.shape, bool)
     for i, (_, rs, cs, _) in enumerate(polar.REGIONS): made[rs, cs] |= pc["P%d" % i]
     seacolour.aux(WORK, land, made); del made, pc
     np.lib.format.open_memmap(os.path.join(FINE, "land.npy"), "w+", np.uint16, (N, N, 3)).flush()

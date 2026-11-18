@@ -19,14 +19,18 @@ export interface TalopediaEntry {
   about: string
 }
 
-export function talopediaUrl(name: string): string {
-  const slug = name
+// A name as the Talopedia writes it into an address or a file name
+export function talopediaSlug(name: string): string {
+  return name
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '')
-  return TALOPEDIA + slug + '/'
+}
+
+export function talopediaUrl(name: string): string {
+  return TALOPEDIA + talopediaSlug(name) + '/'
 }
 
 export const talopedia: Record<string, TalopediaEntry> = {

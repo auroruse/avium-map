@@ -1,0 +1,39 @@
+# Land the Satellite map gives up: rows of the 12000 grid, as  row  first-col  last-col+1.
+# The north shore of the Shimonosaki peninsula, where the overlay puts real sea under Avium land and the photograph
+# showed water on it (user, 18 Nov 2026: "water being shown in the Liaodong Peninsula (just cut the land here)").
+# The drawing and every map made from it keep that shore; hybrid.py alone reads this file.
+1266 5897 5905
+1267 5895 5906
+1268 5891 5907
+1269 5890 5908
+1270 5889 5909
+1271 5888 5910
+1272 5887 5910
+1272 5943 5944
+1273 5886 5910
+1273 5942 5943
+1274 5885 5910
+1274 5940 5943
+1275 5884 5910
+1275 5939 5942
+1276 5884 5911
+1276 5937 5942
+1277 5884 5911
+1277 5936 5941
+1278 5884 5893
+1278 5898 5913
+1278 5934 5940
+1279 5886 5891
+1279 5900 5914
+1279 5926 5929
+1279 5933 5939
+1280 5888 5889
+1280 5901 5916
+1280 5924 5938
+1281 5905 5917
+1281 5923 5934
+1282 5907 5934
+1283 5912 5933
+1284 5922 5924
+1284 5928 5933
+1285 5930 5931
