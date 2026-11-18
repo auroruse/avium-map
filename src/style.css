@@ -1414,7 +1414,10 @@ body.hybridmap .label-sea span {
      pictures and do not run into one band */
   inset: 1px 0 1px 28%;
   border-radius: 0 7px 7px 0;
-  background: var(--pic) center / cover;
+  /* The row shows a strip a quarter of the photograph's height. These are
+     aerials with the horizon near the top, so the strip is taken from where the
+     skyline is: the middle of the frame is foreground rooftops. */
+  background: var(--pic) center 22% / cover;
   opacity: 0.6;
   -webkit-mask-image: linear-gradient(to left, #000 0%, rgba(0,0,0,0.6) 45%, transparent 100%);
   mask-image: linear-gradient(to left, #000 0%, rgba(0,0,0,0.6) 45%, transparent 100%);

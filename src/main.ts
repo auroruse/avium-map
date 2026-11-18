@@ -1423,9 +1423,25 @@ function nameOnZoom(score: number): number {
 // class, which is on from the start, grows from Apple's zoom 3 or a little
 // after, the greatest capitals first (London is 12px at Apple's 4, 14 at 5, 15.5
 // at 6 and 17.5 at 7; Munich, which arrives at 4, is 12, 13.5 and 14.5).
+//
+// Apple grows every name at 1.5px a level to one ceiling. That alone left big
+// and small cities looking alike here: a few levels in, everything on screen had
+// reached the ceiling ("the visual difference between big and small cities seems
+// to have blurred", 18 Nov 2026). So the rate and the ceiling now follow the
+// city's own size, by the same bands the placement uses but on population alone,
+// never the capital's weighting: when a name arrives is unchanged, and how far
+// it grows afterwards is the city's. The two smallest bands also come in a
+// little under the rest.
 const NAME_FS = 10.5
-const NAME_FS_MAX = 17.5
-const NAME_GROW = 1.5 // px per zoom level
+//                 15M   5M    2M    1M    500k  250k  100k  under
+const NAME_IN   = [0,    0,    0,    0,    0,    0,    -0.5, -1] // px off NAME_FS on arrival
+const NAME_GROW = [2.1,  1.9,  1.7,  1.5,  1.3,  1.15, 1,    0.9] // px per zoom level
+const NAME_CAP  = [17.5, 16.5, 15.5, 14.5, 13.5, 12.5, 11.5, 11]
+// The ink disc, by the same bands. The top one is as large as it can be without
+// its reserve pushing a neighbouring megacity's name off the continent view
+// (3.8 dropped Takarazuka and Fengzhou at zoom 4).
+const DOT_R     = [3.4,  3,    2.6,  2.2,  1.9,  1.7,  1.5,  1.3]
+const CORE_BANDS = 4 // 1M and up carry the white centre
 const GROW_WORLD = 3.8 // where a score of 10M starts to grow
 const GROW_TOP = 3.2 // and one of 100M or more
 
@@ -1435,10 +1451,11 @@ function nameGrowZoom(score: number): number {
     : nameOnZoom(score)
 }
 
-function nameSizeAt(growZoom: number, z: number): number {
-  // In half pixels, so a name is restyled three times a zoom level rather than
+function nameSizeAt(growZoom: number, z: number, band = 0): number {
+  // In half pixels, so a name is restyled a few times a zoom level rather than
   // on every step of one
-  return Math.min(NAME_FS_MAX, Math.round((NAME_FS + NAME_GROW * Math.max(0, z - growZoom)) * 2) / 2)
+  const size = NAME_FS + NAME_IN[band] + NAME_GROW[band] * Math.max(0, z - growZoom)
+  return Math.min(NAME_CAP[band], Math.round(size * 2) / 2)
 }
 
 // The zooms a city's name comes on at and starts growing from. Worked out once,
@@ -1455,20 +1472,19 @@ function cityZooms(): Map<City, { on: number; grow: number }> {
 }
 
 // What a city is drawn with at a zoom: the name's size, a weight that follows it
-// (medium at 10.5px, semibold by 13, bold from 15, as measured), and a dot that
-// follows it too, 4px across to 6, which is Apple's 4.5 to 6.5. A city of 2M or
-// more keeps its white centre at every size. One object per distinct style, so
-// two cities drawn alike share it.
+// (medium at 10.5px, semibold by 13, bold from 15, as measured), and a dot set by
+// the city's population band alone, so a megacity's marker is a megacity's at
+// every zoom. One object per distinct style, so two cities drawn alike share it.
 const styleCache = new Map<string, CityTier>()
 function cityStyle(c: City, z: number): CityTier {
-  const fontSize = nameSizeAt(cityZooms().get(c)!.grow, z)
-  const core = c.population >= 2_000_000
-  const key = `${fontSize}|${core ? 1 : 0}`
+  const band = tierRank(c.population)
+  const fontSize = nameSizeAt(cityZooms().get(c)!.grow, z, band)
+  const key = `${fontSize}|${band}`
   let style = styleCache.get(key)
   if (!style) {
     style = {
-      radius: Math.min(2.2, Math.max(core ? 1.85 : 1.55, 1.55 + 0.13 * (fontSize - NAME_FS))),
-      core,
+      radius: DOT_R[band],
+      core: band < CORE_BANDS,
       fontSize,
       weight: Math.min(700, Math.round((500 + 45 * (fontSize - NAME_FS)) / 10) * 10),
     }
