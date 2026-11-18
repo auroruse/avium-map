@@ -2176,13 +2176,13 @@ function byCityName<T>(m: Map<string, T>, name: string): T | undefined {
   return m.get(norm(name)) ?? m.get(norm(name.replace(/,\s*[A-Z]{2,4}$/, '')))
 }
 
-// Flags (src/assets/flags/<nation>.png, written by scripts/flags.mjs from the
+// Flags (src/assets/flags/<nation>.webp, written by scripts/flags.mjs from the
 // Talopedia's), keyed by the nation's name as a slug.
 const flags = new Map<string, string>()
 for (const [path, url] of Object.entries(
-  import.meta.glob('./assets/flags/*.png', { eager: true, query: '?url', import: 'default' }) as Record<string, string>
+  import.meta.glob('./assets/flags/*.webp', { eager: true, query: '?url', import: 'default' }) as Record<string, string>
 )) {
-  flags.set(path.slice(path.lastIndexOf('/') + 1, -4), url)
+  flags.set(path.slice(path.lastIndexOf('/') + 1, -5), url)
 }
 
 // A nation's own flag, or its overlord's when it has none: twelve colonies fly
@@ -2221,6 +2221,14 @@ const lightbox = document.getElementById('lightbox')!
 const lightboxImg = lightbox.querySelector('img') as HTMLImageElement
 
 cityPanel.addEventListener('click', e => {
+  // A nation's flag, washed behind its name: the band is the way in to the flag itself
+  const wash = (e.target as HTMLElement).closest('.cp-wash') as HTMLElement | null
+  if (wash) {
+    lightboxImg.src = wash.dataset.full!
+    lightboxImg.alt = wash.dataset.alt ?? ''
+    lightbox.hidden = false
+    return
+  }
   const banner = (e.target as HTMLElement).closest('.cp-banner') as HTMLElement | null
   if (!banner) return
   const img = banner.querySelector('img') as HTMLImageElement
@@ -2493,7 +2501,9 @@ function openNationPanel(n: Nation) {
   const cap = n.capital
     ? cities.find(c => norm(c.name) === norm(n.capital) && norm(c.nation) === norm(n.name))
     : undefined
-  // The flag stands as a card left of the name and the official name
+  // The flag is washed in behind the name and the official name, fading out
+  // toward them; clicking the band opens the flag whole (the panel's click
+  // handler, beside the banner's)
   const flag = flagFor(n)
   const title =
     `<div class="cp-name">${n.name}</div>` +
@@ -2502,8 +2512,7 @@ function openNationPanel(n: Nation) {
     `<div class="cp-banner"><img alt=""></div>` +
     `<button class="cp-close" aria-label="Close">✕</button>` +
     (flag
-      ? `<div class="cp-title"><img class="cp-flag" src="${flag.url}" alt="Flag of ${esc(flag.of)}" title="Flag of ${esc(flag.of)}">` +
-        `<div class="cp-title-text">${title}</div></div>`
+      ? `<div class="cp-wash" style="--flag:url('${flag.url}')" data-full="${flag.url}" data-alt="Flag of ${esc(flag.of)}" title="Flag of ${esc(flag.of)}">${title}</div>`
       : title) +
     statStrip([
       {

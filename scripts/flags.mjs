@@ -1,7 +1,8 @@
 #!/usr/bin/env node
-// Writes src/assets/flags/<nation>.png: every nation's flag, 264px wide, for the
-// card beside a nation's name in its panel (66px there, so this is four times
-// over and stays sharp on any screen).
+// Writes src/assets/flags/<nation>.webp: every nation's flag, at most 1200px
+// wide. A nation's panel washes it in behind the name and opens it whole when
+// that is clicked, so one file serves both and has to be large enough for the
+// second.
 //
 // The flags are the Talopedia's (../The Talopedia/public/assets/flags), found by
 // the nation's name as the Talopedia spells its files. Run this again when the
@@ -10,9 +11,6 @@
 // A nation with no flag of its own gets no file. Its panel shows its overlord's
 // instead (flagFor in src/main.ts), so a colony follows whatever its overlord
 // flies without a copy to fall out of step.
-//
-// Three are 64px in the Talopedia and soft at this size, with no larger copy
-// known (18 Nov 2026): Frederikka Islands, Kullanmaan and West Bangala.
 import sharp from 'sharp'
 import { mkdirSync, readFileSync, readdirSync, rmSync } from 'fs'
 import { dirname, join, resolve } from 'path'
@@ -21,7 +19,7 @@ import { fileURLToPath } from 'url'
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const TALOPEDIA = resolve(root, '../The Talopedia/public/assets/flags')
 const OUT = join(root, 'src/assets/flags')
-const WIDTH = 264
+const WIDTH = 1200
 
 // As talopediaUrl in src/data/talopedia.ts: no diacritics, lower case, hyphens
 const slug = name =>
@@ -56,7 +54,7 @@ for (const name of names) {
     none.push(name)
     continue
   }
-  await sharp(src).resize({ width: WIDTH, withoutEnlargement: true }).png({ compressionLevel: 9, palette: false }).toFile(join(OUT, s + '.png'))
+  await sharp(src).resize({ width: WIDTH, withoutEnlargement: true }).webp({ quality: 90, effort: 6 }).toFile(join(OUT, s + '.webp'))
 }
 console.log(`flags: ${names.length - none.length} of ${names.length} nations`)
 console.log(`  none of their own (${none.length}): ${none.join(', ')}`)

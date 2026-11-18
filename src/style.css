@@ -467,33 +467,46 @@ body.hybridmap .label-sea span {
   line-height: 1.15;
 }
 
-/* A nation's flag, as a card left of its name and official name. The card is
-   centred on the two lines, or on three when a long name wraps. The close
-   button's clearance moves from the name to the row, since the name no longer
-   reaches the panel's right edge on its own. */
-.cp-title {
-  display: flex;
-  align-items: center;
-  gap: 13px;
-  padding-right: 34px;
+/* A nation's flag, washed in behind its name and official name: full on the
+   panel's right edge and gone before it reaches the text, so the name is read
+   against the panel and not against the flag. The band bleeds to the panel's
+   top and sides like a banner, and like a banner it opens the whole image when
+   clicked. The close button is a later sibling, so it sits on top and keeps its
+   own click. */
+.cp-wash {
+  position: relative;
+  margin: -18px -18px 0;
+  padding: 18px 18px 0;
+  overflow: hidden;
+  cursor: zoom-in;
 }
 
-.cp-title-text {
-  min-width: 0;
+.cp-wash::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: -14px;
+  width: 62%;
+  background: var(--flag) center / cover;
+  opacity: 0.62;
+  -webkit-mask-image: linear-gradient(to left, #000 0%, rgba(0,0,0,0.55) 38%, transparent 100%),
+    linear-gradient(to bottom, #000 55%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to left, #000 0%, rgba(0,0,0,0.55) 38%, transparent 100%),
+    linear-gradient(to bottom, #000 55%, transparent 100%);
+  mask-composite: intersect;
+  transition: opacity 0.15s;
 }
 
-.cp-title .cp-name {
-  padding-right: 0;
+.cp-wash:hover::before {
+  opacity: 0.78;
 }
 
-/* A hairline of light round it, or a dark flag (Arverne's is black) has no edge
-   against the panel */
-.cp-flag {
-  flex: none;
-  width: 66px;
-  height: auto;
-  border-radius: 5px;
-  box-shadow: 0 0 0 0.5px rgba(255,255,255,0.28), 0 1px 3px rgba(0,0,0,0.45);
+/* Above the wash, with a little shadow for the letters that reach into it */
+.cp-wash > * {
+  position: relative;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.55);
 }
 
 /* The line under a name: native script on a city, the official name on a
@@ -2449,6 +2462,11 @@ body.hybridmap .label-sea span {
   .cp-banner {
     margin: -20px -20px 15px;
     border-radius: 0;
+  }
+
+  .cp-wash {
+    margin: -20px -20px 0;
+    padding: 20px 20px 0;
   }
 
   /* Everything that floats over the map centres on the map, not the window.
