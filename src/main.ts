@@ -3762,7 +3762,8 @@ function openListView(mode: 'cities' | 'nations', filter = '') {
   bsFilter.value = filter
   bsFilter.placeholder = 'Search'
   if (mode === 'nations') {
-    sortField = 'population'
+    // Richest first, like the cities
+    sortField = 'gdp'
     sortAsc = false
   } else {
     // Cities opens on every place, richest first; With Photo is a filter the
