@@ -1435,6 +1435,12 @@ body.hybridmap .label-sea span {
 #bs-items li.bs-pic .bs-cstat {
   color: #fff;
 }
+/* A nation's row wears its flag the same way. The strip is cut from the middle
+   of the flag, where the emblem is, and that lands it between the name and the
+   figure. */
+#bs-items li.bs-flag::before {
+  background-position: center;
+}
 #bs-sort-btn .bs-photo { color: inherit; }
 
 /* The photo filter sits under the sorts, ruled off because it narrows the list

@@ -3679,6 +3679,12 @@ function renderNations(q: string) {
       sub.push(`${pct >= 0.1 ? pct.toFixed(1) + '%' : '<0.1%'} of world`)
     }
     const li = document.createElement('li')
+    // The flag behind the row, the way a city's photograph sits behind its own
+    const flag = flagFor(n)
+    if (flag) {
+      li.className = 'bs-pic bs-flag'
+      li.style.setProperty('--pic', `url('${flag.url}')`)
+    }
     li.innerHTML =
       `<span class="bs-rank">${rm ? rm.get(n) : ''}</span>` +
       `<span class="bs-cinfo"><span class="bs-cname"><span class="bs-ctext">${n.name}</span></span><span class="bs-cnation">${sub.join(' · ')}</span></span>` +
