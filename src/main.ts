@@ -1378,10 +1378,29 @@ function cityMarkerHtml(g: { d: number; rim: number; ring: number }, ink: string
 // grid with no hierarchy that was too many at the world view and too few close
 // in ("notice how Apple isn't trying to cram every possible city in???").
 const CAPITAL_WEIGHT = 10
-const cityScore = (c: City) => c.population * (isCapital(c) ? CAPITAL_WEIGHT : 1)
+
+// What a city is ranked on is its population, moved by how its output a head
+// stands against the world's. Population alone put Sennanur and Obangia on the
+// world view and left Golzar, Dolays and Franmark off it ("represent truly
+// significant cities properly", 19 Nov 2026). A rich city counts for up to the
+// square root of the ratio more: at twice the world's output a head, 1.4 times
+// its people. A poor one loses only the fourth root, because the full square
+// root took a third of the names off the southern continent at user zooms 5 and
+// 6, and a billion people on blank ground reads as missing data. WORLD_OUTPUT is
+// set where the count of cities above each row of NAME_ON comes out as it was on
+// population, so the map carries as many names as before and only which ones
+// changes. The marker and the name's ceiling stay on population alone.
+const WORLD_OUTPUT = 40_000 // GDP PPP a head, $
+const RICH_POWER = 0.5
+const POOR_POWER = 0.25
+function cityScore(c: City): number {
+  const ratio = c.population > 0 && c.gdp > 0 ? c.gdp / c.population / WORLD_OUTPUT : 1
+  const economy = Math.pow(ratio, ratio >= 1 ? RICH_POWER : POOR_POWER)
+  return c.population * economy * (isCapital(c) ? CAPITAL_WEIGHT : 1)
+}
 const citiesByPriority = [...cities].sort((a, b) => cityScore(b) - cityScore(a) || b.gdp - a.gdp)
 
-// Bands of weighted population. An index is a rank: placement goes band by band,
+// Bands of that score. An index is a rank: placement goes band by band,
 // and FALLBACK_RANK is counted in them.
 const SCORE_BANDS = [15_000_000, 5_000_000, 2_000_000, 1_000_000, 500_000, 250_000, 100_000, 0]
 function tierRank(score: number): number {
@@ -1389,7 +1408,7 @@ function tierRank(score: number): number {
   return SCORE_BANDS.length - 1
 }
 
-// Weighted population against the zoom a name is switched on at, read between
+// That score against the zoom a name is switched on at, read between
 // the rows on a log scale so that names arrive one by one as the map is zoomed
 // and never as a batch. Apple's levels are ours plus 0.45: its 3, 4, 5, 6 and 7
 // are 3.45, 4.45, 5.45, 6.45 and 7.45 here. The first two rows thin the world
@@ -1458,15 +1477,47 @@ function nameSizeAt(growZoom: number, z: number, band = 0): number {
   return Math.min(NAME_CAP[band], Math.round(size * 2) / 2)
 }
 
+// Room. NAME_ON alone left open country blank long after there was space for
+// its towns: the whole of Southeast Aphirica showed one name at user zoom 7
+// ("I'm in here basically unobstructed and some of the smaller cities aren't
+// showing", 19 Nov 2026). So a city with nothing more important near it comes on
+// early: at the zoom where the nearest city that outranks it stands ROOM_PX away
+// on screen, up to ROOM_EARLY levels ahead of its class. Crowded country has no
+// such city and is left as it was, and nothing is named ahead of a more
+// important neighbour. It never reaches back past the zoom the million class
+// arrives at, so the world and continent views are untouched. The name still
+// grows from its class's zoom, so an early one stays small until then.
+const ROOM_PX = 120
+const ROOM_EARLY = 2
+const ROOM_FLOOR = 4.45
+
 // The zooms a city's name comes on at and starts growing from. Worked out once,
 // and again if a city is moved or edited.
 let cityZoomCache: Map<City, { on: number; grow: number }> | null = null
 function cityZooms(): Map<City, { on: number; grow: number }> {
   if (cityZoomCache) return cityZoomCache
   cityZoomCache = new Map()
-  for (const c of cities) {
-    const score = Math.max(1, cityScore(c))
-    cityZoomCache.set(c, { on: nameOnZoom(score), grow: nameGrowZoom(score) })
+  const ranked = cities
+    .map(c => ({ c, score: Math.max(1, cityScore(c)) }))
+    .sort((a, b) => b.score - a.score)
+  for (let i = 0; i < ranked.length; i++) {
+    const { c, score } = ranked[i]
+    const classOn = nameOnZoom(score)
+    let on = classOn
+    if (c.x != null && c.y != null && classOn > ROOM_FLOOR) {
+      // Map pixels to the nearest city that outranks this one
+      let near2 = Infinity
+      for (let j = 0; j < i; j++) {
+        const o = ranked[j]
+        if (o.score <= score || o.c.x == null || o.c.y == null) continue
+        const d2 = (o.c.x - c.x) ** 2 + (o.c.y - c.y) ** 2
+        if (d2 < near2) near2 = d2
+      }
+      // The zoom that distance is ROOM_PX at (see ptAt for the scale)
+      const roomOn = Math.log2((ROOM_PX * TILE_GRID) / (U * Math.sqrt(near2)))
+      on = Math.min(classOn, Math.max(ROOM_FLOOR, classOn - ROOM_EARLY, roomOn))
+    }
+    cityZoomCache.set(c, { on, grow: nameGrowZoom(score) })
   }
   return cityZoomCache
 }

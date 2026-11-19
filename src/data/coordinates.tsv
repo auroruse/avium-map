@@ -2,7 +2,7 @@ KIND	NAME	NATION	TYPE	X	Y	LATITUDE	LONGITUDE	POSITION
 city	Āb-e Shirin	Varahmehr		4034	3561	-23.9250	19.3280	23.93°SE 19.33°NE
 city	Abazan	Rudania		3145	1321	23.0100	73.5155	23.01°NW 73.52°NE
 city	Acatlazohuacan	Auritania		1298	3990	10.6800	-91.6339	10.68°NW 91.63°SW
-city	Achikulak	Perovska		3755	1589	9.8400	72.9566	9.84°NW 72.96°NE
+city	Achikulak	Perovska		3755	1591	9.8100	72.8620	9.81°NW 72.86°NE
 city	Acra	Southeast Aphirica		3263	4130	-20.8950	-33.8745	20.89°SE 33.87°SW
 city	Adbâr	Demâruz		3462	2262	4.1400	37.7358	4.14°NW 37.74°NE
 city	Adrianopolis	East Astriya		3316	3183	-7.4850	4.3519	7.48°SE 4.35°NE
@@ -19,7 +19,7 @@ city	Akaishi	Nichirin		2818	802	35.7000	100.2431	35.70°NW 100.24°NE
 city	Akala	Seignid		3988	628	20.7600	131.0225	20.76°NW 131.02°NE
 city	Akamine	Nichirin		2960	747	34.3950	107.4562	34.39°NW 107.46°NE
 city	Akenau	Alemannia		2946	2685	5.5350	8.3431	5.53°NW 8.34°NE
-city	Akhsau	Perovska		3631	1474	13.4250	76.0548	13.42°NW 76.05°NE
+city	Akhsau	Perovska		3633	1473	13.4100	76.1457	13.41°NW 76.15°NE
 city	Akino	Nichirin		2302	801	43.4550	87.0706	43.45°NW 87.07°NE
 city	Akolpur	Arunya		3805	4700	-37.5750	-46.0944	37.58°SE 46.09°SW
 city	Aktau	Perovska		3840	1513	9.7050	78.2477	9.71°NW 78.25°NE
@@ -28,16 +28,16 @@ city	Al-Gilfah	Barbary		2761	3099	2.1000	-10.3823	2.10°NW 10.38°SW
 city	Al-Sabkha	Barbary		2810	3137	0.7950	-9.8974	0.79°NW 9.90°SW
 city	Al-Suways	Kemet		3599	3448	-15.7050	5.4876	15.70°SE 5.49°NE
 city	Alacanta	Askurias		2716	3022	3.9300	-9.5992	3.93°NW 9.60°SW
-city	Alash-Qala	Rudania		3319	1513	17.5200	67.2765	17.52°NW 67.28°NE
+city	Alash-Qala	Rudania		3317	1513	17.5500	67.2298	17.55°NW 67.23°NE
 city	Albasita	Askurias		2709	2980	4.6650	-8.5744	4.67°NW 8.57°SW
 city	Albemarle Point	Hollosend		1960	3478	8.4300	-50.2464	8.43°NW 50.25°SW
 city	Alberti Sacra	Vicily		3024	3055	-1.1850	-0.9424	1.18°SE 0.94°SW
 city	Albrechtshaven	Albatrossinseln		3695	2952	-9.7050	24.9841	9.71°SE 24.98°NE
 city	Aldea Oro	Askurias		2736	2837	6.4050	-3.2622	6.40°NW 3.26°SW
-city	Aldenbergen	Alemannia		2916	2604	7.2000	10.1739	7.20°NW 10.17°NE
+city	Aldenbergen	Alemannia		2915	2605	7.2000	10.1087	7.20°NW 10.11°NE
 city	Alebkin	Rudania		2984	1561	21.8250	56.3564	21.82°NW 56.36°NE
 city	Alei	Seignid		3960	552	22.3200	135.9574	22.32°NW 135.96°NE
-city	Aleksandriya	Rudania		3362	2144	7.4100	39.8184	7.41°NW 39.82°NE
+city	Aleksandriya	Rudania		3363	2143	7.4100	39.8838	7.41°NW 39.88°NE
 city	Algernon	Barbary		2757	3035	3.1200	-8.6395	3.12°NW 8.64°SW
 city	Alioual	South Pelagonia		2760	5217	-29.6550	-109.9329	29.65°SE 109.93°SW
 city	Allmiri	Antiqa		1638	4586	-3.3600	-91.8698	3.36°SE 91.87°SW
@@ -45,7 +45,7 @@ city	Altakrai	Rudania		3212	1406	20.7300	70.3941	20.73°NW 70.39°NE
 city	Alung	Axerfreditenshin		3148	845	30.1050	103.8167	30.11°NW 103.82°NE
 city	Älvskrona	Skjarnland		2882	2443	10.1250	14.8394	10.13°NW 14.84°NE
 city	Amassajärvi	Kullanmaan		2150	3988	-2.0700	-56.4381	2.07°SE 56.44°SW
-city	Ambarino	Hollosend		1564	3235	18.0150	-62.6756	18.02°NW 62.68°SW
+city	Ambarino	Hollosend		1563	3236	18.0150	-62.7506	18.02°NW 62.75°SW
 city	Amberdam	Alemannia		2892	2666	6.6300	7.3192	6.63°NW 7.32°NE
 city	Ambewada	Arunya		3448	4908	-35.3400	-72.1186	35.34°SE 72.12°SW
 city	Amunia	Kemet		3465	3377	-12.6300	3.0710	12.63°SE 3.07°NE
@@ -54,18 +54,18 @@ city	An Lộc	Great Ai		4403	934	9.9450	116.9983	9.95°NW 117.00°NE
 city	Anaatasagaram	Arunya		3638	4771	-36.1350	-56.7920	36.13°SE 56.79°SW
 city	Anandpaur	Noradia		3850	4953	-42.0450	-62.1020	42.04°SE 62.10°SW
 city	Añazo	Askurias		2356	3366	4.1700	-31.7721	4.17°NW 31.77°SW
-city	Andevre	Arverne		2857	2815	4.9200	1.3329	4.92°NW 1.33°NE
+city	Andevre	Arverne		2857	2814	4.9350	1.3648	4.93°NW 1.36°NE
 city	Andō	Nichirin		2887	650	36.9450	113.8422	36.95°NW 113.84°NE
 city	Andovère	Arverne		2907	2698	5.9250	6.7119	5.92°NW 6.71°NE
 city	Andropov	Rudania		3040	2116	12.6600	32.2576	12.66°NW 32.26°NE
-city	Angsby	Elvester		2832	2711	6.8550	3.9293	6.85°NW 3.93°NE
+city	Angsby	Elvester		2831	2711	6.8700	3.8975	6.87°NW 3.90°NE
 city	Anisa	Zephran		3782	2219	-0.0150	46.8978	0.01°SE 46.90°NE
-city	Annesburg	Hollosend		1716	3189	16.4250	-54.0550	16.42°NW 54.06°SW
-city	Annesburg East	E.S.U.		1724	3193	16.2450	-53.7767	16.24°NW 53.78°SW
+city	Annesburg	Hollosend		1717	3191	16.3800	-54.0587	16.38°NW 54.06°SW
+city	Annesburg East	E.S.U.		1724	3190	16.2900	-53.6996	16.29°NW 53.70°SW
 city	Ansenes	Skjarnland		2651	2167	17.7300	18.0822	17.73°NW 18.08°NE
 city	Anxiang	Guandong		3331	685	29.7600	118.5956	29.76°NW 118.60°NE
 city	Anxing	Furan		3499	420	31.2150	141.4187	31.21°NW 141.42°NE
-city	Anyi	Furan		3393	576	30.4650	127.7551	30.46°NW 127.76°NE
+city	Anyi	Furan		3391	579	30.4500	127.4962	30.45°NW 127.50°NE
 city	Aoili	Seignid		3813	537	24.7500	135.5586	24.75°NW 135.56°NE
 city	Aomizu	Nichirin		2856	862	34.2300	96.5358	34.23°NW 96.54°NE
 city	Aoyu	Nichirin		2853	578	38.5350	119.3530	38.53°NW 119.35°NE
@@ -79,22 +79,22 @@ city	Aranvata	Arunya		3764	4635	-35.9850	-43.5379	35.98°SE 43.54°SW
 city	Araqilla	Antiqa		1568	4583	-2.2650	-92.7851	2.26°SE 92.79°SW
 city	Araytan	Seignid		3896	507	23.9550	138.5464	23.96°NW 138.55°NE
 city	Arbel	Shivon		3673	3403	-16.1400	9.8700	16.14°SE 9.87°NE
-city	Arburh	Eivorie		2371	3803	-2.6100	-44.2430	2.61°SE 44.24°SW
+city	Arburh	Eivorie		2370	3804	-2.6100	-44.3048	2.61°SE 44.30°SW
 city	Archtessa	Giathka		3739	1790	7.0650	63.4509	7.06°NW 63.45°NE
 city	Arcturus	Skjarnland		2759	2207	15.5100	20.0081	15.51°NW 20.01°NE
 city	Argungu	Côte de Saumon		2552	3750	-4.5300	-37.8449	4.53°SE 37.84°SW
 city	Århaus	Skjarnland		2879	2497	9.3600	12.7902	9.36°NW 12.79°NE
 city	Arisca	Vicily		3201	3237	-6.5700	-1.1650	6.57°SE 1.17°SW
 city	Arkaim	Rudania		3189	1839	14.5800	48.3294	14.58°NW 48.33°NE
-city	Arkankeli	Karjania		2847	2023	16.9500	30.4559	16.95°NW 30.46°NE
-city	Armadillo	Hollosend		1337	3269	20.9100	-75.5015	20.91°NW 75.50°SW
+city	Arkankeli	Karjania		2845	2021	17.0100	30.4809	17.01°NW 30.48°NE
+city	Armadillo	Hollosend		1335	3269	20.9400	-75.6125	20.94°NW 75.61°SW
 city	Arpi	Vicily		3085	3099	-2.7600	-0.4333	2.76°SE 0.43°SW
 city	Artemisia	Santee		1669	3152	17.6850	-55.3703	17.68°NW 55.37°SW
 city	Arvada	E.S.U.		1863	3057	16.2000	-43.6829	16.20°NW 43.68°SW
 city	Arverdun	Arverne		2942	2833	3.3750	3.3974	3.37°NW 3.40°NE
-city	Aryapur	Noradia		3990	4949	-44.0850	-56.3933	44.09°SE 56.39°SW
+city	Aryapur	Noradia		3989	4949	-44.0700	-56.4337	44.07°SE 56.43°SW
 city	Arza	El Magreb		2438	3174	5.8200	-23.6066	5.82°NW 23.61°SW
-city	Arzalma	Rudania		3319	1669	15.1800	59.5429	15.18°NW 59.54°NE
+city	Arzalma	Rudania		3320	1669	15.1650	59.5670	15.16°NW 59.57°NE
 city	Asamitsu	Nichirin		2948	716	35.0400	109.6507	35.04°NW 109.65°NE
 city	Asamori	Nichirin		2603	733	39.9600	100.8993	39.96°NW 100.90°NE
 city	Asazuru	Nichirin		2191	880	43.9350	76.8414	43.93°NW 76.84°NE
@@ -110,12 +110,12 @@ city	Aspadana	East Astriya		3351	3203	-8.3100	4.8917	8.31°SE 4.89°NE
 city	Assansole	West Bangala		4059	5010	-46.0350	-58.4033	46.04°SE 58.40°SW
 city	Assen	Alemannia		3042	2581	5.6550	14.7572	5.65°NW 14.76°NE
 city	Astrakhân	Demâruz		3445	2118	6.5550	42.9373	6.55°NW 42.94°NE
-city	Astralis	Dias		3107	5298	-36.0750	-109.7024	36.07°SE 109.70°SW
+city	Astralis	Dias		3106	5300	-36.0900	-109.8831	36.09°SE 109.88°SW
 city	Atanao	Seignid		3899	520	23.7150	137.6375	23.71°NW 137.64°NE
 city	Atanina	Seignid		3916	561	22.8450	134.8894	22.84°NW 134.89°NE
 city	Atlalixpa	Auritania		1402	3842	11.3400	-83.7529	11.34°NW 83.75°SW
 city	Atlantipitis	Hollosend		1859	3426	10.7250	-53.3699	10.72°NW 53.37°SW
-city	Atoyansk	Rudania		3294	1996	10.6500	44.1664	10.65°NW 44.17°NE
+city	Atoyansk	Rudania		3293	1996	10.6650	44.1407	10.66°NW 44.14°NE
 city	Atrèves	Arverne		2905	2746	5.2350	5.0646	5.23°NW 5.06°NE
 city	Attaliya	Selmira		3506	3308	-12.2100	6.8723	12.21°SE 6.87°NE
 city	Attenza	Vicily		3211	3290	-7.5150	-2.5859	7.51°SE 2.59°SW
@@ -135,7 +135,7 @@ city	Ayér Tam	Cahaya		4492	1030	7.1700	112.8504	7.17°NW 112.85°NE
 city	Ayocuan	Hollosend		1926	3739	5.0250	-57.6064	5.02°NW 57.61°SW
 city	Ayonix	Noradia		4047	4962	-45.1350	-55.0652	45.13°SE 55.07°SW
 city	Āzādport	Varahmehr		4122	4017	-32.0850	4.8951	32.09°SE 4.90°NE
-city	Aziziye	Divia		3954	3430	-20.7600	20.4333	20.76°SE 20.43°NE
+city	Aziziye	Divia		3953	3431	-20.7600	20.3553	20.76°SE 20.36°NE
 city	Azmashir	Selmira		3370	3198	-8.5200	5.6996	8.52°SE 5.70°NE
 city	Azov	Demâruz		3392	2239	5.5350	36.8567	5.53°NW 36.86°NE
 city	Azuréa	Arverne		3063	2861	1.1400	6.1377	1.14°NW 6.14°NE
@@ -144,8 +144,8 @@ city	B'Lao	Great Ai		4399	892	10.6350	119.3083	10.63°NW 119.31°NE
 city	Ba Đê Nhã	Great Ai		4414	1089	7.4550	108.7589	7.45°NW 108.76°NE
 city	Bạc Hạc	Great Ai		4116	887	14.9550	116.1743	14.95°NW 116.17°NE
 city	Bắc Nao	Great Ai		4403	1079	7.7700	109.1426	7.77°NW 109.14°NE
-city	Bacchus	Hollosend		1568	3263	17.5350	-63.1546	17.54°NW 63.15°SW
-city	Bachstadt	Divia		3919	3411	-19.9500	19.5803	19.95°SE 19.58°NE
+city	Bacchus	Hollosend		1570	3263	17.5050	-63.0540	17.50°NW 63.05°SW
+city	Bachstadt	Divia		3917	3412	-19.9350	19.4605	19.93°SE 19.46°NE
 city	Bad Höllenbrunn	Neuhollmar		3167	5651	-42.2700	-140.5154	42.27°SE 140.52°SW
 city	Baergrund	Ponurvia		1088	2941	29.5650	-82.7848	29.56°NW 82.78°SW
 city	Bahārabad	Varahmehr		4044	3493	-23.0550	22.2227	23.05°SE 22.22°NE
@@ -156,7 +156,7 @@ city	Baigau	Cahaya		4437	947	9.2400	116.6790	9.24°NW 116.68°NE
 city	Bais-Mai	Seignid		3847	679	22.1100	125.9920	22.11°NW 125.99°NE
 city	Bakassa	Vicilian North Aphirica		2818	4100	-13.7700	-45.4073	13.77°SE 45.41°SW
 city	Balabilaran	Seignid		3907	711	20.7300	124.5734	20.73°NW 124.57°NE
-city	Balajipur	Arunya		3790	4602	-35.8800	-40.5100	35.88°SE 40.51°SW
+city	Balajipur	Arunya		3793	4602	-35.9250	-40.3939	35.93°SE 40.39°SW
 city	Balambangan	Cahaya		4538	1027	6.5250	113.5633	6.52°NW 113.56°NE
 city	Balikas	Seignid		4081	724	17.9250	125.7565	17.92°NW 125.76°NE
 city	Baliksampan	Cahaya		4640	1135	3.3750	109.2468	3.37°NW 109.25°NE
@@ -176,25 +176,25 @@ city	Bareba	Côte de Saumon		2498	3778	-4.1400	-40.2516	4.14°SE 40.25°SW
 city	Bārfeld	Eivorie		2228	3757	0.2250	-45.9850	0.22°NW 45.98°SW
 city	Bariccia	Vicily		3104	3117	-3.3150	-0.4049	3.31°SE 0.40°SW
 city	Barram	E.S.U.		1776	3038	17.7900	-47.1874	17.79°NW 47.19°SW
-city	Barranco	Auritania		1491	3844	9.9750	-79.3889	9.97°NW 79.39°SW
+city	Barranco	Auritania		1493	3844	9.9450	-79.2917	9.95°NW 79.29°SW
 city	Baru Makmur	Cahaya		4443	954	9.0450	116.3646	9.04°NW 116.36°NE
 city	Baruk-Khizdîn	Demâruz		3622	2341	0.5550	38.6685	0.55°NW 38.67°NE
 city	Bǎsavo	Slytlia		3312	2485	3.0450	25.6788	3.04°NW 25.68°NE
 city	Bashōura	Kinshū		3077	5580	-39.8550	-134.7712	39.85°SE 134.77°SW
 city	Bastsova	Rudania		3289	1604	16.6050	61.9865	16.61°NW 61.99°NE
-city	Bát Tầm Môn	Great Ai		4376	1011	9.1950	112.4373	9.20°NW 112.44°NE
+city	Bát Tầm Môn	Great Ai		4377	1013	9.1500	112.3414	9.15°NW 112.34°NE
 city	Batasa	Seignid		4037	706	18.8550	126.4137	18.85°NW 126.41°NE
 city	Bāthwearf	Eivorie		2054	3810	2.0400	-53.9018	2.04°NW 53.90°SW
 city	Batman	Barbary		2864	3104	0.4800	-7.2386	0.48°NW 7.24°SW
 city	Batu Hitam	Cahaya		4526	1263	3.1650	101.4579	3.16°NW 101.46°NE
 city	Batu Putih	Cahaya		4464	1087	6.7350	109.5046	6.73°NW 109.50°NE
 city	Bayetovo	Perovska		3665	1688	9.7050	66.4786	9.71°NW 66.48°NE
-city	Bayou Nwa	Hollosend		1666	3541	11.8950	-64.8166	11.89°NW 64.82°SW
+city	Bayou Nwa	Hollosend		1667	3541	11.8800	-64.7696	11.88°NW 64.77°SW
 city	Bayunava	Slytlia		3296	2443	3.9150	26.7538	3.91°NW 26.75°NE
 city	Bayusin	Seignid		3957	607	21.5400	132.1209	21.54°NW 132.12°NE
-city	Beauchis	Côte de Saumon		2682	3867	-8.2350	-39.1304	8.23°SE 39.13°SW
+city	Beauchis	Côte de Saumon		2681	3866	-8.2050	-39.1161	8.21°SE 39.12°SW
 city	Beaver Hollow	Hollosend		1639	3236	16.8750	-58.9662	16.88°NW 58.97°SW
-city	Bebbel	Santee		1606	2844	23.2500	-50.0764	23.25°NW 50.08°SW
+city	Bebbel	Santee		1604	2843	23.2950	-50.1507	23.29°NW 50.15°SW
 city	Becedo	Askurias		2767	2875	5.3700	-3.4456	5.37°NW 3.45°SW
 city	Beining	Guandong		3083	691	33.3900	114.0859	33.39°NW 114.09°NE
 city	Beizhou	Furan		3530	802	25.0200	113.3518	25.02°NW 113.35°NE
@@ -204,7 +204,7 @@ city	Bella Utis	Hollosend		1940	3499	8.4150	-51.5940	8.41°NW 51.59°SW
 city	Bellecôte	Arverne		2791	3027	2.7300	-7.3015	2.73°NW 7.30°SW
 city	Belograd	Giathka		3898	1786	4.7400	66.8825	4.74°NW 66.88°NE
 city	Benadetto	Vicily		3026	2964	0.1500	1.8631	0.15°NW 1.86°NE
-city	Benigata	Nichirin		2940	671	35.8350	113.1044	35.84°NW 113.10°NE
+city	Benigata	Nichirin		2940	673	35.8050	112.9422	35.80°NW 112.94°NE
 city	Bérampour	West Bangala		4089	5027	-46.7400	-58.5437	46.74°SE 58.54°SW
 city	Bereket	Selmira		3664	3264	-13.9200	14.1956	13.92°SE 14.20°NE
 city	Berelstein	Alemannia		2982	2545	7.0950	14.2320	7.09°NW 14.23°NE
@@ -212,7 +212,7 @@ city	Berenice	Vicily		3021	2928	0.7650	2.8139	0.76°NW 2.81°NE
 city	Berenthal	Alemannia		3047	2769	2.7600	8.6039	2.76°NW 8.60°NE
 city	Bergheim	Kogelland		2242	5236	-22.1700	-119.1774	22.17°SE 119.18°SW
 city	Beringin	Cahaya		4462	996	8.1300	114.3056	8.13°NW 114.31°NE
-city	Bersel	Alemannia		3035	2755	3.1500	8.7047	3.15°NW 8.70°NE
+city	Bersel	Alemannia		3032	2756	3.1800	8.5833	3.18°NW 8.58°NE
 city	Berun	E.S.U.		2174	3073	11.2950	-30.8405	11.29°NW 30.84°SW
 city	Berytar	Selmira		3626	3333	-14.3850	10.4622	14.38°SE 10.46°NE
 city	Berza	Vicily		3131	3093	-3.3600	1.1842	3.36°SE 1.18°NE
@@ -225,13 +225,13 @@ city	Bieb il-Baħar	Sehreno		3946	4336	-34.2300	-18.8811	34.23°SE 18.88°SW
 city	Bierastia	Rudania		3079	2378	8.1450	23.1226	8.14°NW 23.12°NE
 city	Bigongburh	Eivorie		2090	3792	1.7700	-52.0843	1.77°NW 52.08°SW
 city	Bingang	Furan		3347	468	32.7750	135.8375	32.77°NW 135.84°NE
-city	Bingi	Cahaya		4441	1006	8.2950	113.5120	8.29°NW 113.51°NE
+city	Bingi	Cahaya		4440	1008	8.2800	113.3921	8.28°NW 113.39°NE
 city	Bình Khang	Great Ai		4382	841	11.6550	122.0333	11.65°NW 122.03°NE
 city	Bình Lỗ	Great Ai		4190	835	14.6250	120.1791	14.62°NW 120.18°NE
 city	Bintuhf	Demâruz		3389	2234	5.6550	36.9731	5.65°NW 36.97°NE
 city	Bioly	Sylesyjo		3339	2230	6.4650	35.8449	6.46°NW 35.84°NE
 city	Bir Miftuħ	Sehreno		3960	4317	-34.1550	-17.2603	34.15°SE 17.26°SW
-city	Biram	Côte de Saumon		2729	3810	-8.0850	-35.6308	8.08°SE 35.63°SW
+city	Biram	Côte de Saumon		2732	3810	-8.1300	-35.5515	8.13°SE 35.55°SW
 city	Biryuzinsk	Giathka		3824	2028	2.2200	55.2427	2.22°NW 55.24°NE
 city	Bisao	Hollosend		1980	3635	5.7750	-53.0543	5.78°NW 53.05°SW
 city	Bitano	Vicily		3177	3181	-5.3700	-0.1276	5.37°SE 0.13°SW
@@ -246,21 +246,21 @@ city	Bogalang	Seignid		3992	889	16.7850	114.4315	16.79°NW 114.43°NE
 city	Bolao	Furan		3563	517	28.8000	134.3824	28.80°NW 134.38°NE
 city	Bolsem	E.S.U.		1852	3142	15.0900	-46.4958	15.09°NW 46.50°SW
 city	Bồng Sơn	Great Ai		4346	827	12.4050	122.4473	12.40°NW 122.45°NE
-city	Bonnen	Alemannia		2964	2685	5.2650	8.8901	5.26°NW 8.89°NE
+city	Bonnen	Alemannia		2965	2685	5.2500	8.9204	5.25°NW 8.92°NE
 city	Borbagne	Ponurvia		1145	2977	28.1700	-80.0000	28.17°NW 80.00°SW
-city	Bordigal	Arverne		2856	2862	4.2300	-0.1889	4.23°NW 0.19°SW
+city	Bordigal	Arverne		2856	2863	4.2150	-0.2203	4.21°NW 0.22°SW
 city	Borgund	Skjarnland		2738	2417	12.6750	11.2085	12.67°NW 11.21°NE
 city	Bormla	Sehreno		3887	4346	-33.4950	-21.9326	33.49°SE 21.93°SW
-city	Borndal	Alemannia		2960	2635	6.0750	10.4558	6.08°NW 10.46°NE
+city	Borndal	Alemannia		2959	2635	6.0900	10.4255	6.09°NW 10.43°NE
 city	Bosgownie	Cortesia		3144	2583	4.0950	17.6323	4.09°NW 17.63°NE
 city	Bossina	Vicily		3117	3042	-2.3850	2.3112	2.38°SE 2.31°NE
-city	Boston	Salishia		1325	2606	31.0350	-58.6568	31.03°NW 58.66°SW
+city	Boston	Salishia		1327	2607	30.9900	-58.5663	30.99°NW 58.57°SW
 city	Botai	Auritania		1507	3962	7.9650	-80.8009	7.96°NW 80.80°SW
 city	Bougie	Barbary		2827	3055	1.7700	-6.9772	1.77°NW 6.98°SW
 city	Bracara	Askurias		2657	2841	7.5300	-6.0240	7.53°NW 6.02°SW
-city	Bracetara	Hollosend		1622	3133	18.6750	-57.1987	18.67°NW 57.20°SW
+city	Bracetara	Hollosend		1622	3130	18.7200	-57.1212	18.72°NW 57.12°SW
 city	Brādfeld	Eivorie		2152	3712	2.0400	-47.8854	2.04°NW 47.89°SW
-city	Bramytolne	Sylesyjo		3221	2338	6.6150	28.5915	6.61°NW 28.59°NE
+city	Bramytolne	Sylesyjo		3219	2338	6.6450	28.5370	6.64°NW 28.54°NE
 city	Braneyětsi	Slytlia		3340	2552	1.6200	24.0733	1.62°NW 24.07°NE
 city	Branitzburg	Sankt Gerold Island		3840	5328	-47.5200	-94.5763	47.52°SE 94.58°SW
 city	Breast	Arverne		2772	2800	6.4200	-0.9045	6.42°NW 0.90°SW
@@ -283,7 +283,7 @@ city	Brunswich	Alemannia		2967	2593	6.6000	12.1079	6.60°NW 12.11°NE
 city	Brzuchwola	Sylesyjo		3345	2272	5.7450	34.3849	5.74°NW 34.38°NE
 city	Bugang	Axerfreditenshin		3318	812	28.0500	109.2203	28.05°NW 109.22°NE
 city	Buktoon	Hollosend		2373	3583	0.6600	-36.5682	0.66°NW 36.57°SW
-city	Bungaloo	Southeast Aphirica		3305	4205	-22.6500	-36.0802	22.65°SE 36.08°SW
+city	Bungaloo	Southeast Aphirica		3307	4207	-22.7100	-36.1123	22.71°SE 36.11°SW
 city	Buranachesk	Rudania		3120	2356	7.8600	25.1132	7.86°NW 25.11°NE
 city	Burghersville	E.S.U.		2035	3267	10.4700	-41.8257	10.47°NW 41.83°SW
 city	Buzrâbekhaz	Demâruz		3565	2239	2.9400	41.1234	2.94°NW 41.12°NE
@@ -293,30 +293,30 @@ city	Cadounie	Côte de Saumon		2599	3844	-6.6450	-40.3275	6.64°SE 40.33°SW
 city	Caertaff	Elvester		2797	2753	6.7500	1.4270	6.75°NW 1.43°NE
 city	Cairenza	Vicily		2975	3120	-1.4250	-4.4200	1.42°SE 4.42°SW
 city	Cakobau	New Celyddon		4213	466	19.8150	144.1462	19.81°NW 144.15°NE
-city	Caldrin	E.S.U.		1718	2944	20.0700	-47.3359	20.07°NW 47.34°SW
+city	Caldrin	E.S.U.		1716	2944	20.1000	-47.4335	20.10°NW 47.43°SW
 city	Calé	Askurias		2637	2850	7.6950	-6.9874	7.69°NW 6.99°SW
 city	Calète	Arverne		2883	2737	5.7000	4.6762	5.70°NW 4.68°NE
 city	Calgaich	Elvester		2721	2613	9.9900	3.6445	9.99°NW 3.64°NE
 city	Calumet	Hollosend		1572	3210	18.2700	-61.6562	18.27°NW 61.66°SW
 city	Cẩm Bài	Great Ai		4378	1039	8.7450	110.9507	8.74°NW 110.95°NE
 city	Cam Môn	Great Ai		4263	899	12.5700	117.3034	12.57°NW 117.30°NE
-city	Cam Phanh	Great Ai		4218	967	12.2250	112.8602	12.22°NW 112.86°NE
+city	Cam Phanh	Great Ai		4223	963	12.2100	113.1508	12.21°NW 113.15°NE
 city	Cẩm Xuyên	Great Ai		4212	827	14.4150	120.9168	14.41°NW 120.92°NE
-city	Cam-pông Cam	Great Ai		4399	996	9.0750	113.5385	9.08°NW 113.54°NE
+city	Cam-pông Cam	Great Ai		4399	998	9.0450	113.4297	9.04°NW 113.43°NE
 city	Camberford	Hollosend		2037	3701	3.9300	-52.1994	3.93°NW 52.20°SW
 city	Camberlyn	Hollosend		1513	3443	15.6600	-70.0969	15.66°NW 70.10°SW
 city	Çanakalesi	Selmira		3358	3229	-8.8050	4.2897	8.80°SE 4.29°NE
 city	Canebreak	Hollosend		1652	3364	14.7600	-61.4354	14.76°NW 61.44°SW
 city	Cangyuan	Guandong		3128	658	33.2100	117.4326	33.21°NW 117.43°NE
-city	Canot	Côte de Saumon		2701	3832	-7.9950	-37.2380	8.00°SE 37.24°SW
+city	Canot	Côte de Saumon		2702	3833	-8.0250	-37.2516	8.03°SE 37.25°SW
 city	Cap de Bonne-Espérance	South Pelagonia		2493	5229	-25.8300	-115.1192	25.83°SE 115.12°SW
 city	Cap-des-Flammes	South Pelagonia		2708	5326	-30.5100	-118.8200	30.51°SE 118.82°SW
 city	Capsa	Vicily		2922	3139	-0.9150	-6.5769	0.91°SE 6.58°SW
 city	Carapour	West Bangala		4032	5027	-45.8850	-60.8977	45.88°SE 60.90°SW
 city	Caravigna	Vicily		2970	3061	-0.4650	-2.7442	0.46°SE 2.74°SW
-city	Carbopolis	Salishia		1370	2649	29.7150	-57.2829	29.71°NW 57.28°SW
+city	Carbopolis	Salishia		1368	2648	29.7600	-57.3705	29.76°NW 57.37°SW
 city	Carmeloma	Hollosend		1614	3604	11.7300	-68.6470	11.73°NW 68.65°SW
-city	Carnelune	Arverne		2899	2794	4.6050	3.3199	4.61°NW 3.32°NE
+city	Carnelune	Arverne		2899	2796	4.5750	3.2555	4.57°NW 3.26°NE
 city	Carruther	Hollosend		1577	3128	19.4250	-59.3369	19.43°NW 59.34°SW
 city	Carthena	Hollosend		1924	3368	10.6200	-49.1156	10.62°NW 49.12°SW
 city	Cartishire	Thule		2345	2921	11.0100	-19.6886	11.01°NW 19.69°SW
@@ -331,14 +331,14 @@ city	Cathures	Elvester		2780	2592	9.4200	6.2993	9.42°NW 6.30°NE
 city	Catloban	Seignid		3960	768	19.0800	121.5228	19.08°NW 121.52°NE
 city	Cavares	Arverne		2953	2878	2.5350	2.3152	2.53°NW 2.32°NE
 city	Cengkeh	Cahaya		4696	1202	1.5300	106.6328	1.53°NW 106.63°NE
-city	Chakalov	Rudania		3286	1958	11.3400	45.5835	11.34°NW 45.58°NE
+city	Chakalov	Rudania		3287	1958	11.3250	45.6092	11.32°NW 45.61°NE
 city	Chang'an	Furan		3516	777	25.6050	114.8428	25.61°NW 114.84°NE
 city	Changsu	Furan		3727	844	21.4350	113.5288	21.43°NW 113.53°NE
 city	Changzhou	Furan		3733	466	27.0150	140.0476	27.01°NW 140.05°NE
 city	Chaqalay	Antiqa		1463	4408	1.9350	-90.2913	1.94°NW 90.29°SW
 city	Charlotte	E.S.U.		2167	3039	11.9100	-30.1498	11.91°NW 30.15°SW
 city	Charnois	Arverne		2931	2717	5.2800	6.8201	5.28°NW 6.82°NE
-city	Chemeketa	Salishia		1294	2639	31.0050	-61.5561	31.00°NW 61.56°SW
+city	Chemeketa	Salishia		1295	2641	30.9600	-61.5549	30.96°NW 61.55°SW
 city	Chernovar	Giathka		3652	1751	8.9550	63.3315	8.95°NW 63.33°NE
 city	Cherven	Zephran		3805	2162	0.4950	49.5626	0.49°NW 49.56°NE
 city	Chicazos	Hollosend		1665	3687	9.7200	-68.0045	9.72°NW 68.00°SW
@@ -356,9 +356,9 @@ city	Chyumen	Rudania		3123	1767	16.6500	49.9141	16.65°NW 49.91°NE
 city	Cicheng	Furan		3456	528	30.2400	132.2892	30.24°NW 132.29°NE
 city	Cieza	Askurias		2693	3008	4.4850	-9.9456	4.48°NW 9.95°SW
 city	Citandui	Cahaya		4568	1385	0.7050	96.2439	0.70°NW 96.24°NE
-city	Ciudad Araya	Auritania		1428	3769	12.0450	-81.0814	12.04°NW 81.08°SW
-city	Ciudad de Aurora	Askurias		2733	2942	4.8750	-6.6291	4.87°NW 6.63°SW
-city	Ciudad de Diogo Jota	Hollosend		1439	3720	12.6150	-79.5852	12.61°NW 79.59°SW
+city	Ciudad Araya	Auritania		1429	3769	12.0300	-81.0312	12.03°NW 81.03°SW
+city	Ciudad de Aurora	Askurias		2732	2944	4.8600	-6.7230	4.86°NW 6.72°SW
+city	Ciudad de Diogo Jota	Hollosend		1436	3720	12.6600	-79.7362	12.66°NW 79.74°SW
 city	Ciudad de Magdalena	Hollosend		1491	3666	12.6450	-75.9162	12.64°NW 75.92°SW
 city	Ciudad de Manteca	Tierra Arcadia		2335	2967	10.4700	-21.4561	10.47°NW 21.46°SW
 city	Ciudad Primada	Hollosend		1815	3604	8.7150	-59.4242	8.71°NW 59.42°SW
@@ -369,13 +369,13 @@ city	Cochinay	Hollosend		1752	3280	14.5200	-54.6582	14.52°NW 54.66°SW
 city	Coldharbor	Hollosend		1917	3708	5.6250	-57.3120	5.63°NW 57.31°SW
 city	Colter	Elvester		2758	2701	8.1150	1.8795	8.12°NW 1.88°NE
 city	Combriga	Askurias		2604	2881	7.7250	-9.0902	7.72°NW 9.09°SW
-city	Conhawa	Seignid		3803	821	20.6400	116.0813	20.64°NW 116.08°NE
-city	Conway	E.S.U.		1783	3223	14.9100	-51.7779	14.91°NW 51.78°SW
+city	Conhawa	Seignid		3805	821	20.6100	116.1089	20.61°NW 116.11°NE
+city	Conway	E.S.U.		1783	3225	14.8800	-51.8291	14.88°NW 51.83°SW
 city	Copperhead City	Hollosend		1636	3339	15.3750	-61.6161	15.37°NW 61.62°SW
 city	Corslawa	Cortesia		3076	2452	7.0800	20.3184	7.08°NW 20.32°NE
 city	Cortrix	Arverne		2906	2722	5.5800	5.8849	5.58°NW 5.88°NE
 city	Corunna	Askurias		2684	2785	7.9650	-3.3242	7.96°NW 3.32°SW
-city	Corvalén	Askurias		2642	2983	5.6250	-10.9120	5.63°NW 10.91°SW
+city	Corvalén	Askurias		2642	2985	5.5950	-10.9721	5.59°NW 10.97°SW
 city	Corvus	E.S.U.		1957	3219	12.3600	-43.8872	12.36°NW 43.89°SW
 city	Cosgale	E.S.U.		1914	3050	15.5400	-41.1926	15.54°NW 41.19°SW
 city	Cotorra	Hollosend		1522	3268	18.1500	-65.6117	18.15°NW 65.61°SW
@@ -413,7 +413,7 @@ city	Darülmülk	Selmira		3561	3263	-12.3600	10.3632	12.36°SE 10.36°NE
 city	Dashtvār	Varahmehr		4020	3543	-23.4450	19.3509	23.45°SE 19.35°NE
 city	Daston	Dias		3021	5352	-35.5950	-115.6824	35.59°SE 115.68°SW
 city	Dayan	Seignid		3961	713	19.8900	125.0834	19.89°NW 125.08°NE
-city	Daycott	E.S.U.		1747	3075	17.6700	-49.5728	17.67°NW 49.57°SW
+city	Daycott	E.S.U.		1744	3077	17.6850	-49.7698	17.68°NW 49.77°SW
 city	Dedeagach	East Astriya		3294	3205	-7.4850	2.9122	7.48°SE 2.91°NE
 city	Delano	Hollosend		1786	3451	11.4450	-57.2274	11.44°NW 57.23°SW
 city	Délivár	Cortesia		3237	2554	3.1350	21.2295	3.13°NW 21.23°NE
@@ -430,12 +430,12 @@ city	Deyrë Zor	Shivon		3773	3330	-16.5450	16.2834	16.55°SE 16.28°NE
 city	Dharamapur	Noradia		3988	4875	-42.9450	-50.8958	42.94°SE 50.90°SW
 city	Dhegiha	Santee		1692	2830	22.1700	-45.2985	22.17°NW 45.30°SW
 city	Diarburg	Divia		3772	3230	-15.0300	19.5198	15.03°SE 19.52°NE
-city	Dihok	Divia		3855	3270	-16.8750	21.6000	16.88°SE 21.60°NE
-city	Dimitrovsk	Giathka		3606	1775	9.2850	61.2488	9.28°NW 61.25°NE
+city	Dihok	Divia		3854	3272	-16.8900	21.4936	16.89°SE 21.49°NE
+city	Dimitrovsk	Giathka		3607	1776	9.2550	61.2261	9.26°NW 61.23°NE
 city	Dingli	Sehreno		4119	4331	-36.7500	-10.7493	36.75°SE 10.75°SW
 city	Divignac	Arverne		2989	2782	3.4350	6.4564	3.43°NW 6.46°NE
 city	Diwaniye	Divia		3967	3470	-21.5550	19.6055	21.55°SE 19.61°NE
-city	Dmitriyevsk	Rudania		3325	2119	8.3400	39.8751	8.34°NW 39.88°NE
+city	Dmitriyevsk	Rudania		3327	2118	8.3250	39.9669	8.32°NW 39.97°NE
 city	Đoàn Thành	Great Ai		4047	833	16.8000	118.5492	16.80°NW 118.55°NE
 city	Dobčín	Cortesia		3152	2567	4.2150	18.4123	4.21°NW 18.41°NE
 city	Doborá	Auritania		1491	3977	7.9800	-81.8361	7.98°NW 81.84°SW
@@ -446,10 +446,10 @@ city	Dolays	Hollosend		1518	3380	16.5300	-68.4279	16.53°NW 68.43°SW
 city	Dolinsk	Giathka		3769	2033	2.9700	53.8573	2.97°NW 53.86°NE
 city	Domyna	Sylesyjo		3298	2334	5.5200	30.8097	5.52°NW 30.81°NE
 city	Domyslava	Slytlia		3378	2463	2.3850	28.1972	2.38°NW 28.20°NE
-city	Donai	Cahaya		4448	1005	8.2050	113.6512	8.21°NW 113.65°NE
+city	Donai	Cahaya		4450	1006	8.1600	113.6217	8.16°NW 113.62°NE
 city	Dondong	Cahaya		4445	1144	6.1650	106.3124	6.16°NW 106.31°NE
 city	Dongguan	Furan		3596	477	28.9050	137.8394	28.91°NW 137.84°NE
-city	Dongjin	Guandong		3106	628	33.9900	119.4537	33.99°NW 119.45°NE
+city	Dongjin	Guandong		3106	630	33.9600	119.2934	33.96°NW 119.29°NE
 city	Dongye	Furan		3435	451	31.7100	138.2192	31.71°NW 138.22°NE
 city	Donnerbucht	E.S.U.		2232	3156	9.1800	-30.8686	9.18°NW 30.87°SW
 city	Donuzlu	Selmira		3459	3286	-11.1750	5.9258	11.17°SE 5.93°NE
@@ -460,9 +460,9 @@ city	Doverhill	Hollosend		1607	3153	18.6000	-58.4622	18.60°NW 58.46°SW
 city	Dovre	Zephran		3994	2105	-1.4850	57.6207	1.48°SE 57.62°NE
 city	Dracut	E.S.U.		1809	3051	17.1000	-46.0000	17.10°NW 46.00°SW
 city	Dragmir	Selmira		3392	3219	-9.1650	5.7784	9.16°SE 5.78°NE
-city	Dragunov	Rudania		3204	1704	16.3800	55.0122	16.38°NW 55.01°NE
+city	Dragunov	Rudania		3204	1706	16.3500	54.9165	16.35°NW 54.92°NE
 city	Dranne	Ponurvia		1053	2933	30.2100	-84.8971	30.21°NW 84.90°SW
-city	Dräsden	Alemannia		3024	2572	6.0600	14.5390	6.06°NW 14.54°NE
+city	Dräsden	Alemannia		3023	2574	6.0450	14.4399	6.04°NW 14.44°NE
 city	Drayton	Dias		3013	5378	-35.8650	-117.9551	35.86°SE 117.96°SW
 city	Drevnygorod	Giathka		3809	1803	5.8200	64.3407	5.82°NW 64.34°NE
 city	Driporus	Slytlia		3337	2377	4.2900	30.2415	4.29°NW 30.24°NE
@@ -473,7 +473,7 @@ city	DuClare	E.S.U.		2004	3092	13.5600	-38.4301	13.56°NW 38.43°SW
 city	Dukuzaya	Southeast Aphirica		3358	4042	-21.0000	-26.7652	21.00°SE 26.77°SW
 city	Dùn Èideann	Elvester		2811	2591	8.9700	7.3306	8.97°NW 7.33°NE
 city	Dùn Phris	Elvester		2801	2629	8.5500	5.7017	8.55°NW 5.70°NE
-city	Dunagyöngye	Cortesia		3234	2599	2.5050	19.5954	2.50°NW 19.60°NE
+city	Dunagyöngye	Cortesia		3232	2601	2.5050	19.4720	2.50°NW 19.47°NE
 city	Dunborg	E.S.U.		1795	2981	18.3600	-44.6985	18.36°NW 44.70°SW
 city	Dunbryn	Hollosend		1535	3491	14.6100	-70.0517	14.61°NW 70.05°SW
 city	Dunguncundung	Cahaya		4591	1308	1.5150	100.1763	1.52°NW 100.18°NE
@@ -483,7 +483,7 @@ city	Dunmoutier	Arverne		2893	2733	5.6100	5.1191	5.61°NW 5.12°NE
 city	Dunridge	Hollosend		1882	3688	6.4500	-58.3627	6.45°NW 58.36°SW
 city	Dunwalde	Ponurvia		1408	3011	23.7150	-65.2953	23.71°NW 65.30°SW
 city	Durasso	Vicily		3127	3169	-4.4400	-1.3254	4.44°SE 1.33°SW
-city	Dusterburg	Alemannia		2940	2666	5.9100	8.7977	5.91°NW 8.80°NE
+city	Dusterburg	Alemannia		2942	2665	5.8950	8.8925	5.89°NW 8.89°NE
 city	Duval dos Agostinianos	Hollosend		1927	3563	7.6500	-53.6393	7.65°NW 53.64°SW
 city	Dyfford	Elvester		2807	2751	6.6300	1.8136	6.63°NW 1.81°NE
 city	Dyr	Recolotta		3210	4771	-29.7150	-69.9129	29.71°SE 69.91°SW
@@ -509,11 +509,11 @@ city	Ehomgethlar	Demâruz		3622	2315	0.9450	39.6261	0.94°NW 39.63°NE
 city	Eichenau	Neuhollmar		3186	5636	-42.3300	-138.7665	42.33°SE 138.77°SW
 city	Eilat	Shivon		3679	3485	-17.4600	7.2208	17.46°SE 7.22°NE
 city	Eirosen	Seignid		3930	537	22.9950	136.7226	22.99°NW 136.72°NE
-city	Eisenfeld	Alemannia		2932	2655	6.1950	8.9243	6.20°NW 8.92°NE
+city	Eisenfeld	Alemannia		2932	2656	6.1800	8.8905	6.18°NW 8.89°NE
 city	Ekantapur	Noradia		3854	4889	-41.1450	-57.1999	41.14°SE 57.20°SW
 city	El Paso del Norte	Auritania		1158	3715	16.9050	-94.4511	16.90°NW 94.45°SW
 city	Elstenhagen	Hochbrunn-am-Saharameer		3194	3893	-16.3050	-25.6096	16.30°SE 25.61°SW
-city	Elyredon	Ponurvia		1329	2982	25.3350	-69.0188	25.33°NW 69.02°SW
+city	Elyredon	Ponurvia		1330	2981	25.3350	-68.9353	25.33°NW 68.94°SW
 city	Emerald	E.S.U.		1751	3143	16.5900	-51.1974	16.59°NW 51.20°SW
 city	Emesa	Shivon		3672	3333	-15.0750	12.2162	15.07°SE 12.22°NE
 city	Enambatu	Cahaya		4426	1291	4.2450	98.7056	4.25°NW 98.71°NE
@@ -529,19 +529,19 @@ city	Erpesfurt	Alemannia		3020	2620	5.4000	12.7660	5.40°NW 12.77°NE
 city	Erxel-Stadt	Santee		1581	3037	20.7300	-56.7518	20.73°NW 56.75°SW
 city	Escalera	El Magreb		2480	3075	6.6750	-19.2799	6.67°NW 19.28°SW
 city	Eshkarot	Shivon		3624	3359	-14.7450	9.5077	14.74°SE 9.51°NE
-city	Eshkwiha	Santee		1625	3097	19.1700	-56.1118	19.17°NW 56.11°SW
+city	Eshkwiha	Santee		1624	3098	19.1700	-56.1881	19.17°NW 56.19°SW
 city	Estella Gorge	E.S.U.		1865	3242	13.3950	-48.5334	13.39°NW 48.53°SW
 city	Estellia	E.S.U.		2164	3123	10.6950	-32.6499	10.69°NW 32.65°SW
 city	Étiencourt	Arverne		2979	2849	2.5800	4.0151	2.58°NW 4.02°NE
 city	Evana	Askurias		2577	2930	7.3950	-11.5380	7.39°NW 11.54°SW
-city	Evana	Auritania		1488	4024	7.3200	-82.8157	7.32°NW 82.82°SW
+city	Evana	Auritania		1490	4024	7.2900	-82.7203	7.29°NW 82.72°SW
 city	Ewing Basin	E.S.U.		1980	2975	15.6750	-36.1453	15.67°NW 36.15°SW
 city	Eynde	Alemannia		2921	2682	5.9550	7.6780	5.95°NW 7.68°NE
 city	Eyrborg	Skjarnland		2865	2327	12.1200	18.6518	12.12°NW 18.65°NE
 city	Falkenberg	Alemannia		3064	2686	3.7500	11.8330	3.75°NW 11.83°NE
 city	Falkenheim	Sankt Gerold Island		3940	5244	-47.7600	-83.3523	47.76°SE 83.35°SW
 city	Falkmere	Hollosend		1884	3634	7.2300	-57.0859	7.23°NW 57.09°SW
-city	Farride	West Bangala		4090	5086	-47.6400	-63.4844	47.64°SE 63.48°SW
+city	Farride	West Bangala		4091	5087	-47.6700	-63.5294	47.67°SE 63.53°SW
 city	Fawwara	Sehreno		4164	4373	-38.0550	-10.8634	38.05°SE 10.86°SW
 city	Fayetteville	Hollosend		1962	3351	10.3050	-47.0582	10.30°NW 47.06°SW
 city	Federico	Tierra Arcadia		2336	3014	9.7500	-22.8112	9.75°NW 22.81°SW
@@ -557,16 +557,16 @@ city	Flevens	Alemannia		2899	2662	6.5850	7.6713	6.58°NW 7.67°NE
 city	Flutheim	Neuhollmar		3185	5652	-42.5550	-140.3920	42.55°SE 140.39°SW
 city	Fōfik	Woxza		3309	5244	-38.2950	-101.0444	38.29°SE 101.04°SW
 city	Fönigsfeld	Ponurvia		1134	3136	25.9500	-84.3934	25.95°NW 84.39°SW
-city	Fort Abigail	Salishia		1320	2700	29.7000	-61.7910	29.70°NW 61.79°SW
+city	Fort Abigail	Salishia		1322	2699	29.6850	-61.6414	29.68°NW 61.64°SW
 city	Fort Freedom	E.S.U.		1913	3171	13.7400	-44.5397	13.74°NW 44.54°SW
 city	Fort George	Hollosend		1476	3448	16.1400	-72.0877	16.14°NW 72.09°SW
 city	Fort Hawkins	Hollosend		1882	3465	9.7950	-53.2897	9.79°NW 53.29°SW
 city	Fort Jones	E.S.U.		2072	2941	14.8050	-31.2029	14.80°NW 31.20°SW
-city	Fort Lannahechee	Santee		1741	3072	17.8050	-49.7777	17.80°NW 49.78°SW
+city	Fort Lannahechee	Santee		1742	3072	17.7900	-49.7300	17.79°NW 49.73°SW
 city	Fort Liberty	Hollosend		1551	3115	20.0100	-60.3343	20.01°NW 60.33°SW
 city	Fort Madison	Hollosend		2042	3768	2.8500	-53.4733	2.85°NW 53.47°SW
 city	Fort Pinevale	E.S.U.		1823	3269	13.6200	-51.1155	13.62°NW 51.12°SW
-city	Fort Sigismund	Ponurvia		1108	3067	27.3750	-84.4599	27.37°NW 84.46°SW
+city	Fort Sigismund	Ponurvia		1110	3067	27.3450	-84.3333	27.34°NW 84.33°SW
 city	Fort St. Louis	Hollosend		1749	3551	10.5000	-61.2000	10.50°NW 61.20°SW
 city	Fort Union	E.S.U.		2229	3114	9.8550	-29.8147	9.86°NW 29.81°SW
 city	Forte Carmpagna	Vicilian North Aphirica		2959	4032	-14.8650	-38.5586	14.87°SE 38.56°SW
@@ -574,7 +574,7 @@ city	Foster	E.S.U.		2021	2985	14.9100	-34.6624	14.91°NW 34.66°SW
 city	Foundry	E.S.U.		2125	3208	10.0050	-36.5535	10.00°NW 36.55°SW
 city	Franmark	Alemannia		2995	2668	5.0550	10.3938	5.05°NW 10.39°NE
 city	Fredericksstadt	Alemannia		3119	2541	5.1000	18.3816	5.10°NW 18.38°NE
-city	Freiheit	Santee		1617	3047	20.0400	-55.1887	20.04°NW 55.19°SW
+city	Freiheit	Santee		1618	3047	20.0250	-55.1383	20.03°NW 55.14°SW
 city	Freselmir	Ponurvia		1117	2892	29.8650	-79.6957	29.86°NW 79.70°SW
 city	Friburg	Hollosend		1573	3513	13.7100	-68.6591	13.71°NW 68.66°SW
 city	Fritown	E.S.U.		2224	3001	11.6250	-26.7675	11.62°NW 26.77°SW
@@ -583,7 +583,7 @@ city	Fuerte Principe	Hollosend		1744	3604	9.7800	-62.6028	9.78°NW 62.60°SW
 city	Fuhe	Guandong		3358	720	28.8300	116.4394	28.83°NW 116.44°NE
 city	Fuhua	Guandong		3087	736	32.6550	110.6932	32.65°NW 110.69°NE
 city	Fumino	Kinshū		2976	5352	-34.9200	-116.4706	34.92°SE 116.47°SW
-city	Funadomari	Nichirin		2526	823	39.7650	91.5318	39.77°NW 91.53°NE
+city	Funadomari	Nichirin		2526	825	39.7350	91.3697	39.73°NW 91.37°NE
 city	Funai	Nichirin		2752	604	39.6600	115.2086	39.66°NW 115.21°NE
 city	Furumiya	Nichirin		2874	545	38.7150	122.6148	38.71°NW 122.61°NE
 city	Futahashi	Nichirin		2440	693	43.0050	100.3703	43.00°NW 100.37°NE
@@ -599,7 +599,7 @@ city	Gangi	Nichirin		2462	704	42.5100	99.9495	42.51°NW 99.95°NE
 city	Ganjau	Cahaya		4681	1334	-0.2250	100.6617	0.22°SE 100.66°NE
 city	Ganyun	Furan		3680	581	26.0850	130.9129	26.08°NW 130.91°NE
 city	Gaoxiang	Furan		3512	417	31.0650	141.7918	31.07°NW 141.79°NE
-city	Garovia	Vicilian North Aphirica		2794	3929	-10.8450	-38.7152	10.84°SE 38.72°SW
+city	Garovia	Vicilian North Aphirica		2793	3931	-10.8600	-38.8249	10.86°SE 38.82°SW
 city	Gawaka	Seignid		3878	789	19.9950	119.1386	20.00°NW 119.14°NE
 city	Gêmdubân	Demâruz		3561	2163	4.1400	43.9623	4.14°NW 43.96°NE
 city	Genéveau	Arverne		3026	2796	2.6700	7.1110	2.67°NW 7.11°NE
@@ -625,10 +625,10 @@ city	González Perfecto	Auritania		1242	4109	9.7350	-96.4418	9.73°NW 96.44°SW
 city	Gora	Sylesyjo		3302	2380	4.7700	29.2080	4.77°NW 29.21°NE
 city	Gora Jeleni	Sylesyjo		3338	2342	4.8000	31.5634	4.80°NW 31.56°NE
 city	Gorizza	Vicily		3130	3121	-3.7650	0.2818	3.76°SE 0.28°NE
-city	Gornell	Hollosend		1456	3672	13.0800	-77.7847	13.08°NW 77.78°SW
+city	Gornell	Hollosend		1456	3673	13.0650	-77.8046	13.06°NW 77.80°SW
 city	Gortari	Arunya		3673	4914	-38.8050	-65.4498	38.80°SE 65.45°SW
 city	Goryūno	Nichirin		2475	914	39.1650	82.9094	39.16°NW 82.91°NE
-city	Govnovka	Rudania		2963	1625	21.1800	52.4935	21.18°NW 52.49°NE
+city	Govnovka	Rudania		2962	1626	21.1800	52.4150	21.18°NW 52.41°NE
 city	Gran Torre	Auritania		1293	4071	9.5400	-93.2215	9.54°NW 93.22°SW
 city	Grelzen	Alemannia		3158	2632	3.1500	16.3523	3.15°NW 16.35°NE
 city	Greyholm	Zephran		3875	2134	-0.1350	52.3085	0.14°SE 52.31°NE
@@ -638,15 +638,15 @@ city	Großschloss	Ponurvia		1131	3160	25.6350	-85.1130	25.63°NW 85.11°SW
 city	Growinas	Cortesia		3024	2503	7.0950	16.9676	7.09°NW 16.97°NE
 city	Grunnen	Alemannia		2885	2622	7.3950	8.5963	7.39°NW 8.60°NE
 city	Grünstadt	Alemannia		3021	2539	6.6000	15.6043	6.60°NW 15.60°NE
-city	Guangling	Guandong		3293	574	31.9950	126.5632	31.99°NW 126.56°NE
+city	Guangling	Guandong		3292	575	31.9950	126.4701	31.99°NW 126.47°NE
 city	Gudapa	Arunya		3671	4834	-37.5750	-59.8970	37.58°SE 59.90°SW
 city	Gudja	Sehreno		3682	4142	-27.3600	-19.8276	27.36°SE 19.83°SW
 city	Guiyuan	Furan		3545	642	27.1950	124.8006	27.19°NW 124.80°NE
-city	Gulburagi	Arunya		3714	4724	-36.5700	-51.0387	36.57°SE 51.04°SW
+city	Gulburagi	Arunya		3713	4724	-36.5550	-51.0749	36.55°SE 51.07°SW
 city	Guntapura	Arunya		3731	4863	-38.9100	-59.8238	38.91°SE 59.82°SW
 city	Gurtheden	Skjarnland		2795	2260	14.1750	19.0504	14.18°NW 19.05°NE
 city	Gusev	Rudania		3251	2200	8.2350	34.7056	8.23°NW 34.71°NE
-city	Güzelhisar	Selmira		3418	3285	-10.5450	4.5195	10.54°SE 4.52°NE
+city	Güzelhisar	Selmira		3418	3287	-10.5750	4.4533	10.57°SE 4.45°NE
 city	Gżira	Sehreno		3856	4378	-33.5100	-24.9495	33.51°SE 24.95°SW
 city	Hà Đông	Great Ai		4138	864	14.9700	117.8169	14.97°NW 117.82°NE
 city	Hà Tuyên	Great Ai		4106	889	15.0750	115.9279	15.07°NW 115.93°NE
@@ -664,8 +664,8 @@ city	Haliville	E.S.U.		1859	3091	15.7500	-44.8000	15.75°NW 44.80°SW
 city	Hälsingberg	Skjarnland		2918	2459	9.3450	15.3654	9.34°NW 15.37°NE
 city	Hàm Hoan	Great Ai		4206	831	14.4450	120.6075	14.44°NW 120.61°NE
 city	Hamath	Shivon		3678	3318	-14.9400	12.9496	14.94°SE 12.95°NE
-city	Hammerford	Hollosend		1401	3572	15.4050	-78.5803	15.40°NW 78.58°SW
-city	Hammersburg	Alemannia		2928	2577	7.4250	11.4768	7.42°NW 11.48°NE
+city	Hammerford	Hollosend		1400	3573	15.4050	-78.6527	15.40°NW 78.65°SW
+city	Hammersburg	Alemannia		2929	2577	7.4100	11.5074	7.41°NW 11.51°NE
 city	Hamtun	Elvester		2818	2760	6.3300	1.8716	6.33°NW 1.87°NE
 city	Hanan Chinchay	Antiqa		1618	4572	-2.8500	-91.5181	2.85°SE 91.52°SW
 city	Hanawa	Nichirin		2678	772	38.2500	99.4435	38.25°NW 99.44°NE
@@ -686,17 +686,17 @@ city	Hävnia	Skjarnland		2918	2489	8.8950	14.2815	8.89°NW 14.28°NE
 city	Hawaraq	Antiqa		1554	4481	-0.5250	-88.3252	0.52°SE 88.33°SW
 city	Hayidara	Arunya		3753	4788	-38.1150	-53.8595	38.11°SE 53.86°SW
 city	Healfweġ	Eivorie		2179	3719	1.5300	-46.9990	1.53°NW 47.00°SW
-city	Hehtreow	Eivorie		2507	3855	-5.4300	-43.0365	5.43°SE 43.04°SW
+city	Hehtreow	Eivorie		2507	3860	-5.5050	-43.2345	5.50°SE 43.23°SW
 city	Heitetsu	Nichirin		2802	715	37.2450	106.8126	37.24°NW 106.81°NE
 city	Helbron	Shivon		3699	3389	-16.3200	11.3599	16.32°SE 11.36°NE
 city	Hellesheim	Ponurvia		1054	3087	27.8850	-88.3700	27.88°NW 88.37°SW
 city	Hempden	E.S.U.		2260	3101	9.5850	-28.2373	9.58°NW 28.24°SW
 city	Hengliu	Guandong		3353	610	30.5550	124.5874	30.55°NW 124.59°NE
-city	Hermosaciudad	Auritania		1196	4114	10.3500	-98.9153	10.35°NW 98.92°SW
+city	Hermosaciudad	Auritania		1195	4113	10.3800	-98.9525	10.38°NW 98.95°SW
 city	Hertzberg	Divia		3782	3275	-15.8550	18.4625	15.85°SE 18.46°NE
 city	Herzogsgrätz	Alemannia		3074	2561	5.4750	16.3869	5.48°NW 16.39°NE
 city	Hesheng	Furan		3530	867	24.0450	109.0152	24.04°NW 109.02°NE
-city	Hessenberg	Ponurvia		1292	3161	23.2050	-75.5491	23.20°NW 75.55°SW
+city	Hessenberg	Ponurvia		1293	3162	23.1750	-75.5152	23.17°NW 75.52°SW
 city	Hewlêr	Divia		3888	3300	-17.8200	21.9950	17.82°SE 22.00°NE
 city	Hidacun	E.S.U.		1880	3000	16.8000	-41.3115	16.80°NW 41.31°SW
 city	Hidamari	Nichirin		2483	673	42.6600	103.2319	42.66°NW 103.23°NE
@@ -738,18 +738,18 @@ city	Ichijō	Nichirin		2551	691	41.3700	103.2696	41.37°NW 103.27°NE
 city	Ifira	Napolyon Bonparterre Islands		4348	577	16.1250	137.8234	16.12°NW 137.82°NE
 city	Ighir	El Magreb		2335	3146	7.7850	-26.6338	7.78°NW 26.63°SW
 city	Igorvsk	Giathka		3685	1729	8.7900	65.0314	8.79°NW 65.03°NE
-city	Igyrtsk	Rudania		3037	1077	28.2900	85.7560	28.29°NW 85.76°NE
+city	Igyrtsk	Rudania		3038	1078	28.2600	85.7143	28.26°NW 85.71°NE
 city	Iharu	Nichirin		2614	838	38.2200	92.6072	38.22°NW 92.61°NE
 city	Ikan	Perovska		3606	1711	10.2450	64.1527	10.24°NW 64.15°NE
 city	Ikanikan	Cahaya		4539	1252	3.1350	102.1689	3.13°NW 102.17°NE
 city	Ikezumi	Nichirin		2835	548	39.2550	121.6849	39.25°NW 121.68°NE
-city	Il-Qinalija	Sehreno		3933	4325	-33.8700	-18.8562	33.87°SE 18.86°SW
+city	Il-Qinalija	Sehreno		3933	4324	-33.8550	-18.8031	33.85°SE 18.80°SW
 city	Ilerde	Arverne		2848	2990	2.4300	-4.3782	2.43°NW 4.38°SW
 city	Ilimamik	E.S.U.		1852	2934	18.2100	-40.6937	18.21°NW 40.69°SW
 city	Illup	E.S.U.		1917	3104	14.6850	-42.5533	14.68°NW 42.55°SW
 city	Illychno	Santee		1689	3040	19.0650	-51.4231	19.07°NW 51.42°SW
 city	Imonozato	Nichirin		2330	752	43.7700	92.1609	43.77°NW 92.16°NE
-city	Ingelsten	Alemannia		3054	2654	4.3800	12.6139	4.38°NW 12.61°NE
+city	Ingelsten	Alemannia		3054	2656	4.3500	12.5464	4.35°NW 12.55°NE
 city	Inglauen	Alemannia		3092	2586	4.8300	16.0409	4.83°NW 16.04°NE
 city	Ingvarstad	Malschellskobbarna		3673	2740	-6.1950	30.0591	6.20°SE 30.06°NE
 city	Innstein	Alemannia		3099	2704	2.9550	12.2523	2.96°NW 12.25°NE
@@ -761,7 +761,7 @@ city	Isdalen	Skjarnland		2794	2396	12.1500	13.8035	12.15°NW 13.80°NE
 city	Isenhyrst	Eivorie		2401	3828	-3.4350	-44.5088	3.43°SE 44.51°SW
 city	Ishigaki	Nichirin		2772	604	39.3600	115.5924	39.36°NW 115.59°NE
 city	Iskenderiye	Selmira		3569	3162	-10.9650	13.9040	10.96°SE 13.90°NE
-city	Iskiralsk	Rudania		3263	1583	17.3100	62.4020	17.31°NW 62.40°NE
+city	Iskiralsk	Rudania		3263	1581	17.3400	62.5021	17.34°NW 62.50°NE
 city	Isla Sola	Askurias		2386	3277	5.0550	-28.3207	5.05°NW 28.32°SW
 city	Isohara	Iriria		1483	4505	0.1800	-90.8417	0.18°NW 90.84°SW
 city	Isqa	Antiqa		1620	4579	-2.9850	-91.8152	2.98°SE 91.82°SW
@@ -783,17 +783,17 @@ city	Jatōkip	Woxza		3490	5251	-41.1150	-97.2630	41.11°SE 97.26°SW
 city	Jelgawa	Cortesia		3111	2511	5.6700	19.2102	5.67°NW 19.21°NE
 city	Jelutong	Cahaya		4497	1283	3.3000	100.0900	3.30°NW 100.09°NE
 city	Jernigan	Hollosend		1928	3613	6.8850	-54.7374	6.88°NW 54.74°SW
-city	Jeziorowsk	Cortesia		3036	2422	8.1300	20.2492	8.13°NW 20.25°NE
-city	Jiangkou	Guandong		3072	755	32.5950	108.9783	32.59°NW 108.98°NE
+city	Jeziorowsk	Cortesia		3037	2421	8.1300	20.3151	8.13°NW 20.32°NE
+city	Jiangkou	Guandong		3073	754	32.5950	109.0724	32.59°NW 109.07°NE
 city	Jiangling	Furan		3378	453	32.5350	137.4315	32.53°NW 137.43°NE
 city	Jiaozhou	Guandong		3093	595	34.6800	121.9197	34.68°NW 121.92°NE
 city	Jiekŋaluokta	Cuohpnjalla		2550	1916	23.0100	25.5531	23.01°NW 25.55°NE
 city	Jiezmene	Cortesia		3021	2469	7.6500	18.0984	7.65°NW 18.10°NE
 city	Jilandan	Seignid		3786	801	21.1950	117.1354	21.20°NW 117.14°NE
 city	Jingluo	Guandong		3439	704	27.8550	118.8269	27.85°NW 118.83°NE
-city	Jingnan	Guandong		3161	632	33.1050	120.0158	33.11°NW 120.02°NE
+city	Jingnan	Guandong		3161	634	33.0750	119.8577	33.07°NW 119.86°NE
 city	Jingshui	Guandong		3194	681	31.8750	116.7329	31.88°NW 116.73°NE
-city	Jingxi	Furan		3604	698	25.4700	121.5900	25.47°NW 121.59°NE
+city	Jingxi	Furan		3607	699	25.4100	121.5606	25.41°NW 121.56°NE
 city	Jinkou	Furan		3700	436	27.9600	142.0503	27.96°NW 142.05°NE
 city	Jinyang	Guandong		3358	740	28.5300	114.9927	28.53°NW 114.99°NE
 city	Johannshafen	Andam Islands		4308	1813	-1.8150	76.3905	1.81°SE 76.39°NE
@@ -804,12 +804,12 @@ city	Kaandiva	Arunya		3414	4856	-34.0500	-69.5871	34.05°SE 69.59°SW
 city	Kabagishi	Nichirin		2110	778	46.6800	83.0194	46.68°NW 83.02°NE
 city	Kabimas	Hollosend		1525	3707	11.5200	-75.0688	11.52°NW 75.07°SW
 city	Kadmona	Shivon		3665	3361	-15.3900	11.0012	15.39°SE 11.00°NE
-city	Kadohara	Nichirin		2816	708	37.1400	107.6731	37.14°NW 107.67°NE
+city	Kadohara	Nichirin		2816	706	37.1700	107.8365	37.17°NW 107.84°NE
 city	Kagamidaira	Nichirin		2470	689	42.6150	101.4815	42.62°NW 101.48°NE
 city	Kagyrgyn	Rudania		1734	1617	39.7350	6.2847	39.73°NW 6.28°NE
 city	Kahayan	Cahaya		4672	1220	1.6200	105.4582	1.62°NW 105.46°NE
 city	Kahoney	Hollosend		1982	3578	6.6000	-51.6691	6.60°NW 51.67°SW
-city	Kaijin	Guandong		3359	680	29.4150	119.3909	29.41°NW 119.39°NE
+city	Kaijin	Guandong		3358	682	29.4000	119.2277	29.40°NW 119.23°NE
 city	Kaisershafen	Kienam		4501	834	9.9750	123.7226	9.97°NW 123.72°NE
 city	Kajnujärvi	Karjania		2803	2159	15.5700	23.3615	15.57°NW 23.36°NE
 city	Kajuara	Cahaya		4491	1345	2.4600	97.0322	2.46°NW 97.03°NE
@@ -830,15 +830,15 @@ city	Kamabuchi	Nichirin		2850	518	39.4800	124.6318	39.48°NW 124.63°NE
 city	Kamassa	Hollosend		1832	3347	12.3150	-52.6550	12.31°NW 52.65°SW
 city	Kamazaka	Nichirin		2926	669	36.0750	113.0070	36.07°NW 113.01°NE
 city	Kambamettu	Arunya		3762	4849	-39.1650	-57.7338	39.16°SE 57.73°SW
-city	Kamenetsk	Giathka		3603	1944	6.7950	53.8345	6.79°NW 53.83°NE
+city	Kamenetsk	Giathka		3603	1946	6.7650	53.7502	6.76°NW 53.75°NE
 city	Kamengrad	Rudania		3133	1837	15.4500	46.9376	15.45°NW 46.94°NE
 city	Kamennaya	Rudania		3320	1440	18.6000	71.0924	18.60°NW 71.09°NE
 city	Kameshki	Rudania		3151	1824	15.3750	48.0121	15.37°NW 48.01°NE
 city	Kamkatska	Rudania		1929	1297	41.6100	35.2635	41.61°NW 35.26°NE
 city	Kampong Cepih	Cahaya		4491	1012	7.4550	113.7961	7.45°NW 113.80°NE
 city	Kamuyto	Nichirin		2071	955	44.6100	66.3847	44.61°NW 66.38°NE
-city	Kämyrvi	Karjania		3065	2066	13.0350	35.0458	13.04°NW 35.05°NE
-city	Kanamine	Nichirin		2828	705	37.0050	108.1630	37.00°NW 108.16°NE
+city	Kämyrvi	Karjania		3070	2066	12.9600	35.1869	12.96°NW 35.19°NE
+city	Kanamine	Nichirin		2827	707	36.9900	107.9796	36.99°NW 107.98°NE
 city	Kandanavolu	Arunya		3681	4782	-36.9450	-56.0305	36.95°SE 56.03°SW
 city	Kandang	Guandong		3245	689	30.9900	116.9497	30.99°NW 116.95°NE
 city	Kanderun	Selmira		3663	3283	-14.1900	13.5338	14.19°SE 13.53°NE
@@ -871,7 +871,7 @@ city	Kazarsary	Rudania		3461	2006	7.9950	47.9056	8.00°NW 47.91°NE
 city	Kean	Great Ai		4318	819	12.9450	122.6046	12.94°NW 122.60°NE
 city	Kedawung	Cahaya		4674	1300	0.3900	101.6605	0.39°NW 101.66°NE
 city	Keigaku	Nichirin		2764	661	38.6250	110.5226	38.62°NW 110.52°NE
-city	Keimori	Nichirin		2445	812	41.1450	90.2487	41.14°NW 90.25°NE
+city	Keimori	Nichirin		2445	811	41.1600	90.3317	41.16°NW 90.33°NE
 city	Kelesina	Selmira		3734	3160	-13.4100	20.2350	13.41°SE 20.24°NE
 city	Kema	Furan		3780	574	24.6900	132.5402	24.69°NW 132.54°NE
 city	Kemena	Cahaya		4525	1209	3.9900	104.0949	3.99°NW 104.09°NE
@@ -880,7 +880,7 @@ city	Keokuk	Santee		1730	3054	18.2400	-49.8161	18.24°NW 49.82°SW
 city	Kerambitan	Cahaya		4751	1132	1.7550	110.7292	1.75°NW 110.73°NE
 city	Kereman	Selmira		3589	3268	-12.8550	11.2347	12.85°SE 11.23°NE
 city	Kermaneon	Recolotta		3176	4859	-30.5250	-76.4035	30.52°SE 76.40°SW
-city	Kernbeldu	Axerfreditenshin		3203	1250	23.2050	78.9445	23.20°NW 78.94°NE
+city	Kernbeldu	Axerfreditenshin		3201	1250	23.2350	78.8991	23.23°NW 78.90°NE
 city	Keshewa	Santee		1716	3030	18.8100	-49.8357	18.81°NW 49.84°SW
 city	Ketābshahr	Varahmehr		4206	3700	-28.5900	22.2472	28.59°SE 22.25°NE
 city	Ketéréh	Cahaya		4496	1235	4.0350	102.4219	4.03°NW 102.42°NE
@@ -910,10 +910,10 @@ city	Kirmaşan	Divia		3973	3366	-20.0850	23.4413	20.08°SE 23.44°NE
 city	Kizawa	Nichirin		2775	694	37.9650	107.9792	37.96°NW 107.98°NE
 city	Kjellberg	Skjarnland		2826	2424	11.2500	13.7829	11.25°NW 13.78°NE
 city	Kjellshaven	Alemannia		2913	2547	8.1000	12.0659	8.10°NW 12.07°NE
-city	Kladn	Alemannia		3054	2585	5.4150	14.9707	5.41°NW 14.97°NE
+city	Kladn	Alemannia		3055	2584	5.4150	15.0346	5.41°NW 15.03°NE
 city	Klagenhafen	Alemannia		3159	2659	2.7300	15.4692	2.73°NW 15.47°NE
 city	Klonslava	Slytlia		3344	2402	3.8100	29.5092	3.81°NW 29.51°NE
-city	Kludzic	Sylesyjo		3262	2338	6.0000	29.7000	6.00°NW 29.70°NE
+city	Kludzic	Sylesyjo		3262	2340	5.9700	29.6251	5.97°NW 29.63°NE
 city	Kochōrin	Nichirin		2838	616	38.1900	115.7962	38.19°NW 115.80°NE
 city	Koganehama	Kinshū		3139	5606	-41.1750	-136.4240	41.17°SE 136.42°SW
 city	Koimburu	Arunya		3551	4807	-35.3700	-62.0758	35.37°SE 62.08°SW
@@ -923,19 +923,19 @@ city	Kolapura	Noradia		3907	4857	-41.4600	-52.8430	41.46°SE 52.84°SW
 city	Kolavanta	Arunya		3650	4638	-34.3200	-47.9095	34.32°SE 47.91°SW
 city	Kolawaya	Antiqa		1555	4572	-1.9050	-92.4672	1.90°SE 92.47°SW
 city	Kołęka	Cortesia		3022	2392	8.7900	20.9457	8.79°NW 20.95°NE
-city	Kolkutta	West Bangala		4047	5055	-46.5300	-62.6087	46.53°SE 62.61°SW
+city	Kolkutta	West Bangala		4046	5057	-46.5450	-62.8167	46.55°SE 62.82°SW
 city	Kolmar	Alemannia		2947	2675	5.6700	8.7086	5.67°NW 8.71°NE
 city	Komekura	Nichirin		2879	549	38.5800	122.3454	38.58°NW 122.35°NE
 city	Kommodorefels	Kogelland		2478	5270	-26.2200	-118.1938	26.22°SE 118.19°SW
 city	Kon Trang-Or	Great Ai		4338	859	12.0450	120.4964	12.04°NW 120.50°NE
 city	Koneka	Rudania		3249	2106	9.6750	38.4202	9.67°NW 38.42°NE
-city	Koperników	Cortesia		3036	2465	7.4850	18.6839	7.48°NW 18.68°NE
+city	Koperników	Cortesia		3034	2464	7.5300	18.6613	7.53°NW 18.66°NE
 city	Korake	Selmira		3549	3305	-12.8100	8.5348	12.81°SE 8.53°NE
 city	Kōrihama	Nichirin		2691	743	38.4900	102.1083	38.49°NW 102.11°NE
-city	Korkai	Arunya		3520	4866	-35.7900	-67.0393	35.79°SE 67.04°SW
+city	Korkai	Arunya		3518	4865	-35.7450	-67.0335	35.74°SE 67.03°SW
 city	Korolevskygorod	Giathka		3886	1818	4.4400	65.2595	4.44°NW 65.26°NE
 city	Korvane	E.S.U.		1805	3095	16.5000	-47.3878	16.50°NW 47.39°SW
-city	Korybuschevsky	Rudania		3141	2108	11.2650	35.4239	11.26°NW 35.42°NE
+city	Korybuschevsky	Rudania		3140	2110	11.2500	35.3143	11.25°NW 35.31°NE
 city	Köseln	Alemannia		2971	2483	8.1900	16.1056	8.19°NW 16.11°NE
 city	Kōshū	Nichirin		2896	534	38.5500	123.9534	38.55°NW 123.95°NE
 city	Kosigoda	Arunya		3533	4763	-34.4400	-59.7732	34.44°SE 59.77°SW
@@ -954,7 +954,7 @@ city	Krasnopol	Giathka		3679	1761	8.4000	63.4632	8.40°NW 63.46°NE
 city	Krasnysk	Rudania		3096	1419	22.2750	66.8571	22.28°NW 66.86°NE
 city	Kresów	Cortesia		3135	2445	6.3000	22.2581	6.30°NW 22.26°NE
 city	Kretme	Cortesia		3131	2502	5.5050	20.0994	5.50°NW 20.10°NE
-city	Kristalinsk	Giathka		3717	1906	5.6550	57.9726	5.65°NW 57.97°NE
+city	Kristalinsk	Giathka		3718	1907	5.6250	57.9520	5.63°NW 57.95°NE
 city	Królewice	Cortesia		3093	2505	6.0300	18.9068	6.03°NW 18.91°NE
 city	Ku	Axerfreditenshin		3354	808	27.5700	110.1105	27.57°NW 110.11°NE
 city	Kuchuwa	Antiqa		1611	4567	-2.6700	-91.3913	2.67°SE 91.39°SW
@@ -969,10 +969,10 @@ city	Kuntala	Arunya		3651	4747	-35.9700	-54.7696	35.97°SE 54.77°SW
 city	Kuntom	Cahaya		4443	1014	8.1450	113.1061	8.14°NW 113.11°NE
 city	Kurǎpol	Slytlia		3268	2508	3.3600	23.6842	3.36°NW 23.68°NE
 city	Kurazaki	Nichirin		2359	723	43.7700	95.5483	43.77°NW 95.55°NE
-city	Kurchask	Rudania		3221	2232	8.2050	32.6462	8.21°NW 32.65°NE
+city	Kurchask	Rudania		3222	2233	8.1750	32.6343	8.17°NW 32.63°NE
 city	Kureha	Shashanka		4162	5120	-49.2300	-63.4437	49.23°SE 63.44°SW
-city	Kurglin	Rudania		3183	1774	15.6450	51.1640	15.64°NW 51.16°NE
-city	Kurogawa	Nichirin		2617	899	37.2600	87.9522	37.26°NW 87.95°NE
+city	Kurglin	Rudania		3183	1776	15.6150	51.0708	15.62°NW 51.07°NE
+city	Kurogawa	Nichirin		2615	899	37.2900	87.8998	37.29°NW 87.90°NE
 city	Kurogishi	Kinshū		2949	5376	-34.8750	-118.8735	34.88°SE 118.87°SW
 city	Kurozuyama	Nichirin		2547	811	39.6300	93.0554	39.63°NW 93.06°NE
 city	Kuryk	Perovska		3601	1635	11.4600	67.5859	11.46°NW 67.59°NE
@@ -980,9 +980,9 @@ city	Kusanami	Nichirin		2711	756	37.9950	101.4999	37.99°NW 101.50°NE
 city	Kusune	Shashanka		4122	5063	-47.7750	-60.1705	47.77°SE 60.17°SW
 city	Kusurigura	Nichirin		2815	678	37.6050	110.1231	37.60°NW 110.12°NE
 city	Kut	Divia		4010	3569	-23.6850	17.9552	23.68°SE 17.96°NE
-city	Kuybyshev	Rudania		3241	2027	10.9800	41.4806	10.98°NW 41.48°NE
+city	Kuybyshev	Rudania		3239	2025	11.0400	41.5122	11.04°NW 41.51°NE
 city	Kyakhta	Perovska		3584	1586	12.4500	69.5629	12.45°NW 69.56°NE
-city	Kyzyl-Perovsk	Rudania		3579	1787	9.5100	60.1118	9.51°NW 60.11°NE
+city	Kyzyl-Perovsk	Rudania		3581	1787	9.4800	60.1565	9.48°NW 60.16°NE
 city	L-Għarb	Sehreno		3779	4080	-27.8850	-13.0838	27.88°SE 13.08°SW
 city	L-Imdina	Sehreno		3878	4357	-33.5250	-22.9004	33.52°SE 22.90°SW
 city	L-Isla	Sehreno		3681	4155	-27.5400	-20.4899	27.54°SE 20.49°SW
@@ -999,10 +999,10 @@ city	Lampam	Cahaya		4627	1295	1.1700	101.2766	1.17°NW 101.28°NE
 city	Lạng Thương	Great Ai		4117	868	15.2250	117.3159	15.22°NW 117.32°NE
 city	Långdalshamn	Spetsbergen		2533	1905	23.4300	25.4709	23.43°NW 25.47°NE
 city	Lankharân	Demâruz		3617	2276	1.6050	40.9605	1.60°NW 40.96°NE
-city	Lannahechee	E.S.U.		1751	3000	18.7350	-47.3206	18.73°NW 47.32°SW
+city	Lannahechee	E.S.U.		1749	3000	18.7650	-47.4163	18.77°NW 47.42°SW
 city	Laodicea	Selmira		3660	3296	-14.3400	12.9897	14.34°SE 12.99°NE
 city	Lapsikan	Seignid		3950	868	17.7300	115.1432	17.73°NW 115.14°NE
-city	Lasalia	Santee		1625	2987	20.8200	-53.1570	20.82°NW 53.16°SW
+city	Lasalia	Santee		1623	2989	20.8200	-53.3131	20.82°NW 53.31°SW
 city	Lebaron	E.S.U.		2079	3193	10.9200	-38.0349	10.92°NW 38.03°SW
 city	Leclerc	Arverne		3084	2851	0.9750	7.0666	0.97°NW 7.07°NE
 city	Leetown	Hollosend		1805	3502	10.3950	-57.5579	10.39°NW 57.56°SW
@@ -1018,7 +1018,7 @@ city	Lerekya	Slytlia		3318	2528	2.3100	24.3243	2.31°NW 24.32°NE
 city	Leuwen	Alemannia		2879	2632	7.3350	8.0675	7.33°NW 8.07°NE
 city	Lianchong	Guandong		3196	652	32.2800	119.0021	32.28°NW 119.00°NE
 city	Libaca	Livonia		2959	2359	10.2300	20.3084	10.23°NW 20.31°NE
-city	Liberta	E.S.U.		1828	3223	14.2350	-49.7129	14.23°NW 49.71°SW
+city	Liberta	E.S.U.		1830	3225	14.1750	-49.6736	14.18°NW 49.67°SW
 city	Lichtenau	Alemannia		3062	2753	2.7750	9.5649	2.77°NW 9.56°NE
 city	Liezfurt	Alemannia		3007	2589	6.0600	13.4453	6.06°NW 13.45°NE
 city	Ligor	Cahaya		4418	1199	5.7450	103.1547	5.74°NW 103.15°NE
@@ -1051,7 +1051,7 @@ city	Lujiang	Furan		3386	526	31.3200	131.5951	31.32°NW 131.60°NE
 city	Lưỡng Giới Thương Thành	Great Ai		4361	1035	9.0600	110.9489	9.06°NW 110.95°NE
 city	Lushan	Guandong		3477	646	28.1550	123.5945	28.15°NW 123.59°NE
 city	Lusol	Arverne		2839	2938	3.3450	-3.0846	3.35°NW 3.08°SW
-city	Lutèce	Arverne		2897	2773	4.9500	3.9365	4.95°NW 3.94°NE
+city	Lutèce	Arverne		2897	2772	4.9650	3.9690	4.96°NW 3.97°NE
 city	Luviania	Vicily		3107	2951	-0.8700	4.7257	0.87°SE 4.73°NE
 city	Lũy Thầy	Great Ai		4227	823	14.2500	121.3307	14.25°NW 121.33°NE
 city	Luzilbourg	Arverne		2972	2719	4.6350	8.0021	4.63°NW 8.00°NE
@@ -1066,14 +1066,14 @@ city	Macandé	South Pelagonia		2715	5283	-29.9700	-115.5022	29.97°SE 115.50°SW
 city	Machline	Arverne		2913	2702	5.7750	6.7640	5.78°NW 6.76°NE
 city	Madinat Al-Dosser	Divia		4057	3689	-26.1900	15.5712	26.19°SE 15.57°NE
 city	Magdelstein	Alemannia		2979	2580	6.6150	12.9196	6.61°NW 12.92°NE
-city	Magnitsk	Rudania		3254	1896	12.7500	47.4641	12.75°NW 47.46°NE
+city	Magnitsk	Rudania		3255	1895	12.7500	47.5340	12.75°NW 47.53°NE
 city	Maguzmgethlar	Demâruz		3547	2292	2.4150	38.6881	2.41°NW 38.69°NE
 city	Mahakam	Cahaya		4618	1123	3.8850	109.5802	3.88°NW 109.58°NE
 city	Mahapattana	Arunya		3375	4889	-33.9600	-72.9443	33.96°SE 72.94°SW
 city	Maia-Kalais	Seignid		3969	576	21.8250	134.3762	21.82°NW 134.38°NE
 city	Maintal	Alemannia		2977	2687	5.0400	9.2161	5.04°NW 9.22°NE
 city	Makinohara	Nichirin		2544	653	42.0450	106.4686	42.04°NW 106.47°NE
-city	Maksalé	Cahaya		4450	976	8.6100	115.2451	8.61°NW 115.25°NE
+city	Maksalé	Cahaya		4452	976	8.5800	115.2690	8.58°NW 115.27°NE
 city	Maktan	Cahaya		4588	997	6.2250	115.7350	6.22°NW 115.74°NE
 city	Malaca	Askurias		2623	3023	5.3100	-12.7524	5.31°NW 12.75°SW
 city	Malbode	Arverne		2929	2733	5.0700	6.2310	5.07°NW 6.23°NE
@@ -1085,9 +1085,9 @@ city	Malobu	Seignid		4048	888	15.9600	115.2350	15.96°NW 115.24°NE
 city	Manbavi	Arunya		3709	4554	-33.9450	-40.7011	33.95°SE 40.70°SW
 city	Manceshire	Elvester		2821	2691	7.3200	4.2453	7.32°NW 4.25°NE
 city	Mangapura	Arunya		3566	4711	-34.1550	-55.3586	34.15°SE 55.36°SW
-city	Manito	Hollosend		1695	3188	16.7550	-55.0358	16.75°NW 55.04°SW
+city	Manito	Hollosend		1696	3187	16.7550	-54.9621	16.75°NW 54.96°SW
 city	Mannenheim	Alemannia		3008	2696	4.4400	9.8457	4.44°NW 9.85°NE
-city	Mantova	Vicily		2980	2923	1.4550	1.7381	1.45°NW 1.74°NE
+city	Mantova	Vicily		2982	2923	1.4250	1.7985	1.42°NW 1.80°NE
 city	Manukan	Cahaya		4626	978	5.9400	117.1734	5.94°NW 117.17°NE
 city	Manyabas	Seignid		4029	869	16.5300	116.1290	16.53°NW 116.13°NE
 city	Manzanita	Hollosend		1425	3316	18.8850	-71.7950	18.88°NW 71.79°SW
@@ -1099,7 +1099,7 @@ city	Maravento	Vicilian North Aphirica		2833	3895	-10.9200	-36.2595	10.92°SE 36
 city	Marienhafen	Kogelland		2107	5187	-19.4100	-117.8071	19.41°SE 117.81°SW
 city	Mariensburg	Alemannia		2999	2398	9.0450	20.0445	9.04°NW 20.04°NE
 city	Marjava	Cortesia		3138	2556	4.5900	18.3983	4.59°NW 18.40°NE
-city	Markarth	Demâruz		3429	2041	7.9500	45.6746	7.95°NW 45.67°NE
+city	Markarth	Demâruz		3429	2043	7.9200	45.5921	7.92°NW 45.59°NE
 city	Marnelui	Dämmerung Islands		885	2642	37.0950	-89.6683	37.09°NW 89.67°SW
 city	Marrowby	Hollosend		1974	3707	4.7850	-54.9093	4.78°NW 54.91°SW
 city	Marsa l-Għatran	Sehreno		3780	4133	-28.6950	-15.5469	28.69°SE 15.55°SW
@@ -1111,7 +1111,7 @@ city	Marzbān	Varahmehr		4036	3610	-24.6900	17.6114	24.69°SE 17.61°NE
 city	Massilia	Arverne		2981	2889	1.9500	2.8211	1.95°NW 2.82°NE
 city	Matara	South Pelagonia		2803	5270	-31.0950	-113.0787	31.09°SE 113.08°SW
 city	Mathare	Arunya		3537	4857	-35.9100	-65.8902	35.91°SE 65.89°SW
-city	Matsumoto	Nichirin		2759	741	37.5000	103.7829	37.50°NW 103.78°NE
+city	Matsumoto	Nichirin		2759	743	37.4700	103.6208	37.47°NW 103.62°NE
 city	Matsuumi	Nichirin		2691	644	39.9750	110.4828	39.97°NW 110.48°NE
 city	Maverick	Hollosend		1480	3481	15.5850	-72.6023	15.58°NW 72.60°SW
 city	Mayasuru	Arunya		3564	4774	-35.0700	-59.4757	35.07°SE 59.48°SW
@@ -1126,33 +1126,33 @@ city	Medinina	Vicily		2965	3202	-2.5050	-7.3136	2.50°SE 7.31°SW
 city	Médouris	Côte de Saumon		2813	3843	-9.8400	-34.6931	9.84°SE 34.69°SW
 city	Mehrāvar	Varahmehr		4118	3679	-26.9550	18.8009	26.95°SE 18.80°NE
 city	Melcarta	East Astriya		3244	3136	-5.7000	3.4591	5.70°SE 3.46°NE
-city	Melden	Ponurvia		1124	2864	30.1800	-78.5356	30.18°NW 78.54°SW
+city	Melden	Ponurvia		1124	2866	30.1500	-78.5865	30.15°NW 78.59°SW
 city	Melidene	Selmira		3709	3202	-13.6650	17.9328	13.66°SE 17.93°NE
 city	Mellieħa	Sehreno		3873	4233	-31.5900	-16.6410	31.59°SE 16.64°SW
 city	Memlyn	Livonia		2981	2373	9.6900	20.4408	9.69°NW 20.44°NE
 city	Memphipolis	Kemet		3560	3444	-15.0600	4.1793	15.06°SE 4.18°NE
-city	Mempolis	Hollosend		1704	3321	14.6250	-57.9224	14.62°NW 57.92°SW
-city	Mengshan	Furan		3354	573	31.0950	127.4714	31.09°NW 127.47°NE
+city	Mempolis	Hollosend		1706	3322	14.5800	-57.8520	14.58°NW 57.85°SW
+city	Mengshan	Furan		3354	575	31.0650	127.3148	31.07°NW 127.31°NE
 city	Menisku	Rudania		3091	2324	8.7750	25.4958	8.78°NW 25.50°NE
 city	Mentari	Cahaya		4547	1290	2.4450	100.4386	2.44°NW 100.44°NE
 city	Menteşe	Selmira		3419	3319	-11.0700	3.4208	11.07°SE 3.42°NE
 city	Mercer	Hollosend		1396	3394	18.1500	-75.0814	18.15°NW 75.08°SW
 city	Merenhaura	Zephran		3984	2049	-0.4950	58.3710	0.49°SE 58.37°NE
 city	Merkez	Selmira		3594	3225	-12.2850	12.8199	12.28°SE 12.82°NE
-city	Mersky	Rudania		3020	1911	16.0350	40.4827	16.03°NW 40.48°NE
+city	Mersky	Rudania		3020	1913	16.0050	40.3933	16.00°NW 40.39°NE
 city	Mesagozza	Vicily		3056	3152	-3.1200	-2.9834	3.12°SE 2.98°SW
 city	Meshkavitsk	Giathka		3700	1775	7.8750	63.2877	7.88°NW 63.29°NE
 city	Mesonia	Hollosend		1698	3452	12.7500	-61.3049	12.75°NW 61.30°SW
 city	Mestečko	Cortesia		3157	2521	4.8300	20.1620	4.83°NW 20.16°NE
-city	Mêsul	Divia		3859	3294	-17.2950	20.9821	17.29°SE 20.98°NE
-city	Mettis	Arverne		2989	2737	4.1100	7.9218	4.11°NW 7.92°NE
+city	Mêsul	Divia		3861	3293	-17.3100	21.0978	17.31°SE 21.10°NE
+city	Mettis	Arverne		2988	2737	4.1250	7.8917	4.13°NW 7.89°NE
 city	Mianling	Furan		3743	822	21.5250	115.1763	21.52°NW 115.18°NE
 city	Miastokotow	Sylesyjo		3272	2262	6.9900	32.8515	6.99°NW 32.85°NE
 city	Miastonog	Sylesyjo		3111	2403	7.2900	23.1121	7.29°NW 23.11°NE
 city	Middelrād	Eivorie		2196	3744	0.9000	-46.9091	0.90°NW 46.91°SW
 city	Midorimori	Kinshū		2978	5451	-36.4350	-124.6542	36.43°SE 124.65°SW
 city	Mikariba	Nichirin		2798	710	37.3800	107.1380	37.38°NW 107.14°NE
-city	Mikawahara	Nichirin		2561	819	39.3000	92.7692	39.30°NW 92.77°NE
+city	Mikawahara	Nichirin		2562	820	39.2700	92.7144	39.27°NW 92.71°NE
 city	Mikil-id-Karâk	Demâruz		3481	2247	4.0800	38.7779	4.08°NW 38.78°NE
 city	Mikilgethlar	Demâruz		3544	2280	2.6400	39.0659	2.64°NW 39.07°NE
 city	Miklós	Cortesia		3191	2537	4.0800	20.5517	4.08°NW 20.55°NE
@@ -1167,14 +1167,14 @@ city	Mirovuz	Demâruz		3467	2337	2.9400	35.0448	2.94°NW 35.04°NE
 city	Misono	Dar Hadid		3474	3873	-20.2050	-15.4352	20.21°SE 15.44°SW
 city	Misurata	Vicily		3067	3248	-4.7250	-5.7309	4.72°SE 5.73°SW
 city	Mitajiri	Nichirin		2737	622	39.6150	113.3373	39.62°NW 113.34°NE
-city	Mitau	Livonia		3025	2295	10.2000	24.6992	10.20°NW 24.70°NE
+city	Mitau	Livonia		3026	2296	10.1700	24.6900	10.17°NW 24.69°NE
 city	Mitsuyama	Nichirin		2541	786	40.0950	94.9504	40.09°NW 94.95°NE
 city	Mizuchibuchi	Nichirin		2740	703	38.3550	106.4943	38.35°NW 106.49°NE
 city	Mizuhara	Nichirin		2888	699	36.1950	109.8467	36.20°NW 109.85°NE
 city	Mộ Đức	Great Ai		4340	826	12.5100	122.4390	12.51°NW 122.44°NE
 city	Moana	Salishia		1328	2575	31.4550	-57.5096	31.45°NW 57.51°SW
 city	Modrzewia	Zephran		3934	2126	-0.9000	54.7879	0.90°SE 54.79°NE
-city	Mogeyov	Rudania		3112	2298	8.8500	27.0832	8.85°NW 27.08°NE
+city	Mogeyov	Rudania		3113	2297	8.8500	27.1497	8.85°NW 27.15°NE
 city	Mohonon	Shivon		3654	3466	-16.8000	6.9344	16.80°SE 6.93°NE
 city	Moingona	Santee		1624	2964	21.1800	-52.5719	21.18°NW 52.57°SW
 city	Mokissos	Selmira		3592	3196	-11.8200	13.6761	11.82°SE 13.68°NE
@@ -1191,7 +1191,7 @@ city	Moose Pen	E.S.U.		2293	3066	9.6150	-25.9638	9.61°NW 25.96°SW
 city	Moreno	Hollosend		1798	3570	9.4800	-59.4188	9.48°NW 59.42°SW
 city	Moriguchi	Nichirin		2940	666	35.9100	113.5108	35.91°NW 113.51°NE
 city	Morozinsk	Giathka		3766	1782	6.7800	64.3691	6.78°NW 64.37°NE
-city	Morrisville	Hollosend		1833	3505	9.9300	-56.3807	9.93°NW 56.38°SW
+city	Morrisville	Hollosend		1835	3505	9.9000	-56.2921	9.90°NW 56.29°SW
 city	Morskorel	Rudania		3159	1962	13.1850	42.0738	13.18°NW 42.07°NE
 city	Mosta	Sehreno		3893	4344	-33.5550	-21.5732	33.55°SE 21.57°SW
 city	Mostagneau	Barbary		2664	3043	4.3950	-11.9537	4.39°NW 11.95°SW
@@ -1213,7 +1213,7 @@ city	Myhailfsborough	Elvester		2845	2653	7.5300	6.2859	7.53°NW 6.29°NE
 city	Mynstæcer	Eivorie		2297	3751	-0.7200	-43.9718	0.72°SE 43.97°SW
 city	Mytileneia	E.S.U.		2059	3101	12.6000	-36.3488	12.60°NW 36.35°SW
 city	Naagura	Arunya		3867	4768	-39.5250	-48.1961	39.52°SE 48.20°SW
-city	Naasike	Arunya		3756	4582	-35.0700	-40.6008	35.07°SE 40.60°SW
+city	Naasike	Arunya		3754	4582	-35.0400	-40.6769	35.04°SE 40.68°SW
 city	Nadelberg	Ponurvia		1072	3165	26.4450	-88.9167	26.45°NW 88.92°SW
 city	Nadezgorod	Rudania		2897	1893	18.1500	37.7286	18.15°NW 37.73°NE
 city	Nagatani	Nichirin		2525	745	40.9500	97.9817	40.95°NW 97.98°NE
@@ -1221,16 +1221,16 @@ city	Naginomiya	Nichirin		2852	565	38.7450	120.4741	38.74°NW 120.47°NE
 city	Nagoniara	Gonenite Islands		4401	726	13.0950	129.0228	13.09°NW 129.02°NE
 city	Najymca	Sylesyjo		3243	2399	5.3700	26.9266	5.37°NW 26.93°NE
 city	Nakhljān	Varahmehr		4119	3533	-24.7800	24.2594	24.78°SE 24.26°NE
-city	Nam Chưởng	Great Ai		4181	971	12.7200	112.1506	12.72°NW 112.15°NE
+city	Nam Chưởng	Great Ai		4182	970	12.7200	112.2205	12.72°NW 112.22°NE
 city	Namiura	Nichirin		2843	611	38.1900	116.3173	38.19°NW 116.32°NE
 city	Namnetac	Arverne		2837	2821	5.1300	0.5090	5.13°NW 0.51°NE
 city	Namosain	Cahaya		4738	1097	2.4750	112.3188	2.47°NW 112.32°NE
-city	Namuce	Arverne		2938	2714	5.2200	7.1338	5.22°NW 7.13°NE
-city	Namvan	Great Ai		4415	1009	8.6400	113.0310	8.64°NW 113.03°NE
-city	Nanan	Axerfreditenshin		3391	861	26.2200	107.1025	26.22°NW 107.10°NE
+city	Namuce	Arverne		2937	2714	5.2350	7.1032	5.23°NW 7.10°NE
+city	Namvan	Great Ai		4416	1007	8.6550	113.1514	8.65°NW 113.15°NE
+city	Nanan	Axerfreditenshin		3391	863	26.1900	106.9676	26.19°NW 106.97°NE
 city	Nandigrama	Arunya		3770	4697	-37.0050	-47.2290	37.00°SE 47.23°SW
 city	Nangke	Seignid		3823	615	23.4300	130.1127	23.43°NW 130.11°NE
-city	Nantingou	Côte de Saumon		2453	3805	-3.8700	-42.3824	3.87°SE 42.38°SW
+city	Nantingou	Côte de Saumon		2453	3807	-3.9000	-42.4599	3.90°SE 42.46°SW
 city	Nanyang	Guandong		3213	617	32.5500	122.0052	32.55°NW 122.01°NE
 city	Naqissuserpaa	E.S.U.		1992	2910	16.4700	-33.7087	16.47°NW 33.71°SW
 city	Nara	Cahaya		4573	1057	5.5500	112.4121	5.55°NW 112.41°NE
@@ -1239,7 +1239,7 @@ city	Narovsky	Karjania		2923	2232	12.6750	24.1280	12.67°NW 24.13°NE
 city	Nascara	Hollosend		1790	3310	13.5000	-53.6471	13.50°NW 53.65°SW
 city	Nashizono	Nichirin		2705	685	39.1500	107.2566	39.15°NW 107.26°NE
 city	Nashun	Seignid		3771	742	22.3050	120.8110	22.30°NW 120.81°NE
-city	Nassirya	Divia		3987	3497	-22.2600	19.5306	22.26°SE 19.53°NE
+city	Nassirya	Divia		3986	3499	-22.2750	19.4153	22.28°SE 19.42°NE
 city	Nasyptsk	Rudania		2938	1940	16.8300	36.8266	16.83°NW 36.83°NE
 city	Naucano	Hollosend		2015	3414	8.5650	-46.3842	8.56°NW 46.38°SW
 city	Nauhcampa	Auritania		1297	3907	11.9400	-90.2767	11.94°NW 90.28°SW
@@ -1252,17 +1252,17 @@ city	Neapolis	Vicily		3042	3106	-2.2200	-1.9686	2.22°SE 1.97°SW
 city	Neaveville	Hollosend		1597	3467	14.0400	-66.4692	14.04°NW 66.47°SW
 city	Necgila	Sylesyjo		3260	2235	7.5750	33.5760	7.57°NW 33.58°NE
 city	Neerkalamburu	Arunya		3395	4827	-33.3300	-68.2266	33.33°SE 68.23°SW
-city	Neigawa	Nichirin		2670	672	39.8700	107.6122	39.87°NW 107.61°NE
+city	Neigawa	Nichirin		2671	674	39.8250	107.4619	39.82°NW 107.46°NE
 city	Nemunagashi	Nichirin		2271	803	43.8900	85.9597	43.89°NW 85.96°NE
 city	Nerungrad	Rudania		2659	1088	33.7950	75.4684	33.79°NW 75.47°NE
 city	Neu-Arburg	Ponurvia		1272	2827	28.5150	-68.2849	28.51°NW 68.28°SW
 city	Neu-Catamburg	Ponurvia		1184	2767	30.7350	-72.1185	30.73°NW 72.12°SW
 city	Neu-Klagenhafen	Dämmerung Islands		841	2623	38.0400	-92.5982	38.04°NW 92.60°SW
-city	Neu-Nürbrecht	Divia		3950	3470	-21.3000	18.8646	21.30°SE 18.86°NE
+city	Neu-Nürbrecht	Divia		3948	3471	-21.2850	18.7426	21.28°SE 18.74°NE
 city	Neu-Prauvenberg	Kogelland		2357	5214	-23.5650	-116.1120	23.56°SE 116.11°SW
 city	Neu-Rendorf	Ponurvia		1207	2752	30.6150	-70.2450	30.61°NW 70.25°SW
 city	New Barcino	Hollosend		1700	3554	11.1900	-63.5173	11.19°NW 63.52°SW
-city	New Blackwater	Hollosend		1470	3119	21.1650	-64.6808	21.16°NW 64.68°SW
+city	New Blackwater	Hollosend		1468	3119	21.1950	-64.7874	21.20°NW 64.79°SW
 city	New Brunswich	Santee		1725	2988	19.3050	-48.2368	19.30°NW 48.24°SW
 city	New Colter	Hollosend		1441	3138	21.3150	-66.7089	21.31°NW 66.71°SW
 city	New Colter	Salishia		1450	2564	29.7900	-49.9552	29.79°NW 49.96°SW
@@ -1271,7 +1271,7 @@ city	New Shefford	E.S.U.		2104	3231	9.9750	-38.0244	9.97°NW 38.02°SW
 city	New Talhuanca	E.S.U.		1899	3119	14.7300	-43.7625	14.73°NW 43.76°SW
 city	New Valentine	Salishia		1303	2678	30.2850	-62.1703	30.28°NW 62.17°SW
 city	New Winscor	Hollosend		1851	3523	9.3900	-56.0030	9.39°NW 56.00°SW
-city	Nexus	E.S.U.		2058	3234	10.6200	-40.0000	10.62°NW 40.00°SW
+city	Nexus	E.S.U.		2059	3236	10.5750	-40.0113	10.57°NW 40.01°SW
 city	Nghĩa Tín	Great Ai		4389	892	10.7850	119.1933	10.78°NW 119.19°NE
 city	Niamé-sur-Saharienne	Côte de Saumon		2489	3720	-3.1350	-38.2628	3.13°SE 38.26°SW
 city	Nidaros	Skjarnland		2740	2362	13.4700	13.3359	13.47°NW 13.34°NE
@@ -1279,8 +1279,8 @@ city	Niemilinna	Kullanmaan		2132	3965	-1.4550	-55.8936	1.45°SE 55.89°SW
 city	Nīewebricg	Eivorie		2373	3867	-3.6000	-46.6875	3.60°SE 46.69°SW
 city	Nīewescēafford	Eivorie		2282	3786	-1.0200	-45.6372	1.02°SE 45.64°SW
 city	Niitsu	Nichirin		2526	711	41.4450	100.9268	41.45°NW 100.93°NE
-city	Nikolaevsk	Rudania		3261	1813	13.8900	51.3678	13.89°NW 51.37°NE
-city	Nikonya	Selmira		3620	3131	-11.2650	16.7689	11.26°SE 16.77°NE
+city	Nikolaevsk	Rudania		3263	1813	13.8600	51.4184	13.86°NW 51.42°NE
+city	Nikonya	Selmira		3618	3130	-11.2200	16.7251	11.22°SE 16.73°NE
 city	Nilakhîn	Demâruz		3527	2349	1.8600	36.0858	1.86°NW 36.09°NE
 city	Nimdallr	Skjarnland		2779	2491	10.9500	9.8368	10.95°NW 9.84°NE
 city	Ninh Thuận	Great Ai		4399	876	10.8750	120.2161	10.87°NW 120.22°NE
@@ -1289,7 +1289,7 @@ city	Nishikibashi	Nichirin		2712	619	40.0350	113.1012	40.03°NW 113.10°NE
 city	Nishikino	Nichirin		2950	684	35.4900	112.2400	35.49°NW 112.24°NE
 city	Nizambhavi	Arunya		3778	4775	-38.2950	-52.0627	38.29°SE 52.06°SW
 city	Nizamnagar	Arunya		3735	4623	-35.3700	-43.8880	35.37°SE 43.89°SW
-city	Nizhegorod	Rudania		3108	2073	12.2850	35.9583	12.28°NW 35.96°NE
+city	Nizhegorod	Rudania		3108	2070	12.3300	36.0834	12.33°NW 36.08°NE
 city	Nizuc	Auritania		1425	4006	8.5350	-85.5423	8.53°NW 85.54°SW
 city	Nobata	Nichirin		2716	812	37.0800	97.1429	37.08°NW 97.14°NE
 city	Nogrod	Demâruz		3510	2231	3.8850	40.1010	3.88°NW 40.10°NE
@@ -1311,11 +1311,11 @@ city	Novokrepost	Giathka		3868	1947	2.7750	59.4635	2.77°NW 59.46°NE
 city	Novomurmursk	Axerfreditenshin		3169	1114	25.7550	86.3647	25.75°NW 86.36°NE
 city	Novorodubân	Demâruz		3452	2305	3.6450	35.8624	3.65°NW 35.86°NE
 city	Novoselsk	Giathka		3790	2013	2.9550	55.1198	2.96°NW 55.12°NE
-city	Novospatrya	Rudania		3141	1466	20.8950	65.4439	20.89°NW 65.44°NE
-city	Novotessa	Giathka		3623	1947	6.4500	54.1616	6.45°NW 54.16°NE
+city	Novospatrya	Rudania		3142	1467	20.8650	65.4155	20.86°NW 65.42°NE
+city	Novotessa	Giathka		3623	1949	6.4200	54.0775	6.42°NW 54.08°NE
 city	Nowgorod	Karjania		2978	2187	12.5250	27.5663	12.52°NW 27.57°NE
 city	Noxara	Hollosend		1851	3330	12.2850	-51.3839	12.28°NW 51.38°SW
-city	Nozan	Hollosend		1668	3424	13.6200	-62.0738	13.62°NW 62.07°SW
+city	Nozan	Hollosend		1670	3424	13.5900	-61.9788	13.59°NW 61.98°SW
 city	Nueva Legona	Hollosend		1577	3765	9.8700	-73.7252	9.87°NW 73.73°SW
 city	Nueva Segovia	Hollosend		1575	3687	11.0700	-72.2463	11.07°NW 72.25°SW
 city	Nuevo Cartago	Askurias		2684	3029	4.3050	-10.8699	4.30°NW 10.87°SW
@@ -1331,20 +1331,20 @@ city	Nürbrecht	Alemannia		3043	2651	4.5900	12.3920	4.59°NW 12.39°NE
 city	Nürntal	Ponurvia		1149	2827	30.3600	-75.9658	30.36°NW 75.97°SW
 city	Nussbaum	Ponurvia		1115	3229	24.8400	-87.5967	24.84°NW 87.60°SW
 city	Nutappet	Nichirin		2187	850	44.4450	79.2427	44.44°NW 79.24°NE
-city	Oakridge	Hollosend		1413	3644	14.1450	-79.4107	14.14°NW 79.41°SW
-city	Obangia	Vicilian North Aphirica		2894	4111	-15.0750	-43.8559	15.07°SE 43.86°SW
+city	Oakridge	Hollosend		1411	3646	14.1450	-79.5531	14.14°NW 79.55°SW
+city	Obangia	Vicilian North Aphirica		2895	4112	-15.1050	-43.8734	15.10°SE 43.87°SW
 city	Odanta	Noradia		3953	4869	-42.3300	-51.8817	42.33°SE 51.88°SW
-city	Odbytbyka	Sylesyjo		3197	2307	7.4400	29.1061	7.44°NW 29.11°NE
+city	Odbytbyka	Sylesyjo		3197	2306	7.4550	29.1441	7.45°NW 29.14°NE
 city	Oderfurt	Alemannia		2971	2501	7.9200	15.4605	7.92°NW 15.46°NE
 city	Odessos	East Astriya		3351	3127	-7.1700	7.3017	7.17°SE 7.30°NE
-city	Odryssa	East Astriya		3281	3159	-6.6000	3.9496	6.60°SE 3.95°NE
+city	Odryssa	East Astriya		3280	3160	-6.6000	3.8849	6.60°SE 3.88°NE
 city	Oestrande	Arverne		2893	2711	5.9400	5.8458	5.94°NW 5.85°NE
 city	Ōgiya	Nichirin		2874	539	38.8050	123.1468	38.80°NW 123.15°NE
-city	Ognechist	Rudania		3144	1935	13.8150	42.8470	13.81°NW 42.85°NE
-city	Ojo de Águila	Auritania		1292	4040	10.0200	-92.7682	10.02°NW 92.77°SW
+city	Ognechist	Rudania		3146	1935	13.7850	42.9010	13.78°NW 42.90°NE
+city	Ojo de Águila	Auritania		1290	4040	10.0500	-92.8705	10.05°NW 92.87°SW
 city	Okasumi	Kinshū		3058	5648	-40.5900	-141.5301	40.59°SE 141.53°SW
 city	Okotsk	Rudania		2016	1313	40.0650	38.0114	40.06°NW 38.01°NE
-city	Okrug	Karjania		2917	2013	16.0500	33.0061	16.05°NW 33.01°NE
+city	Okrug	Karjania		2917	2012	16.0650	33.0493	16.06°NW 33.05°NE
 city	Olisibona	Askurias		2550	2905	8.1750	-11.7140	8.17°NW 11.71°SW
 city	Olisipo	Hollosend		1807	3397	11.9400	-54.9962	11.94°NW 55.00°SW
 city	Olryretsk	Rudania		3120	2014	12.9900	38.7768	12.99°NW 38.78°NE
@@ -1370,13 +1370,13 @@ city	Ostrig	E.S.U.		1945	3134	13.8150	-42.1382	13.81°NW 42.14°SW
 city	Ostróżki	Cortesia		3095	2432	7.0950	21.5922	7.09°NW 21.59°NE
 city	Ōtase	Nichirin		2685	629	40.2900	111.6717	40.29°NW 111.67°NE
 city	Outnia	E.S.U.		1835	3110	15.8250	-46.4105	15.82°NW 46.41°SW
-city	Owamni	Santee		1710	2943	20.2050	-47.6983	20.21°NW 47.70°SW
+city	Owamni	Santee		1710	2945	20.1750	-47.7551	20.17°NW 47.76°SW
 city	Owanjila	Hollosend		1400	3258	20.1300	-71.7991	20.13°NW 71.80°SW
 city	Ōyashiro	Nichirin		2706	641	39.7950	111.0547	39.79°NW 111.05°NE
 city	Ōyodo	Nichirin		2759	584	39.8550	117.1104	39.85°NW 117.11°NE
-city	Ozaagi	Santee		1533	2908	23.3850	-55.7307	23.38°NW 55.73°SW
+city	Ozaagi	Santee		1532	2907	23.4150	-55.7558	23.42°NW 55.76°SW
 city	Ozerinsk	Giathka		3640	1870	7.3500	57.8221	7.35°NW 57.82°NE
-city	Paanje	Arunya		3634	4618	-33.7800	-47.2572	33.78°SE 47.26°SW
+city	Paanje	Arunya		3632	4616	-33.7200	-47.2068	33.72°SE 47.21°SW
 city	Pabžys	Cortesia		3085	2399	7.7400	22.5164	7.74°NW 22.52°NE
 city	Pắc Xế	Great Ai		4311	901	11.8200	117.7667	11.82°NW 117.77°NE
 city	Pacensis	Askurias		2594	2958	6.7200	-11.8012	6.72°NW 11.80°SW
@@ -1384,12 +1384,12 @@ city	Pacensis	Auritania		1465	4051	7.2600	-84.3872	7.26°NW 84.39°SW
 city	Palos Verdes	El Magreb		2593	3066	5.1150	-15.0451	5.11°NW 15.05°SW
 city	Pamali	Cahaya		4671	1289	0.6000	102.1409	0.60°NW 102.14°NE
 city	Pamananqa	Antiqa		1573	4581	-2.3100	-92.6172	2.31°SE 92.62°SW
-city	Pandavagram	Arunya		3646	4602	-33.7200	-45.8635	33.72°SE 45.86°SW
+city	Pandavagram	Arunya		3640	4599	-33.5850	-45.8974	33.59°SE 45.90°SW
 city	Panorama	Vicily		3019	3117	-2.0400	-3.0082	2.04°SE 3.01°SW
 city	Paotai	Guandong		3038	636	34.8900	117.6810	34.89°NW 117.68°NE
 city	Parabilaran	Seignid		3982	601	21.2550	132.7907	21.25°NW 132.79°NE
 city	Paraliton	Hollosend		1725	3514	11.4150	-61.4659	11.41°NW 61.47°SW
-city	Parata	Arunya		3553	4894	-36.7050	-67.9370	36.70°SE 67.94°SW
+city	Parata	Arunya		3554	4895	-36.7350	-67.9752	36.73°SE 67.98°SW
 city	Parish Rapids	Hollosend		1593	3552	12.8250	-68.5364	12.82°NW 68.54°SW
 city	Parzánske	Cortesia		3156	2538	4.5900	19.5364	4.59°NW 19.54°NE
 city	Pasaqiro	Antiqa		1602	4492	-1.4100	-88.0799	1.41°SE 88.08°SW
@@ -1403,7 +1403,7 @@ city	Penance	Salishia		1394	2657	29.2350	-56.1195	29.23°NW 56.12°SW
 city	Pengcheng	Guandong		3235	596	32.5350	123.9937	32.53°NW 123.99°NE
 city	Perangat	Cahaya		4549	1094	5.3550	110.2073	5.35°NW 110.21°NE
 city	Pergamis	Hollosend		1923	3332	11.1750	-48.2626	11.17°NW 48.26°SW
-city	Perisapora	Divia		3892	3397	-19.3350	18.9132	19.34°SE 18.91°NE
+city	Perisapora	Divia		3890	3399	-19.3350	18.7603	19.34°SE 18.76°NE
 city	Perlemeer	Ponurvia		1147	3229	24.3600	-85.6399	24.36°NW 85.64°SW
 city	Permarello	Recolotta		3313	4882	-32.9250	-74.2234	32.92°SE 74.22°SW
 city	Permskoye	Rudania		2309	951	41.1000	74.9816	41.10°NW 74.98°NE
@@ -1419,7 +1419,7 @@ city	Phaqcha	Antiqa		1560	4588	-2.2200	-93.1374	2.22°SE 93.14°SW
 city	Phôn Xa Vẳn	Great Ai		4188	945	13.0050	113.7230	13.00°NW 113.72°NE
 city	Phong Thổ	Great Ai		4109	924	14.5050	113.9082	14.50°NW 113.91°NE
 city	Phú Xuân	Great Ai		4294	817	13.3350	122.4535	13.33°NW 122.45°NE
-city	Phúc Túc	Great Ai		4389	1009	9.0300	112.7084	9.03°NW 112.71°NE
+city	Phúc Túc	Great Ai		4389	1008	9.0450	112.7626	9.04°NW 112.76°NE
 city	Pietari	Karjania		2931	2205	12.9600	25.4439	12.96°NW 25.44°NE
 city	Pilzbrück	Alemannia		3058	2602	5.1000	14.5018	5.10°NW 14.50°NE
 city	Ping	Sylesyjo		3374	2284	5.1300	34.6766	5.13°NW 34.68°NE
@@ -1432,7 +1432,7 @@ city	Playa del Climene	Auritania		1414	4035	8.2650	-86.5810	8.26°NW 86.58°SW
 city	Pleasance	Hollosend		1626	3467	13.6050	-65.0658	13.61°NW 65.07°SW
 city	Plimuth	Elvester		2773	2773	6.8100	0.0000	6.81°NW 0.00°NE
 city	Plơi Kơdưr	Great Ai		4347	861	11.8800	120.4839	11.88°NW 120.48°NE
-city	Pochang	Guandong		3273	663	30.9600	119.3598	30.96°NW 119.36°NE
+city	Pochang	Guandong		3273	664	30.9450	119.2837	30.94°NW 119.28°NE
 city	Ponca	Santee		1729	3064	18.1050	-50.1356	18.11°NW 50.14°SW
 city	Ponewesch	Livonia		3014	2334	9.7800	22.8871	9.78°NW 22.89°NE
 city	Ponta	Sehreno		3698	4162	-27.9000	-20.1739	27.90°SE 20.17°SW
@@ -1442,7 +1442,7 @@ city	Port Gabéra	South Pelagonia		2683	5291	-29.6100	-116.6021	29.61°SE 116.60
 city	Port Lox	Recolotta		3128	4973	-31.5150	-85.1757	31.51°SE 85.18°SW
 city	Port Mercer	Salishia		1373	2580	30.7050	-54.9608	30.70°NW 54.96°SW
 city	Port of Muscovite	E.S.U.		2237	3143	9.3000	-30.3123	9.30°NW 30.31°SW
-city	Port Verran	Dias		3100	5284	-35.7600	-108.7168	35.76°SE 108.72°SW
+city	Port Verran	Dias		3099	5286	-35.7750	-108.8963	35.77°SE 108.90°SW
 city	Port-de-Orssier	Napolyon Bonparterre Islands		4406	497	16.4550	143.5081	16.45°NW 143.51°NE
 city	Porta Ferrata	Vicily		3027	3225	-3.7800	-6.2004	3.78°SE 6.20°SW
 city	Prabhavati	Arunya		3769	4684	-36.7950	-46.4336	36.79°SE 46.43°SW
@@ -1456,11 +1456,11 @@ city	Pristinia	East Astriya		3323	3115	-6.5700	6.7314	6.57°SE 6.73°NE
 city	Przyiny	Zephran		3820	2123	0.8550	51.3983	0.85°NW 51.40°NE
 city	Pueblo del Prosperidad	Auritania		1311	3706	14.7450	-85.9278	14.74°NW 85.93°SW
 city	Puerta de Testudera	Hollosend		1783	3641	8.6400	-61.6593	8.64°NW 61.66°SW
-city	Puerta Waiyana	Hollosend		1737	3685	8.6700	-64.6699	8.67°NW 64.67°SW
+city	Puerta Waiyana	Hollosend		1738	3687	8.6250	-64.6673	8.63°NW 64.67°SW
 city	Puerto Delgado	Askurias		2323	3197	7.2000	-28.5000	7.20°NW 28.50°SW
-city	Pulzind	E.S.U.		1972	3177	12.7650	-42.1247	12.77°NW 42.12°SW
+city	Pulzind	E.S.U.		1973	3179	12.7200	-42.1351	12.72°NW 42.14°SW
 city	Purushottamkshetra	Noradia		3946	5021	-44.5050	-63.7982	44.50°SE 63.80°SW
-city	Putai	Guandong		3134	629	33.5550	119.8246	33.55°NW 119.82°NE
+city	Putai	Guandong		3133	631	33.5400	119.6493	33.54°NW 119.65°NE
 city	Puvani	Arunya		3709	4603	-34.6800	-43.6334	34.68°SE 43.63°SW
 city	Puyuan	Furan		3457	421	31.8300	140.9180	31.83°NW 140.92°NE
 city	Pyrgos	East Astriya		3347	3152	-7.4850	6.3807	7.48°SE 6.38°NE
@@ -1474,7 +1474,7 @@ city	Qingliu	Guandong		3426	586	29.8200	127.4177	29.82°NW 127.42°NE
 city	Qingyang	Furan		3626	658	25.7400	124.7059	25.74°NW 124.71°NE
 city	Qingzhou	Furan		3374	473	32.2950	135.7369	32.30°NW 135.74°NE
 city	Qormi	Sehreno		3769	4298	-31.0050	-24.2105	31.00°SE 24.21°SW
-city	Qulunam	Axerfreditenshin		3371	871	26.3700	106.0820	26.37°NW 106.08°NE
+city	Qulunam	Axerfreditenshin		3371	873	26.3400	105.9472	26.34°NW 105.95°NE
 city	Qusu	Axerfreditenshin		3231	795	29.6100	108.9121	29.61°NW 108.91°NE
 city	Quy Hóa	Great Ai		4111	895	14.9100	115.6372	14.91°NW 115.64°NE
 city	Quỳnh Thiện	Great Ai		4182	834	14.7600	120.1435	14.76°NW 120.14°NE
@@ -1491,20 +1491,20 @@ city	Rajora	Noradia		4023	4994	-45.2550	-58.5920	45.25°SE 58.59°SW
 city	Rakovets	Giathka		3856	1994	2.2500	57.2923	2.25°NW 57.29°NE
 city	Rakovsk	Giathka		3844	2028	1.9200	55.6676	1.92°NW 55.67°NE
 city	Ramsapolis	Kemet		3539	3478	-15.2550	2.2035	15.25°SE 2.20°NE
-city	Randstadt	Alemannia		2885	2675	6.6000	6.7986	6.60°NW 6.80°NE
+city	Randstadt	Alemannia		2886	2676	6.5700	6.7961	6.57°NW 6.80°NE
 city	Ranpua	Dämmerung Islands		919	2680	36.0150	-88.0745	36.02°NW 88.07°SW
 city	Rant	Sylesyjo		3260	2307	6.4950	30.8137	6.50°NW 30.81°NE
-city	Rassvetin	Rudania		3220	1923	12.8550	45.3937	12.85°NW 45.39°NE
+city	Rassvetin	Rudania		3221	1922	12.8550	45.4637	12.85°NW 45.46°NE
 city	Rát Bu Ri	Great Ai		4385	1122	7.3950	106.6534	7.39°NW 106.65°NE
 city	Ratnapur	Arunya		3738	4695	-36.4950	-48.2927	36.49°SE 48.29°SW
 city	Raudanpää	Zephran		3867	2043	1.3500	55.5533	1.35°NW 55.55°NE
 city	Rautaniemi	Karjania		2748	2146	16.5900	22.1414	16.59°NW 22.14°NE
 city	Ravenford	Hollosend		1894	3674	6.4800	-57.5431	6.48°NW 57.54°SW
-city	Rayachooru	Arunya		3683	4748	-36.4650	-53.7125	36.46°SE 53.71°SW
+city	Rayachooru	Arunya		3683	4749	-36.4800	-53.7780	36.48°SE 53.78°SW
 city	Rechinsk	Giathka		3802	2092	1.5900	52.2226	1.59°NW 52.22°NE
 city	Recolotta City	Recolotta		2992	5134	-31.8900	-99.5250	31.89°SE 99.53°SW
 city	Redville	Hollosend		2034	3328	9.5700	-43.4390	9.57°NW 43.44°SW
-city	Reedbank	Recolotta		3126	4860	-29.7900	-77.7578	29.79°SE 77.76°SW
+city	Reedbank	Recolotta		3128	4859	-29.8050	-77.6427	29.80°SE 77.64°SW
 city	Reighfyl	Hollosend		1463	3506	15.4650	-74.0068	15.46°NW 74.01°SW
 city	Reisawa	Nichirin		2562	781	39.8550	95.8959	39.85°NW 95.90°NE
 city	Rejóna	Askurias		2371	3373	3.8400	-31.3997	3.84°NW 31.40°SW
@@ -1513,8 +1513,8 @@ city	Rembulan	Cahaya		4566	1307	1.9050	99.8842	1.90°NW 99.88°NE
 city	Renaix-sur-Veldt	South Pelagonia		2683	5231	-28.7100	-112.2467	28.71°SE 112.25°SW
 city	Renedon	Arverne		2825	2804	5.5650	0.6715	5.56°NW 0.67°NE
 city	Reno-lan	Recolotta		3031	5109	-32.1000	-96.9016	32.10°SE 96.90°SW
-city	Reqa	Divia		3753	3296	-15.7350	16.6148	15.73°SE 16.61°NE
-city	Rětny	Slytlia		3351	2514	2.0250	25.6880	2.02°NW 25.69°NE
+city	Reqa	Divia		3751	3298	-15.7350	16.4694	15.73°SE 16.47°NE
+city	Rětny	Slytlia		3353	2514	1.9950	25.7406	2.00°NW 25.74°NE
 city	Reykawick	Elvester		2685	2581	11.0100	3.5549	11.01°NW 3.55°NE
 city	Ricewall	Elvester		2792	2773	6.5250	0.6146	6.52°NW 0.61°NE
 city	Ricomonte	Hollosend		2035	3595	5.5500	-49.8757	5.55°NW 49.88°SW
@@ -1537,7 +1537,7 @@ city	Rollinghem	Arverne		2900	2719	5.7150	5.7982	5.71°NW 5.80°NE
 city	Römpöla	Karjania		2893	2296	12.1650	20.7092	12.17°NW 20.71°NE
 city	Romsa	Karjania		2645	2108	18.7050	20.3366	18.70°NW 20.34°NE
 city	Rongzhou	Furan		3769	863	20.5200	112.9275	20.52°NW 112.93°NE
-city	Rośe	E.S.U.		2245	2954	12.0150	-24.5470	12.01°NW 24.55°SW
+city	Rośe	E.S.U.		2245	2956	11.9850	-24.6068	11.98°NW 24.61°SW
 city	Rosenveldt	Ponurvia		1134	2772	31.4100	-75.4839	31.41°NW 75.48°SW
 city	Rōseweg	Eivorie		2066	3812	1.8300	-53.4672	1.83°NW 53.47°SW
 city	Rosthaven	Alemannia		2933	2518	8.2350	13.7039	8.23°NW 13.70°NE
@@ -1577,15 +1577,15 @@ city	Sakyū	Nichirin		2652	672	40.1400	107.2202	40.14°NW 107.22°NE
 city	Sala Majorca	El Magreb		2451	3052	7.4550	-19.6584	7.45°NW 19.66°SW
 city	Saladique	Hollosend		1588	3705	10.6050	-71.9932	10.61°NW 71.99°SW
 city	Salamat	Seignid		4054	437	22.6350	144.9699	22.64°NW 144.97°NE
-city	Salish City	Salishia		1317	2625	30.8700	-59.7260	30.87°NW 59.73°SW
+city	Salish City	Salishia		1320	2625	30.8250	-59.5437	30.82°NW 59.54°SW
 city	Salvetino	Vicily		3047	3116	-2.4450	-2.1278	2.44°SE 2.13°SW
 city	Salvina	Hollosend		1938	3336	10.8900	-47.7133	10.89°NW 47.71°SW
 city	Salzgruven	Ponurvia		1318	2881	27.0150	-67.0017	27.01°NW 67.00°SW
 city	Salzquell	Alemannia		3105	2653	3.6300	14.1299	3.63°NW 14.13°NE
 city	San Bonifacio	Auritania		1503	4079	6.2700	-83.0670	6.27°NW 83.07°SW
 city	San Cristobal	Hollosend		1537	3624	12.5850	-72.7882	12.58°NW 72.79°SW
-city	San Damiano	Vicilian North Aphirica		2859	3850	-10.6350	-33.7139	10.63°SE 33.71°SW
-city	San Ġiljan	Sehreno		3916	4320	-33.5400	-19.3199	33.54°SE 19.32°SW
+city	San Damiano	Vicilian North Aphirica		2865	3853	-10.7700	-33.6691	10.77°SE 33.67°SW
+city	San Ġiljan	Sehreno		3916	4318	-33.5100	-19.2140	33.51°SE 19.21°SW
 city	San Ġwann	Sehreno		3955	4343	-34.4700	-18.8655	34.47°SE 18.87°SW
 city	San Isidoro	Hollosend		1768	3603	9.4350	-61.4969	9.43°NW 61.50°SW
 city	San Luis	Auritania		1193	3761	15.6900	-93.3064	15.69°NW 93.31°SW
@@ -1603,21 +1603,21 @@ city	Sannat	Sehreno		3960	4160	-31.8000	-9.2784	31.80°SE 9.28°SW
 city	Sanshan	Guandong		3312	710	29.6700	116.4495	29.67°NW 116.45°NE
 city	Santa Alejandra	Auritania		1333	3996	10.0650	-89.9493	10.06°NW 89.95°SW
 city	Santa Gabriella	Vicily		2952	3175	-1.9050	-6.8347	1.90°SE 6.83°SW
-city	Santa Luċija	Sehreno		4007	4353	-35.4000	-17.1099	35.40°SE 17.11°SW
+city	Santa Luċija	Sehreno		4007	4355	-35.4300	-17.2183	35.43°SE 17.22°SW
 city	Santa María	Auritania		1527	3900	8.5950	-78.7065	8.60°NW 78.71°SW
 city	Santa Marisol	El Magreb		2367	3076	8.3550	-23.4466	8.36°NW 23.45°SW
 city	Santa Verena	Hollosend		1971	3558	7.0650	-51.6658	7.06°NW 51.67°SW
-city	Santa Virenia	Askurias		2597	2987	6.2400	-12.5716	6.24°NW 12.57°SW
+city	Santa Virenia	Askurias		2598	2989	6.1950	-12.5971	6.20°NW 12.60°SW
 city	Santiago	Auritania		1450	4021	7.9350	-84.5878	7.93°NW 84.59°SW
 city	Santiago del Valle	Hollosend		1617	3658	10.8750	-69.6455	10.87°NW 69.65°SW
 city	Sanzhen	Furan		3576	674	26.2500	122.9082	26.25°NW 122.91°NE
 city	Sarakusta	Askurias		2784	2969	3.7050	-5.7883	3.71°NW 5.79°SW
 city	Satsuno	Nichirin		2224	858	43.7700	79.7794	43.77°NW 79.78°NE
 city	Sattarapur	Arunya		3686	4614	-34.5000	-45.1459	34.50°SE 45.15°SW
-city	Saucoté	Côte de Saumon		2586	3749	-5.0250	-36.9532	5.02°SE 36.95°SW
+city	Saucoté	Côte de Saumon		2586	3751	-5.0550	-37.0298	5.05°SE 37.03°SW
 city	Saulensk	Livonia		2999	2345	9.8400	22.0284	9.84°NW 22.03°NE
 city	Sauravalli	Arunya		3707	4685	-35.8800	-48.7916	35.88°SE 48.79°SW
-city	Sawbone	Hollosend		1727	3229	15.6600	-54.5521	15.66°NW 54.55°SW
+city	Sawbone	Hollosend		1729	3229	15.6300	-54.4574	15.63°NW 54.46°SW
 city	Sceapham	Eivorie		2330	3796	-1.8900	-44.9234	1.89°SE 44.92°SW
 city	Scheinfurt	Ponurvia		1306	3070	24.3600	-72.5594	24.36°NW 72.56°SW
 city	Scipbeorg	Eivorie		2279	3715	0.0900	-43.1231	0.09°NW 43.12°SW
@@ -1632,7 +1632,7 @@ city	Seitou	Kinshū		3009	5501	-37.6500	-128.5272	37.65°SE 128.53°SW
 city	Sekidome	Nichirin		2382	691	43.9050	99.0498	43.91°NW 99.05°NE
 city	Sekiringaku	Nichirin		2971	795	33.5100	104.0042	33.51°NW 104.00°NE
 city	Seleucia	Selmira		3594	3306	-13.5000	10.1647	13.50°SE 10.16°NE
-city	Semarre	Divia		3883	3359	-18.6300	19.8235	18.63°SE 19.82°NE
+city	Semarre	Divia		3885	3359	-18.6600	19.9075	18.66°SE 19.91°NE
 city	Seneja	Cahaya		4675	1354	-0.4350	100.1139	0.43°SE 100.11°NE
 city	Sennanur	Arunya		3637	4891	-37.9200	-65.0115	37.92°SE 65.01°SW
 city	Senshima	Nichirin		2706	605	40.3350	114.2193	40.34°NW 114.22°NE
@@ -1650,16 +1650,16 @@ city	Shefford	Elvester		2835	2697	7.0200	4.4902	7.02°NW 4.49°NE
 city	Shengshui	Furan		3497	594	28.6350	127.7292	28.63°NW 127.73°NE
 city	Shengyang	Furan		3492	702	27.0900	119.7425	27.09°NW 119.74°NE
 city	Shengyuan	Furan		3611	795	23.9100	115.0431	23.91°NW 115.04°NE
-city	Shestsyeminsk	Rudania		3142	2025	12.4950	38.9123	12.49°NW 38.91°NE
+city	Shestsyeminsk	Rudania		3144	2024	12.4800	39.0093	12.48°NW 39.01°NE
 city	Shevestria	Hollosend		1769	3464	11.5050	-58.3031	11.50°NW 58.30°SW
 city	Shib'a	Shivon		3646	3416	-15.9300	8.3840	15.93°SE 8.38°NE
 city	Shichidaika	Nichirin		2557	792	39.7650	94.8641	39.77°NW 94.86°NE
 city	Shikisen	Nichirin		2751	706	38.1450	106.4796	38.14°NW 106.48°NE
 city	Shimizu	Nichirin		2794	581	39.3750	118.0267	39.37°NW 118.03°NE
 city	Shimonosaki	Nichirin		2962	645	35.8950	115.6252	35.89°NW 115.63°NE
-city	Shin-Chukyo	Dar Hadid		3451	3894	-20.1750	-17.1300	20.17°SE 17.13°SW
+city	Shin-Chukyo	Dar Hadid		3449	3896	-20.1750	-17.2846	20.17°SE 17.28°SW
 city	Shinanose	Nichirin		2376	742	43.2300	94.3297	43.23°NW 94.33°NE
-city	Shinkeisei	Nichirin		2430	676	43.4100	101.6484	43.41°NW 101.65°NE
+city	Shinkeisei	Nichirin		2431	681	43.3200	101.2211	43.32°NW 101.22°NE
 city	Shinoshima	Kinshū		3093	5652	-41.1750	-141.5115	41.17°SE 141.51°SW
 city	Shionome	Nichirin		2862	580	38.3700	119.3376	38.37°NW 119.34°NE
 city	Shioshino	Nichirin		2556	720	40.8600	100.8791	40.86°NW 100.88°NE
@@ -1684,7 +1684,7 @@ city	Sikov	Rudania		2987	2239	11.6100	25.7635	11.61°NW 25.76°NE
 city	Sile	Kemet		3557	3630	-17.8050	-2.7301	17.80°SE 2.73°SW
 city	Silemani	Divia		3928	3326	-18.8100	22.8319	18.81°SE 22.83°NE
 city	Silvastria	Hollosend		1978	3384	9.5700	-47.1988	9.57°NW 47.20°SW
-city	Simbirsk	Rudania		3194	2029	11.6550	40.1493	11.65°NW 40.15°NE
+city	Simbirsk	Rudania		3194	2031	11.6250	40.0651	11.62°NW 40.07°NE
 city	Simhapuri	Arunya		3680	4887	-38.5050	-63.2858	38.51°SE 63.29°SW
 city	Simpanssilahti	Kullanmaan		2151	3891	-0.6300	-52.5680	0.63°SE 52.57°SW
 city	Simtherbûl	Demâruz		3415	2360	3.3750	32.8831	3.37°NW 32.88°NE
@@ -1695,18 +1695,18 @@ city	Sinopia	E.S.U.		2122	3164	10.7100	-35.4824	10.71°NW 35.48°SW
 city	Sipin	Cahaya		4553	1329	1.7700	98.6603	1.77°NW 98.66°NE
 city	Sitifa	Barbary		2842	3077	1.2150	-7.1465	1.21°NW 7.15°SW
 city	Siyahkaya	Selmira		3496	3231	-10.9050	9.0461	10.91°SE 9.05°NE
-city	Siyezda	Rudania		3172	1362	21.9900	71.8571	21.99°NW 71.86°NE
+city	Siyezda	Rudania		3171	1362	22.0050	71.8332	22.00°NW 71.83°NE
 city	Sjöbo	Skjarnland		2909	2360	10.9650	18.7550	10.96°NW 18.75°NE
-city	Slav	Sylesyjo		3335	2360	4.5750	30.8165	4.57°NW 30.82°NE
-city	Slavagrad	Rudania		3066	2104	12.4500	33.4932	12.45°NW 33.49°NE
+city	Slav	Sylesyjo		3337	2360	4.5450	30.8689	4.54°NW 30.87°NE
+city	Slavagrad	Rudania		3066	2100	12.5100	33.6585	12.51°NW 33.66°NE
 city	Sliema	Sehreno		3766	4098	-27.9600	-14.4487	27.96°SE 14.45°SW
 city	Slin	Alemannia		3120	2560	4.8000	17.7465	4.80°NW 17.75°NE
 city	Słoneczna	Cortesia		3159	2472	5.5350	21.9606	5.53°NW 21.96°NE
 city	Slynsk	Sylesyjo		3374	2336	4.3500	32.7215	4.35°NW 32.72°NE
 city	Snegorod	Rudania		3082	1835	16.2450	45.6498	16.24°NW 45.65°NE
 city	Sniezno-ojla	Sylesyjo		3167	2296	8.0550	28.6985	8.05°NW 28.70°NE
-city	Soboltsk	Rudania		3079	1719	18.0300	51.0213	18.03°NW 51.02°NE
-city	Sokol	Rudania		3173	2228	8.9850	31.4942	8.98°NW 31.49°NE
+city	Soboltsk	Rudania		3079	1717	18.0600	51.1176	18.06°NW 51.12°NE
+city	Sokol	Rudania		3174	2227	8.9850	31.5608	8.98°NW 31.56°NE
 city	Sokushin	Nichirin		2322	776	43.5300	89.8257	43.53°NW 89.83°NE
 city	Solano	Hollosend		1985	3608	6.1050	-52.2331	6.10°NW 52.23°SW
 city	Solhamn	Malschellskobbarna		3732	2780	-7.6800	31.2245	7.68°SE 31.22°NE
@@ -1714,7 +1714,7 @@ city	Solorsk	Rudania		3316	1907	11.6550	48.5583	11.65°NW 48.56°NE
 city	Sombáthar	Alemannia		3174	2616	3.1500	17.3472	3.15°NW 17.35°NE
 city	Somerdale	E.S.U.		1821	3000	17.6850	-44.0199	17.68°NW 44.02°SW
 city	Sōtenkō	Nichirin		2479	666	42.8250	103.7647	42.82°NW 103.76°NE
-city	Sōtō	Nichirin		2898	682	36.3000	111.4190	36.30°NW 111.42°NE
+city	Sōtō	Nichirin		2898	683	36.2850	111.3376	36.28°NW 111.34°NE
 city	Spaletta	Vicily		3072	3041	-1.6950	0.9479	1.69°SE 0.95°NE
 city	Speskan	Rudania		2764	1638	23.9700	46.0427	23.97°NW 46.04°NE
 city	Śreka	Zephran		3835	2230	-0.9750	48.6773	0.97°SE 48.68°NE
@@ -1727,12 +1727,12 @@ city	Stravrobûl	Demâruz		3466	2242	4.3800	38.5985	4.38°NW 38.60°NE
 city	Strawberry	Hollosend		1451	3263	19.2900	-69.1896	19.29°NW 69.19°SW
 city	Strømmå	Zephran		3975	2129	-1.5600	56.3569	1.56°SE 56.36°NE
 city	Sturnheim	Alemannia		3032	2707	3.9150	10.1934	3.91°NW 10.19°NE
-city	Styropol	Rudania		3224	2019	11.3550	41.3694	11.35°NW 41.37°NE
+city	Styropol	Rudania		3226	2019	11.3250	41.4223	11.32°NW 41.42°NE
 city	Suague	Auritania		1513	3912	8.6250	-79.5982	8.63°NW 79.60°SW
 city	Subrotira	Vicily		3182	3009	-2.8650	5.3606	2.86°SE 5.36°NE
 city	Suchester	Elvester		2808	2569	9.3450	8.0007	9.34°NW 8.00°NE
 city	Sudenpesä	Zephran		3957	2071	-0.4200	56.8453	0.42°SE 56.85°NE
-city	Suifeng	Guandong		3500	633	28.0050	124.8633	28.00°NW 124.86°NE
+city	Suifeng	Guandong		3502	633	27.9750	124.8900	27.97°NW 124.89°NE
 city	Sultanönü	Selmira		3479	3206	-10.2750	9.2455	10.27°SE 9.25°NE
 city	Sumerajima	Nichirin		3036	657	34.6050	115.9545	34.60°NW 115.95°NE
 city	Summi	E.S.U.		1989	3072	14.0850	-38.5181	14.08°NW 38.52°SW
@@ -1749,34 +1749,34 @@ city	Sverd	Skjarnland		2875	2467	9.8700	13.7477	9.87°NW 13.75°NE
 city	Svobodinsk	Giathka		3784	2074	2.1300	52.5435	2.13°NW 52.54°NE
 city	Svyatogorsk	Giathka		3822	2011	2.5050	55.8855	2.50°NW 55.89°NE
 city	Sweartstan	Eivorie		2318	3772	-1.3500	-44.2843	1.35°SE 44.28°SW
-city	Sykaran	Rudania		3270	2066	9.9600	40.6147	9.96°NW 40.61°NE
+city	Sykaran	Rudania		3271	2066	9.9450	40.6408	9.95°NW 40.64°NE
 city	Syrjälä	Zephran		3905	2035	0.9000	56.6667	0.90°NW 56.67°NE
 city	Syväsjärvi	Karjania		2862	2223	13.7250	22.6195	13.72°NW 22.62°NE
 city	Szalaváros	Cortesia		3185	2615	3.0000	17.6897	3.00°NW 17.69°NE
 city	Szatmár	Cortesia		3225	2500	4.1250	22.7948	4.13°NW 22.79°NE
 city	Szczelnie	Cortesia		3126	2520	5.3100	19.3199	5.31°NW 19.32°NE
 city	Szegvár	Cortesia		3239	2575	2.7900	20.5573	2.79°NW 20.56°NE
-city	Szerencsehely	Cortesia		3191	2572	3.5550	19.3337	3.56°NW 19.33°NE
+city	Szerencsehely	Cortesia		3191	2574	3.5250	19.2645	3.52°NW 19.26°NE
 city	Taaneya	Arunya		3723	4565	-34.3200	-40.8297	34.32°SE 40.83°SW
 city	Tabak	Sylesyjo		3161	2336	7.5450	27.0147	7.54°NW 27.01°NE
 city	Tabaruan	Cahaya		4497	960	8.1450	116.6685	8.14°NW 116.67°NE
 city	Tacugoza	Hollosend		1574	3734	10.3800	-73.2479	10.38°NW 73.25°SW
-city	Tadaki	Nichirin		2672	919	36.1350	87.8697	36.13°NW 87.87°NE
+city	Tadaki	Nichirin		2672	917	36.1650	88.0189	36.16°NW 88.02°NE
 city	Takaraguchi	Nichirin		2539	806	39.8250	93.2556	39.82°NW 93.26°NE
 city	Takarazuka	Nichirin		2620	653	40.9050	108.1760	40.91°NW 108.18°NE
 city	Takatsu	Nichirin		2591	699	40.6500	103.5137	40.65°NW 103.51°NE
 city	Talhuanca	Askurias		2687	2903	6.1500	-6.9553	6.15°NW 6.96°SW
 city	Talhuanca	Auritania		1153	3764	16.2450	-95.5827	16.24°NW 95.58°SW
-city	Tali Sawah	Cahaya		4678	1208	1.7100	106.1162	1.71°NW 106.12°NE
+city	Tali Sawah	Cahaya		4679	1207	1.7100	106.1774	1.71°NW 106.18°NE
 city	Tallon	Great Ai		4124	876	15.0000	116.9280	15.00°NW 116.93°NE
 city	Talwahasi	Hollosend		1843	3564	8.8950	-57.2924	8.89°NW 57.29°SW
 city	Tam Dương	Great Ai		4118	881	15.0150	116.5553	15.01°NW 116.56°NE
 city	Tam Lộ	Great Ai		4329	822	12.7350	122.5510	12.74°NW 122.55°NE
 city	Tambun	Cahaya		4468	1262	4.0500	100.7120	4.05°NW 100.71°NE
-city	Tamiatta	Kemet		3577	3397	-14.6100	6.4465	14.61°SE 6.45°NE
+city	Tamiatta	Kemet		3579	3398	-14.6550	6.4862	14.65°SE 6.49°NE
 city	Tánger	El Magreb		2494	3013	7.3950	-16.9639	7.39°NW 16.96°SW
 city	Tanglaoi	Seignid		3889	511	24.0000	138.1909	24.00°NW 138.19°NE
-city	Tangong	Furan		3655	664	25.2150	124.6539	25.21°NW 124.65°NE
+city	Tangong	Furan		3654	664	25.2300	124.6410	25.23°NW 124.64°NE
 city	Tanikai	Nichirin		2817	652	37.9650	112.3378	37.96°NW 112.34°NE
 city	Tanjung Karang	Cahaya		4675	1386	-0.9150	99.6834	0.91°SE 99.68°NE
 city	Tanretsu	Nichirin		2908	721	35.5650	108.4762	35.56°NW 108.48°NE
@@ -1787,7 +1787,7 @@ city	Tarabozan	Selmira		3765	3114	-13.1850	22.8822	13.18°SE 22.88°NE
 city	Tarnovetskygrad	Giathka		3806	1847	5.2050	62.3775	5.21°NW 62.38°NE
 city	Tarnovostok	Giathka		3636	1938	6.3900	54.8332	6.39°NW 54.83°NE
 city	Tarracon	Arverne		2852	3014	2.0100	-4.9710	2.01°NW 4.97°SW
-city	Tarxien	Sehreno		3947	4324	-34.0650	-18.1979	34.06°SE 18.20°SW
+city	Tarxien	Sehreno		3946	4326	-34.0800	-18.3476	34.08°SE 18.35°SW
 city	Tas-Sliema	Sehreno		4041	4252	-34.3950	-10.2455	34.39°SE 10.25°SW
 city	Tatarahama	Kinshū		2998	5495	-37.3950	-128.1608	37.39°SE 128.16°SW
 city	Tatari	Vicily		2956	3022	0.3300	-1.9873	0.33°NW 1.99°SW
@@ -1801,7 +1801,7 @@ city	Tebomicha	Antiqa		1519	4467	0.2100	-88.6468	0.21°NW 88.65°SW
 city	Teiburg	Hollosend		1983	3568	6.7350	-51.3961	6.73°NW 51.40°SW
 city	Tekonah	Ponurvia		1274	2659	31.0050	-63.3867	31.00°NW 63.39°SW
 city	Teluk Penaga	Cahaya		4453	1257	4.3500	100.7496	4.35°NW 100.75°NE
-city	Temnezh	Rudania		3318	2184	7.4700	37.0992	7.47°NW 37.10°NE
+city	Temnezh	Rudania		3318	2186	7.4400	37.0203	7.44°NW 37.02°NE
 city	Temuan	Cahaya		4642	1041	4.7550	114.0560	4.75°NW 114.06°NE
 city	Ten-Karat	Recolotta		3228	4899	-31.9050	-77.6607	31.90°SE 77.66°SW
 city	Tencepantic	Auritania		1195	4193	9.1800	-100.1559	9.18°NW 100.16°SW
@@ -1842,12 +1842,12 @@ city	Tlalticpac	Auritania		1141	4173	10.2900	-102.7023	10.29°NW 102.70°SW
 city	Tlatocan	Auritania		1255	3948	11.9550	-93.1655	11.95°NW 93.17°SW
 city	Tlaxco	Auritania		1172	3894	14.0100	-96.7154	14.01°NW 96.72°SW
 city	Tobau	Rudania		3273	2156	8.5650	37.0344	8.56°NW 37.03°NE
-city	Tōgen	Nichirin		2412	882	40.5900	83.6066	40.59°NW 83.61°NE
+city	Tōgen	Nichirin		2414	883	40.5450	83.5851	40.54°NW 83.59°NE
 city	Tōhara	Nichirin		3052	663	34.2750	115.7524	34.28°NW 115.75°NE
 city	Tokisaka	Iriria		1448	4486	0.9900	-92.1537	0.99°NW 92.15°SW
 city	Toksavaara	Karjania		2960	2255	11.7750	24.3337	11.78°NW 24.33°NE
 city	Tokuyama	Nichirin		2729	619	39.7800	113.4409	39.78°NW 113.44°NE
-city	Toletaña	Askurias		2654	2933	6.1950	-8.9887	6.20°NW 8.99°SW
+city	Toletaña	Askurias		2653	2934	6.1950	-9.0532	6.20°NW 9.05°SW
 city	Tolosa	Arverne		2870	2938	2.8800	-2.1074	2.88°NW 2.11°SW
 city	Tolvajärvi	Karjania		2950	2146	13.5600	28.3987	13.56°NW 28.40°NE
 city	Tombaq	Antiqa		1414	4334	3.7800	-91.4405	3.78°NW 91.44°SW
@@ -1869,26 +1869,26 @@ city	Trossö	Skjarnland		2944	2440	9.2400	16.8499	9.24°NW 16.85°NE
 city	Tsambok	Slytlia		3319	2378	4.5450	29.7314	4.54°NW 29.73°NE
 city	Tsirvakka	Karjania		2868	2254	13.1700	21.5775	13.17°NW 21.58°NE
 city	Tsitsikua	Auritania		1105	3812	16.2450	-99.0970	16.24°NW 99.10°SW
-city	Tsubayo	Shashanka		4117	5106	-48.3450	-64.1051	48.34°SE 64.11°SW
+city	Tsubayo	Shashanka		4116	5107	-48.3450	-64.2348	48.34°SE 64.23°SW
 city	Tsukeno	Nichirin		2407	694	43.4850	99.4324	43.48°NW 99.43°NE
 city	Tsuruoka	Nichirin		2571	832	38.9550	91.9835	38.95°NW 91.98°NE
 city	Tsuruse	Dar Hadid		3504	3845	-20.2350	-13.1972	20.23°SE 13.20°SW
 city	Tsurutani	Nichirin		2148	858	44.9100	77.2455	44.91°NW 77.25°NE
 city	Tuchtlan	Auritania		1160	4164	10.1400	-101.5627	10.14°NW 101.56°SW
-city	Tukhachevosk	Rudania		3101	2235	9.9600	29.2129	9.96°NW 29.21°NE
-city	Tumbleweed	Hollosend		1257	3303	21.6000	-80.7632	21.60°NW 80.76°SW
-city	Tunitsk	Rudania		3065	1461	22.1100	63.7914	22.11°NW 63.79°NE
-city	Turonne	Arverne		2874	2828	4.4700	1.4521	4.47°NW 1.45°NE
+city	Tukhachevosk	Rudania		3102	2234	9.9600	29.2804	9.96°NW 29.28°NE
+city	Tumbleweed	Hollosend		1257	3305	21.5700	-80.8067	21.57°NW 80.81°SW
+city	Tunitsk	Rudania		3066	1462	22.0800	63.7633	22.08°NW 63.76°NE
+city	Turonne	Arverne		2876	2828	4.4400	1.5147	4.44°NW 1.51°NE
 city	Tuscan	Hollosend		1751	3397	12.7800	-57.5524	12.78°NW 57.55°SW
 city	Tushan	Guandong		3392	710	28.4700	117.6889	28.47°NW 117.69°NE
 city	Tuvlina	Rudania		3152	2177	10.0650	32.9330	10.06°NW 32.93°NE
-city	Twin Rocks	Hollosend		1254	3262	22.2600	-80.0354	22.26°NW 80.04°SW
+city	Twin Rocks	Hollosend		1252	3262	22.2900	-80.1506	22.29°NW 80.15°SW
 city	Tynemouth	Elvester		2840	2642	7.7700	6.5013	7.77°NW 6.50°NE
-city	Tynglod	Sylesyjo		3178	2428	5.9100	24.0813	5.91°NW 24.08°NE
+city	Tynglod	Sylesyjo		3178	2430	5.8800	24.0086	5.88°NW 24.01°NE
 city	Tzapotlan	Auritania		1264	4002	11.0100	-93.5891	11.01°NW 93.59°SW
 city	Uchoyé	South Pelagonia		2732	5362	-31.4100	-121.1982	31.41°SE 121.20°SW
 city	Udupa	Arunya		3584	4695	-34.1850	-53.7436	34.19°SE 53.74°SW
-city	Ufraberg	Divia		3802	3339	-17.1150	17.1517	17.11°SE 17.15°NE
+city	Ufraberg	Divia		3800	3341	-17.1150	17.0035	17.11°SE 17.00°NE
 city	Ufysk	Rudania		3189	1922	13.3350	44.6214	13.33°NW 44.62°NE
 city	Ulan-Khol	Perovska		3799	1512	10.3350	77.5108	10.33°NW 77.51°NE
 city	Ulan-Ovoo	Nichirin		2732	806	36.9300	97.9876	36.93°NW 97.99°NE
@@ -1898,20 +1898,20 @@ city	Ulsterhausen	Alemannia		3046	2704	3.7500	10.7061	3.75°NW 10.71°NE
 city	Umagome	Nichirin		2484	681	42.5250	102.5403	42.52°NW 102.54°NE
 city	Umbravati	Arunya		3833	4725	-38.3700	-46.6473	38.37°SE 46.65°SW
 city	Umetsuji	Nichirin		2797	704	37.4850	107.6093	37.48°NW 107.61°NE
-city	Ūmqêsir	Divia		4005	3536	-23.1150	18.9325	23.11°SE 18.93°NE
+city	Ūmqêsir	Divia		4007	3534	-23.1150	19.0940	23.11°SE 19.09°NE
 city	Union Creek	Hollosend		1882	3350	11.5200	-50.5046	11.52°NW 50.50°SW
 city	Utamichi	Nichirin		2860	556	38.7600	121.4052	38.76°NW 121.41°NE
 city	Utano	Kinshū		3088	5539	-39.4050	-130.7975	39.41°SE 130.80°SW
 city	Utinenza	Vicily		3081	2922	-0.0450	4.7724	0.05°SE 4.77°NE
 city	Utopia	Salishia		1456	2527	30.2550	-48.4007	30.25°NW 48.40°SW
-city	Utsinsk	Rudania		2943	1186	28.0650	76.5948	28.06°NW 76.59°NE
+city	Utsinsk	Rudania		2944	1188	28.0200	76.4956	28.02°NW 76.50°NE
 city	Uzuiwa	Nichirin		2299	754	44.2050	91.0907	44.20°NW 91.09°NE
-city	Väärnitsa	Karjania		3005	2072	13.8450	33.0786	13.84°NW 33.08°NE
-city	Vaasugada	Arunya		3628	4624	-33.7800	-47.8335	33.78°SE 47.83°SW
+city	Väärnitsa	Karjania		3003	2072	13.8750	33.0207	13.87°NW 33.02°NE
+city	Vaasugada	Arunya		3626	4623	-33.7350	-47.8432	33.73°SE 47.84°SW
 city	Valden	Hollosend		1859	3733	6.1200	-60.3219	6.12°NW 60.32°SW
 city	Valentiane	Arverne		2915	2735	5.2500	5.7345	5.25°NW 5.73°NE
 city	Valentine	Hollosend		1546	3307	17.2050	-65.3163	17.20°NW 65.32°SW
-city	Välivlahti	Karjania		3009	2128	12.9450	30.8702	12.94°NW 30.87°NE
+city	Välivlahti	Karjania		3010	2127	12.9450	30.9402	12.94°NW 30.94°NE
 city	Vân Đồn	Great Ai		4093	826	16.2150	119.5487	16.21°NW 119.55°NE
 city	Van Horn	E.S.U.		2019	3105	13.1400	-38.1499	13.14°NW 38.15°SW
 city	Vanadzor	Demâruz		3533	2332	2.0250	36.8593	2.02°NW 36.86°NE
@@ -1928,7 +1928,7 @@ city	Velazquita	Askurias		2760	3024	3.2400	-8.2158	3.24°NW 8.22°SW
 city	Veligandula	Arunya		3783	4797	-38.7000	-53.3684	38.70°SE 53.37°SW
 city	Velikiy Roy	Giathka		3728	1860	6.1800	60.1718	6.18°NW 60.17°NE
 city	Velomagne	Arverne		2883	2756	5.4150	4.0539	5.41°NW 4.05°NE
-city	Veltridge	E.S.U.		1910	3101	14.8350	-42.7819	14.83°NW 42.78°SW
+city	Veltridge	E.S.U.		1911	3100	14.8350	-42.7100	14.83°NW 42.71°SW
 city	Venesia	Vicily		3047	2939	0.2100	3.2476	0.21°NW 3.25°NE
 city	Venugram	Arunya		3632	4660	-34.3800	-49.9029	34.38°SE 49.90°SW
 city	Versberre	Arverne		2910	2925	2.4750	-0.4627	2.47°NW 0.46°SW
@@ -1942,12 +1942,12 @@ city	Vicestra	Hollosend		2028	3380	8.8800	-45.0000	8.88°NW 45.00°SW
 city	Vidyapura	Arunya		3681	4691	-35.5800	-50.1103	35.58°SE 50.11°SW
 city	Vihar	Noradia		4033	4891	-43.8600	-50.2081	43.86°SE 50.21°SW
 city	Vijeyara	Arunya		3746	4871	-39.2550	-59.8581	39.25°SE 59.86°SW
-city	Villa del Sol	Auritania		1178	4174	9.7200	-100.7623	9.72°NW 100.76°SW
+city	Villa del Sol	Auritania		1177	4174	9.7350	-100.8148	9.73°NW 100.81°SW
 city	Villa Libertador	Hollosend		1547	3775	10.1700	-75.3551	10.17°NW 75.36°SW
 city	Villa Rica	Auritania		1340	3946	10.7100	-88.7401	10.71°NW 88.74°SW
 city	Villaguja	Hollosend		1992	3563	6.6750	-50.9055	6.67°NW 50.91°SW
 city	Villanova	Vicily		3115	3016	-1.9650	3.0363	1.97°SE 3.04°NE
-city	Villanueva	Auritania		1530	3969	7.5150	-79.8363	7.51°NW 79.84°SW
+city	Villanueva	Auritania		1530	3971	7.4850	-79.8728	7.48°NW 79.87°SW
 city	Villenshafen	Alemannia		3151	2672	2.6550	14.8068	2.65°NW 14.81°NE
 city	Vindvik	Skjarnland		2807	2514	10.1850	9.9117	10.18°NW 9.91°NE
 city	Vĩnh	Great Ai		4197	832	14.5650	120.4414	14.57°NW 120.44°NE
@@ -1960,7 +1960,7 @@ city	Vivantapur	Noradia		3801	4926	-40.9050	-61.8698	40.91°SE 61.87°SW
 city	Vladikavkaz	Demâruz		3551	2208	3.6150	41.9760	3.61°NW 41.98°NE
 city	Vohenholz	Ponurvia		1076	3027	28.4550	-85.5910	28.45°NW 85.59°SW
 city	Volchansk	Giathka		3789	2096	1.7250	51.7825	1.72°NW 51.78°NE
-city	Volgodonsk	Demâruz		3387	2200	6.1950	38.2423	6.20°NW 38.24°NE
+city	Volgodonsk	Demâruz		3389	2200	6.1650	38.2931	6.16°NW 38.29°NE
 city	Volkstrom	Ponurvia		1238	2702	30.9000	-66.8832	30.90°NW 66.88°SW
 city	Volnograd	Giathka		3702	1838	6.9000	60.5632	6.90°NW 60.56°NE
 city	Vongkac	Great Ai		4399	1092	7.6350	108.4065	7.63°NW 108.41°NE
@@ -1978,31 +1978,31 @@ city	Wallace	Hollosend		1507	3345	17.2200	-68.1863	17.22°NW 68.19°SW
 city	Wan	Selmira		3865	3221	-16.2900	23.5897	16.29°SE 23.59°NE
 city	Wangerhafen	Neuhollmar		3216	5621	-42.5550	-136.8637	42.55°SE 136.86°SW
 city	Waperaine	E.S.U.		1762	2899	20.0850	-43.9090	20.08°NW 43.91°SW
-city	Wapiti	Hollosend		1532	3167	19.5150	-62.6303	19.51°NW 62.63°SW
-city	Washunga	Santee		1625	3126	18.7350	-56.8680	18.73°NW 56.87°SW
-city	Wasit	Divia		3992	3444	-21.5400	21.6126	21.54°SE 21.61°NE
+city	Wapiti	Hollosend		1534	3166	19.5000	-62.5021	19.50°NW 62.50°SW
+city	Washunga	Santee		1626	3127	18.7050	-56.8441	18.70°NW 56.84°SW
+city	Wasit	Divia		3995	3444	-21.5850	21.7452	21.58°SE 21.75°NE
 city	Watagumo	Nichirin		2921	530	38.2350	124.7117	38.23°NW 124.71°NE
 city	Waudrin	Arverne		2922	2724	5.3100	6.3124	5.31°NW 6.31°NE
 city	Wealdtun	Eivorie		2310	3832	-2.1300	-46.7668	2.13°SE 46.77°SW
-city	Weidenstadt	Kogelland		2466	5173	-24.5850	-111.7313	24.58°SE 111.73°SW
+city	Weidenstadt	Kogelland		2466	5174	-24.6000	-111.7982	24.60°SE 111.80°SW
 city	Weinertitz	Ponurvia		1291	2683	30.3900	-63.0498	30.39°NW 63.05°SW
 city	Welstenberg	Alemannia		3019	2663	4.7700	11.2777	4.77°NW 11.28°NE
 city	Werpestade	Alemannia		2948	2656	5.9400	9.3790	5.94°NW 9.38°NE
 city	Westrel	Dias		2984	5306	-34.3500	-112.6577	34.35°SE 112.66°SW
 city	Wied il-Għajn	Sehreno		3787	3974	-26.4150	-7.9406	26.41°SE 7.94°SW
 city	Wied l-Għaqda	Sehreno		4088	4323	-36.1650	-11.7860	36.16°SE 11.79°SW
-city	Wijayakarta	Cahaya		4455	991	8.3100	114.4914	8.31°NW 114.49°NE
+city	Wijayakarta	Cahaya		4456	992	8.2800	114.4493	8.28°NW 114.45°NE
 city	Wilcze Doły	Zephran		3858	2086	0.8400	53.6608	0.84°NW 53.66°NE
-city	Willard	Hollosend		1672	3177	17.2650	-55.8672	17.26°NW 55.87°SW
+city	Willard	Hollosend		1672	3179	17.2350	-55.9184	17.23°NW 55.92°SW
 city	Williamsby	Elvester		2770	2649	8.7150	4.0192	8.71°NW 4.02°NE
 city	Wilna	Livonia		3046	2345	9.1350	23.4057	9.13°NW 23.41°NE
 city	Windau	Livonia		2943	2340	10.7550	20.5451	10.75°NW 20.55°NE
 city	Winscor	Elvester		2808	2690	7.5300	3.8632	7.53°NW 3.86°NE
 city	Wisaka	Santee		1685	3052	18.9450	-51.9443	18.94°NW 51.94°SW
-city	Wita	Sylesyjo		3312	2257	6.4650	34.0995	6.46°NW 34.10°NE
+city	Wita	Sylesyjo		3312	2254	6.5100	34.2149	6.51°NW 34.21°NE
 city	Wolmar	Livonia		2971	2292	11.0550	23.2225	11.05°NW 23.22°NE
 city	Wuling	Furan		3632	677	25.3650	123.4393	25.36°NW 123.44°NE
-city	Wülst	Alemannia		3105	2632	3.9450	14.8405	3.95°NW 14.84°NE
+city	Wülst	Alemannia		3106	2633	3.9150	14.8353	3.91°NW 14.84°NE
 city	Wyngiel	Sylesyjo		3237	2264	7.4850	31.8378	7.48°NW 31.84°NE
 city	Xa Van Na Khẹt	Great Ai		4278	906	12.2400	117.0833	12.24°NW 117.08°NE
 city	Xagħra	Sehreno		3774	4052	-27.3900	-11.9885	27.39°SE 11.99°SW
@@ -2014,7 +2014,7 @@ city	Xianzhou	Furan		3304	537	32.3850	129.6694	32.38°NW 129.67°NE
 city	Ximen	Furan		3666	839	22.4250	112.9545	22.42°NW 112.95°NE
 city	Xinghua	Furan		3647	427	28.8900	142.2680	28.89°NW 142.27°NE
 city	Xingzhou	Guandong		3231	699	31.0500	115.9695	31.05°NW 115.97°NE
-city	Ý Dĩ	Great Ai		4395	1003	9.0300	113.1086	9.03°NW 113.11°NE
+city	Ý Dĩ	Great Ai		4394	1002	9.0600	113.1505	9.06°NW 113.15°NE
 city	Yadrosk	Rudania		2753	1751	22.4400	40.0444	22.44°NW 40.04°NE
 city	Yaelan	Seignid		3796	455	26.2350	141.4679	26.23°NW 141.47°NE
 city	Yakishi	Nichirin		2833	850	34.7550	96.9156	34.76°NW 96.92°NE
@@ -2026,13 +2026,13 @@ city	Yangshen	Guandong		3328	607	30.9750	124.4676	30.97°NW 124.47°NE
 city	Yao	Seignid		3735	445	27.3000	141.6746	27.30°NW 141.67°NE
 city	Yaoyachimallan	Auritania		1167	3969	12.9600	-98.2009	12.96°NW 98.20°SW
 city	Yaqanis	Rudania		2432	1314	33.8100	53.7213	33.81°NW 53.72°NE
-city	Yar	Rudania		3037	1311	24.7800	71.4535	24.78°NW 71.45°NE
+city	Yar	Rudania		3037	1313	24.7500	71.3379	24.75°NW 71.34°NE
 city	Yarovo	Giathka		3924	1855	3.3150	64.4437	3.31°NW 64.44°NE
 city	Yatsuura	Nichirin		2248	793	44.3850	86.1230	44.38°NW 86.12°NE
 city	Yawae	Nichirin		2655	885	36.9000	90.0000	36.90°NW 90.00°NE
 city	Ye'or	Shivon		3632	3405	-15.5550	8.2329	15.55°SE 8.23°NE
 city	Yehora	Shivon		3633	3701	-20.0100	-2.6232	20.01°SE 2.62°SW
-city	Yeneshir	Selmira		3641	3262	-13.5450	13.3843	13.54°SE 13.38°NE
+city	Yeneshir	Selmira		3643	3263	-13.5900	13.4276	13.59°SE 13.43°NE
 city	Yevata	Arunya		3835	4757	-38.8800	-48.6972	38.88°SE 48.70°SW
 city	Yijia	Furan		3632	724	24.6600	120.1653	24.66°NW 120.17°NE
 city	Yinde	Furan		3564	429	30.1050	141.3223	30.11°NW 141.32°NE
@@ -2042,23 +2042,23 @@ city	Yoloxochitl	Auritania		1445	3906	9.7350	-82.7845	9.73°NW 82.78°SW
 city	Yongchun	Furan		3605	623	26.5800	126.9536	26.58°NW 126.95°NE
 city	Yongguan	Furan		3645	474	28.2150	138.5725	28.21°NW 138.57°NE
 city	Yongkang	Furan		3673	726	24.0150	120.5865	24.02°NW 120.59°NE
-city	Yongping	Guandong		3414	728	27.8700	116.7262	27.87°NW 116.73°NE
+city	Yongping	Guandong		3416	727	27.8550	116.8284	27.85°NW 116.83°NE
 city	Yongyuan	Guandong		3234	646	31.8000	120.0619	31.80°NW 120.06°NE
 city	Yootó	Hollosend		1327	3157	22.7400	-73.4612	22.74°NW 73.46°SW
 city	Yoshihama	Nichirin		2876	518	39.0900	125.0560	39.09°NW 125.06°NE
 city	Yoshino	Nichirin		2610	768	39.3300	98.1528	39.33°NW 98.15°NE
 city	Yuda	Nichirin		2737	626	39.5550	112.9884	39.55°NW 112.99°NE
-city	Yuecheng	Furan		3331	573	31.4400	127.1619	31.44°NW 127.16°NE
+city	Yuecheng	Furan		3331	576	31.3950	126.9260	31.39°NW 126.93°NE
 city	Yueyang	Furan		3604	672	25.8600	123.4238	25.86°NW 123.42°NE
 city	Yuhuac	Antiqa		1636	4520	-2.3400	-88.8296	2.34°SE 88.83°SW
-city	Yulayev	Rudania		3235	1929	12.5400	45.5229	12.54°NW 45.52°NE
+city	Yulayev	Rudania		3235	1927	12.5700	45.6102	12.57°NW 45.61°NE
 city	Yuling	Furan		3732	618	24.7500	128.8552	24.75°NW 128.86°NE
 city	Yunokgrad	Giathka		3688	1716	8.9400	65.6847	8.94°NW 65.68°NE
 city	Yunping	Furan		3686	660	24.8100	125.3290	24.81°NW 125.33°NE
 city	Yunyin	Guandong		3219	565	33.2400	126.2474	33.24°NW 126.25°NE
 city	Yuzuki	Nichirin		2728	614	39.8700	113.8600	39.87°NW 113.86°NE
 city	Yþcaester	Eivorie		2065	3819	1.7400	-53.6574	1.74°NW 53.66°SW
-city	Żabbar	Sehreno		3740	4060	-27.0000	-13.7143	27.00°SE 13.71°SW
+city	Żabbar	Sehreno		3738	4060	-26.9700	-13.7934	26.97°SE 13.79°SW
 city	Zacrébba	Vicily		3107	2981	-1.3200	3.8363	1.32°SE 3.84°NE
 city	Zalaya	Auritania		1188	3823	14.8350	-94.6518	14.83°NW 94.65°SW
 city	Zalesie Nad Księżycem	Zephran		3890	2233	-1.8450	50.7504	1.84°SE 50.75°NE
@@ -2066,7 +2066,7 @@ city	Zamorsk	Rudania		3210	1350	21.6000	73.4211	21.60°NW 73.42°NE
 city	Zarentia	Vicily		3078	3137	-3.2250	-1.8358	3.22°SE 1.84°SW
 city	Zarienne	Côte de Saumon		2628	3831	-6.8850	-39.0796	6.88°SE 39.08°SW
 city	Zarinbad	Demâruz		3652	2337	0.1650	39.5225	0.17°NW 39.52°NE
-city	Zasratov	Rudania		3143	1692	17.4750	54.0186	17.47°NW 54.02°NE
+city	Zasratov	Rudania		3145	1692	17.4450	54.0707	17.44°NW 54.07°NE
 city	Zaton	Perovska		3652	1616	10.9800	69.5672	10.98°NW 69.57°NE
 city	Zavkhan	Perovska		3522	1549	13.9350	70.0335	13.93°NW 70.03°NE
 city	Żebbuġ	Sehreno		3822	4273	-31.4250	-20.7887	31.42°SE 20.79°SW
@@ -2082,12 +2082,12 @@ city	Zetkinburg	Santee		1690	2977	19.9950	-49.6379	20.00°NW 49.64°SW
 city	Zgorzelec-Górny	Zephran		3864	2179	-0.6450	50.9149	0.64°SE 50.91°NE
 city	Zhadian	Guandong		3446	673	28.2150	121.1799	28.21°NW 121.18°NE
 city	Zhangzhou	Guandong		3404	694	28.5300	119.0337	28.53°NW 119.03°NE
-city	Zharatov	Rudania		3289	2100	9.1650	39.7142	9.16°NW 39.71°NE
+city	Zharatov	Rudania		3291	2099	9.1500	39.8071	9.15°NW 39.81°NE
 city	Zhaur	Rudania		3345	1632	15.3450	61.9530	15.34°NW 61.95°NE
 city	Zheleznogorod	Giathka		3673	1786	8.1150	62.2202	8.12°NW 62.22°NE
 city	Zhenlang	Furan		3324	394	34.2300	141.8505	34.23°NW 141.85°NE
 city	Zhikgethlar	Demâruz		3462	2298	3.6000	36.3750	3.60°NW 36.38°NE
-city	Zhugezhen	Furan		3651	643	25.5900	126.0922	25.59°NW 126.09°NE
+city	Zhugezhen	Furan		3653	643	25.5600	126.1173	25.56°NW 126.12°NE
 city	Ziringethlar	Demâruz		3506	2226	4.0200	40.1954	4.02°NW 40.20°NE
 city	Zirinkhebbâr	Demâruz		3662	2352	-0.2100	39.3919	0.21°SE 39.39°NE
 city	Zitkahan	Santee		1680	2861	21.8850	-46.8135	21.88°NW 46.81°SW
@@ -2098,7 +2098,7 @@ city	Zoryansk	Giathka		3686	1857	6.8550	59.3938	6.85°NW 59.39°NE
 city	Zōtō	Woxza		3412	5295	-40.6050	-102.9274	40.60°SE 102.93°SW
 city	Züharin	Alemannia		2938	2546	7.7400	12.8665	7.74°NW 12.87°NE
 city	Zula	Southeast Aphirica		3201	4185	-20.7900	-38.3875	20.79°SE 38.39°SW
-city	Zurelstein	Ponurvia		1251	3305	21.6600	-81.1501	21.66°NW 81.15°SW
+city	Zurelstein	Ponurvia		1251	3303	21.6900	-81.1067	21.69°NW 81.11°SW
 city	Zürmark	Alemannia		3059	2746	2.9250	9.7054	2.92°NW 9.71°NE
 city	Zwilingstürme	Ponurvia		1320	2787	28.3950	-64.2951	28.39°NW 64.30°SW
 label	ACADIAN SEA		sea	2469	2981	8.2500	-16.9101	8.25°NW 16.91°SW
