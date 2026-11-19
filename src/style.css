@@ -1418,14 +1418,14 @@ body.hybridmap .label-sea span {
      aerials with the horizon near the top, so the strip is taken from where the
      skyline is: the middle of the frame is foreground rooftops. */
   background: var(--pic) center 22% / cover;
-  opacity: 0.6;
+  opacity: 0.82;
   -webkit-mask-image: linear-gradient(to left, #000 0%, rgba(0,0,0,0.6) 45%, transparent 100%);
   mask-image: linear-gradient(to left, #000 0%, rgba(0,0,0,0.6) 45%, transparent 100%);
   transition: opacity 0.15s;
 }
 #bs-items li.bs-pic:hover::before,
 #bs-items li.bs-pic.sel::before {
-  opacity: 0.82;
+  opacity: 1;
 }
 #bs-items li.bs-pic > * {
   position: relative;
@@ -1440,6 +1440,12 @@ body.hybridmap .label-sea span {
    figure. */
 #bs-items li.bs-flag::before {
   background-position: center;
+  /* Flat colour is louder than a photograph, so a flag sits further back */
+  opacity: 0.6;
+}
+#bs-items li.bs-flag:hover::before,
+#bs-items li.bs-flag.sel::before {
+  opacity: 0.82;
 }
 #bs-sort-btn .bs-photo { color: inherit; }
 
