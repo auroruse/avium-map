@@ -700,15 +700,6 @@
     "size": 9
   },
   {
-    "text": "RECOLOTTA",
-    "type": "nation",
-    "x": 3205,
-    "y": 4856,
-    "minZoom": 3.5,
-    "maxZoom": 5,
-    "size": 13
-  },
-  {
     "text": "SOUTHEAST APHIRICA",
     "type": "colony",
     "x": 3270,
