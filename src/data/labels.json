@@ -128,6 +128,16 @@
     "size": 13
   },
   {
+    "text": "CARESTUR",
+    "type": "nation",
+    "x": 2908,
+    "y": 2878,
+    "minZoom": 3.5,
+    "maxZoom": 5,
+    "tier": 13,
+    "size": 9.834427095347792
+  },
+  {
     "text": "ELVESTER",
     "type": "nation",
     "x": 2784,
@@ -428,7 +438,7 @@
     "size": 9
   },
   {
-    "text": "BARBARY",
+    "text": "NUMIDIA",
     "type": "colony",
     "x": 2729,
     "y": 3145,
