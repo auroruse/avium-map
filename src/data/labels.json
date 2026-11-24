@@ -120,8 +120,8 @@
   {
     "text": "ARVERNE",
     "type": "nation",
-    "x": 2940,
-    "y": 2815,
+    "x": 2935,
+    "y": 2800,
     "minZoom": 3.5,
     "maxZoom": 5,
     "tier": 13,
